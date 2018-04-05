@@ -5,8 +5,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ trans('app.general.appName') }}</div>
 
-                    <div class="panel-body">
-                        I'm an example component!
+                    <div class="panel-body" v-text="user.test[lang]">
                     </div>
                 </div>
             </div>
@@ -15,9 +14,23 @@
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log(this.trans('app.general.appName'))
+import lang from '../mixins/lang';
+
+export default {
+    mixins: [lang],
+
+    data() {
+        return {
+            user: {}
+        }
+    },
+
+    mounted() {
+        console.log(this.lang);
+        axios.get("/users")
+            .then(({data}) => {
+                this.user = data
+            })
         }
     }
 </script>

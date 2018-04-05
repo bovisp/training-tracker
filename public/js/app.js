@@ -971,11 +971,9 @@ module.exports = __webpack_require__(38);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-
 __webpack_require__(11);
 
 
@@ -13298,7 +13296,7 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_lang__ = __webpack_require__(43);
 //
 //
 //
@@ -13315,9 +13313,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_lang__["a" /* default */]],
+
+    data: function data() {
+        return {
+            user: {}
+        };
+    },
     mounted: function mounted() {
-        console.log(this.trans('app.general.appName'));
+        var _this = this;
+
+        console.log(this.lang);
+        axios.get("/users").then(function (_ref) {
+            var data = _ref.data;
+
+            _this.user = data;
+        });
     }
 });
 
@@ -13337,11 +13351,10 @@ var render = function() {
             _vm._v(_vm._s(_vm.trans("app.general.appName")))
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _vm._v(
-              "\n                    I'm an example component!\n                "
-            )
-          ])
+          _c("div", {
+            staticClass: "panel-body",
+            domProps: { textContent: _vm._s(_vm.user.test[_vm.lang]) }
+          })
         ])
       ])
     ])
@@ -13362,6 +13375,23 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+	data: function data() {
+		return {
+			lang: window.App.lang
+		};
+	}
+});
 
 /***/ })
 /******/ ]);
