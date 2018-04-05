@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => TrainingTracker\User::class,
+            'model' => TrainingTracker\Domains\Users\User::class,
         ],
 
         // 'users' => [

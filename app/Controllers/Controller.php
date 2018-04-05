@@ -1,6 +1,6 @@
 <?php
 
-namespace TrainingTracker\Http\Controllers;
+namespace TrainingTracker\App\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
