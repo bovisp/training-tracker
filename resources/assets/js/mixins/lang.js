@@ -1,7 +1,7 @@
 export default {
 	data() {
 		return {
-			lang: window.App.lang
+			language: window.App.lang
 		}
 	}
 }

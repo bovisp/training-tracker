@@ -13,7 +13,7 @@
 use TrainingTracker\Domains\Users\User;
 
 Route::get("/users", function () {
-	return User::find(1);
+	return User::find(1)->toArray();
 });
 
 Route::get('/', function () {

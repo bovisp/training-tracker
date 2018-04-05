@@ -963,7 +963,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
-module.exports = __webpack_require__(38);
+module.exports = __webpack_require__(39);
 
 
 /***/ }),
@@ -13143,7 +13143,7 @@ var normalizeComponent = __webpack_require__(35)
 /* script */
 var __vue_script__ = __webpack_require__(36)
 /* template */
-var __vue_template__ = __webpack_require__(37)
+var __vue_template__ = __webpack_require__(38)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -13296,7 +13296,8 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_lang__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_lang__ = __webpack_require__(37);
+//
 //
 //
 //
@@ -13323,10 +13324,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             user: {}
         };
     },
-    mounted: function mounted() {
+    created: function created() {
         var _this = this;
 
-        console.log(this.lang);
         axios.get("/users").then(function (_ref) {
             var data = _ref.data;
 
@@ -13337,6 +13337,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 /* 37 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+	data: function data() {
+		return {
+			language: window.App.lang
+		};
+	}
+});
+
+/***/ }),
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -13351,10 +13364,13 @@ var render = function() {
             _vm._v(_vm._s(_vm.trans("app.general.appName")))
           ]),
           _vm._v(" "),
-          _c("div", {
-            staticClass: "panel-body",
-            domProps: { textContent: _vm._s(_vm.user.test[_vm.lang]) }
-          })
+          _c("div", { staticClass: "panel-body" }, [
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.user.test[_vm.language]) +
+                "\n                "
+            )
+          ])
         ])
       ])
     ])
@@ -13371,27 +13387,10 @@ if (false) {
 }
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-	data: function data() {
-		return {
-			lang: window.App.lang
-		};
-	}
-});
 
 /***/ })
 /******/ ]);

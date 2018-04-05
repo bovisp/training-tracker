@@ -5,7 +5,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ trans('app.general.appName') }}</div>
 
-                    <div class="panel-body" v-text="user.test[lang]">
+                    <div class="panel-body">
+                        {{ user.test[language] }}
                     </div>
                 </div>
             </div>
@@ -25,12 +26,11 @@ export default {
         }
     },
 
-    mounted() {
-        console.log(this.lang);
+    created() {
         axios.get("/users")
             .then(({data}) => {
                 this.user = data
             })
-        }
     }
+}
 </script>
