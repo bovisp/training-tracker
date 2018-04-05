@@ -968,8 +968,9 @@ module.exports = __webpack_require__(38);
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__(11);
 
 window.Vue = __webpack_require__(31);
