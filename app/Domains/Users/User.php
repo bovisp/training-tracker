@@ -1,13 +1,21 @@
 <?php
 
-namespace App;
+namespace TrainingTracker\Domains\Users;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Translatable\HasTranslations;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasTranslations;
+
+    /**
+     * The attributes that are translatable.
+     * 
+     * @var array
+     */
+    public $translatable = ['test'];
 
     /**
      * The attributes that are mass assignable.
