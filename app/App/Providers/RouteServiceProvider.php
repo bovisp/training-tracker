@@ -1,6 +1,6 @@
 <?php
 
-namespace TrainingTracker\Providers;
+namespace TrainingTracker\App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'TrainingTracker\Http\Controllers';
+    protected $namespace = 'TrainingTracker\Http';
 
     /**
      * Define your route model bindings, pattern filters, etc.

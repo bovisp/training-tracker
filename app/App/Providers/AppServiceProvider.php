@@ -1,6 +1,6 @@
 <?php
 
-namespace TrainingTracker\Providers;
+namespace TrainingTracker\App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

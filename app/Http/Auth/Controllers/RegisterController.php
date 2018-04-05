@@ -2,10 +2,10 @@
 
 namespace TrainingTracker\Http\Controllers\Auth;
 
-use TrainingTracker\User;
-use TrainingTracker\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
+use TrainingTracker\Dommains\Users\User;
+use TrainingTracker\Http\Controllers\Controller;
 
 class RegisterController extends Controller
 {

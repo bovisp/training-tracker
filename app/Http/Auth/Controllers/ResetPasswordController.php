@@ -1,8 +1,8 @@
 <?php
 
-namespace TrainingTracker\Http\Controllers\Auth;
+namespace TrainingTracker\Http\Auth\Controllers;
 
-use TrainingTracker\Http\Controllers\Controller;
+use TrainingTracker\App\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller

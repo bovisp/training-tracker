@@ -1,9 +1,9 @@
 <?php
 
-namespace TrainingTracker\Http\Controllers\Auth;
+namespace TrainingTracker\Http\Auth\Controllers;
 
-use TrainingTracker\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use TrainingTracker\App\Controllers\Controller;
 
 class ForgotPasswordController extends Controller
 {
