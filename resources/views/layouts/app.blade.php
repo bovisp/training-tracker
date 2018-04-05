@@ -9,6 +9,12 @@
         <title>{{ trans('app.general.appName') }}</title>
 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        
+        <script>
+            window.App = {
+                'lang': '{{ app()->getLocale() }}'
+            };
+        </script>
     </head>
     <body>
         <div id="app">

@@ -10,6 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use TrainingTracker\Domains\Users\User;
+
+Route::get("/users", function () {
+	return User::find(1);
+});
 
 Route::get('/', function () {
     return view('layouts.app');
