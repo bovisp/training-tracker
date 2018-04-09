@@ -19,3 +19,5 @@ Route::get("/users", function () {
 Route::get('/', function () {
     return view('layouts.app');
 });
+
+Route::post('/test', '\TrainingTracker\Http\Test\Controllers\TestController@store');

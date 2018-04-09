@@ -3,7 +3,8 @@
 namespace TrainingTracker\Http\Test\Controllers;
 
 use Illuminate\Http\Request;
-use TrainingTracker\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use TrainingTracker\App\Controllers\Controller;
 
 class TestController extends Controller
 {
@@ -33,9 +34,19 @@ class TestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        request()->validate([
+            'myfile' => 'required|file|mimes:xlsx,xls,csv,txt'
+        ]);
+
+        $file = request()->file('myfile')->store('test');
+
+        dd(Storage::get($file));
+
+        // $myfile = fopen(asset($file), "r") or die("Unable to open file!");
+
+        dd($file);
     }
 
     /**
