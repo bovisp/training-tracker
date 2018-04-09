@@ -17,6 +17,9 @@
         </script>
     </head>
     <body>
+
+        @include('layouts.partials._lang-switcher')
+
         <div id="app">
             <example-component></example-component>
         </div>
