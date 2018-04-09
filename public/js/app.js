@@ -13331,6 +13331,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var data = _ref.data;
 
             _this.user = data;
+            console.log(_this.user);
         });
     }
 });
@@ -13367,7 +13368,7 @@ var render = function() {
           _c("div", { staticClass: "panel-body" }, [
             _vm._v(
               "\n                    " +
-                _vm._s(_vm.user.test[_vm.language]) +
+                _vm._s(_vm.user.test) +
                 "\n                "
             )
           ])

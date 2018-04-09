@@ -6,7 +6,7 @@
                     <div class="panel-heading">{{ trans('app.general.appName') }}</div>
 
                     <div class="panel-body">
-                        {{ user.test[language] }}
+                        {{ user.test }}
                     </div>
                 </div>
             </div>
@@ -30,6 +30,7 @@ export default {
         axios.get("/users")
             .then(({data}) => {
                 this.user = data
+                console.log(this.user);
             })
     }
 }

@@ -34,4 +34,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Convert the model instance to an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $attributes = parent::toArray();
+        
+        foreach ($this->getTranslatableAttributes() as $name) {
+            $attributes[$name] = $this->getTranslation($name, app()->getLocale());
+        }
+        
+        return $attributes;
+    }
 }
