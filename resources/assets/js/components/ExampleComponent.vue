@@ -15,11 +15,7 @@
 </template>
 
 <script>
-import lang from '../mixins/lang';
-
 export default {
-    mixins: [lang],
-
     data() {
         return {
             user: {}
