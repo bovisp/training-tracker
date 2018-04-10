@@ -4,6 +4,7 @@ namespace TrainingTracker\Http\Test\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use TrainingTracker\App\Controllers\Controller;
 
 class TestController extends Controller
@@ -40,13 +41,13 @@ class TestController extends Controller
             'myfile' => 'required|file|mimes:xlsx,xls,csv,txt'
         ]);
 
-        $file = request()->file('myfile')->store('test');
+        $file = request()->file('myfile')->store('public');
 
-        dd(Storage::get($file));
+        Excel::load("storage\\app\\public\\" . basename($file), function($reader) {
+            $results = $reader->get();
 
-        // $myfile = fopen(asset($file), "r") or die("Unable to open file!");
-
-        dd($file);
+            dd($results);
+        });
     }
 
     /**

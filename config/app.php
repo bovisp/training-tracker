@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         ied3vil\LanguageSwitcher\Providers\LanguageSwitcherProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,6 +228,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * Package Facades...
+         */
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];
