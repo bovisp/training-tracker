@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use TrainingTracker\App\Controllers\Controller;
+use TrainingTracker\Domains\Users\User;
 
 class TestController extends Controller
 {
@@ -46,8 +47,18 @@ class TestController extends Controller
         Excel::load("storage\\app\\public\\" . basename($file), function($reader) {
             $results = $reader->get();
 
-            dd($results);
+            foreach ($results as $result) {
+                User::create([
+                    'username' => $result->username,
+                    'password' => $result->password,
+                    'email' => $result->email,
+                    'firstname' => $result->firstname,
+                    'lastname' => $result->lastname
+                ]);
+            }
         });
+
+        return back();
     }
 
     /**
