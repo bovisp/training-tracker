@@ -11,7 +11,7 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
 {
 	protected $filename;
 
-	protected $validations = [];
+	protected $errors = [];
 
 	public function __construct($filename)
 	{
@@ -31,7 +31,7 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
 			$this->validateRow($row);
 		}
 
-		return $this->validations;
+		return $this->errors;
 	}
 
 	public function validateRow($row)
@@ -46,7 +46,7 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
 	        return;	    	        
 	    }
 
-	    $this->validations[] = $this->getErrors($validator, $row);
+	    $this->errors[] = $this->getErrors($validator, $row);
 	}
 
 	public function persist($row)
