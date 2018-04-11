@@ -3,6 +3,7 @@
 namespace TrainingTracker\Domains\Permissions;
 
 use Illuminate\Database\Eloquent\Model;
+use TrainingTracker\Domains\Roles\Role;
 
 /**
  * Add the ability to create permissions which can then be assigned (primarily)
@@ -18,4 +19,14 @@ class Permission extends Model
     protected $fillable = [
     	'type', 'name', 'description'
     ];
+
+    /**
+     * A permission can belong to many roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+    	return $this->belongsToMany(Role::class, 'roles_permissions');
+    }
 }
