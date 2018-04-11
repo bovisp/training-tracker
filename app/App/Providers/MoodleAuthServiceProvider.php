@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use TrainingTracker\App\Classes\Auth;
 
+/**
+ * Registers the MoodleAuth facade to Laravel's container.
+ */
 class MoodleAuthServiceProvider extends ServiceProvider
 {
     /**
@@ -19,7 +22,7 @@ class MoodleAuthServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the application services.
+     * Register the moodleauth service by binding it to Laravel's container.
      *
      * @return void
      */

@@ -4,6 +4,13 @@ import Vue from 'vue';
 
 window.Vue = Vue;
 
+/**
+ * Gives Vue access to the Laravel translation strings on a per language basis.
+ * 
+ * @param  {string} key The translation string key.
+ * 
+ * @return {string}     The translation string value.
+ */
 Vue.prototype.trans = (key) => {
 	let paths = key.split('.'),
 	    current = window.trans,
@@ -22,6 +29,12 @@ Vue.prototype.trans = (key) => {
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
+/**
+ * Instantiates the application Vue instance that can be utilized on any view
+ * in Laravel as long as an element with an id of #app is present on page.
+ * 
+ * @type {Vue}
+ */
 const app = new Vue({
     el: '#app'
 });
