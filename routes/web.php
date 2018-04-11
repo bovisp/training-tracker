@@ -17,7 +17,7 @@
 // });
 
 // Route::get('/test', function(){
-//     dd(moodleauth()->id());
+//     dd(moodleauth()->user());
 // });
 
 // Route::get('/', function () {
@@ -25,10 +25,10 @@
 // });
 
 // Route::post('/test', '\TrainingTracker\Http\Test\Controllers\TestController@store');
-use TrainingTracker\Domains\Users\User;
+// use TrainingTracker\Domains\Users\User;
 
 Route::get('/', function () {
-	$user = User::first();
+	$user = moodleauth()->user();
 
-	dd($user->hasRole('admin', 'user'));
+	dd($user->can('edit posts'));
 });

@@ -40,4 +40,16 @@ trait HasPermissionsTrait
 
 		return false;
 	}
+
+	public function hasPermissionTo($permission)
+	{
+		return $this->hasPermission($permission);
+	}
+
+	protected function hasPermission($permission)
+	{
+		return (bool) $this->permissions
+			->where('type', $permission->type)
+			->count();
+	}
 }

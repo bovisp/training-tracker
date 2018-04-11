@@ -2,9 +2,10 @@
 
 namespace TrainingTracker\App\Classes;
 
-use TrainingTracker\Domains\MoodleUsers\MoodleUser;
 use TrainingTracker\Domains\Config\Config;
+use TrainingTracker\Domains\MoodleUsers\MoodleUser;
 use TrainingTracker\Domains\Sessions\Session;
+use TrainingTracker\Domains\Users\User;
 
 /**
  * Provides a set of helper methods to extract information about an
@@ -119,7 +120,7 @@ class Auth
      * 
      * @return object \TrainingTracker\Domains\MoodleUsers\MoodleUser
      */
-    public function user()
+    public function moodleuser()
     {
         if (! $this->check()) {
             return '';
@@ -130,12 +131,23 @@ class Auth
         return $user->profile($this->moodleId);
     }
 
+    public function user()
+    {
+        if (! $this->check()) {
+            return '';
+        }
+
+        return User::where('moodle_id', $this->moodleid())
+            ->get()
+            ->first();
+    }
+
     /**
      * Returns the id of the currently logged in Moodle user.
      * 
      * @return string The id of the currently logged in Moodle user.
      */
-    public function id()
+    public function moodleid()
     {
         if (! $this->check()) {
             return '';
