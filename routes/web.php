@@ -16,6 +16,10 @@ Route::get("/users", function () {
 	return User::find(1)->toArray();
 });
 
+Route::get('/test', function(){
+    dd(moodleauth()->id());
+});
+
 Route::get('/', function () {
     return view('layouts.app');
 });
