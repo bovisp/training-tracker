@@ -177,6 +177,7 @@ return [
         // TrainingTracker\Providers\BroadcastServiceProvider::class,
         TrainingTracker\App\Providers\EventServiceProvider::class,
         TrainingTracker\App\Providers\RouteServiceProvider::class,
+        TrainingTracker\App\Providers\MoodleAuthServiceProvider::class,
 
     ],
 
@@ -231,6 +232,11 @@ return [
          * Package Facades...
          */
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        /*
+         * Custom Facades...
+         */
+        'MoodleAuth' => TrainingTracker\App\Facades\MoodleAuth::class,
     ],
 
 ];
