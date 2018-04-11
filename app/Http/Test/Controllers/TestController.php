@@ -2,11 +2,8 @@
 
 namespace TrainingTracker\Http\Test\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
 use TrainingTracker\App\Controllers\Controller;
-use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Domains\Users\Requests\StoreUsersSpreadsheet;
 
 class TestController extends Controller
 {
@@ -44,21 +41,20 @@ class TestController extends Controller
 
         $file = request()->file('myfile')->store('public');
 
-        Excel::load("storage\\app\\public\\" . basename($file), function($reader) {
-            $results = $reader->get();
+        $validations = new StoreUsersSpreadsheet(
+            "storage\\app\\public\\" . basename($file)
+        );
 
-            foreach ($results as $result) {
-                User::create([
-                    'username' => $result->username,
-                    'password' => $result->password,
-                    'email' => $result->email,
-                    'firstname' => $result->firstname,
-                    'lastname' => $result->lastname
+        if (count($validations->validate())) {
+            return back()
+                ->with('error', $validations)
+                ->with('headers', [
+                    'Test', 'Username', 'Password', 'First name', 'Last name', 'Email'
                 ]);
-            }
-        });
+        }
 
         return back();
+        
     }
 
     /**
@@ -90,7 +86,7 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
         //
     }

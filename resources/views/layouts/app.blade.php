@@ -61,13 +61,63 @@
             </div>
         </form>
 
-        <pre>
-            @if ($errors->has('myfile'))
-                @foreach ($errors->get('myfile') as $message)
-                    {{ $message }}
-                @endforeach
-            @endif
-        </pre>
+
+        @if (session()->has('error'))
+
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        @foreach (session()->get('headers') as $header)
+                            
+                            <th>
+
+                                {{ $header }}
+
+                            </th>
+
+                        @endforeach
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    
+                    @foreach (session()->get('error') as $row)
+
+                        <tr>
+
+                            @foreach($row["data"] as $data)
+
+                                <td>{{ $data }}</td>
+                                
+
+                            @endforeach
+
+
+                            
+                        </tr>
+                        <tr>
+                            <td colspan="{{ count($row['data']) }}">
+                                <article class="message is-danger">
+                                    <div class="message-body">
+                                        <ul>
+                                            @foreach($row["errors"] as $error)
+                                                <li>&bull; {{ $error[0] }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div
+                                </article>
+                            </td>
+                        </tr>
+                        
+
+                    @endforeach
+
+                </tbody>
+            </table>
+
+        @endif
 
         @include('layouts.partials._trans')
 
