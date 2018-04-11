@@ -61,7 +61,8 @@
             </div>
         </form>
 
-        @if (session()->has('errors'))
+
+        @if (session()->has('error'))
 
             <table class="table">
                 <thead>
@@ -82,7 +83,7 @@
 
                 <tbody>
                     
-                    @foreach (session()->get('errors') as $row)
+                    @foreach (session()->get('error') as $row)
 
                         <tr>
 

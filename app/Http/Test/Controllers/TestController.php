@@ -2,12 +2,8 @@
 
 namespace TrainingTracker\Http\Test\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Maatwebsite\Excel\Facades\Excel;
 use TrainingTracker\App\Controllers\Controller;
-use TrainingTracker\Domains\Users\User;
-use TrainingTracker\Exceptions\TestException;
+use TrainingTracker\Domains\Users\Requests\StoreUsersSpreadsheet;
 
 class TestController extends Controller
 {
@@ -44,41 +40,14 @@ class TestController extends Controller
         ]);
 
         $file = request()->file('myfile')->store('public');
-        // dd(User::where('firstname', 'fuzzybutt')->get()->first());
 
-        $validations = [];
+        $validations = new StoreUsersSpreadsheet(
+            "storage\\app\\public\\" . basename($file)
+        );
 
-        $results = Excel::load("storage\\app\\public\\" . basename($file), function($reader) {})->get();
-
-        foreach ($results as $result) {
-            $result = $result->toArray();
-
-            $messages = [
-                'username.unique' => 'The username ":input" is already in use',
-                'email.unique' => 'The email ":input" is already in use',
-                'test.exists' => 'The topic ":input" does not exist'
-            ];
-
-            $validator = Validator::make($result, [
-                // 'username' => 'unique:users,username,NULL,id,test,' . $result["test"]
-                'username' => 'unique:users,username',
-                'email' => 'unique:users,email|email',
-                'test' => 'exists:topics,id'
-            ], $messages);
-
-            if (count($validator->errors()->toArray())) {
-                $validations[] = [
-                    "errors" => $validator->errors()->toArray(),
-                    "data" => $result
-                ];
-            } else {
-                User::create($result);
-            }   
-        }
-
-        if (count($validations)) {
+        if (count($validations->validate())) {
             return back()
-                ->with('errors', $validations)
+                ->with('error', $validations)
                 ->with('headers', [
                     'Test', 'Username', 'Password', 'First name', 'Last name', 'Email'
                 ]);
@@ -117,7 +86,7 @@ class TestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
         //
     }
