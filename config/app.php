@@ -169,7 +169,6 @@ return [
          */
         ied3vil\LanguageSwitcher\Providers\LanguageSwitcherProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
