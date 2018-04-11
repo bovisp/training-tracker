@@ -17,7 +17,7 @@ Route::get("/users", function () {
 });
 
 Route::get('/test', function(){
-    dd(MoodleAuth::check());
+    dd(MoodleAuth::id());
 });
 
 Route::get('/', function () {
