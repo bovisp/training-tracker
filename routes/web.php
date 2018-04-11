@@ -10,18 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// use TrainingTracker\Domains\Users\User;
+
+// Route::get("/users", function () {
+// 	return User::find(1)->toArray();
+// });
+
+// Route::get('/test', function(){
+//     dd(moodleauth()->id());
+// });
+
+// Route::get('/', function () {
+//     return view('layouts.app');
+// });
+
+// Route::post('/test', '\TrainingTracker\Http\Test\Controllers\TestController@store');
 use TrainingTracker\Domains\Users\User;
 
-Route::get("/users", function () {
-	return User::find(1)->toArray();
-});
-
-Route::get('/test', function(){
-    dd(moodleauth()->id());
-});
-
 Route::get('/', function () {
-    return view('layouts.app');
-});
+	$user = User::first();
 
-Route::post('/test', '\TrainingTracker\Http\Test\Controllers\TestController@store');
+	dd($user->hasRole('admin', 'user'));
+});

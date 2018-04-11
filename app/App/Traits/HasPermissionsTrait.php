@@ -29,4 +29,15 @@ trait HasPermissionsTrait
 	{
 		return $this->belongsToMany(Permission::class, 'users_permissions');
 	}
+
+	public function hasRole(...$roles)
+	{
+		foreach ($roles as $role) {
+			if ($this->roles->contains('type', $role)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace TrainingTracker\Domains\Users;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
