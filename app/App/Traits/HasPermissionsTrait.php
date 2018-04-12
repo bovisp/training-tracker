@@ -96,4 +96,137 @@ trait HasPermissionsTrait
 
 		return false;
 	}
+
+	/**
+	 * Assign permissions to a model instance
+	 * 
+	 * @param  array $permissions A list of permissions.
+	 * 
+	 * @return model              The model instance to facilitate method
+	 * chaining.
+	 */
+	public function givePermissionTo(...$permissions)
+	{
+		$permissions = $this->getPermissions(
+			array_flatten($permissions)
+		);
+
+		if ($permissions === null) {
+			return $this;
+		}
+
+		$this->permissions()->saveMany($permissions);
+
+		return $this;
+	}
+
+	/**
+	 * Remove permissions from a model instance.
+	 * 
+	 * @param  array $permissions A list of permissions.
+	 * 
+	 * @return model              The model instance to facilitate method
+	 * chaining.
+	 */
+	public function withdrawPermissionTo(...$permissions)
+	{
+		$permissions = $this->getPermissions(
+			array_flatten($permissions)
+		);
+
+		$this->permissions()->detach($permissions);
+
+		return $this;
+	}
+
+	/**
+	 * Update (or refresh) permissions on a model instance.
+	 * 
+	 * @param  array $permissions A list of permissions.
+	 * @return model              The model instance to facilitate method
+	 * chaining.
+	 */
+	public function updatePermissions(...$permissions)
+	{
+		$this->permissions()->detach();
+
+		return $this->givePermissionTo($permissions);
+	}
+
+	/**
+	 * Assign a role to a model instance.
+	 * 
+	 * @param  string $role The role to be assigned.
+	 * 
+	 * @return model The model instance to facilitate method
+	 * chaining.
+	 */
+	public function assignRole($role)
+	{
+		$role = $this->getRole($role);
+
+		if ($role === null) {
+			return $this;
+		}
+
+		$this->roles()->save($role);
+
+		return $this;
+	}
+
+	/**
+	 * Remove a role from a model instance.
+	 * 
+	 * @param  string $role The role to be removed.
+	 * 
+	 * @return model The model instance to facilitate method
+	 * chaining.
+	 */
+	public function removeRole($role)
+	{
+		$role = $this->getRole($role);
+
+		$this->roles()->detach($role);
+
+		return $this;
+	}
+
+	/**
+	 * Update (or refresh) a role on a model instance.
+	 * 
+	 * @param  string $role The role to be updated.
+	 * 
+	 * @return model The model instance to facilitate method
+	 * chaining.
+	 */
+	public function updateRole($role)
+	{
+		$this->roles()->detach();
+
+		return $this->assignRole($role);
+	}
+
+	/**
+	 * Get a collection of Permissions.
+	 * 
+	 * @param  array $permissions An an array of permission strings.
+	 * 
+	 * @return collection \TrainingTracker\Domains\Permissions\Permission
+	 */
+	protected function getPermissions($permissions)
+	{
+		return Permission::whereIn('type', $permissions)->get();
+	}
+
+	/**
+	 * Get a Role model instance.
+	 * 
+	 * @param  string $role The role type string to be queried.
+	 * 
+	 * @return model \TrainingTracker\Domains\Roles\Role
+	 */
+	protected function getRole($role)
+	{
+		return Role::where('type', $role)->get()->first();
+	}
 }
