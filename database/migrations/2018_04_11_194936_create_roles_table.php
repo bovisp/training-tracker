@@ -18,7 +18,7 @@ class CreateRolesTable extends Migration
             $table->string('type');
 
             //Translatable
-            $table->string('name')->nullable();
+            // $table->string('name')->nullable();
             
             $table->timestamps();
         });

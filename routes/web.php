@@ -30,5 +30,5 @@
 Route::get('/', function () {
 	$user = moodleauth()->user();
 
-	dd($user->can('edit posts'));
+	dd($user->can('delete users'));
 });
