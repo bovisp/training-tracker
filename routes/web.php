@@ -28,7 +28,34 @@
 // use TrainingTracker\Domains\Users\User;
 
 Route::get('/', function () {
-	$user = moodleauth()->user();
+	return view('layouts.app');
+	// $user = moodleauth()->user();
 
-	$user->updateRole('user');
+	// $user->updateRole('user');
+});
+
+// Route::group(['middleware' => 'role:admin'], function () {
+
+// 	Route::group(['middleware' => 'role:admin,delete users'], function () {
+// 		Route::get('/admin/users', function () {
+// 			return "delete users";
+// 		});
+// 	});
+
+// 	Route::get('/admin', function () {
+// 		return "admin panel";
+// 	});
+// });
+
+Route::group(['middleware' => 'can:delete users'], function () {
+
+	// Route::group(['middleware' => 'role:admin,delete users'], function () {
+	// 	Route::get('/admin/users', function () {
+	// 		return "delete users";
+	// 	});
+	// });
+
+	Route::get('/admintest', function () {
+		return "admin panel";
+	});
 });
