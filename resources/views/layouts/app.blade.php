@@ -29,6 +29,10 @@
             <example-component></example-component>
         </div>
 
+        @if(moodleauth()->user()->can('edit posts'))
+            Yes I can
+        @endif
+
         <form action="/test" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             
@@ -118,6 +122,8 @@
             </table>
 
         @endif
+
+        
 
         @include('layouts.partials._trans')
 

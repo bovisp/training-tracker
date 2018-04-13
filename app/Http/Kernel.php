@@ -51,7 +51,9 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        // 'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'role' => \TrainingTracker\Http\Middleware\RoleMiddleware::class,
+        'can' => \TrainingTracker\Http\Middleware\PermissionMiddleware::class,
     ];
 }

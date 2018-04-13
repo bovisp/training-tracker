@@ -1,21 +1,13 @@
 <?php
-
 namespace TrainingTracker\Domains\Users;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Translatable\HasTranslations;
+use TrainingTracker\App\Traits\HasPermissionsTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasTranslations;
-
-    /**
-     * The attributes that are translatable.
-     * 
-     * @var array
-     */
-    // public $translatable = ['test'];
+    use Notifiable, HasPermissionsTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -23,9 +15,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password', 'username', 'test'
+        'moodle_id'
     ];
-
+    
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -34,20 +26,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    /**
-     * Convert the model instance to an array.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        $attributes = parent::toArray();
-        
-        foreach ($this->getTranslatableAttributes() as $name) {
-            $attributes[$name] = $this->getTranslation($name, app()->getLocale());
-        }
-        
-        return $attributes;
-    }
 }
