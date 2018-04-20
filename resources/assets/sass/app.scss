@@ -4,11 +4,52 @@
 // Get all of Bulma's base styles.
 @import "~bulma/sass/base/_all";
 
+// Get a subset of Bulma's grid styles
+@import "~bulma/sass/grid/columns";
+
 // Get a subset of Bulma's element styles.
 @import "~bulma/sass/elements/form";
 @import "~bulma/sass/elements/button";
 @import "~bulma/sass/elements/table";
+@import "~bulma/sass/elements/title";
 @import "~bulma/sass/elements/content";
+@import "~bulma/sass/elements/container";
 
 // Get a subset of Bulma's component styles.
 @import "~bulma/sass/components/message";
+@import "~bulma/sass/components/level";
+
+// Custom styles for datatable
+.table {
+
+	&.is-sortable {
+
+		th {
+
+			span {
+				cursor:pointer
+			}
+		}
+	}
+}
+
+.arrow {
+	display: inline-block;
+	vertical-align: middle;
+	width: 0;
+	height: 0;
+	margin-left: 5px;
+	opactiy: .6;
+
+	&--asc {
+		border-left: 4px solid transparent;
+		border-right: 4px solid transparent;
+		border-bottom: 4px solid #222;
+	}
+
+	&--desc {
+		border-left: 4px solid transparent;
+		border-right: 4px solid transparent;
+		border-top: 4px solid #222;
+	}
+}

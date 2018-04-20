@@ -1,5 +1,8 @@
 <?php
 
+// use TrainingTracker\Domains\Roles\Role;
+// use TrainingTracker\Domains\Users\User;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,52 +13,26 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// use TrainingTracker\Domains\Users\User;
-
-// Route::get("/users", function () {
-// 	return User::find(1)->toArray();
-// });
-
-// Route::get('/test', function(){
-//     dd(moodleauth()->user());
-// });
 
 // Route::get('/', function () {
-//     return view('layouts.app');
+// 	dd((Role::with('users')->whereType('admin')->first())->users->each->moodleuser);
+//     // return view('layouts.app');
 // });
 
-// Route::post('/test', '\TrainingTracker\Http\Test\Controllers\TestController@store');
-// use TrainingTracker\Domains\Users\User;
-
-Route::get('/', function () {
-	return view('layouts.app');
-	// $user = moodleauth()->user();
-
-	// $user->updateRole('user');
-});
-
-// Route::group(['middleware' => 'role:admin'], function () {
-
-// 	Route::group(['middleware' => 'role:admin,delete users'], function () {
-// 		Route::get('/admin/users', function () {
-// 			return "delete users";
-// 		});
-// 	});
-
-// 	Route::get('/admin', function () {
-// 		return "admin panel";
-// 	});
+// Route::get('/profile/{user}', function (User $user) {
+// 	dd($user->isSupervisedBy());
+//     // return view('layouts.app');
 // });
 
-Route::group(['middleware' => 'can:delete users'], function () {
+// Route::get('/api/users', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@index');
+// Route::post('/api/users', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store');
 
-	// Route::group(['middleware' => 'role:admin,delete users'], function () {
-	// 	Route::get('/admin/users', function () {
-	// 		return "delete users";
-	// 	});
-	// });
+Route::middleware(['role:administrator'])->group(function () {
+	Route::prefix('roles')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\Roles\Controllers\RolesController@index')->name('roles.index');
+		Route::get('/api', '\TrainingTracker\Http\Roles\Controllers\Api\RolesController@index')->name('roles.index.api');
 
-	Route::get('/admintest', function () {
-		return "admin panel";
+		Route::get('/create', '\TrainingTracker\Http\Roles\Controllers\RolesController@create');
+		Route::post('/', '\TrainingTracker\Http\Roles\Controllers\RolesController@store');
 	});
 });

@@ -15,5 +15,13 @@ return [
     'general' => [
     	'appName' => 'MSC Training Tracker',
     ],
-
+    'table-columns' => [
+        'firstname' => 'First name',
+        'lastname' => 'Last name',
+        'email' => 'E-mail',
+        'id' => 'ID',
+        'type' => 'Type',
+        'created_at' => 'Created at',
+        'name' => 'Name',
+    ],
 ];

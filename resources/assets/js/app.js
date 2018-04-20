@@ -27,7 +27,7 @@ Vue.prototype.trans = (key) => {
 	return current;
 }
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('datatable', require('./components/Datatable.vue'));
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view
