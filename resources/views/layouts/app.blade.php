@@ -31,6 +31,8 @@
                 @yield('content')
                 
             </div>
+
+            <flash :flash="{{ json_encode(session('flash')) }}"></flash>
         </div>        
 
         @include('layouts.partials._trans')

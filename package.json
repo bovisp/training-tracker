@@ -16,6 +16,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "buefy": "^0.6.5",
         "bulma": "^0.7.1",
         "lodash.orderby": "^4.6.0"
     }

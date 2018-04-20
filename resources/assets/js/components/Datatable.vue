@@ -121,7 +121,6 @@ export default {
             return axios.get(`${this.endpoint}`)
                 .then(({data}) => {
                     this.response = data.data
-                    console.log(this.trans(`app.table-columns.name`));
                 })
         },
 

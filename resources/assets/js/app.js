@@ -1,6 +1,11 @@
 require('./bootstrap');
 
 import Vue from 'vue';
+import Buefy from 'buefy'
+
+Vue.use(Buefy, {
+	defaultToastDuration: 5000
+})
 
 window.Vue = Vue;
 
@@ -28,6 +33,7 @@ Vue.prototype.trans = (key) => {
 }
 
 Vue.component('datatable', require('./components/Datatable.vue'));
+Vue.component('flash', require('./components/Flash.vue'));
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view

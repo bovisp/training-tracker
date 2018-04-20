@@ -28,6 +28,12 @@ class RolesController extends Controller
             ]
         ]);
 
-        return redirect()->route('roles.index');
+        return redirect()
+            ->route('roles.index')
+            ->with([
+                'flash' => [
+                    'message' => "Role created successfully."
+                ]
+            ]);
     }
 }
