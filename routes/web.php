@@ -37,5 +37,7 @@ Route::middleware(['role:administrator'])->group(function () {
 
 		Route::get('/{role}/edit', '\TrainingTracker\Http\Roles\Controllers\RolesController@edit');
 		Route::put('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@update');
+
+		Route::delete('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@destroy');
 	});
 });

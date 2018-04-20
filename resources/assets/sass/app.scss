@@ -56,3 +56,22 @@
 		border-top: 4px solid #222;
 	}
 }
+
+// Custom horizontal divider
+.divider {
+	border-top: 1px solid rgba(34 ,36, 38, .15);
+	border-bottom: 1px solid rgba(255, 255, 255, .1);
+	height: 0;
+	margin: 1rem 0;
+
+	&--relaxed {
+		margin: 2rem 0;
+	}
+}
+
+// Spacing utilities
+.mt {
+	&-4 {
+		margin-top: 1rem;
+	}
+}
