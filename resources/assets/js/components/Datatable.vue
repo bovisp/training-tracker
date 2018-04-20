@@ -37,6 +37,8 @@
                             ></span>
                         </span>
                     </th>
+
+                    <th v-if="editButton">&nbsp;</th>
                 </tr>
             </thead>
 
@@ -46,6 +48,15 @@
 
                     <td v-for="(columnValue, column) in record">
                         {{ columnValue }}
+                    </td>
+
+                    <td v-if="editButton">
+                        <a 
+                            :href="editButtonEndpoint + record['id'] + '/edit'"
+                            class="button is-info is-small"
+                        >
+                            Edit
+                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -71,6 +82,14 @@ export default {
             type: String,
             required: false,
             default: "id"
+        },
+        editButton: {
+            type: Boolean,
+            required: false
+        },
+        editButtonEndpoint: {
+            type: String,
+            required: false
         }
     },
 

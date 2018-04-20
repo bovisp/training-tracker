@@ -13389,6 +13389,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13407,6 +13418,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: String,
             required: false,
             default: "id"
+        },
+        editButton: {
+            type: Boolean,
+            required: false
+        },
+        editButtonEndpoint: {
+            type: String,
+            required: false
         }
     },
 
@@ -16085,7 +16104,9 @@ var render = function() {
                   ]
                 )
               ])
-            })
+            }),
+            _vm._v(" "),
+            _vm.editButton ? _c("th", [_vm._v(" ")]) : _vm._e()
           ],
           2
         )
@@ -16109,7 +16130,26 @@ var render = function() {
                       "\n                "
                   )
                 ])
-              })
+              }),
+              _vm._v(" "),
+              _vm.editButton
+                ? _c("td", [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "button is-info is-small",
+                        attrs: {
+                          href: _vm.editButtonEndpoint + record["id"] + "/edit"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Edit\n                    "
+                        )
+                      ]
+                    )
+                  ])
+                : _vm._e()
             ],
             2
           )

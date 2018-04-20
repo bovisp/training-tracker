@@ -32,7 +32,10 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Roles\Controllers\RolesController@index')->name('roles.index');
 		Route::get('/api', '\TrainingTracker\Http\Roles\Controllers\Api\RolesController@index')->name('roles.index.api');
 
-		Route::get('/create', '\TrainingTracker\Http\Roles\Controllers\RolesController@create');
+		Route::get('/create', '\TrainingTracker\Http\Roles\Controllers\RolesController@create')->name('roles.create');
 		Route::post('/', '\TrainingTracker\Http\Roles\Controllers\RolesController@store');
+
+		Route::get('/{role}/edit', '\TrainingTracker\Http\Roles\Controllers\RolesController@edit');
+		Route::put('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@update');
 	});
 });
