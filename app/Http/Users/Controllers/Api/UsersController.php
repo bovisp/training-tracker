@@ -2,28 +2,47 @@
 
 namespace TrainingTracker\Http\Users\Controllers\Api;
 
-use TrainingTracker\App\Controllers\Controller;
+use TrainingTracker\App\Controllers\DatatablesController;
 use TrainingTracker\Domains\Roles\Role;
 use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Http\Users\Requests\StoreUsersSpreadsheet;
 
-class UsersController extends Controller
+class UsersController extends DatatablesController
 {
 
-	public function __construct()
-	{
-		$this->middleware('role:admin');
-	}
-
-    public function index()
+	public function builder()
     {
-    	return [
-    		'employees' => User::notIn(),
-    		'roles' => Role::all()
-    	];
+        return User::query();
+    }
+
+    public function getDisplayableColumns()
+    {
+        return ['id'];
+    }
+
+    public function create()
+    {
+        return response()->json([
+            'data' => [
+                'records' => User::notIn(),
+                'displayable' => $this->getDisplayableColumns(),
+                'roles' => Role::all()
+            ]
+        ]);
     }
 
     public function store()
     {
-    	User::add(request()->all());
+        $validations = new StoreUsersSpreadsheet(request()->all());
+
+        if (count($validations->validate())) {
+            return response()->json([
+                'errors' => $validations->validate()
+            ], 422);
+        } else {
+            return response()->json([
+                'flash' => 'users added successfully!'
+            ]);
+        }
     }
 }

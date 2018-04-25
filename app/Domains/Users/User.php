@@ -32,7 +32,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'firstname', 'lastname', 'email'
+        'firstname', 'lastname', 'email', 'role'
     ];
 
     public function supervisor()
@@ -63,7 +63,7 @@ class User extends Authenticatable
     {
         $employees = self::pluck('moodle_id')->toArray();
 
-        return MoodleUser::select('firstname', 'lastname', 'email', 'id')
+        return MoodleUser::select('id', 'firstname', 'lastname', 'email')
             ->where('id', '>', 1)
             ->whereNotIn('id', $employees)
             ->get();
@@ -96,6 +96,11 @@ class User extends Authenticatable
     public function getEmailAttribute()
     {
         return $this->moodleProfile('email');
+    }
+
+    public function getRoleAttribute()
+    {
+        return $this->roles()->first()->type;
     }
 
     protected function moodleProfile($column)

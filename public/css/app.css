@@ -20747,7 +20747,20 @@ a.has-text-danger:focus {
   margin: 2rem 0;
 }
 
+.self-end {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+.mt-0 {
+  margin-top: 0 !important;
+}
+
 .mt-4 {
   margin-top: 1rem;
+}
+
+.ml-auto {
+  margin-left: auto;
 }
 

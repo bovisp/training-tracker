@@ -9,6 +9,8 @@ Vue.use(Buefy, {
 
 window.Vue = Vue;
 
+window.events = new Vue();
+
 /**
  * Gives Vue access to the Laravel translation strings on a per language basis.
  * 
@@ -33,6 +35,7 @@ Vue.prototype.trans = (key) => {
 }
 
 Vue.component('datatable', require('./components/Datatable.vue'));
+Vue.component('user-errors', require('./components/UserErrors.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
 
 /**

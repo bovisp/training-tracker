@@ -1,33 +1,30 @@
 <?php
 
-namespace TrainingTracker\Domains\Users\Requests;
+namespace TrainingTracker\Http\Users\Requests;
 
 use Illuminate\Support\Facades\Validator;
-use Maatwebsite\Excel\Facades\Excel;
 use TrainingTracker\App\Interfaces\StoreSpreadsheet;
 use TrainingTracker\Domains\Users\User;
 
 class StoreUsersSpreadsheet implements StoreSpreadsheet
 {
-	protected $filename;
-
 	protected $errors = [];
 
-	public function __construct($filename)
+	protected $data;
+
+	public function __construct($data)
 	{
-		$this->filename = $filename;
+		$this->data = $data;
 	}
 
 	public function data()
 	{
-		return Excel::load($this->filename, function($reader) {})->get();
+		return $this->data;
 	}
 
 	public function validate()
 	{
 		foreach ($this->data() as $row) {
-			$row = $row->toArray();
-
 			$this->validateRow($row);
 		}
 
@@ -51,25 +48,28 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
 
 	public function persist($row)
 	{
-		User::create($row);
+		User::create([
+			'moodle_id' => $row["id"]
+		])->assignRole($row["role"]);
 	}
 
 	public function messages ()
 	{
 		return [
-            'username.unique' => 'The username ":input" is already in use',
-            'email.unique' => 'The email ":input" is already in use',
-            'test.exists' => 'The topic ":input" does not exist'
-        ];
+			'id.required' => 'You have not checked the checkbox next to one or more of your selected users.',
+			'id.exists' => 'The user with an id of :input is not registered on Moodle. Please ask them to register.',
+			'id.unique' => 'The user with an id of :input has already been added to this application.',
+			'role.required' => 'You have not added a role for one or more selected users.',
+			'role.exists' => 'The role :input does not exist'
+		];
 	}
 
 	public function validations()
 	{
 		return [
             // 'username' => 'unique:users,username,NULL,id,test,' . $result["test"]
-            'username' => 'unique:users,username',
-            'email' => 'unique:users,email|email',
-            'test' => 'exists:topics,id'
+            'id' => 'required|exists:mysql2.mdl_user,id|unique:users,moodle_id',
+            'role' => 'required|exists:roles,type'
         ];
 	}
 

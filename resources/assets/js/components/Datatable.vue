@@ -1,18 +1,26 @@
 <template>
     <div>
         <div class="columns">
-            <div class="column is-10">
+            <div class="column is-half">
                 <div class="field">
                     <div class="control">
-                        <label for="filter" class="label">Quick search query</label>
+                        <label for="filter" class="label">Quick search</label>
 
                         <input class="input" type="text" id="filter" v-model="quickSearchQuery">
                     </div>
                 </div>
             </div>
 
-            <div class="column is-2">
-                {{ quickSearchQuery }}
+            <div class="column is-half is-flex">
+                <button class="button is-link ml-auto self-end" @click="validate" v-if="postEndpoint">Add users</button>
+            </div>
+        </div>
+
+        <div v-if="errors.length" class="message is-danger">
+            <div class="message-body content">
+                <ul class="mt-0">
+                    <li v-for="error in errors">{{ error }}</li>
+                </ul>
             </div>
         </div>
 
@@ -39,12 +47,20 @@
                     </th>
 
                     <th v-if="editButton">&nbsp;</th>
+
+                    <th v-if="withRoles">Choose a role...</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr v-for="record in filteredRecords">
-                    <td v-if="hasCheckbox">{{record[checkboxField]}}</td>
+                    <td v-if="hasCheckbox">
+                        <input 
+                            type="checkbox" 
+                            :value="record.id"
+                            v-model="recordsModel[record.id]"
+                        >
+                    </td>
 
                     <td v-for="(columnValue, column) in record">
                         {{ columnValue }}
@@ -57,6 +73,16 @@
                         >
                             Edit
                         </a>
+                    </td>
+
+                    <td v-if="withRoles">
+                        <div class="select">
+                            <select v-model="roleModel[record.id]">
+                                <option value=""></option>
+
+                                <option :value="role.type" v-for="role in roles" :key="role.id">{{ role.name }}</option>
+                            </select>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -90,6 +116,26 @@ export default {
         editButtonEndpoint: {
             type: String,
             required: false
+        },
+        customHeaders: {
+            type: Array,
+            required: false
+        },
+        withRoles: {
+            type: Boolean,
+            required: false
+        },
+        rolesEndpoint: {
+            type: String,
+            required: false
+        },
+        postEndpoint: {
+            type: String,
+            required: false
+        },
+        successMessage: {
+            type: String,
+            required: false
         }
     },
 
@@ -103,7 +149,11 @@ export default {
                 key: 'id',
                 order: 'asc'
             },
-            quickSearchQuery: ''
+            quickSearchQuery: '',
+            recordsModel: [],
+            roles: [],
+            roleModel: [],
+            errors: []
         }
     },
 
@@ -140,6 +190,14 @@ export default {
             return axios.get(`${this.endpoint}`)
                 .then(({data}) => {
                     this.response = data.data
+
+                    if (this.customHeaders) {
+                        this.response.displayable = this.customHeaders
+                    }
+
+                    if (this.withRoles) {
+                        this.getRoles()
+                    }
                 })
         },
 
@@ -151,6 +209,129 @@ export default {
             this.sort.key = column
 
             this.sort.order = this.sort.order === 'asc' ? 'desc' : 'asc'
+        },
+
+        checkboxChanged (record) {
+            if (!this.recordsModel[record.id]) {
+                this.recordsModel[record.id] = {}
+            }
+
+            this.recordsModel[record.id]["id"] = record.id
+        },
+
+        getRoles () {
+            axios.get('/roles/api')
+                .then(({data}) => {
+                    this.roles = data.data.records
+                })
+        },
+
+        selectionChanged (record, role) {
+            if (!this.recordsModel[record.id]) {
+                this.recordsModel[record.id] = {}
+            }
+
+            this.recordsModel[record.id]["role"] = role
+        },
+
+        validate () {
+            let records = [
+                {id:1},
+                {id:2},
+                {id:3},
+                {id:43},
+                {id:15},
+                {id:15000}
+            ]
+            // this.errors = []
+
+            // let records = this.validateSelectedRecords()
+
+            // this.validateSelectedRecordRoles()
+
+            // if (this.noRecordsAdded()) {
+            //     this.$toast.open({
+            //         message: `Please add some users.`,
+            //         position: 'is-top-right',
+            //         type: 'is-danger'
+            //     })
+            // }
+
+            // if (this.errors.length === 0 && records.filter(Boolean).length !== 0) {
+                this.postRecords(records)
+            // }
+        },
+
+        validateSelectedRecords () {
+            let records = [];
+
+            Object.keys(this.recordsModel).forEach(key => {
+                if (!this.roleModel[key] && this.recordsModel[key]) {
+                    const user = this.findUserId(key)
+
+                    this.errors.push(
+                        `You have not chosen a role for ${user.firstname} ${user.lastname}`
+                    )
+
+                    return
+                }
+
+                records.push({
+                    id: key,
+                    role: this.roleModel[key]
+                })
+            })
+
+            return records
+        },
+
+        validateSelectedRecordRoles () {
+            Object.keys(this.roleModel).forEach(key => {
+                if (!this.recordsModel[key] && this.roleModel[key]) {
+                    const user = this.findUserId(key)
+
+                    this.errors.push(
+                        `You have not selected ${user.firstname} ${user.lastname} to be added, but you have selected a role. Please check the checkbox to the left of the user's name to add this person to the application`
+                    )
+                }
+            })
+        },
+
+        noRecordsAdded () {
+            return this.recordsModel.filter(Boolean).length === 0 && this.roleModel.filter(Boolean).length === 0
+        },
+
+        findUserId (key) {
+            return this.response.records.find(user => user.id === parseInt(key))
+        },
+
+        postRecords (records) {
+            axios.interceptors.response.use(
+                response => {
+                  return response;
+                },
+                error => {
+                    return Promise.reject(error.response);
+                }
+            );
+
+            axios.post(this.postEndpoint, records)
+                .then(response => {
+                    this.$toast.open({
+                        message: this.successMessage,
+                        position: 'is-top-right',
+                        type: 'is-success'
+                    })
+
+                    setTimeout(() => {
+                        window.location = '/users';
+                    }, 3000)
+                })
+                .catch(error => {
+                    if (error.status === 422) {
+                        window.events.$emit('users-create-error', error.data.errors)
+                    }
+                })
         }
     },
 

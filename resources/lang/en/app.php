@@ -23,5 +23,6 @@ return [
         'type' => 'Type',
         'created_at' => 'Created at',
         'name' => 'Name',
+        'role' => 'Role',
     ],
 ];

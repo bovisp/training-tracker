@@ -69,9 +69,26 @@
 	}
 }
 
+// Flex helpers
+.self {
+	&-end {
+		align-self: flex-end;
+	}
+}
+
 // Spacing utilities
 .mt {
+	&-0 {
+		margin-top: 0 !important;
+	}
+
 	&-4 {
 		margin-top: 1rem;
+	}
+}
+
+.ml {
+	&-auto {
+		margin-left: auto;
 	}
 }

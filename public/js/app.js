@@ -1096,6 +1096,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_buef
 
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 
+window.events = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+
 /**
  * Gives Vue access to the Laravel translation strings on a per language basis.
  * 
@@ -1120,6 +1122,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.trans = function (key) {
 };
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('datatable', __webpack_require__(36));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-errors', __webpack_require__(50));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('flash', __webpack_require__(41));
 
 /**
@@ -13400,6 +13403,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13426,6 +13455,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         editButtonEndpoint: {
             type: String,
             required: false
+        },
+        customHeaders: {
+            type: Array,
+            required: false
+        },
+        withRoles: {
+            type: Boolean,
+            required: false
+        },
+        rolesEndpoint: {
+            type: String,
+            required: false
+        },
+        postEndpoint: {
+            type: String,
+            required: false
+        },
+        successMessage: {
+            type: String,
+            required: false
         }
     },
 
@@ -13439,7 +13488,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 key: 'id',
                 order: 'asc'
             },
-            quickSearchQuery: ''
+            quickSearchQuery: '',
+            recordsModel: [],
+            roles: [],
+            roleModel: [],
+            errors: []
         };
     },
 
@@ -13480,6 +13533,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var data = _ref.data;
 
                 _this2.response = data.data;
+
+                if (_this2.customHeaders) {
+                    _this2.response.displayable = _this2.customHeaders;
+                }
+
+                if (_this2.withRoles) {
+                    _this2.getRoles();
+                }
             });
         },
         getTranslatedColumnName: function getTranslatedColumnName(column) {
@@ -13489,6 +13550,115 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.sort.key = column;
 
             this.sort.order = this.sort.order === 'asc' ? 'desc' : 'asc';
+        },
+        checkboxChanged: function checkboxChanged(record) {
+            if (!this.recordsModel[record.id]) {
+                this.recordsModel[record.id] = {};
+            }
+
+            this.recordsModel[record.id]["id"] = record.id;
+        },
+        getRoles: function getRoles() {
+            var _this3 = this;
+
+            axios.get('/roles/api').then(function (_ref2) {
+                var data = _ref2.data;
+
+                _this3.roles = data.data.records;
+            });
+        },
+        selectionChanged: function selectionChanged(record, role) {
+            if (!this.recordsModel[record.id]) {
+                this.recordsModel[record.id] = {};
+            }
+
+            this.recordsModel[record.id]["role"] = role;
+        },
+        validate: function validate() {
+            var records = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 43 }, { id: 15 }, { id: 15000 }];
+            // this.errors = []
+
+            // let records = this.validateSelectedRecords()
+
+            // this.validateSelectedRecordRoles()
+
+            // if (this.noRecordsAdded()) {
+            //     this.$toast.open({
+            //         message: `Please add some users.`,
+            //         position: 'is-top-right',
+            //         type: 'is-danger'
+            //     })
+            // }
+
+            // if (this.errors.length === 0 && records.filter(Boolean).length !== 0) {
+            this.postRecords(records);
+            // }
+        },
+        validateSelectedRecords: function validateSelectedRecords() {
+            var _this4 = this;
+
+            var records = [];
+
+            Object.keys(this.recordsModel).forEach(function (key) {
+                if (!_this4.roleModel[key] && _this4.recordsModel[key]) {
+                    var user = _this4.findUserId(key);
+
+                    _this4.errors.push('You have not chosen a role for ' + user.firstname + ' ' + user.lastname);
+
+                    return;
+                }
+
+                records.push({
+                    id: key,
+                    role: _this4.roleModel[key]
+                });
+            });
+
+            return records;
+        },
+        validateSelectedRecordRoles: function validateSelectedRecordRoles() {
+            var _this5 = this;
+
+            Object.keys(this.roleModel).forEach(function (key) {
+                if (!_this5.recordsModel[key] && _this5.roleModel[key]) {
+                    var user = _this5.findUserId(key);
+
+                    _this5.errors.push('You have not selected ' + user.firstname + ' ' + user.lastname + ' to be added, but you have selected a role. Please check the checkbox to the left of the user\'s name to add this person to the application');
+                }
+            });
+        },
+        noRecordsAdded: function noRecordsAdded() {
+            return this.recordsModel.filter(Boolean).length === 0 && this.roleModel.filter(Boolean).length === 0;
+        },
+        findUserId: function findUserId(key) {
+            return this.response.records.find(function (user) {
+                return user.id === parseInt(key);
+            });
+        },
+        postRecords: function postRecords(records) {
+            var _this6 = this;
+
+            axios.interceptors.response.use(function (response) {
+                return response;
+            }, function (error) {
+                return Promise.reject(error.response);
+            });
+
+            axios.post(this.postEndpoint, records).then(function (response) {
+                _this6.$toast.open({
+                    message: _this6.successMessage,
+                    position: 'is-top-right',
+                    type: 'is-success'
+                });
+
+                setTimeout(function () {
+                    window.location = '/users';
+                }, 3000);
+            }).catch(function (error) {
+                if (error.status === 422) {
+                    window.events.$emit('users-create-error', error.data.errors);
+                }
+            });
         }
     },
 
@@ -16028,11 +16198,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "columns" }, [
-      _c("div", { staticClass: "column is-10" }, [
+      _c("div", { staticClass: "column is-half" }, [
         _c("div", { staticClass: "field" }, [
           _c("div", { staticClass: "control" }, [
             _c("label", { staticClass: "label", attrs: { for: "filter" } }, [
-              _vm._v("Quick search query")
+              _vm._v("Quick search")
             ]),
             _vm._v(" "),
             _c("input", {
@@ -16060,10 +16230,33 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "column is-2" }, [
-        _vm._v("\n            " + _vm._s(_vm.quickSearchQuery) + "\n        ")
+      _c("div", { staticClass: "column is-half is-flex" }, [
+        _vm.postEndpoint
+          ? _c(
+              "button",
+              {
+                staticClass: "button is-link ml-auto self-end",
+                on: { click: _vm.validate }
+              },
+              [_vm._v("Add users")]
+            )
+          : _vm._e()
       ])
     ]),
+    _vm._v(" "),
+    _vm.errors.length
+      ? _c("div", { staticClass: "message is-danger" }, [
+          _c("div", { staticClass: "message-body content" }, [
+            _c(
+              "ul",
+              { staticClass: "mt-0" },
+              _vm._l(_vm.errors, function(error) {
+                return _c("li", [_vm._v(_vm._s(error))])
+              })
+            )
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("table", { staticClass: "table is-fullwidth is-sortable" }, [
       _c("thead", [
@@ -16106,7 +16299,9 @@ var render = function() {
               ])
             }),
             _vm._v(" "),
-            _vm.editButton ? _c("th", [_vm._v(" ")]) : _vm._e()
+            _vm.editButton ? _c("th", [_vm._v(" ")]) : _vm._e(),
+            _vm._v(" "),
+            _vm.withRoles ? _c("th", [_vm._v("Choose a role...")]) : _vm._e()
           ],
           2
         )
@@ -16119,7 +16314,53 @@ var render = function() {
             "tr",
             [
               _vm.hasCheckbox
-                ? _c("td", [_vm._v(_vm._s(record[_vm.checkboxField]))])
+                ? _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.recordsModel[record.id],
+                          expression: "recordsModel[record.id]"
+                        }
+                      ],
+                      attrs: { type: "checkbox" },
+                      domProps: {
+                        value: record.id,
+                        checked: Array.isArray(_vm.recordsModel[record.id])
+                          ? _vm._i(_vm.recordsModel[record.id], record.id) > -1
+                          : _vm.recordsModel[record.id]
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.recordsModel[record.id],
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = record.id,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.recordsModel,
+                                  record.id,
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.recordsModel,
+                                  record.id,
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.recordsModel, record.id, $$c)
+                          }
+                        }
+                      }
+                    })
+                  ])
                 : _vm._e(),
               _vm._v(" "),
               _vm._l(record, function(columnValue, column) {
@@ -16148,6 +16389,57 @@ var render = function() {
                         )
                       ]
                     )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.withRoles
+                ? _c("td", [
+                    _c("div", { staticClass: "select" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.roleModel[record.id],
+                              expression: "roleModel[record.id]"
+                            }
+                          ],
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.roleModel,
+                                record.id,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }),
+                          _vm._v(" "),
+                          _vm._l(_vm.roles, function(role) {
+                            return _c(
+                              "option",
+                              { key: role.id, domProps: { value: role.type } },
+                              [_vm._v(_vm._s(role.name))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
                   ])
                 : _vm._e()
             ],
@@ -16267,6 +16559,147 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(51)
+/* template */
+var __vue_template__ = __webpack_require__(52)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\UserErrors.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3ba532cd", Component.options)
+  } else {
+    hotAPI.reload("data-v-3ba532cd", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			errors: []
+		};
+	},
+	mounted: function mounted() {
+		var _this = this;
+
+		window.events.$on('users-create-error', function (errors) {
+			_this.errors = errors.slice(0, errors.length / 2);
+		});
+	}
+});
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.errors.length
+    ? _c("div", { staticClass: "message is-danger" }, [
+        _c("div", { staticClass: "message-body" }, [
+          _c("div", { staticClass: "content" }, [
+            _c(
+              "ul",
+              { staticClass: "mt-0" },
+              [
+                _vm._l(_vm.errors, function(error) {
+                  return [
+                    error.errors.role
+                      ? _c("li", {
+                          domProps: {
+                            textContent: _vm._s(error.errors.role[0])
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    error.errors.id
+                      ? _c("li", {
+                          domProps: { textContent: _vm._s(error.errors.id[0]) }
+                        })
+                      : _vm._e()
+                  ]
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3ba532cd", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

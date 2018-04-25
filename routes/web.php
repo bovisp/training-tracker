@@ -41,3 +41,14 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::delete('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@destroy');
 	});
 });
+
+Route::middleware(['role:administrator'])->group(function () {
+	Route::prefix('users')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@index')->name('users.index');
+		Route::get('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@index')->name('users.index.api');
+
+		Route::get('/create', '\TrainingTracker\Http\Users\Controllers\UsersController@create')->name('users.create');
+		Route::get('/api/create', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@create')->name('users.create.api');
+		Route::post('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store')->name('users.store.api');
+	});
+});
