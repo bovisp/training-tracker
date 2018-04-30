@@ -4,6 +4,7 @@ namespace TrainingTracker\Http\Users\Requests;
 
 use Illuminate\Support\Facades\Validator;
 use TrainingTracker\App\Interfaces\StoreSpreadsheet;
+use TrainingTracker\Domains\Supervisors\Supervisor;
 use TrainingTracker\Domains\Users\User;
 
 class StoreUsersSpreadsheet implements StoreSpreadsheet
@@ -48,9 +49,15 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
 
 	public function persist($row)
 	{
-		User::create([
-			'moodle_id' => $row["id"]
-		])->assignRole($row["role"]);
+		$user = User::create([
+            'moodle_id' => $row["id"]
+        ])->assignRole($row["role"]);
+
+        if (!$user->hasRole('apprentice')) {
+            Supervisor::create([ 
+            	'user_id' => $user->id 
+            ]);
+        }
 	}
 
 	public function messages ()

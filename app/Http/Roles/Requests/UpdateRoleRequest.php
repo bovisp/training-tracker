@@ -25,6 +25,7 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             'type' => 'required|min:3',
+            'rank' => 'integer',
             'name_en' => 'required|min:3',
             'name_fr' => 'required|min:3'
         ];
@@ -35,6 +36,7 @@ class UpdateRoleRequest extends FormRequest
         return [
             'type.required' => 'Please enter a role type.',
             'type.min' => 'The "Type" must be at least three characters long.',
+            'rank.integer' => 'The "Rank" must be a number',
             'name_en.required' => 'Please enter a role name in English.',
             'name_en.min' => 'The "Name" must be at least three characters long.',
             'name_fr.required' => 'Please enter a role name in French.',

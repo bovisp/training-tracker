@@ -50,5 +50,15 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/create', '\TrainingTracker\Http\Users\Controllers\UsersController@create')->name('users.create');
 		Route::get('/api/create', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@create')->name('users.create.api');
 		Route::post('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store')->name('users.store.api');
+
+		Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\UsersReportingController@index')->name('usersreporting.index');
+		Route::get('/api/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@index')->name('usersreporting.index.api');
+		Route::post('/api/{user}/reporting/{role}', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@store')->name('usersreporting.store.api');
+	});
+});
+
+Route::middleware(['profile'])->group(function () {
+	Route::prefix('users/{user}')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')->name('users.show');
 	});
 });

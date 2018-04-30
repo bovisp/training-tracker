@@ -46,7 +46,7 @@
                         </span>
                     </th>
 
-                    <th v-if="editButton">&nbsp;</th>
+                    <th v-if="actionButton">&nbsp;</th>
 
                     <th v-if="withRoles">Choose a role...</th>
                 </tr>
@@ -66,12 +66,12 @@
                         {{ columnValue }}
                     </td>
 
-                    <td v-if="editButton">
+                    <td v-if="actionButton">
                         <a 
-                            :href="editButtonEndpoint + record['id'] + '/edit'"
+                            :href="actionButtonEndpoint + record['id'] + (actionButtonEndpointSuffix || '') "
                             class="button is-info is-small"
                         >
-                            Edit
+                            {{ actionButtonText }}
                         </a>
                     </td>
 
@@ -109,11 +109,19 @@ export default {
             required: false,
             default: "id"
         },
-        editButton: {
+        actionButton: {
             type: Boolean,
             required: false
         },
-        editButtonEndpoint: {
+        actionButtonText: {
+            type: String,
+            required: false
+        },
+        actionButtonEndpoint: {
+            type: String,
+            required: false
+        },
+        actionButtonEndpointSuffix: {
             type: String,
             required: false
         },
@@ -198,6 +206,10 @@ export default {
                     if (this.withRoles) {
                         this.getRoles()
                     }
+
+                    if (data.data.checked) {
+                        data.data.checked.forEach(key => this.recordsModel[key] = true)
+                    }
                 })
         },
 
@@ -235,31 +247,39 @@ export default {
         },
 
         validate () {
-            let records = [
-                {id:1},
-                {id:2},
-                {id:3},
-                {id:43},
-                {id:15},
-                {id:15000}
-            ]
-            // this.errors = []
+            this.errors = []
 
-            // let records = this.validateSelectedRecords()
+            if (this.withRoles) {
+                let records = this.validateSelectedRecords()
 
-            // this.validateSelectedRecordRoles()
+                this.validateSelectedRecordRoles()
 
-            // if (this.noRecordsAdded()) {
-            //     this.$toast.open({
-            //         message: `Please add some users.`,
-            //         position: 'is-top-right',
-            //         type: 'is-danger'
-            //     })
-            // }
+                if (this.noRecordsAdded()) {
+                    this.$toast.open({
+                        message: `Please add some users.`,
+                        position: 'is-top-right',
+                        type: 'is-danger'
+                    })
+                }
 
-            // if (this.errors.length === 0 && records.filter(Boolean).length !== 0) {
-                this.postRecords(records)
-            // }
+                if (this.errors.length === 0 && records.filter(Boolean).length !== 0) {
+                    this.postRecords(records)
+                }
+            } else {
+                if (this.errors.length === 0) {
+                    let records = [];
+
+                    for (var i = this.recordsModel.length - 1; i >= 0; i--) {
+                        if (this.recordsModel[i] === true) {
+                            records.push({
+                                id: i
+                            })
+                        }
+                    }
+
+                    this.postRecords(records)
+                }
+            }
         },
 
         validateSelectedRecords () {
@@ -323,9 +343,9 @@ export default {
                         type: 'is-success'
                     })
 
-                    setTimeout(() => {
-                        window.location = '/users';
-                    }, 3000)
+                    // setTimeout(() => {
+                    //     window.location = '/users';
+                    // }, 3000)
                 })
                 .catch(error => {
                     if (error.status === 422) {

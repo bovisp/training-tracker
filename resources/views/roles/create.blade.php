@@ -30,6 +30,26 @@
 				</div>
 
 				<div class="field">
+					<label class="label" for="rank">Rank</label>
+
+					<div class="control">
+						<input 
+							class="input {{ $errors->any() && $errors->has('rank') ? 'is-danger' : '' }}" 
+							type="number" 
+							id="rank" 
+							name="rank"
+							value="{{ old('rank') }}"
+						>
+					</div>
+
+					@if ($errors->any() && $errors->has('rank'))
+
+						<p class="help is-danger">{{ ($errors->get('rank'))[0] }}</p>
+
+					@endif
+				</div>
+
+				<div class="field">
 					<label class="label" for="name_en">Name (English)</label>
 
 					<div class="control">

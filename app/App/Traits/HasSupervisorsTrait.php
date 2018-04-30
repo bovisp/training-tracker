@@ -7,7 +7,7 @@ use TrainingTracker\Domains\Supervisors\Supervisor;
 trait HasSupervisorsTrait
 {
 	protected $roleOrder = [
-		'admin', 'user'
+		'manager', 'head_of_operations', 'supervisor', 'apprentice'
 	];
 
 	public function supervisors()
@@ -15,14 +15,24 @@ trait HasSupervisorsTrait
         return $this->belongsToMany(Supervisor::class, 'users_supervisors');
     }
 
-    protected function canSupervise()
+    public function canSupervise()
     {
     	return array_key_exists($this->roleKey() + 1, $this->roleOrder);
     }
 
-    protected function isSupervised()
+    public function employeeRoles()
+    {
+        return array_slice($this->roleOrder, $this->roleKey() + 1);
+    }
+
+    public function isSupervised()
     {
     	return array_key_exists($this->roleKey() - 1, $this->roleOrder);
+    }
+
+    public function supervisorRoles()
+    {
+        return array_slice($this->roleOrder, 0, $this->roleKey());
     }
 
     public function usersSupervisors()
@@ -31,7 +41,7 @@ trait HasSupervisorsTrait
     		$supervisorsArray = [];
 
     		foreach($this->supervisors as $supervisor) {
-    			$role = ($supervisor->user->first())->roles()->first()->type;
+    			$role = $supervisor->user->roles->first()->type;
     			
     			$supervisorsArray[$role][] = [
     				'name' => $supervisor->user->moodleuser->firstname . ' ' . $supervisor->user->moodleuser->lastname,

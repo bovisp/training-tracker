@@ -20,6 +20,16 @@ class UsersController extends DatatablesController
         return ['id'];
     }
 
+    public function index()
+    {
+        return response()->json([
+            'data' => [
+                'records' => User::active(),
+                'displayable' => $this->getDisplayableColumns(),
+            ]
+        ]); 
+    }
+
     public function create()
     {
         return response()->json([

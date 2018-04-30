@@ -14,6 +14,6 @@ class RolesController extends DatatablesController
 
     public function getDisplayableColumns()
     {
-    	return ['id', 'type', 'name'];
+    	return ['id', 'rank', 'type', 'name'];
     }
 }

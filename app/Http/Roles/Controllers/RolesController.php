@@ -21,8 +21,9 @@ class RolesController extends Controller
 
     public function store(StoreRoleRequest $request)
     {
-    	Role::create([
+        Role::create([
             'type' => snake_case(request('type')),
+            'rank' => request('rank'),
             'name' => [
                 'en' => request('name_en'),
                 'fr' => request('name_fr')
@@ -47,6 +48,7 @@ class RolesController extends Controller
     {
         $role->update([
             'type' => snake_case(request('type')),
+            'rank' => request('rank'),
             'name' => [
                 'en' => request('name_en'),
                 'fr' => request('name_fr')

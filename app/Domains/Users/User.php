@@ -28,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        'password', 'remember_token', 'isSupervised', 'canSupervise'
     ];
 
     protected $appends = [
@@ -53,8 +53,7 @@ class User extends Authenticatable
      */
     public static function active()
     {
-        return self::with('roles')
-            ->select('id')
+        return self::select('id')
             ->where('active', 1)
             ->get();
     }
@@ -67,20 +66,6 @@ class User extends Authenticatable
             ->where('id', '>', 1)
             ->whereNotIn('id', $employees)
             ->get();
-    }
-
-    public static function add($request)
-    {
-        foreach ($request as $employee) {
-            $user = self::create([
-                'moodle_id' => MoodleUser::find($employee["id"])->id,
-                'active' => 1
-            ])->assignRole($employee["role"]);
-
-            if ($user->hasRole('admin')) {
-                $user->supervisor()->create([ 'user_id' => $user->id ]);
-            }            
-        }
     }
 
     public function getFirstnameAttribute()

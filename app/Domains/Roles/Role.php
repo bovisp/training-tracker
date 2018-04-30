@@ -21,7 +21,7 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-    	'type', 'name'
+    	'type', 'name', 'rank'
     ];
 
     public $translatable = [

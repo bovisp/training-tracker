@@ -16,8 +16,10 @@
 
 			<datatable 
 				endpoint="{{ route('roles.index.api') }}"
-				:edit-button="true"
-				edit-button-endpoint="/roles/"
+				:action-button="true"
+				action-button-endpoint="/roles/"
+				action-button-endpoint-suffix="/edit"
+				action-button-text="Edit"
 			>
 			</datatable>
 		</div>
