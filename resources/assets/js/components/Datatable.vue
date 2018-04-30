@@ -6,13 +6,24 @@
                     <div class="control">
                         <label for="filter" class="label">Quick search</label>
 
-                        <input class="input" type="text" id="filter" v-model="quickSearchQuery">
+                        <input 
+                            class="input" 
+                            type="text" 
+                            id="filter" 
+                            v-model="quickSearchQuery"
+                        >
                     </div>
                 </div>
             </div>
 
             <div class="column is-half is-flex">
-                <button class="button is-link ml-auto self-end" @click="validate" v-if="postEndpoint">Add users</button>
+                <button 
+                    class="button is-link ml-auto self-end" 
+                    @click="validate" 
+                    v-if="postEndpoint"
+                >
+                    Add users
+                </button>
             </div>
         </div>
 
@@ -68,7 +79,7 @@
 
                     <td v-if="actionButton">
                         <a 
-                            :href="actionButtonEndpoint + record['id'] + (actionButtonEndpointSuffix || '') "
+                            :href="actionButtonLink(record.id)"
                             class="button is-info is-small"
                         >
                             {{ actionButtonText }}
@@ -80,7 +91,13 @@
                             <select v-model="roleModel[record.id]">
                                 <option value=""></option>
 
-                                <option :value="role.type" v-for="role in roles" :key="role.id">{{ role.name }}</option>
+                                <option 
+                                    :value="role.type" 
+                                    v-for="role in roles" 
+                                    :key="role.id"
+                                >
+                                    {{ role.name }}
+                                </option>
                             </select>
                         </div>
                     </td>
@@ -235,13 +252,6 @@ export default {
             this.recordsModel[record.id]["id"] = record.id
         },
 
-        getRoles () {
-            axios.get('/roles/api')
-                .then(({data}) => {
-                    this.roles = data.data.records
-                })
-        },
-
         selectionChanged (record, role) {
             if (!this.recordsModel[record.id]) {
                 this.recordsModel[record.id] = {}
@@ -250,25 +260,18 @@ export default {
             this.recordsModel[record.id]["role"] = role
         },
 
+        getRoles () {
+            axios.get('/roles/api')
+                .then(({data}) => {
+                    this.roles = data.data.records
+                })
+        },
+
         validate () {
             this.errors = []
 
             if (this.withRoles) {
-                let records = this.validateSelectedRecords()
-
-                this.validateSelectedRecordRoles()
-
-                if (this.noRecordsAdded()) {
-                    this.$toast.open({
-                        message: `Please add some users.`,
-                        position: 'is-top-right',
-                        type: 'is-danger'
-                    })
-                }
-
-                if (this.errors.length === 0 && records.filter(Boolean).length !== 0) {
-                    this.postRecords(records)
-                }
+                this.validateWithRoles()
             } else {
                 if (this.errors.length === 0) {
                     let records = [];
@@ -283,6 +286,24 @@ export default {
 
                     this.postRecords(records)
                 }
+            }
+        },
+
+        validateWithRoles () {
+            let records = this.validateSelectedRecords()
+
+            this.validateSelectedRecordRoles()
+
+            if (this.noRecordsAdded()) {
+                this.$toast.open({
+                    message: `Please add some users.`,
+                    position: 'is-top-right',
+                    type: 'is-danger'
+                })
+            }
+
+            if (this.errors.length === 0 && records.filter(Boolean).length !== 0) {
+                this.postRecords(records)
             }
         },
 
@@ -329,6 +350,12 @@ export default {
             return this.response.records.find(user => user.id === parseInt(key))
         },
 
+        actionButtonLink(id) {
+            return `
+                ${this.actionButtonEndpoint}${id}${this.actionButtonEndpointSuffix || ''}
+            `
+        },
+
         postRecords (records) {
             axios.interceptors.response.use(
                 response => {
@@ -338,6 +365,10 @@ export default {
                     return Promise.reject(error.response);
                 }
             );
+
+            records = [
+                {id: 18}
+            ]
 
             axios.post(this.postEndpoint, records)
                 .then(response => {

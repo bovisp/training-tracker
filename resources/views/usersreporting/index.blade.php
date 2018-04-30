@@ -10,6 +10,8 @@
 				{{ $user->moodleuser->lastname }}
 			</h2>
 
+			<user-errors></user-errors>
+
 			<datatable 
 				endpoint="{{ route('usersreporting.index.api', ['user' => $user->id, 'role' => $role->id]) }}"
 				redirect-endpoint="{{ route('users.show', ['user' => $user->id]) }}"
