@@ -144,6 +144,10 @@ export default {
         successMessage: {
             type: String,
             required: false
+        },
+        redirectEndpoint: {
+            type: String,
+            required: false
         }
     },
 
@@ -343,9 +347,9 @@ export default {
                         type: 'is-success'
                     })
 
-                    // setTimeout(() => {
-                    //     window.location = '/users';
-                    // }, 3000)
+                    setTimeout(() => {
+                        window.location = this.redirectEndpoint;
+                    }, 3000)
                 })
                 .catch(error => {
                     if (error.status === 422) {

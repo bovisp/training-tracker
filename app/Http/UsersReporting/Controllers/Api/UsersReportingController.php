@@ -6,6 +6,7 @@ use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Roles\Role;
 use TrainingTracker\Domains\Supervisors\Supervisor;
 use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Http\UsersReporting\Requests\StoreUsersReportingSpreadsheet;
 
 class UsersReportingController extends Controller
 {
@@ -13,19 +14,9 @@ class UsersReportingController extends Controller
 	public function index(User $user, Role $role)
     {
         if (in_array($role->type, $user->supervisorRoles())) {
-            $currentSupervisorsWithRole = $user->supervisors->map(function($s) use ($role) {
-                if ($s->user()->first()->hasRole($role->type)) {
-                    return $s->user_id;
-                }
-            });
+            $currentSupervisorsWithRole = $user->supervisorsWithRoleOf($role);
         } else {
-            $supervisor = Supervisor::whereUserId($user->id)->first();
-
-            $currentEmployeesWithRole = $supervisor->users->map(function($u) use ($role) {
-                if ($u->hasRole($role->type)) {
-                    return $u->id;
-                }
-            });
+            $currentEmployeesWithRole = $user->employeesWithRoleOf($role);
         }
 
         return response()->json([
@@ -39,36 +30,16 @@ class UsersReportingController extends Controller
 
     public function store(User $user, Role $role)
     {
-        if (in_array($role->type, $user->supervisorRoles())) {
-            $currentSupervisorsWithRole = $user->supervisors->map(function($s) use ($role) {
-                if ($s->user()->first()->hasRole($role->type)) {
-                    return $s->id;
-                }
-            });        
+        $validations = new StoreUsersReportingSpreadsheet(request()->all(), $role, $user);
 
-            $supervisorsFromRequest = array_map(function($u) {
-                return Supervisor::whereUserId(array_values($u)[0])->first()->id;
-            }, request()->all());
-
-            $user->supervisors()->detach($currentSupervisorsWithRole);
-
-            $user->supervisors()->attach($supervisorsFromRequest);
-        } else if (in_array($role->type, $user->employeeRoles())) {
-            $supervisor = Supervisor::whereUserId($user->id)->first();
-
-            $currentEmployeesWithRole = $supervisor->users->map(function($u) use ($role) {
-                if ($u->hasRole($role->type)) {
-                    return $s->id;
-                }
-            });
-
-            $employeesFromRequest = array_map(function($u) {
-                return array_values($u)[0];
-            }, request()->all());
-
-            $supervisor->users()->detach($currentEmployeesWithRole);
-
-            $supervisor->users()->attach($employeesFromRequest);
+       if (count($validations->validate())) {
+            return response()->json([
+                'errors' => $validations->validate()
+            ], 422);
+        } else {
+            return response()->json([
+                'flash' => 'users added successfully!'
+            ]);
         }
     }
 

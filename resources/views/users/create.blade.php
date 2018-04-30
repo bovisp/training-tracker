@@ -15,6 +15,7 @@
 			<datatable 
 				endpoint="{{ route('users.create.api') }}"
 				post-endpoint="{{ route('users.store.api') }}"
+				redirect-endpoint="{{ route('users.index') }}"
 				:custom-headers="['id', 'firstname', 'lastname', 'email']"
 				:has-checkbox="true"
 				:with-roles="true"

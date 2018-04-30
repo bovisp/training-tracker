@@ -13483,6 +13483,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         successMessage: {
             type: String,
             required: false
+        },
+        redirectEndpoint: {
+            type: String,
+            required: false
         }
     },
 
@@ -13680,9 +13684,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     type: 'is-success'
                 });
 
-                // setTimeout(() => {
-                //     window.location = '/users';
-                // }, 3000)
+                setTimeout(function () {
+                    window.location = _this6.redirectEndpoint;
+                }, 3000);
             }).catch(function (error) {
                 if (error.status === 422) {
                     window.events.$emit('users-create-error', error.data.errors);

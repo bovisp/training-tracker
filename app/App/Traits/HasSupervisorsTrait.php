@@ -80,6 +80,26 @@ trait HasSupervisorsTrait
     	return $this->supervisors->contains($supervisor);
     }
 
+    public function supervisorsWithRoleOf($role)
+    {
+        return $this->supervisors->map(function($s) use ($role) {
+            if ($s->user()->first()->hasRole($role->type)) {
+                return $s->user_id;
+            }
+        });
+    }
+
+    public function employeesWithRoleOf($role)
+    {
+        $supervisor = Supervisor::whereUserId($this->id)->first();
+
+        return $supervisor->users->map(function($u) use ($role) {
+            if ($u->hasRole($role->type)) {
+                return $u->id;
+            }
+        });
+    }
+
     protected function roleKey()
     {
     	return (int) array_search($this->roles()->first()->type, $this->roleOrder);
