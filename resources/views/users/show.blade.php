@@ -60,6 +60,12 @@
 					@endcomponent
 
 				@endif
+
+				<div class="divider divider--relaxed"></div>
+
+				@component('users.components.delete', ['user' => $user])
+
+				@endcomponent
 			</div>
 		</div>
 	</div>

@@ -52,6 +52,7 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::post('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store')->name('users.store.api');
 
 		Route::put('/{user}', '\TrainingTracker\Http\Users\Controllers\UsersController@update');
+		Route::delete('/{user}', '\TrainingTracker\Http\Users\Controllers\UsersController@destroy');
 
 		Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\UsersReportingController@index')->name('usersreporting.index');
 		Route::get('/api/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@index')->name('usersreporting.index.api');
