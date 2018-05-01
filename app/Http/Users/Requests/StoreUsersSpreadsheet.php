@@ -53,7 +53,7 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
             'moodle_id' => $row["id"]
         ])->assignRole($row["role"]);
 
-        if (!$user->hasRole('apprentice')) {
+        if (!$user->hasRole('apprentice') || !$user->hasRole('administrator')) {
             Supervisor::create([ 
             	'user_id' => $user->id 
             ]);

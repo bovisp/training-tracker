@@ -3,17 +3,22 @@
 	<div class="is-flex">
 		<h5 class="title is-5">{{ \TrainingTracker\Domains\Roles\Role::whereType($role)->first()->name }}</h5>
 
-		<a 
-			href="/users/{{ $user->id }}/reporting/{{ \TrainingTracker\Domains\Roles\Role::whereType($role)->first()->id }}/edit" 
-			class="tag is-link ml-4"
-		>
-			Edit
-		</a>
+		@if($user->directlyManagesRole() === \TrainingTracker\Domains\Roles\Role::whereType($role)->first()->type)
+
+			<a 
+				href="/users/{{ $user->id }}/reporting/{{ \TrainingTracker\Domains\Roles\Role::whereType($role)->first()->id }}/edit" 
+				class="button is-text is-small ml-4"
+			>
+				Edit
+			</a>
+
+		@endif
+
 	</div>
 
 	
 
-	@if (array_key_exists($role, $users))
+	@if (array_key_exists($role, $users) && $users[$role] !== null)
 
 		<ul class="mt-0">
 		

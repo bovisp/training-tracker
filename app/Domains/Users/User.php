@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'moodle_id'
+        'moodle_id', 'active'
     ];
     
     /**

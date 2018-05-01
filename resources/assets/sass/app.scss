@@ -76,6 +76,12 @@
 	}
 }
 
+.items {
+	&-center {
+		align-items: center;
+	}
+}
+
 // Spacing utilities
 .mt {
 	&-0 {

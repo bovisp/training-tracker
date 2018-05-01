@@ -2,13 +2,12 @@
 
 namespace TrainingTracker\App\Traits;
 
+use TrainingTracker\Domains\Roles\Role;
 use TrainingTracker\Domains\Supervisors\Supervisor;
 
 trait HasSupervisorsTrait
 {
-	protected $roleOrder = [
-		'manager', 'head_of_operations', 'supervisor', 'apprentice'
-	];
+    public $superviseesArray = [];
 
 	public function supervisors()
     {
@@ -17,60 +16,81 @@ trait HasSupervisorsTrait
 
     public function canSupervise()
     {
-    	return array_key_exists($this->roleKey() + 1, $this->roleOrder);
+        return Role::whereRank($this->roles()->first()->rank + 1)->exists();
     }
 
     public function employeeRoles()
     {
-        return array_slice($this->roleOrder, $this->roleKey() + 1);
+        return Role::where('rank', '>', $this->roles()->first()->rank)
+            ->get()
+            ->pluck('type')
+            ->toArray();
     }
 
     public function isSupervised()
     {
-    	return array_key_exists($this->roleKey() - 1, $this->roleOrder);
+    	return Role::whereRank($this->roles()->first()->rank - 1)->exists();
     }
 
     public function supervisorRoles()
     {
-        return array_slice($this->roleOrder, 0, $this->roleKey());
+        return Role::where('rank', '<', $this->roles()->first()->rank)
+            ->get()
+            ->pluck('type')
+            ->toArray();
     }
 
-    public function usersSupervisors()
+    public function directlyManagesRole()
     {
-    	if ($this->isSupervised()) {
-    		$supervisorsArray = [];
+        if (!Role::whereRank($this->roles()->first()->rank + 1)->exists()) {
+            return '';
+        }
 
-    		foreach($this->supervisors as $supervisor) {
-    			$role = $supervisor->user->roles->first()->type;
-    			
-    			$supervisorsArray[$role][] = [
-    				'name' => $supervisor->user->moodleuser->firstname . ' ' . $supervisor->user->moodleuser->lastname,
-    				'id' => $supervisor->user->id
-    			];
-    		}
-
-    		return $supervisorsArray;
-    	}
+        return Role::whereRank($this->roles()->first()->rank + 1)
+            ->first()
+            ->type;
     }
 
-    public function usersSupervisees()
+    public function usersSupervisors($user, $arr = [])
     {
-    	if ($this->canSupervise()) {
-    		$superviseesArray = [];
+        if ($user->supervisors->count()) {
+            $supervisor = $user->supervisors->first()->user;
 
-    		$supervisor = Supervisor::where('user_id', $this->id)->first();
+            $role = $user->supervisors->first()->user->roles()->first()->type;
+
+            $arr[$role][] = [
+             'name' => $user->supervisors->first()->user->moodleuser->firstname . ' ' . $user->supervisors->first()->user->moodleuser->lastname,
+             'id' => $user->supervisors->first()->user->id
+            ];
+
+            if($supervisor->isSupervised()) {
+                $arr =  $this->usersSupervisors($supervisor, $arr);
+            }
+        }
+
+		return $arr;
+    }
+
+    public function usersSupervisees($user1, $arr = [])
+    {
+        if ($user1->canSupervise()) {
+            $supervisor = Supervisor::where('user_id', $user1->id)->first();
 
     		foreach($supervisor->users as $user) {
     			$role = $user->roles()->first()->type;
 
-    			$superviseesArray[$role][] = [
+    			$arr[$role][] = [
     				'name' => $user->moodleuser->firstname . ' ' . $user->moodleuser->lastname,
     				'id' => $user->id
     			];
-    		}
 
-    		return $superviseesArray;
-    	}
+                if($user->canSupervise()) {
+                    $arr =  $this->usersSupervisees($user, $arr);
+                }
+    		}
+        }
+
+        return $arr;
     }
 
     public function isSupervisedBy()
@@ -98,10 +118,5 @@ trait HasSupervisorsTrait
                 return $u->id;
             }
         });
-    }
-
-    protected function roleKey()
-    {
-    	return (int) array_search($this->roles()->first()->type, $this->roleOrder);
     }
 }

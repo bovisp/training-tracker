@@ -364,11 +364,7 @@ export default {
                 error => {
                     return Promise.reject(error.response);
                 }
-            );
-
-            records = [
-                {id: 18}
-            ]
+            )
 
             axios.post(this.postEndpoint, records)
                 .then(response => {
