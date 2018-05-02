@@ -76,8 +76,8 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/create', '\TrainingTracker\Http\Topics\Controllers\TopicsController@create')->name('topics.create');
 		Route::post('/', '\TrainingTracker\Http\Topics\Controllers\TopicsController@store');
 
-		// Route::get('/{role}/edit', '\TrainingTracker\Http\Roles\Controllers\RolesController@edit');
-		// Route::put('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@update');
+		Route::get('/{topic}/edit', '\TrainingTracker\Http\Topics\Controllers\TopicsController@edit');
+		Route::put('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@update');
 
 		// Route::delete('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@destroy');
 	});

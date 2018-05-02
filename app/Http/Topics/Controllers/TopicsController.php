@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Topics\Topic;
 use TrainingTracker\Http\Topics\Requests\StoreTopicRequest;
+use TrainingTracker\Http\Topics\Requests\UpdateTopicRequest;
 
 class TopicsController extends Controller
 {
@@ -55,17 +56,6 @@ class TopicsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \TrainingTracker\Topic  $topic
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Topic $topic)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \TrainingTracker\Topic  $topic
@@ -73,7 +63,7 @@ class TopicsController extends Controller
      */
     public function edit(Topic $topic)
     {
-        //
+        return view('topics.edit', compact('topic'));
     }
 
     /**
@@ -83,9 +73,23 @@ class TopicsController extends Controller
      * @param  \TrainingTracker\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function update(Topic $topic)
+    public function update(UpdateTopicRequest $request, Topic $topic)
     {
-        //
+        $topic->update([
+            'number' => request('number'),
+            'name' => [
+                'en' => request('name_en'),
+                'fr' => request('name_fr')
+            ]
+        ]);
+
+        return redirect()
+            ->route('topics.index')
+            ->with([
+                'flash' => [
+                    'message' => 'Topic successfully updated.'
+                ]
+            ]);
     }
 
     /**
