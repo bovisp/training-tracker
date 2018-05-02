@@ -62,6 +62,13 @@ class User extends Authenticatable
             ->get();
     }
 
+    public static function inactive()
+    {
+        return self::select('id')
+            ->where('active', 0)
+            ->get();
+    }
+
     public static function notIn()
     {
         $employees = self::pluck('moodle_id')->toArray();

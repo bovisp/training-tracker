@@ -6,18 +6,19 @@
 		<div class="column is-three-quarters-desktop">
 			<div class="level">
 				<div class="level-left">
-					<h2 class="title is-2">Users</h2>
+					<h2 class="title is-2">Inactive users</h2>
 				</div>
 
 				<div class="level-right">
-					<a href="/users/create" class="button is-text">Add users</a> | 
-					<a href="/users/inactive" class="button is-text">Inactive users</a>
+					<a href="{{ route('users.index') }}" class="button is-text">
+						Active users
+					</a>
 				</div>
 			</div>
 
 			<datatable 
-				endpoint="{{ route('users.index.api') }}"
-				:custom-headers="['id', 'firstname', 'lastname', 'email', 'role']"
+				endpoint="{{ route('inactiveusers.index.api') }}"
+				:custom-headers="['id', 'firstname', 'lastname', 'email']"
 				:action-button="true"
 				action-button-endpoint="/users/"
 				action-button-text="Profile"
