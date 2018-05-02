@@ -68,6 +68,21 @@ Route::middleware(['role:administrator'])->group(function () {
 	});
 });
 
+Route::middleware(['role:administrator'])->group(function () {
+	Route::prefix('topics')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\Topics\Controllers\TopicsController@index')->name('topics.index');
+		Route::get('/api', '\TrainingTracker\Http\Topics\Controllers\Api\TopicsController@index')->name('topics.index.api');
+
+		Route::get('/create', '\TrainingTracker\Http\Topics\Controllers\TopicsController@create')->name('topics.create');
+		Route::post('/', '\TrainingTracker\Http\Topics\Controllers\TopicsController@store');
+
+		Route::get('/{topic}/edit', '\TrainingTracker\Http\Topics\Controllers\TopicsController@edit');
+		Route::put('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@update');
+
+		Route::delete('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@destroy');
+	});
+});
+
 Route::middleware(['profile'])->group(function () {
 	Route::prefix('users/{user}')->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')->name('users.show');

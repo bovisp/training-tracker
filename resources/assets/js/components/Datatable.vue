@@ -165,6 +165,16 @@ export default {
         redirectEndpoint: {
             type: String,
             required: false
+        },
+        sort: {
+            type: Object,
+            required: false,
+            default () {
+                return {
+                    key: 'id',
+                    order: 'asc'
+                }
+            }
         }
     },
 
@@ -173,10 +183,6 @@ export default {
             response: {
                 displayable: [],
                 records: []
-            },
-            sort: {
-                key: 'id',
-                order: 'asc'
             },
             quickSearchQuery: '',
             recordsModel: [],
