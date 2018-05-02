@@ -1,9 +1,10 @@
 <?php
 
-namespace TrainingTracker\Http\Controllers;
+namespace TrainingTracker\Http\Topics\Controllers;
 
-use TrainingTracker\Topic;
 use Illuminate\Http\Request;
+use TrainingTracker\App\Controllers\Controller;
+use TrainingTracker\Domains\Topics\Topic;
 
 class TopicsController extends Controller
 {
@@ -14,7 +15,7 @@ class TopicsController extends Controller
      */
     public function index()
     {
-        //
+        return view('topics.index');
     }
 
     /**

@@ -24,6 +24,7 @@ return [
         'created_at' => 'f Created at',
         'name' => 'f Name',
         'role' => 'f Role',
-        'rank'=> 'f Rank'
+        'rank'=> 'f Rank',
+        'number'=> 'f Number'
     ],
 ];
