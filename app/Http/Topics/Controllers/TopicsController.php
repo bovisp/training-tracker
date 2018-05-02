@@ -5,6 +5,7 @@ namespace TrainingTracker\Http\Topics\Controllers;
 use Illuminate\Http\Request;
 use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Topics\Topic;
+use TrainingTracker\Http\Topics\Requests\StoreTopicRequest;
 
 class TopicsController extends Controller
 {
@@ -25,7 +26,7 @@ class TopicsController extends Controller
      */
     public function create()
     {
-        //
+        return view('topics.create');
     }
 
     /**
@@ -34,9 +35,23 @@ class TopicsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(StoreTopicRequest $request)
     {
-        //
+        Topic::create([
+            'number' => request('number'),
+            'name' => [
+                'en' => request('name_en'),
+                'fr' => request('name_fr')
+            ]
+        ]);
+
+        return redirect()
+            ->route('topics.index')
+            ->with([
+                'flash' => [
+                    'message' => 'Topic successfully added.'
+                ]
+            ]);
     }
 
     /**

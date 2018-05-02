@@ -73,8 +73,8 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Topics\Controllers\TopicsController@index')->name('topics.index');
 		Route::get('/api', '\TrainingTracker\Http\Topics\Controllers\Api\TopicsController@index')->name('topics.index.api');
 
-		// Route::get('/create', '\TrainingTracker\Http\Roles\Controllers\RolesController@create')->name('roles.create');
-		// Route::post('/', '\TrainingTracker\Http\Roles\Controllers\RolesController@store');
+		Route::get('/create', '\TrainingTracker\Http\Topics\Controllers\TopicsController@create')->name('topics.create');
+		Route::post('/', '\TrainingTracker\Http\Topics\Controllers\TopicsController@store');
 
 		// Route::get('/{role}/edit', '\TrainingTracker\Http\Roles\Controllers\RolesController@edit');
 		// Route::put('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@update');
