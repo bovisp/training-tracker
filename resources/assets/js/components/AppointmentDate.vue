@@ -5,27 +5,29 @@
 				{{ appointedAt }}	
 			</p>
 
-			<b-field v-if="editing" class="mb-0">
-		        <b-datepicker
-		            placeholder="Click to select..."
-		            icon="calendar-today"
-		            v-model="appointmentDate"
-		            size="is-small">
-		        </b-datepicker>
-		    </b-field>
+			<template v-if="role === 'administrator'">
+				<b-field v-if="editing" class="mb-0">
+			        <b-datepicker
+			            placeholder="Click to select..."
+			            icon="calendar-today"
+			            v-model="appointmentDate"
+			            size="is-small">
+			        </b-datepicker>
+			    </b-field>
 
-		    <button class="button is-text is-small ml-4" @click="editing = true" v-if="!editing">
-		    	Edit
-		    </button>
-
-		    <template v-if="editing">
-			    <button class="button is-text is-small ml-4" @click="update">
-			    	Save
+			    <button class="button is-text is-small ml-4" @click="editing = true" v-if="!editing">
+			    	Edit
 			    </button>
 
-			    <button class="button is-text is-small ml-4 has-text-danger" @click="editing = false">
-			    	Cancel
-			    </button>	
+			    <template v-if="editing">
+				    <button class="button is-text is-small ml-4" @click="update">
+				    	Save
+				    </button>
+
+				    <button class="button is-text is-small ml-4 has-text-danger" @click="editing = false">
+				    	Cancel
+				    </button>	
+			    </template>
 		    </template>
 		</div>
 
@@ -44,7 +46,7 @@
 	import Error from '../classes/Error'
 
 	export default {
-		props: ['user'],
+		props: ['user', 'role'],
 
 		data () {
 			return {

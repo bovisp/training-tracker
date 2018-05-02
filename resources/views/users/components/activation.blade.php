@@ -9,8 +9,8 @@
 
 		{{ csrf_field() }}
 
-		<button class="button is-text">
-			({{ $user->active === 1 ? 'Deactivate' : 'Activate' }})
+		<button class="button is-text is-small">
+			{{ $user->active === 1 ? 'Deactivate' : 'Activate' }}
 		</button>
 	</form>
 

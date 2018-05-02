@@ -51,7 +51,7 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/api/create', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@create')->name('users.create.api');
 		Route::post('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store')->name('users.store.api');
 
-		Route::put('/{user}/role', '\TrainingTracker\Http\Users\Controllers\UsersController@updateRole');
+		Route::put('/{user}/role', '\TrainingTracker\Http\UsersRole\Controllers\UsersRoleController@update');
 		Route::delete('/{user}', '\TrainingTracker\Http\Users\Controllers\UsersController@destroy');
 
 		Route::put('/api/{user}/appointment', '\TrainingTracker\Http\UsersAppointment\Controllers\Api\UsersAppointmentController@update');

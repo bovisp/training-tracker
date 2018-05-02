@@ -7,7 +7,9 @@
 
 		<div class="field is-grouped">
 			<div class="control">
-				<div class="select is-small">
+				<div 
+					class="select is-small {{ $errors->any() && $errors->has('role') ? 'is-danger' : '' }}"
+				>
 					<select name="role">
 
 						@foreach($roles as $role)
@@ -32,6 +34,12 @@
 				<button class="button is-text is-small">Update role</button>
 			</div>
 		</div>
+
+		@if ($errors->any() && $errors->has('role'))
+
+			<p class="help is-danger">{{ ($errors->get('role'))[0] }}</p>
+
+		@endif
 	</form>
 
 @else

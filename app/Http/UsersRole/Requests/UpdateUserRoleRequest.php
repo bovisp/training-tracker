@@ -1,10 +1,10 @@
 <?php
 
-namespace TrainingTracker\Http\Users\Requests;
+namespace TrainingTracker\Http\UsersRole\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class UpdateUserRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

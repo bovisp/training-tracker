@@ -1072,7 +1072,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(51);
+module.exports = __webpack_require__(52);
 
 
 /***/ }),
@@ -1148,7 +1148,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype.trans = function (key) {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('datatable', __webpack_require__(37));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-errors', __webpack_require__(42));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('appointment-date', __webpack_require__(45));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('flash', __webpack_require__(48));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('flash', __webpack_require__(49));
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view
@@ -17033,7 +17033,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(46)
 /* template */
-var __vue_template__ = __webpack_require__(47)
+var __vue_template__ = __webpack_require__(48)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -17077,7 +17077,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Error__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Error__ = __webpack_require__(47);
+//
+//
 //
 //
 //
@@ -17124,7 +17126,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['user'],
+	props: ['user', 'role'],
 
 	data: function data() {
 		return {
@@ -17188,227 +17190,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 /* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "is-flex items-center" },
-      [
-        !_vm.editing
-          ? _c("p", { staticClass: "mb-0" }, [
-              _vm._v("\n\t\t\t" + _vm._s(_vm.appointedAt) + "\t\n\t\t")
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.editing
-          ? _c(
-              "b-field",
-              { staticClass: "mb-0" },
-              [
-                _c("b-datepicker", {
-                  attrs: {
-                    placeholder: "Click to select...",
-                    icon: "calendar-today",
-                    size: "is-small"
-                  },
-                  model: {
-                    value: _vm.appointmentDate,
-                    callback: function($$v) {
-                      _vm.appointmentDate = $$v
-                    },
-                    expression: "appointmentDate"
-                  }
-                })
-              ],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        !_vm.editing
-          ? _c(
-              "button",
-              {
-                staticClass: "button is-text is-small ml-4",
-                on: {
-                  click: function($event) {
-                    _vm.editing = true
-                  }
-                }
-              },
-              [_vm._v("\n\t    \tEdit\n\t    ")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.editing
-          ? [
-              _c(
-                "button",
-                {
-                  staticClass: "button is-text is-small ml-4",
-                  on: { click: _vm.update }
-                },
-                [_vm._v("\n\t\t    \tSave\n\t\t    ")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "button is-text is-small ml-4 has-text-danger",
-                  on: {
-                    click: function($event) {
-                      _vm.editing = false
-                    }
-                  }
-                },
-                [_vm._v("\n\t\t    \tCancel\n\t\t    ")]
-              )
-            ]
-          : _vm._e()
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _vm.editing
-      ? _c("div", [
-          _c("p", {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.errors.has("appointed_at"),
-                expression: "errors.has('appointed_at')"
-              }
-            ],
-            staticClass: "help is-danger",
-            class: { "is-block": _vm.errors.has("appointed_at") },
-            domProps: { textContent: _vm._s(_vm.errors.get("appointed_at")) }
-          })
-        ])
-      : _vm._e()
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-39250f46", module.exports)
-  }
-}
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(49)
-/* template */
-var __vue_template__ = __webpack_require__(50)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\Flash.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-24005b09", Component.options)
-  } else {
-    hotAPI.reload("data-v-24005b09", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-	props: ["flash"],
-
-	mounted: function mounted() {
-		if (this.flash) {
-			this.$toast.open({
-				message: this.flash.message,
-				position: this.flash.position ? this.flash.position : 'is-top-right',
-				type: this.flash.type ? this.flash.type : 'is-success'
-			});
-		}
-	}
-});
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div")
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-24005b09", module.exports)
-  }
-}
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17456,6 +17237,227 @@ var Error = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (Error);
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "is-flex items-center" },
+      [
+        !_vm.editing
+          ? _c("p", { staticClass: "mb-0" }, [
+              _vm._v("\n\t\t\t" + _vm._s(_vm.appointedAt) + "\t\n\t\t")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.role === "administrator"
+          ? [
+              _vm.editing
+                ? _c(
+                    "b-field",
+                    { staticClass: "mb-0" },
+                    [
+                      _c("b-datepicker", {
+                        attrs: {
+                          placeholder: "Click to select...",
+                          icon: "calendar-today",
+                          size: "is-small"
+                        },
+                        model: {
+                          value: _vm.appointmentDate,
+                          callback: function($$v) {
+                            _vm.appointmentDate = $$v
+                          },
+                          expression: "appointmentDate"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.editing
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "button is-text is-small ml-4",
+                      on: {
+                        click: function($event) {
+                          _vm.editing = true
+                        }
+                      }
+                    },
+                    [_vm._v("\n\t\t    \tEdit\n\t\t    ")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.editing
+                ? [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button is-text is-small ml-4",
+                        on: { click: _vm.update }
+                      },
+                      [_vm._v("\n\t\t\t    \tSave\n\t\t\t    ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "button is-text is-small ml-4 has-text-danger",
+                        on: {
+                          click: function($event) {
+                            _vm.editing = false
+                          }
+                        }
+                      },
+                      [_vm._v("\n\t\t\t    \tCancel\n\t\t\t    ")]
+                    )
+                  ]
+                : _vm._e()
+            ]
+          : _vm._e()
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _vm.editing
+      ? _c("div", [
+          _c("p", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.has("appointed_at"),
+                expression: "errors.has('appointed_at')"
+              }
+            ],
+            staticClass: "help is-danger",
+            class: { "is-block": _vm.errors.has("appointed_at") },
+            domProps: { textContent: _vm._s(_vm.errors.get("appointed_at")) }
+          })
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-39250f46", module.exports)
+  }
+}
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(50)
+/* template */
+var __vue_template__ = __webpack_require__(51)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Flash.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-24005b09", Component.options)
+  } else {
+    hotAPI.reload("data-v-24005b09", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ["flash"],
+
+	mounted: function mounted() {
+		if (this.flash) {
+			this.$toast.open({
+				message: this.flash.message,
+				position: this.flash.position ? this.flash.position : 'is-top-right',
+				type: this.flash.type ? this.flash.type : 'is-success'
+			});
+		}
+	}
+});
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-24005b09", module.exports)
+  }
+}
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
