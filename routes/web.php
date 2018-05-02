@@ -79,7 +79,7 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/{topic}/edit', '\TrainingTracker\Http\Topics\Controllers\TopicsController@edit');
 		Route::put('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@update');
 
-		// Route::delete('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@destroy');
+		Route::delete('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@destroy');
 	});
 });
 

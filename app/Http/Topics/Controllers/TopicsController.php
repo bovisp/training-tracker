@@ -100,6 +100,14 @@ class TopicsController extends Controller
      */
     public function destroy(Topic $topic)
     {
-        //
+        $topic->delete();
+
+        return redirect()
+            ->route('topics.index')
+            ->with([
+                'flash' => [
+                    'message' => 'Topic successfully deleted.'
+                ]
+            ]);
     }
 }
