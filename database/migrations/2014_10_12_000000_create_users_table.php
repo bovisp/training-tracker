@@ -14,8 +14,8 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('moodle_id')->unique();
-            $table->unsignedInteger('supervisor_id')->nullable();
-            $table->unsignedInteger('active')->nullable();
+            $table->unsignedInteger('active')->default(1);
+            $table->date('appointed_at')->nullable();
             $table->timestamps();
         });
     }

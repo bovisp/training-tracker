@@ -142,6 +142,11 @@ class Auth
             ->first();
     }
 
+    public function id()
+    {
+        return $this->user()->id;
+    }
+
     /**
      * Returns the id of the currently logged in Moodle user.
      * 

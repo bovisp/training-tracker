@@ -3,6 +3,7 @@
 namespace TrainingTracker\Domains\MoodleUsers;
 
 use Illuminate\Database\Eloquent\Model;
+use TrainingTracker\Domains\Users\User;
 
 class MoodleUser extends Model
 {

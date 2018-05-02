@@ -19,6 +19,7 @@ class Kernel extends HttpKernel
         \TrainingTracker\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \TrainingTracker\Http\Middleware\TrustProxies::class,
+        \TrainingTracker\Http\Middleware\CheckMoodleAuthentication::class,
     ];
 
     /**
@@ -51,9 +52,9 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        // 'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'role' => \TrainingTracker\Http\Middleware\RoleMiddleware::class,
         'can' => \TrainingTracker\Http\Middleware\PermissionMiddleware::class,
+        'profile' => \TrainingTracker\Http\Middleware\CanViewProfile::class,
     ];
 }
