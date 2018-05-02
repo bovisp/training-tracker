@@ -8,10 +8,7 @@
 
         <title>{{ trans('app.general.appName') }}</title>
 
-        <link 
-            rel="stylesheet" 
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        >
+        <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         

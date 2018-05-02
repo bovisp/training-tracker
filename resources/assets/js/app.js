@@ -2,14 +2,36 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import Buefy from 'buefy'
+import fecha from 'fecha'
 
 Vue.use(Buefy, {
 	defaultToastDuration: 5000
 })
 
-window.Vue = Vue;
+window.Vue = Vue
 
-window.events = new Vue();
+window.events = new Vue()
+
+window.fecha = fecha
+
+/**
+ * You first need to create a formatting function to pad numbers to two digits…
+ **/
+function twoDigits(d) {
+    if(0 <= d && d < 10) return "0" + d.toString();
+    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+    return d.toString();
+}
+
+/**
+ * …and then create the method to output the date string as desired.
+ * Some people hate using prototypes this way, but if you are going
+ * to apply this to more than one Date object, having it as a prototype
+ * makes sense.
+ **/
+Date.prototype.toMysqlFormat = function() {
+    return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+};
 
 /**
  * Gives Vue access to the Laravel translation strings on a per language basis.
@@ -36,6 +58,7 @@ Vue.prototype.trans = (key) => {
 
 Vue.component('datatable', require('./components/Datatable.vue'));
 Vue.component('user-errors', require('./components/UserErrors.vue'));
+Vue.component('appointment-date', require('./components/AppointmentDate.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
 
 /**

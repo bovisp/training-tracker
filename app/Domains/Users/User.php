@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'moodle_id', 'active'
+        'moodle_id', 'active', 'appointed_at'
     ];
     
     /**
@@ -33,6 +33,10 @@ class User extends Authenticatable
 
     protected $appends = [
         'firstname', 'lastname', 'email', 'role'
+    ];
+
+    protected $casts = [
+        'appointed_at' => 'datetime:d/m/Y',
     ];
 
     public function supervisor()

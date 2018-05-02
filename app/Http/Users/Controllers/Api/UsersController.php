@@ -6,6 +6,7 @@ use TrainingTracker\App\Controllers\DatatablesController;
 use TrainingTracker\Domains\Roles\Role;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\Users\Requests\StoreUsersSpreadsheet;
+use TrainingTracker\Http\Users\Requests\UpdateAppointmentUserRequest;
 
 class UsersController extends DatatablesController
 {

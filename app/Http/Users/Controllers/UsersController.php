@@ -24,7 +24,7 @@ class UsersController extends Controller
     	return view('users.show', compact('user'));
     }
 
-    public function update(User $user, UpdateUserRequest $request)
+    public function updateRole(User $user, UpdateUserRequest $request)
     {
         $user->supervisors()->detach($user->supervisors);
 

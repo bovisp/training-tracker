@@ -32,6 +32,17 @@
 						@endcomponent
 
 					</dd>
+
+					<dt><strong>Appointment date</strong></dt>
+					<dd class="is-flex items-center">
+
+						@if (!$user->hasRole('administrator'))
+
+							<appointment-date :user="{{ json_encode($user) }}"></appointment-date>
+
+						@endif
+						
+					</dd>
 				</dl>
 			
 

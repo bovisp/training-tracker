@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('moodle_id')->unique();
             $table->unsignedInteger('active')->default(1);
+            $table->date('appointed_at')->nullable();
             $table->timestamps();
         });
     }
