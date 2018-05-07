@@ -166,15 +166,19 @@ export default {
             type: String,
             required: false
         },
-        sort: {
-            type: Object,
+        sortKey: {
+            type: String,
             required: false,
-            default () {
-                return {
-                    key: 'id',
-                    order: 'asc'
-                }
-            }
+            default: 'id'
+        },
+        sortOrder: {
+            type: String,
+            required: false,
+            default: 'asc'
+        },
+        secondarySort: {
+            type: String,
+            required: false
         }
     },
 
@@ -188,7 +192,12 @@ export default {
             recordsModel: [],
             roles: [],
             roleModel: [],
-            errors: []
+            errors: [],
+            sort: {
+                key: this.sortKey,
+                secondaryKey: this.secondarySort || '',
+                order: this.sortOrder
+            }
         }
     },
 
@@ -204,16 +213,46 @@ export default {
                 })
             })
 
-            if (this.sort.key) {
-                data = orderBy(data, (i) => {
-                    let value = i[this.sort.key]
+            if (this.sort.key && this.sort.secondaryKey.length !== 0) {
+                console.log(this.sort)
+                data = orderBy(
+                    data,
+                    [
+                        (item) => {
+                            let value = item[this.sort.key]
 
-                    if (!isNaN(parseFloat(value))) {
-                        return parseFloat(value)
-                    }
+                            if (!isNaN(parseFloat(value))) {
+                                return parseFloat(value)
+                            }
 
-                    return String(i[this.sort.key]).toLowerCase()
-                }, this.sort.order)
+                            return String(item[this.sort.key]).toLowerCase()
+                        },
+                        (item) => {
+                            let value = item[this.sort.secondaryKey]
+
+                            if (!isNaN(parseFloat(value))) {
+                                return parseFloat(value)
+                            }
+
+                            return String(item[this.sort.secondaryKey]).toLowerCase()
+                        }, 
+                    ],
+                    [this.sort.order, this.sort.order]
+                )
+            } else if (this.sort.key) {
+                data = orderBy(
+                    data, 
+                    (item) => {
+                        let value = item[this.sort.key]
+
+                        if (!isNaN(parseFloat(value))) {
+                            return parseFloat(value)
+                        }
+
+                        return String(item[this.sort.key]).toLowerCase()
+                    },
+                    this.sort.order
+                )
             }
 
             return data

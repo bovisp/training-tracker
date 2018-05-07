@@ -83,6 +83,21 @@ Route::middleware(['role:administrator'])->group(function () {
 	});
 });
 
+Route::middleware(['role:administrator'])->group(function () {
+	Route::prefix('lessons')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@index')->name('lessons.index');
+		Route::get('/api', '\TrainingTracker\Http\Lessons\Controllers\Api\LessonsController@index')->name('lessons.index.api');
+
+		Route::get('/create', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@create')->name('lessons.create');
+		Route::post('/', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@store');
+
+		Route::get('/{lesson}/edit', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@edit');
+		Route::put('/{lesson}', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@update');
+
+		Route::delete('/{lesson}', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@destroy');
+	});
+});
+
 Route::middleware(['profile'])->group(function () {
 	Route::prefix('users/{user}')->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')->name('users.show');
