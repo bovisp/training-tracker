@@ -89,7 +89,7 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/api', '\TrainingTracker\Http\Lessons\Controllers\Api\LessonsController@index')->name('lessons.index.api');
 
 		Route::get('/create', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@create')->name('lessons.create');
-		// Route::post('/', '\TrainingTracker\Http\Topics\Controllers\TopicsController@store');
+		Route::post('/', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@store');
 
 		// Route::get('/{topic}/edit', '\TrainingTracker\Http\Topics\Controllers\TopicsController@edit');
 		// Route::put('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@update');

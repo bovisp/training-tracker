@@ -5,6 +5,7 @@ namespace TrainingTracker\Http\Lessons\Controllers;
 use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\Topics\Topic;
+use TrainingTracker\Http\Lessons\Requests\StoreLessonRequest;
 
 class LessonsController extends Controller
 {
@@ -36,9 +37,24 @@ class LessonsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(StoreLessonRequest $request)
     {
-        //
+        Lesson::create([
+            'topic_id' => request('topic_id'),
+            'number' => request('number'),
+            'name' => [
+                'en' => request('name_en'),
+                'fr' => request('name_fr')
+            ]
+        ]);
+
+        return redirect()
+            ->route('lessons.index')
+            ->with([
+                'flash' => [
+                    'message' => 'Lesson successfully added.'
+                ]
+            ]);
     }
 
     /**
