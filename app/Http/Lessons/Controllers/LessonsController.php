@@ -106,6 +106,14 @@ class LessonsController extends Controller
      */
     public function destroy(Lesson $lesson)
     {
-        //
+        $lesson->delete();
+
+        return redirect()
+            ->route('lessons.index')
+            ->with([
+                'flash' => [
+                    'message' => 'Lesson successfully deleted.'
+                ]
+            ]);
     }
 }
