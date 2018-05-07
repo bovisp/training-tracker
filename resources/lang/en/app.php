@@ -25,6 +25,7 @@ return [
         'name' => 'Name',
         'role' => 'Role',
         'rank'=> 'Rank',
-        'number'=> 'Number'
+        'number'=> 'Number',
+        'topic' => 'Topic'
     ],
 ];

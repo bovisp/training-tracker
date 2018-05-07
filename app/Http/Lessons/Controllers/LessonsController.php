@@ -4,6 +4,7 @@ namespace TrainingTracker\Http\Lessons\Controllers;
 
 use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Lessons\Lesson;
+use TrainingTracker\Domains\Topics\Topic;
 
 class LessonsController extends Controller
 {
@@ -14,7 +15,7 @@ class LessonsController extends Controller
      */
     public function index()
     {
-        //
+        return view('lessons.index');
     }
 
     /**
@@ -24,7 +25,9 @@ class LessonsController extends Controller
      */
     public function create()
     {
-        //
+        $topics = Topic::all();
+
+        return view('lessons.create', compact('topics'));
     }
 
     /**

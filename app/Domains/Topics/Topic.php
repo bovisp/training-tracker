@@ -4,6 +4,7 @@ namespace TrainingTracker\Domains\Topics;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use TrainingTracker\Domains\Lessons\Lesson;
 
 class Topic extends Model
 {
@@ -12,6 +13,11 @@ class Topic extends Model
     public $translatable = ['name'];
     
     protected $fillable = ['name', 'number'];
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
 
     public function toArray()
     {

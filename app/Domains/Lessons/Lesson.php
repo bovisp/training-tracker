@@ -4,6 +4,7 @@ namespace TrainingTracker\Domains\Lessons;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use TrainingTracker\Domains\Topics\Topic;
 
 class Lesson extends Model
 {
@@ -12,7 +13,12 @@ class Lesson extends Model
     protected $translatable = ['name'];
 
     protected $fillable = ['topic_id', 'name', 'number'];
-    
+
+    public function topic()
+    {
+    	return $this->belongsTo(Topic::class);
+    }
+
     public function toArray()
     {
         $attributes = parent::toArray();
