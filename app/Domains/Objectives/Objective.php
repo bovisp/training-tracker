@@ -1,28 +1,22 @@
 <?php
 
-namespace TrainingTracker\Domains\Lessons;
+namespace TrainingTracker\Domains\Objectives;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
-use TrainingTracker\Domains\Objectives\Objective;
-use TrainingTracker\Domains\Topics\Topic;
+use TrainingTracker\Domains\Lessons\Lesson;
 
-class Lesson extends Model
+class Objective extends Model
 {
     use HasTranslations;
 
     protected $translatable = ['name'];
 
-    protected $fillable = ['topic_id', 'name', 'number'];
+    protected $fillable = ['lesson_id', 'name', 'number'];
 
-    public function topic()
+    public function lesson()
     {
-    	return $this->belongsTo(Topic::class);
-    }
-
-    public function objectives()
-    {
-        return $this->hasMany(Objective::class);
+    	return $this->belongsTo(Lesson::class);
     }
 
     public function toArray()
