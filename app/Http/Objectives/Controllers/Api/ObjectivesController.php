@@ -31,10 +31,11 @@ class ObjectivesController extends DatatablesController
     {
         $objectives = [];
 
-        foreach(Objective::with('lesson')->get() as $objective) {
+        foreach(Objective::with('lesson.topic')->get() as $objective) {
             $objectives[] = [
                 'id' => $objective->id,
-                'topic' => $objective->lesson->number,
+                'topic' => $objective->lesson->topic->number,
+                'lesson' => $objective->lesson->number,
                 'number' => $objective->number,
                 'name' => $objective->name
             ];

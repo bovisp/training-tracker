@@ -14,7 +14,7 @@ class ObjectivesController extends Controller
      */
     public function index()
     {
-        //
+        return view('objectives.index');
     }
 
     /**
@@ -34,17 +34,6 @@ class ObjectivesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \TrainingTracker\Objective  $objective
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Objective $objective)
     {
         //
     }

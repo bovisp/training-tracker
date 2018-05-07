@@ -13884,6 +13884,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         secondarySort: {
             type: String,
             required: false
+        },
+        tertiarySort: {
+            type: String,
+            required: false
         }
     },
 
@@ -13901,6 +13905,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             sort: {
                 key: this.sortKey,
                 secondaryKey: this.secondarySort || '',
+                tertiaryKey: this.tertiarySort || '',
                 order: this.sortOrder
             }
         };
@@ -13919,8 +13924,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
 
-            if (this.sort.key && this.sort.secondaryKey.length !== 0) {
-                console.log(this.sort);
+            if (this.sort.key && this.sort.secondaryKey.length !== 0 && this.sort.tertiaryKey.length !== 0) {
+                data = __WEBPACK_IMPORTED_MODULE_0_lodash_orderby___default()(data, [function (item) {
+                    var value = item[_this.sort.key];
+
+                    if (!isNaN(parseFloat(value))) {
+                        return parseFloat(value);
+                    }
+
+                    return String(item[_this.sort.key]).toLowerCase();
+                }, function (item) {
+                    var value = item[_this.sort.secondaryKey];
+
+                    if (!isNaN(parseFloat(value))) {
+                        return parseFloat(value);
+                    }
+
+                    return String(item[_this.sort.secondaryKey]).toLowerCase();
+                }, function (item) {
+                    var value = item[_this.sort.tertiaryKey];
+
+                    if (!isNaN(parseFloat(value))) {
+                        return parseFloat(value);
+                    }
+
+                    return String(item[_this.sort.tertiaryKey]).toLowerCase();
+                }], [this.sort.order, this.sort.order, this.sort.order]);
+            } else if (this.sort.key && this.sort.secondaryKey.length !== 0) {
                 data = __WEBPACK_IMPORTED_MODULE_0_lodash_orderby___default()(data, [function (item) {
                     var value = item[_this.sort.key];
 
