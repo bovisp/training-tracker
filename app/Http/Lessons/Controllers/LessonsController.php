@@ -6,6 +6,7 @@ use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\Topics\Topic;
 use TrainingTracker\Http\Lessons\Requests\StoreLessonRequest;
+use TrainingTracker\Http\Lessons\Requests\UpdateLessonRequest;
 
 class LessonsController extends Controller
 {
@@ -58,17 +59,6 @@ class LessonsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \TrainingTracker\Lesson  $lesson
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Lesson $lesson)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \TrainingTracker\Lesson  $lesson
@@ -76,7 +66,9 @@ class LessonsController extends Controller
      */
     public function edit(Lesson $lesson)
     {
-        //
+        $topics = Topic::all();
+
+        return view('lessons.edit', compact('lesson', 'topics'));
     }
 
     /**
@@ -86,9 +78,24 @@ class LessonsController extends Controller
      * @param  \TrainingTracker\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function update(Lesson $lesson)
+    public function update(UpdateLessonRequest $request, Lesson $lesson)
     {
-        //
+        $lesson->update([
+            'topic_id' => request('topic_id'),
+            'number' => request('number'),
+            'name' => [
+                'en' => request('name_en'),
+                'fr' => request('name_fr')
+            ]
+        ]);
+
+        return redirect()
+            ->route('lessons.index')
+            ->with([
+                'flash' => [
+                    'message' => 'Lesson successfully updated.'
+                ]
+            ]);
     }
 
     /**

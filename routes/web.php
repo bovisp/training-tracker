@@ -91,8 +91,8 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/create', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@create')->name('lessons.create');
 		Route::post('/', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@store');
 
-		// Route::get('/{topic}/edit', '\TrainingTracker\Http\Topics\Controllers\TopicsController@edit');
-		// Route::put('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@update');
+		Route::get('/{lesson}/edit', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@edit');
+		Route::put('/{lesson}', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@update');
 
 		// Route::delete('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@destroy');
 	});
