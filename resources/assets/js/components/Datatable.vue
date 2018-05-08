@@ -179,6 +179,10 @@ export default {
         secondarySort: {
             type: String,
             required: false
+        },
+        tertiarySort: {
+            type: String,
+            required: false
         }
     },
 
@@ -196,6 +200,7 @@ export default {
             sort: {
                 key: this.sortKey,
                 secondaryKey: this.secondarySort || '',
+                tertiaryKey: this.tertiarySort || '',
                 order: this.sortOrder
             }
         }
@@ -213,8 +218,41 @@ export default {
                 })
             })
 
-            if (this.sort.key && this.sort.secondaryKey.length !== 0) {
-                console.log(this.sort)
+            if (this.sort.key && this.sort.secondaryKey.length !== 0 && this.sort.tertiaryKey.length !== 0) {
+                data = orderBy(
+                    data,
+                    [
+                        (item) => {
+                            let value = item[this.sort.key]
+
+                            if (!isNaN(parseFloat(value))) {
+                                return parseFloat(value)
+                            }
+
+                            return String(item[this.sort.key]).toLowerCase()
+                        },
+                        (item) => {
+                            let value = item[this.sort.secondaryKey]
+
+                            if (!isNaN(parseFloat(value))) {
+                                return parseFloat(value)
+                            }
+
+                            return String(item[this.sort.secondaryKey]).toLowerCase()
+                        },
+                        (item) => {
+                            let value = item[this.sort.tertiaryKey]
+
+                            if (!isNaN(parseFloat(value))) {
+                                return parseFloat(value)
+                            }
+
+                            return String(item[this.sort.tertiaryKey]).toLowerCase()
+                        } 
+                    ],
+                    [this.sort.order, this.sort.order, this.sort.order]
+                )
+            } else if (this.sort.key && this.sort.secondaryKey.length !== 0) {
                 data = orderBy(
                     data,
                     [

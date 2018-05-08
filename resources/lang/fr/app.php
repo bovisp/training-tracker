@@ -26,6 +26,7 @@ return [
         'role' => 'f Role',
         'rank'=> 'f Rank',
         'number'=> 'f Number',
-        'topic' => 'f Topic'
+        'topic' => 'f Topic',
+        'lesson' => 'f Lesson'
     ],
 ];
