@@ -103,8 +103,8 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@index')->name('objectives.index');
 		Route::get('/api', '\TrainingTracker\Http\Objectives\Controllers\Api\ObjectivesController@index')->name('objectives.index.api');
 
-		// Route::get('/create', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@create')->name('lessons.create');
-		// Route::post('/', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@store');
+		Route::get('/create', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@create')->name('objectives.create');
+		Route::post('/', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@store');
 
 		// Route::get('/{lesson}/edit', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@edit');
 		// Route::put('/{lesson}', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@update');

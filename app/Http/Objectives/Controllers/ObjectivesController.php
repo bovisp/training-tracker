@@ -3,7 +3,10 @@
 namespace TrainingTracker\Http\Objectives\Controllers;
 
 use TrainingTracker\App\Controllers\Controller;
+use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\Objectives\Objective;
+use TrainingTracker\Http\Objectives\Requests\StoreObjectiveRequest;
+use TrainingTracker\Http\Objectives\Requests\UpdateObjectiveRequest;
 
 class ObjectivesController extends Controller
 {
@@ -24,7 +27,9 @@ class ObjectivesController extends Controller
      */
     public function create()
     {
-        //
+        $lessons = $this->sortedLessons();
+
+        return view('objectives.create', compact('lessons'));
     }
 
     /**
@@ -33,9 +38,24 @@ class ObjectivesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(StoreObjectiveRequest $request)
     {
-        //
+        Objective::create([
+            'lesson_id' => request('lesson_id'),
+            'number' => request('number'),
+            'name' => [
+                'en' => request('name_en'),
+                'fr' => request('name_fr')
+            ]
+        ]);
+
+        return redirect()
+            ->route('objectives.index')
+            ->with([
+                'flash' => [
+                    'message' => 'Objective successfully added.'
+                ]
+            ]);
     }
 
     /**
@@ -56,7 +76,7 @@ class ObjectivesController extends Controller
      * @param  \TrainingTracker\Objective  $objective
      * @return \Illuminate\Http\Response
      */
-    public function update(Objective $objective)
+    public function update(UpdateObjectiveRequest $request, Objective $objective)
     {
         //
     }
@@ -70,5 +90,20 @@ class ObjectivesController extends Controller
     public function destroy(Objective $objective)
     {
         //
+    }
+
+    protected function sortedLessons()
+    {
+        return Lesson::all()->load('topic')->sort(function($a, $b) {
+            if($a->topic->number === $b->topic->number) {
+                if($a->number === $b->number) {
+                    return 0;
+                }
+
+                return $a->number < $b->number ? -1 : 1;
+            } 
+            
+            return $a->topic->number < $b->topic->number ? -1 : 1;
+        });
     }
 }
