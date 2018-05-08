@@ -377,33 +377,6 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -507,6 +480,33 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -1072,7 +1072,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(52);
+module.exports = __webpack_require__(55);
 
 
 /***/ }),
@@ -1149,6 +1149,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('datatable', __webpack_req
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-errors', __webpack_require__(42));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('appointment-date', __webpack_require__(45));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('flash', __webpack_require__(49));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('unassigned-user-lessons', __webpack_require__(52));
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view
@@ -13035,7 +13036,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(33).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(33).setImmediate))
 
 /***/ }),
 /* 33 */
@@ -13105,7 +13106,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 34 */
@@ -13298,7 +13299,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5)))
 
 /***/ }),
 /* 35 */
@@ -13653,7 +13654,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;(function (main) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(38)
 /* template */
@@ -16644,7 +16645,7 @@ function property(path) {
 
 module.exports = orderBy;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(40)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(40)(module)))
 
 /***/ }),
 /* 40 */
@@ -16957,7 +16958,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(43)
 /* template */
@@ -17093,7 +17094,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(46)
 /* template */
@@ -17428,7 +17429,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(50)
 /* template */
@@ -17519,6 +17520,508 @@ if (false) {
 
 /***/ }),
 /* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(53)
+/* template */
+var __vue_template__ = __webpack_require__(54)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\UnassignedUserLessons.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0e9c4ea2", Component.options)
+  } else {
+    hotAPI.reload("data-v-0e9c4ea2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_orderby__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_orderby___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_orderby__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Error__ = __webpack_require__(47);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['userId'],
+
+	data: function data() {
+		return {
+			unassigned: {
+				depricated: [],
+				non_depricated: []
+			},
+			nonDepricated: '',
+			editingNonDepricated: false,
+			depricated: '',
+			editingDepricated: false,
+			errors: new __WEBPACK_IMPORTED_MODULE_1__classes_Error__["a" /* default */]()
+		};
+	},
+
+
+	methods: {
+		fetch: function fetch() {
+			var _this = this;
+
+			axios.get('/users/' + this.userId + '/userlessons/unassigned').then(function (_ref) {
+				var data = _ref.data;
+
+				_this.unassigned.non_depricated = data.non_depricated || [];
+				_this.unassigned.depricated = data.depricated || [];
+			});
+		},
+		submit: function submit(lesson) {
+			var _this2 = this;
+
+			if (lesson !== '') {
+				axios.interceptors.response.use(function (response) {
+					return response;
+				}, function (error) {
+					return Promise.reject(error.response);
+				});
+
+				axios.post('/users/' + this.userId + '/userlessons/unassigned', {
+					userlesson: lesson
+				}).then(function (response) {
+					_this2.nonDepricated = '';
+
+					_this2.$toast.open({
+						message: response.data.flash,
+						position: 'is-top-right',
+						type: 'is-success'
+					});
+
+					setTimeout(function () {
+						window.location = '/users/' + _this2.userId;
+					}, 3000);
+				}).catch(function (error) {
+					if (error.status === 422) {
+						_this2.errors.record(error.data.errors);
+					}
+				});
+			}
+		}
+	},
+
+	computed: {
+		nonDepricatedLessons: function nonDepricatedLessons() {
+			var self = this;
+
+			return __WEBPACK_IMPORTED_MODULE_0_lodash_orderby___default()(self.unassigned.non_depricated, ['topic.number', 'number'], ['asc', 'asc']);
+		},
+		depricatedLessons: function depricatedLessons() {
+			var self = this;
+
+			return __WEBPACK_IMPORTED_MODULE_0_lodash_orderby___default()(self.unassigned.depricated, ['topic.number', 'number'], ['asc', 'asc']);
+		}
+	},
+
+	mounted: function mounted() {
+		this.fetch();
+	}
+});
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {}, [
+    !_vm.editingNonDepricated && !_vm.editingDepricated
+      ? _c("div", [
+          _vm.unassigned.non_depricated.length
+            ? _c(
+                "button",
+                {
+                  staticClass: "button is-link is-small",
+                  on: {
+                    click: function($event) {
+                      _vm.editingNonDepricated = true
+                    }
+                  }
+                },
+                [_vm._v("\n\t\t\t\tAdd new lesson package\n\t\t\t")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.unassigned.depricated.length
+            ? _c(
+                "button",
+                {
+                  staticClass: "button is-link is-small ml-4",
+                  on: {
+                    click: function($event) {
+                      _vm.editingDepricated = true
+                    }
+                  }
+                },
+                [_vm._v("\n\t\t\t\tAdd depricated lesson package\n\t\t\t")]
+              )
+            : _vm._e()
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.unassigned.non_depricated.length && _vm.editingNonDepricated
+      ? _c("div", [
+          _c(
+            "div",
+            {
+              staticClass: "select is-small",
+              class: { "is-danger": _vm.errors.has("userlesson") }
+            },
+            [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.nonDepricated,
+                      expression: "nonDepricated"
+                    }
+                  ],
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.nonDepricated = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "", selected: "" } }, [
+                    _vm._v("Choose a lesson package...")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.nonDepricatedLessons, function(lesson) {
+                    return _c(
+                      "option",
+                      { key: lesson.id, domProps: { value: lesson.id } },
+                      [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t" +
+                            _vm._s(lesson.topic.number) +
+                            "." +
+                            _vm._s(lesson.number) +
+                            " " +
+                            _vm._s(lesson.name) +
+                            "\n\t\t\t\t\t"
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button is-link is-small ml-4",
+              on: {
+                click: function($event) {
+                  _vm.submit(_vm.nonDepricated)
+                }
+              }
+            },
+            [_vm._v("\n\t\t\t\tAdd lesson package\n\t\t\t")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button is-text has-text-danger is-small ml-4",
+              on: {
+                click: function($event) {
+                  _vm.editingNonDepricated = false
+                }
+              }
+            },
+            [_vm._v("\n\t\t\t\tCancel\n\t\t\t")]
+          ),
+          _vm._v(" "),
+          _c("div", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.has("userlesson"),
+                expression: "errors.has('userlesson')"
+              }
+            ],
+            staticClass: "help is-danger",
+            domProps: { textContent: _vm._s(_vm.errors.get("userlesson")) }
+          })
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.unassigned.depricated.length && _vm.editingDepricated
+      ? _c("div", [
+          _c(
+            "div",
+            {
+              staticClass: "select is-small",
+              class: { "is-danger": _vm.errors.has("userlesson") }
+            },
+            [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.depricated,
+                      expression: "depricated"
+                    }
+                  ],
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.depricated = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "", selected: "" } }, [
+                    _vm._v("Choose a lesson package...")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.depricatedLessons, function(lesson) {
+                    return _c(
+                      "option",
+                      { key: lesson.id, domProps: { value: lesson.id } },
+                      [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t" +
+                            _vm._s(lesson.topic.number) +
+                            "." +
+                            _vm._s(lesson.number) +
+                            " " +
+                            _vm._s(lesson.name) +
+                            "\n\t\t\t\t\t"
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button is-link is-small ml-4",
+              on: {
+                click: function($event) {
+                  _vm.submit(_vm.depricated)
+                }
+              }
+            },
+            [_vm._v("\n\t\t\t\tAdd lesson package\n\t\t\t")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button is-text has-text-danger is-small ml-4",
+              on: {
+                click: function($event) {
+                  _vm.editingDepricated = false
+                }
+              }
+            },
+            [_vm._v("\n\t\t\t\tCancel\n\t\t\t")]
+          ),
+          _vm._v(" "),
+          _c("div", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.has("userlesson"),
+                expression: "errors.has('userlesson')"
+              }
+            ],
+            staticClass: "help is-danger",
+            domProps: { textContent: _vm._s(_vm.errors.get("userlesson")) }
+          })
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0e9c4ea2", module.exports)
+  }
+}
+
+/***/ }),
+/* 55 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

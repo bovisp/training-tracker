@@ -65,6 +65,24 @@ Route::middleware(['role:administrator'])->group(function () {
 
 		Route::get('/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\InactiveUsersController@index')->name('inactiveusers.index');
 		Route::get('/api/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\Api\InactiveUsersController@index')->name('inactiveusers.index.api');
+
+		Route::get('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@index');
+	});
+});
+
+Route::middleware(['role:administrator'])->group(function () {
+	Route::prefix('users/{user}')->group(function () {
+		Route::get('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@index');
+		Route::post('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@store');
+	});
+});
+
+Route::middleware(['profile'])->group(function () {
+	Route::prefix('users/{user}')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')->name('users.show');
+
+		Route::get('/userlessons', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@getUserLessons')
+			->name('userlessons.index.api');
 	});
 });
 
@@ -110,14 +128,5 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::put('/{objective}', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@update');
 
 		Route::delete('/{objective}', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@destroy');
-	});
-});
-
-Route::middleware(['profile'])->group(function () {
-	Route::prefix('users/{user}')->group(function () {
-		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')->name('users.show');
-
-		Route::get('/userlessons', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@getUserLessons')
-			->name('userlessons.index.api');
 	});
 });

@@ -75,6 +75,18 @@
 
 				@endif
 
+				@if ($user->hasUnassignedLessons() && moodleauth()->user()->hasRole('administrator'))
+
+					<div class="divider divider--relaxed"></div>
+
+					<h3 class="title is-3">
+						Add Unassigned Lesson Packages
+					</h3>
+
+					<unassigned-user-lessons user-id="{{ $user->id }}"></unassigned-user-lessons>
+
+				@endif
+
 				@if ($user->hasLessons())
 
 					<div class="divider divider--relaxed"></div>

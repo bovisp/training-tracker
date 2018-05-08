@@ -60,6 +60,7 @@ Vue.component('datatable', require('./components/Datatable.vue'));
 Vue.component('user-errors', require('./components/UserErrors.vue'));
 Vue.component('appointment-date', require('./components/AppointmentDate.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
+Vue.component('unassigned-user-lessons', require('./components/UnassignedUserLessons.vue'));
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view
