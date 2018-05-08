@@ -75,6 +75,20 @@
 
 				@endif
 
+				@if ($user->hasLessons())
+
+					<div class="divider divider--relaxed"></div>
+
+					<h3 class="title is-3">
+						Lesson Packages
+					</h3>
+
+					@component('users.components.lesson-packages', ['user' => $user])
+
+					@endcomponent
+
+				@endif
+
 				<div class="divider divider--relaxed"></div>
 
 				@component('users.components.delete', ['user' => $user])

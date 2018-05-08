@@ -3,9 +3,7 @@
 namespace TrainingTracker\Http\Users\Controllers;
 
 use TrainingTracker\App\Controllers\Controller;
-use TrainingTracker\Domains\Supervisors\Supervisor;
 use TrainingTracker\Domains\Users\User;
-use TrainingTracker\Http\Users\Requests\UpdateUserRequest;
 
 class UsersController extends Controller
 {

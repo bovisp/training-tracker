@@ -7,6 +7,7 @@ use TrainingTracker\App\Traits\HasPermissionsTrait;
 use TrainingTracker\App\Traits\HasSupervisorsTrait;
 use TrainingTracker\Domains\MoodleUsers\MoodleUser;
 use TrainingTracker\Domains\Supervisors\Supervisor;
+use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
 
 class User extends Authenticatable
@@ -50,6 +51,11 @@ class User extends Authenticatable
             ->select('firstname', 'lastname', 'email', 'id');
     }
 
+    public function userlessons()
+    {
+        return $this->hasMany(UserLesson::class);
+    }
+
     /**
      * Get all active employees.
      * 
@@ -77,6 +83,11 @@ class User extends Authenticatable
             ->where('id', '>', 1)
             ->whereNotIn('id', $employees)
             ->get();
+    }
+
+    public function hasLessons()
+    {
+        return $this->userlessons()->count() > 0;
     }
 
     public function getFirstnameAttribute()

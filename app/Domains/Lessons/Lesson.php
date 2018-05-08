@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use TrainingTracker\Domains\Objectives\Objective;
 use TrainingTracker\Domains\Topics\Topic;
+use TrainingTracker\Domains\UserLessons\UserLesson;
 
 class Lesson extends Model
 {
@@ -23,6 +24,11 @@ class Lesson extends Model
     public function objectives()
     {
         return $this->hasMany(Objective::class);
+    }
+
+    public function userlessons()
+    {
+        return $this->hasMany(UserLesson::class);
     }
 
     public function toArray()

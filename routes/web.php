@@ -116,5 +116,8 @@ Route::middleware(['role:administrator'])->group(function () {
 Route::middleware(['profile'])->group(function () {
 	Route::prefix('users/{user}')->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')->name('users.show');
+
+		Route::get('/userlessons', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@getUserLessons')
+			->name('userlessons.index.api');
 	});
 });
