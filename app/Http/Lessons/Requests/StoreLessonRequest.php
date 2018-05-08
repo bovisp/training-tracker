@@ -32,7 +32,8 @@ class StoreLessonRequest extends FormRequest
                 'integer',
                 Rule::unique('lessons')->where(function ($query) {
                     $query->where([
-                        ['topic_id', request('topic_id')]
+                        ['topic_id', request('topic_id')],
+                        ['depricated', 0]
                     ]);
                 })
             ],

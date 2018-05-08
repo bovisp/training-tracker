@@ -28,7 +28,8 @@ class UpdateLessonRequest extends FormRequest
             'topic_id' => 'required|integer|min:0|exists:topics,number',
             'number' => 'required|min:0|integer',
             'name_en' => 'required|min:3',
-            'name_fr' => 'required|min:3'
+            'name_fr' => 'required|min:3',
+            'depricated' => 'required|integer|min:0|max:1'
         ];
     }
 
@@ -45,7 +46,11 @@ class UpdateLessonRequest extends FormRequest
             'name_en.required' => 'Please enter a lesson name in English.',
             'name_en.min' => 'The "Name" must be at least three characters long.',
             'name_fr.required' => 'Please enter a lesson name in French.',
-            'name_fr.min' => 'The "Name" must be at least three characters long.'
+            'name_fr.min' => 'The "Name" must be at least three characters long.',
+            'depricated.required' => 'Please enter "Yes" for a depricated lesson or "No" for an active one',
+            'depricated.min' => 'Please enter "Yes" for a depricated lesson or "No" for an active one',
+            'depricated.min' => 'Please enter "Yes" for a depricated lesson or "No" for an active one',
+            'depricated.integer' => 'Please enter "Yes" for a depricated lesson or "No" for an active one',
         ];
     }
 }

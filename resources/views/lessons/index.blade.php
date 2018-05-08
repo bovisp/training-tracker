@@ -16,7 +16,7 @@
 
 			<datatable 
 				endpoint="{{ route('lessons.index.api') }}"
-				:custom-headers="['id', 'topic', 'number', 'name']"
+				:custom-headers="['id', 'topic', 'number', 'name', 'depricated']"
 				sort-key="topic"
 				secondary-sort="number"
 				:action-button="true"

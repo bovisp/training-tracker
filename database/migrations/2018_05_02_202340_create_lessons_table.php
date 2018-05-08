@@ -15,6 +15,7 @@ class CreateLessonsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('topic_id');
             $table->unsignedInteger('number');
+            $table->boolean('depricated')->default(0);
             $table->text('name');
             $table->timestamps();
 

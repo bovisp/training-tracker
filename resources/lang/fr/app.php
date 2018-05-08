@@ -29,6 +29,7 @@ return [
         'topic' => 'f Topic',
         'lesson' => 'f Lesson',
         'package' => 'f Lesson Package',
-        'completed' => 'f Completed'
+        'completed' => 'f Completed',
+        'depricated' => 'f Depricated',
     ],
 ];

@@ -100,7 +100,7 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
 
 	protected function createLessons($user)
 	{
-		foreach (Lesson::all() as $lesson) {
+		foreach (Lesson::whereDepricated(0)->get() as $lesson) {
             UserLesson::create([
                 'user_id' => $user->id,
                 'lesson_id' => $lesson->id

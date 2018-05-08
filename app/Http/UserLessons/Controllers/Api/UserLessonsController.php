@@ -51,7 +51,7 @@ class UserLessonsController extends DatatablesController
         foreach($userlessons as $userlesson) {
             $collection[] = [
                 'id' => $userlesson->id,
-                'package' => $userlesson->lesson->topic->number . '.' . $userlesson->lesson->number . ' ' . $userlesson->lesson->name,
+                'package' => $userlesson->lesson->topic->number . '.' . str_pad($userlesson->lesson->number, 2, '0', STR_PAD_LEFT) . ' ' . $userlesson->lesson->name,
                 'completed' => $userlesson->completed === 1 ? 'Yes' : 'No'
             ];
         }

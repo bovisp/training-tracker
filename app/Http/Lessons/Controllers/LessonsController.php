@@ -86,7 +86,8 @@ class LessonsController extends Controller
             'name' => [
                 'en' => request('name_en'),
                 'fr' => request('name_fr')
-            ]
+            ],
+            'depricated' => request('depricated')
         ]);
 
         return redirect()

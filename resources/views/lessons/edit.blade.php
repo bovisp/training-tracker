@@ -28,7 +28,7 @@
 										value="{{ $topic->id }}"
 										{{ $topic->id == old('topic_id') || $topic->id == $lesson->topic_id ? 'selected' : '' }}
 									>
-										{{ $topic->name }}
+										{{ $topic->number }}. {{ $topic->name }}
 									</option>
 
 								@endforeach
@@ -107,8 +107,39 @@
 				</div>
 
 				<div class="field">
+					<label class="label" for="depricated">Depricated</label>
+
 					<div class="control">
-						<button class="button is-link">Add lesson</button>
+						<div class="select {{ $errors->any() && $errors->has('depricated') ? 'is-danger' : '' }}">
+							<select 
+								name="depricated" 
+								id="depricated" 
+							>
+								<option 
+									value="0"
+									{{ old('depricated') == 0 || $lesson->depricated == 0 ? 'selected' : '' }}
+								>No</option>
+
+								<option 
+									value="1"
+									{{ old('depricated') == 1 || $lesson->depricated == 1 ? 'selected' : '' }}
+								>Yes</option>
+
+							</select>
+						</div>
+					</div>
+
+					@if ($errors->any() && $errors->has('depricated'))
+
+						<p class="help is-danger">{{ ($errors->get('depricated'))[0] }}</p>
+
+					@endif
+
+				</div>
+
+				<div class="field">
+					<div class="control">
+						<button class="button is-link">Update lesson</button>
 					</div>
 				</div>
 			</form>
