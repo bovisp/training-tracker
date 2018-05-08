@@ -106,8 +106,8 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::get('/create', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@create')->name('objectives.create');
 		Route::post('/', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@store');
 
-		// Route::get('/{lesson}/edit', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@edit');
-		// Route::put('/{lesson}', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@update');
+		Route::get('/{objective}/edit', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@edit');
+		Route::put('/{objective}', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@update');
 
 		// Route::delete('/{lesson}', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@destroy');
 	});

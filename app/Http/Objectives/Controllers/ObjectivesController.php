@@ -66,7 +66,9 @@ class ObjectivesController extends Controller
      */
     public function edit(Objective $objective)
     {
-        //
+        $lessons = $this->sortedLessons();
+
+        return view('objectives.edit', compact('lessons', 'objective'));
     }
 
     /**
@@ -78,7 +80,22 @@ class ObjectivesController extends Controller
      */
     public function update(UpdateObjectiveRequest $request, Objective $objective)
     {
-        //
+        $objective->update([
+            'lesson_id' => request('lesson_id'),
+            'number' => request('number'),
+            'name' => [
+                'en' => request('name_en'),
+                'fr' => request('name_fr')
+            ]
+        ]);
+
+        return redirect()
+            ->route('objectives.index')
+            ->with([
+                'flash' => [
+                    'message' => 'Objective successfully updated.'
+                ]
+            ]);
     }
 
     /**
