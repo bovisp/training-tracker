@@ -4,72 +4,27 @@ namespace TrainingTracker\Http\UserLessons\Controllers;
 
 use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\UserLessons\UserLesson;
+use TrainingTracker\Domains\Users\User;
 
 class UserLessonsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
      * @param  \TrainingTracker\UserLesson  $userLesson
      * @return \Illuminate\Http\Response
      */
-    public function show(UserLesson $userLesson)
+    public function show(User $user, UserLesson $userlesson)
     {
-        //
-    }
+        $userlesson = $userlesson->whereId($userlesson->id)
+            ->with('lesson.topic')
+            ->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \TrainingTracker\UserLesson  $userLesson
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserLesson $userLesson)
-    {
-        //
-    }
+        $user = $user->whereId($user->id)
+            ->with('moodleuser')
+            ->first();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \TrainingTracker\UserLesson  $userLesson
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UserLesson $userLesson)
-    {
-        //
+        return view('userlessons.show', compact('userlesson', 'user'));
     }
 
     /**
@@ -78,8 +33,16 @@ class UserLessonsController extends Controller
      * @param  \TrainingTracker\UserLesson  $userLesson
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserLesson $userLesson)
+    public function destroy(User $user, UserLesson $userlesson)
     {
-        //
+        $userlesson->delete();
+
+        return redirect()
+            ->route('users.show', ['user' => $user->id])
+            ->with([
+                'flash' => [
+                    'message' => 'Lesson package successfully deleted.'
+                ]
+            ]);
     }
 }

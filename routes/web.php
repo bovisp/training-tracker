@@ -74,6 +74,8 @@ Route::middleware(['role:administrator'])->group(function () {
 	Route::prefix('users/{user}')->group(function () {
 		Route::get('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@index');
 		Route::post('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@store');
+
+		Route::delete('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@destroy');
 	});
 });
 
@@ -83,6 +85,9 @@ Route::middleware(['profile'])->group(function () {
 
 		Route::get('/userlessons', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@getUserLessons')
 			->name('userlessons.index.api');
+
+		Route::get('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@show')
+			->name('userlessons.show');
 	});
 });
 
