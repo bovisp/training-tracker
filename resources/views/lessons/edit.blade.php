@@ -138,6 +138,52 @@
 				</div>
 
 				<div class="field">
+					<p>
+						<strong>Period(s) in which this training should be iniated:</strong>
+					</p>
+
+					<label class="checkbox is-block mt-2">
+						<input 
+							type="checkbox" 
+							name="p9" 
+							value="1" 
+							{{ old('p9') || $lesson->p9 === 1 ? 'checked' : '' }}
+						>
+						Early EG-03 (0-9 months)
+					</label>
+
+					<label class="checkbox is-block mt-2">
+						<input 
+							type="checkbox" 
+							name="p18" 
+							value="1" 
+							{{ old('p18') || $lesson->p18 === 1 ? 'checked' : '' }}
+						>
+						Late EG-03 (9-18 months)
+					</label>
+
+					<label class="checkbox is-block mt-2">
+						<input 
+							type="checkbox" 
+							name="p30" 
+							value="1" 
+							{{ old('p30') || $lesson->p30 === 1 ? 'checked' : '' }}
+						>
+						Early EG-04 (18-30 months)
+					</label>
+
+					<label class="checkbox is-block mt-2">
+						<input 
+							type="checkbox" 
+							name="p42" 
+							value="1" 
+							{{ old('p42') || $lesson->p42 === 1 ? 'checked' : '' }}
+						>
+						Late EG-04 (30-42 months)
+					</label>
+				</div>
+
+				<div class="field mt-6">
 					<div class="control">
 						<button class="button is-link">Update lesson</button>
 					</div>

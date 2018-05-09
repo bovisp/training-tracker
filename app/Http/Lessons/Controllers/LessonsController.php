@@ -46,7 +46,11 @@ class LessonsController extends Controller
             'name' => [
                 'en' => request('name_en'),
                 'fr' => request('name_fr')
-            ]
+            ],
+            'p9' => request()->has('p9') ? request('p9') : 0,
+            'p18' => request()->has('p18') ? request('p18') : 0,
+            'p30' => request()->has('p30') ? request('p30') : 0,
+            'p42' => request()->has('p40') ? request('p40') : 0,
         ]);
 
         return redirect()
@@ -87,7 +91,11 @@ class LessonsController extends Controller
                 'en' => request('name_en'),
                 'fr' => request('name_fr')
             ],
-            'depricated' => request('depricated')
+            'depricated' => request('depricated'),
+            'p9' => request()->has('p9') ? request('p9') : 0,
+            'p18' => request()->has('p18') ? request('p18') : 0,
+            'p30' => request()->has('p30') ? request('p30') : 0,
+            'p42' => request()->has('p40') ? request('p40') : 0,
         ]);
 
         return redirect()

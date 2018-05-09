@@ -14,7 +14,9 @@ class Lesson extends Model
 
     protected $translatable = ['name'];
 
-    protected $fillable = ['topic_id', 'name', 'number', 'depricated'];
+    protected $fillable = [
+        'topic_id', 'name', 'number', 'depricated', 'p9', 'p18', 'p30', 'p42'
+    ];
 
     public function topic()
     {

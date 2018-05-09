@@ -19,6 +19,10 @@ class CreateUserLessonsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->text('comment')->nullable();
             $table->boolean('completed')->default(0);
+            $table->string('p9', 1);
+            $table->string('p18', 1);
+            $table->string('p30', 1);
+            $table->string('p42', 1);
             $table->timestamps();
 
             $table->foreign('lesson_id')
