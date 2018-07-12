@@ -1596,7 +1596,7 @@ var Error = function () {
         key: "record",
         value: function record(errors) {
             this.errors = errors;
-            console.log(errors);
+            console.log(this.errors);
         }
     }]);
 
@@ -17151,81 +17151,31 @@ var __WEBPACK_AMD_DEFINE_RESULT__;(function (main) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__mutations__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__actions__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_userlesson__ = __webpack_require__(72);
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
-var state = {
-	userlesson: {},
-	user: {},
-	isLoading: true
-};
 
-var mutations = {
-	initializeUserLesson: function initializeUserLesson(state, payload) {
-		state.userlesson = payload;
-	},
-	initializeUser: function initializeUser(state, payload) {
-		state.user = payload;
-	},
-	updateP9: function updateP9(state, payload) {
-		state.userlesson.status.p9 = payload;
-	},
-	updateP18: function updateP18(state, payload) {
-		state.userlesson.status.p18 = payload;
-	},
-	updateP30: function updateP30(state, payload) {
-		state.userlesson.status.p30 = payload;
-	},
-	updateP42: function updateP42(state, payload) {
-		state.userlesson.status.p42 = payload;
-	},
-	loadStatus: function loadStatus(state, payload) {
-		state.isLoading = payload;
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+	state: __WEBPACK_IMPORTED_MODULE_2__state__["a" /* default */],
+	mutations: __WEBPACK_IMPORTED_MODULE_3__mutations__,
+	actions: __WEBPACK_IMPORTED_MODULE_4__actions__,
+	modules: {
+		userlessons: __WEBPACK_IMPORTED_MODULE_5__modules_userlesson__["a" /* default */]
 	}
-};
-
-var actions = {
-	loadState: function loadState(_ref, _ref2) {
-		var commit = _ref.commit;
-		var userlesson = _ref2.userlesson,
-		    user = _ref2.user;
-
-		commit('loadStatus', true);
-
-		return axios.get('/users/' + user + '/userlessons/' + userlesson + '/api').then(function (_ref3) {
-			var data = _ref3.data;
-
-			return new Promise(function (resolve, reject) {
-				commit('initializeUserLesson', data.userlesson);
-				commit('initializeUser', data.user);
-				resolve();
-			});
-		}).then(function () {
-			return new Promise(function (resolve, reject) {
-				commit('loadStatus', false);
-				resolve();
-			});
-		});
-	},
-	updateLessonPackage: function updateLessonPackage(_ref4, payload) {
-		var state = _ref4.state,
-		    commit = _ref4.commit;
-
-		commit('loadStatus', true);
-
-		axios.interceptors.response.use(function (response) {
-			return response;
-		}, function (error) {
-			return Promise.reject(error.response);
-		});
-
-		return axios.put('/users/' + state.user.id + '/userlessons/' + state.userlesson.id, payload);
-	}
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({ state: state, mutations: mutations, actions: actions }));
+}));
 
 /***/ }),
 /* 41 */
@@ -19129,6 +19079,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19137,7 +19095,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 	data: function data() {
 		return {
-			formData: {}
+			formData: {},
+			errors: {}
 		};
 	},
 
@@ -19155,14 +19114,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		submit: function submit() {
 			var _this = this;
 
-			this.formData = {
-				// statuses: this.status
-				statuses: {
-					p9: 'p'
-				}
-			};
-
-			this.$store.dispatch('updateLessonPackage', this.formData).then(function (_ref) {
+			this.$store.dispatch('userlessons/updateLessonPackage').then(function (_ref) {
 				var data = _ref.data;
 
 				_this.$toast.open({
@@ -19177,14 +19129,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 				});
 			}).catch(function (error) {
 				if (error.status === 422) {
-					_this.$store.commit('loadStatus', false);
-
 					window.events.$emit('status-errors', error.data.errors);
+				}
+
+				if (error.status === 403) {
+					_this.errors = error.data.errors.errors;
 				}
 			});
 		}
 	}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])({
-		fetch: 'loadState'
+		fetch: 'userlessons/loadState'
 	})),
 
 	mounted: function mounted() {
@@ -19206,6 +19160,23 @@ var render = function() {
   return _c(
     "div",
     [
+      _vm.errors["denied"]
+        ? _c("article", { staticClass: "message is-danger mt-4" }, [
+            _c("div", { staticClass: "message-body content" }, [
+              _c(
+                "ul",
+                { staticClass: "mt-0" },
+                _vm._l(_vm.errors, function(error, type) {
+                  return _c("li", {
+                    key: type,
+                    domProps: { textContent: _vm._s(error) }
+                  })
+                })
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c("div", { staticClass: "columns" }, [
         _c("div", { staticClass: "column" }, [
           _c(
@@ -19290,8 +19261,23 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Error__ = __webpack_require__(5);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -19409,60 +19395,82 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 	data: function data() {
 		return {
 			statusTypes: [{ type: 'c', name: 'C – Module Complete' }, { type: 'd', name: 'D – Deferred to next evaluation period' }, { type: 'e', name: 'E – Exempt based on location requirements' }],
-			errors: []
+			errors: new __WEBPACK_IMPORTED_MODULE_1__classes_Error__["a" /* default */]()
 		};
 	},
 
 
-	computed: _extends({
+	computed: {
 		p9: {
 			get: function get() {
-				return this.$store.state.userlesson.status.p9;
+				return this.$store.state.userlessons.userlesson.status.p9;
 			},
 			set: function set(value) {
-				this.$store.commit('updateP9', value);
+				this.$store.commit('userlessons/updateP9', value);
 			}
 		},
 		p18: {
 			get: function get() {
-				return this.$store.state.userlesson.status.p18;
+				return this.$store.state.userlessons.userlesson.status.p18;
 			},
 			set: function set(value) {
-				this.$store.commit('updateP18', value);
+				this.$store.commit('userlessons/updateP18', value);
 			}
 		},
 		p30: {
 			get: function get() {
-				return this.$store.state.userlesson.status.p30;
+				return this.$store.state.userlessons.userlesson.status.p30;
 			},
 			set: function set(value) {
-				this.$store.commit('updateP30', value);
+				this.$store.commit('userlessons/updateP30', value);
 			}
 		},
 		p42: {
 			get: function get() {
-				return this.$store.state.userlesson.status.p42;
+				return this.$store.state.userlessons.userlesson.status.p42;
 			},
 			set: function set(value) {
-				this.$store.commit('updateP42', value);
+				this.$store.commit('userlessons/updateP42', value);
+			}
+		},
+		lessonPeriodp9: {
+			get: function get() {
+				return this.$store.state.userlessons.userlesson.lesson.p9;
+			}
+		},
+		lessonPeriodp18: {
+			get: function get() {
+				return this.$store.state.userlessons.userlesson.lesson.p18;
+			}
+		},
+		lessonPeriodp30: {
+			get: function get() {
+				return this.$store.state.userlessons.userlesson.lesson.p30;
+			}
+		},
+		lessonPeriodp42: {
+			get: function get() {
+				return this.$store.state.userlessons.userlesson.lesson.p42;
 			}
 		}
-	}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])({
-		lessonPeriods: function lessonPeriods(state) {
-			return {
-				p9: state.userlesson.lesson.p9,
-				p18: state.userlesson.lesson.p18,
-				p30: state.userlesson.lesson.p30,
-				p42: state.userlesson.lesson.p42
-			};
-		}
-	})),
+		// ...mapState({
+		// 	lessonPeriods: state => {
+		// 		console.log(this.$store.state.userlessons.userlesson)
+		// 		return {
+		// 			p9: state.userlessons.userlesson.lesson.p9,
+		// 			p18: state.userlessons.userlesson.lesson.p18,
+		// 			p30: state.userlessons.userlesson.lesson.p30,
+		// 			p42: state.userlessons.userlesson.lesson.p42
+		// 		}
+		// 	}
+		// })
+	},
 
 	mounted: function mounted() {
 		var _this = this;
 
 		window.events.$on('status-errors', function (errors) {
-			_this.errors = errors;
+			_this.errors.record(errors);
 		});
 	}
 });
@@ -19483,7 +19491,7 @@ var render = function() {
         "div",
         {
           staticClass: "column",
-          class: { "has-background-grey-lighter": _vm.lessonPeriods.p9 }
+          class: { "has-background-grey-lighter": _vm.lessonPeriodp9 }
         },
         [
           _c("div", { staticClass: "field" }, [
@@ -19495,7 +19503,7 @@ var render = function() {
               "div",
               {
                 staticClass: "select is-small",
-                class: { "is-danger": _vm.errors["p9"] }
+                class: { "is-danger": _vm.errors.has("p9") }
               },
               [
                 _c(
@@ -19545,19 +19553,12 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("p", {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.errors["p9"],
-                  expression: "errors['p9']"
-                }
-              ],
-              staticClass: "help is-danger",
-              class: { "is-block": _vm.errors["p9"] },
-              domProps: { textContent: _vm._s(_vm.errors["p9"]) }
-            })
+            _vm.errors.has("p9")
+              ? _c("p", {
+                  staticClass: "help is-danger",
+                  domProps: { textContent: _vm._s(_vm.errors.get("p9")) }
+                })
+              : _vm._e()
           ])
         ]
       ),
@@ -19566,7 +19567,7 @@ var render = function() {
         "div",
         {
           staticClass: "column",
-          class: { "has-background-grey-lighter": _vm.lessonPeriods.p18 }
+          class: { "has-background-grey-lighter": _vm.lessonPeriodp18 }
         },
         [
           _c("div", { staticClass: "field" }, [
@@ -19574,52 +19575,66 @@ var render = function() {
               _vm._v("Late EG-03")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "select is-small" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.p18,
-                      expression: "p18"
-                    }
-                  ],
-                  attrs: { id: "p18" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.p18 = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }),
-                  _vm._v(" "),
-                  _vm._l(_vm.statusTypes, function(status) {
-                    return _c("option", {
-                      key: status.type,
-                      domProps: {
-                        value: status.type,
-                        selected: status.type == _vm.p18,
-                        textContent: _vm._s(status.name)
+            _c(
+              "div",
+              {
+                staticClass: "select is-small",
+                class: { "is-danger": _vm.errors.has("p18") }
+              },
+              [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.p18,
+                        expression: "p18"
                       }
+                    ],
+                    attrs: { id: "p18" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.p18 = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }),
+                    _vm._v(" "),
+                    _vm._l(_vm.statusTypes, function(status) {
+                      return _c("option", {
+                        key: status.type,
+                        domProps: {
+                          value: status.type,
+                          selected: status.type == _vm.p18,
+                          textContent: _vm._s(status.name)
+                        }
+                      })
                     })
-                  })
-                ],
-                2
-              )
-            ])
+                  ],
+                  2
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm.errors.has("p18")
+              ? _c("p", {
+                  staticClass: "help is-danger",
+                  domProps: { textContent: _vm._s(_vm.errors.get("p18")) }
+                })
+              : _vm._e()
           ])
         ]
       ),
@@ -19628,7 +19643,7 @@ var render = function() {
         "div",
         {
           staticClass: "column",
-          class: { "has-background-grey-lighter": _vm.lessonPeriods.p30 }
+          class: { "has-background-grey-lighter": _vm.lessonPeriodp30 }
         },
         [
           _c("div", { staticClass: "field" }, [
@@ -19636,52 +19651,66 @@ var render = function() {
               _vm._v("Early EG-04")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "select is-small" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.p30,
-                      expression: "p30"
-                    }
-                  ],
-                  attrs: { id: "p30" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.p30 = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }),
-                  _vm._v(" "),
-                  _vm._l(_vm.statusTypes, function(status) {
-                    return _c("option", {
-                      key: status.type,
-                      domProps: {
-                        value: status.type,
-                        selected: status.type == _vm.p30,
-                        textContent: _vm._s(status.name)
+            _c(
+              "div",
+              {
+                staticClass: "select is-small",
+                class: { "is-danger": _vm.errors.has("p30") }
+              },
+              [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.p30,
+                        expression: "p30"
                       }
+                    ],
+                    attrs: { id: "p30" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.p30 = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }),
+                    _vm._v(" "),
+                    _vm._l(_vm.statusTypes, function(status) {
+                      return _c("option", {
+                        key: status.type,
+                        domProps: {
+                          value: status.type,
+                          selected: status.type == _vm.p30,
+                          textContent: _vm._s(status.name)
+                        }
+                      })
                     })
-                  })
-                ],
-                2
-              )
-            ])
+                  ],
+                  2
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm.errors.has("p30")
+              ? _c("p", {
+                  staticClass: "help is-danger",
+                  domProps: { textContent: _vm._s(_vm.errors.get("p30")) }
+                })
+              : _vm._e()
           ])
         ]
       ),
@@ -19690,7 +19719,7 @@ var render = function() {
         "div",
         {
           staticClass: "column",
-          class: { "has-background-grey-lighter": _vm.lessonPeriods.p42 }
+          class: { "has-background-grey-lighter": _vm.lessonPeriodp42 }
         },
         [
           _c("div", { staticClass: "field" }, [
@@ -19698,52 +19727,66 @@ var render = function() {
               _vm._v("late EG-04")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "select is-small" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.p42,
-                      expression: "p42"
-                    }
-                  ],
-                  attrs: { id: "p42" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.p42 = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }),
-                  _vm._v(" "),
-                  _vm._l(_vm.statusTypes, function(status) {
-                    return _c("option", {
-                      key: status.type,
-                      domProps: {
-                        value: status.type,
-                        selected: status.type == _vm.p42,
-                        textContent: _vm._s(status.name)
+            _c(
+              "div",
+              {
+                staticClass: "select is-small",
+                class: { "is-danger": _vm.errors.has("p42") }
+              },
+              [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.p42,
+                        expression: "p42"
                       }
+                    ],
+                    attrs: { id: "p42" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.p42 = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }),
+                    _vm._v(" "),
+                    _vm._l(_vm.statusTypes, function(status) {
+                      return _c("option", {
+                        key: status.type,
+                        domProps: {
+                          value: status.type,
+                          selected: status.type == _vm.p42,
+                          textContent: _vm._s(status.name)
+                        }
+                      })
                     })
-                  })
-                ],
-                2
-              )
-            ])
+                  ],
+                  2
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm.errors.has("p42")
+              ? _c("p", {
+                  staticClass: "help is-danger",
+                  domProps: { textContent: _vm._s(_vm.errors.get("p42")) }
+                })
+              : _vm._e()
           ])
         ]
       )
@@ -19765,6 +19808,161 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({});
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__state__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(75);
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+	namespaced: true,
+	state: __WEBPACK_IMPORTED_MODULE_0__state__["a" /* default */],
+	mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__,
+	actions: __WEBPACK_IMPORTED_MODULE_2__actions__
+});
+
+/***/ }),
+/* 73 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+	userlesson: {
+		lesson: {
+			p9: '',
+			p18: '',
+			p30: '',
+			p42: ''
+		},
+		status: {
+			p9: '',
+			p18: '',
+			p30: '',
+			p42: ''
+		}
+	},
+	user: {},
+	isLoading: true
+});
+
+/***/ }),
+/* 74 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["initializeUserLesson"] = initializeUserLesson;
+/* harmony export (immutable) */ __webpack_exports__["initializeUser"] = initializeUser;
+/* harmony export (immutable) */ __webpack_exports__["loadStatus"] = loadStatus;
+/* harmony export (immutable) */ __webpack_exports__["updateP9"] = updateP9;
+/* harmony export (immutable) */ __webpack_exports__["updateP18"] = updateP18;
+/* harmony export (immutable) */ __webpack_exports__["updateP30"] = updateP30;
+/* harmony export (immutable) */ __webpack_exports__["updateP42"] = updateP42;
+function initializeUserLesson(state, payload) {
+	state.userlesson = payload;
+}
+
+function initializeUser(state, payload) {
+	state.user = payload;
+}
+
+function loadStatus(state, payload) {
+	state.isLoading = payload;
+}
+
+function updateP9(state, payload) {
+	state.userlesson.status.p9 = payload;
+}
+
+function updateP18(state, payload) {
+	state.userlesson.status.p18 = payload;
+}
+
+function updateP30(state, payload) {
+	state.userlesson.status.p30 = payload;
+}
+
+function updateP42(state, payload) {
+	state.userlesson.status.p42 = payload;
+}
+
+/***/ }),
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["loadState"] = loadState;
+/* harmony export (immutable) */ __webpack_exports__["updateLessonPackage"] = updateLessonPackage;
+function loadState(_ref, _ref2) {
+	var commit = _ref.commit;
+	var userlesson = _ref2.userlesson,
+	    user = _ref2.user;
+
+	commit('loadStatus', true);
+
+	return axios.get('/users/' + user + '/userlessons/' + userlesson + '/api').then(function (_ref3) {
+		var data = _ref3.data;
+
+		return new Promise(function (resolve, reject) {
+			commit('initializeUserLesson', data.userlesson);
+			commit('initializeUser', data.user);
+			resolve();
+		});
+	}).then(function () {
+		return new Promise(function (resolve, reject) {
+			commit('loadStatus', false);
+			resolve();
+		});
+	});
+}
+
+function updateLessonPackage(_ref4) {
+	var state = _ref4.state,
+	    commit = _ref4.commit;
+
+	commit('loadStatus', true);
+
+	axios.interceptors.response.use(function (response) {
+		return response;
+	}, function (error) {
+		commit('loadStatus', false);
+		return Promise.reject(error.response);
+	});
+
+	return axios.put('/users/' + state.user.id + '/userlessons/' + state.userlesson.id, { statuses: state.userlesson.status });
+}
 
 /***/ })
 /******/ ]);

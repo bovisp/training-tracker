@@ -41,6 +41,8 @@ class UpdateStatusesRequest implements StoreSpreadsheet
 
 	public function validateRow($row)
 	{
+		$this->row = $row;
+
 		$validator = Validator::make(
 			[$this->key => $row], $this->validations()
 		);
@@ -69,7 +71,7 @@ class UpdateStatusesRequest implements StoreSpreadsheet
 	public function validations()
 	{
 		return [
-            $this->key => [new StatusTypes]
+            $this->key => [new StatusTypes($this->row)]
         ];
 	}
 
