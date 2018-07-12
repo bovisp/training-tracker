@@ -1,0 +1,55 @@
+<?php
+
+namespace TrainingTracker\Http\UserLessons\Controllers;
+
+use TrainingTracker\App\Controllers\Controller;
+use TrainingTracker\Domains\UserLessons\UserLesson;
+use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Http\UserLessons\Classes\UpdateUserLesson;
+
+class UserLessonsController extends Controller
+{
+    /**
+     * Display the specified resource.
+     *
+     * @param  \TrainingTracker\UserLesson  $userLesson
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user, UserLesson $userlesson)
+    {
+        return view('userlessons.show', compact('userlesson', 'user'));
+    }
+
+    public function update(User $user, UserLesson $userlesson)
+    {
+        $res = (new UpdateUserLesson($user, $userlesson))
+            ->update($user, $userlesson);
+
+        if (count($res)) {
+            return response()->json(['errors' => $res], 422);
+        } else {
+            return response()->json([
+                'flash' => 'Lesson package update successfully.'
+            ]);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \TrainingTracker\UserLesson  $userLesson
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user, UserLesson $userlesson)
+    {
+        $userlesson->delete();
+
+        return redirect()
+            ->route('users.show', ['user' => $user->id])
+            ->with([
+                'flash' => [
+                    'message' => 'Lesson package successfully deleted.'
+                ]
+            ]);
+    }
+}

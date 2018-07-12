@@ -105,6 +105,76 @@
 				</div>
 
 				<div class="field">
+					<p>
+						<strong>Period(s) in which this training should be iniated:</strong>
+					</p>
+
+					<label class="checkbox is-block mt-2">
+						<input 
+							type="checkbox" 
+							name="p9" 
+							value="1" 
+							{{ old('p9') ? 'checked' : '' }}
+						>
+						Early EG-03 (0-9 months)
+					</label>
+
+					<label class="checkbox is-block mt-2">
+						<input 
+							type="checkbox" 
+							name="p18" 
+							value="1"
+							{{ old('p18') ? 'checked' : '' }}
+						>
+						Early EG-03 (9-18 months)
+					</label>
+
+					<label class="checkbox is-block mt-2">
+						<input 
+							type="checkbox" 
+							name="p30" 
+							value="1"
+							{{ old('p30') ? 'checked' : '' }}
+						>
+						Early EG-04 (18-30 months)
+					</label>
+
+					<label class="checkbox is-block mt-2">
+						<input 
+							type="checkbox" 
+							name="p42" 
+							value="1"
+							{{ old('p42') ? 'checked' : '' }}
+						>
+						Early EG-04 (30-42 months)
+					</label>
+
+					@if ($errors->any() && $errors->has('p9'))
+
+						<p class="help is-danger">{{ ($errors->get('p9'))[0] }}</p>
+
+					@endif
+
+					@if ($errors->any() && $errors->has('p18'))
+
+						<p class="help is-danger">{{ ($errors->get('p18'))[0] }}</p>
+
+					@endif
+
+					@if ($errors->any() && $errors->has('p30'))
+
+						<p class="help is-danger">{{ ($errors->get('p30'))[0] }}</p>
+
+					@endif
+
+					@if ($errors->any() && $errors->has('p42'))
+
+						<p class="help is-danger">{{ ($errors->get('p42'))[0] }}</p>
+
+					@endif
+				</div>
+
+				<div class="field">
 					<div class="control">
 						<button class="button is-link">Add lesson</button>
 					</div>

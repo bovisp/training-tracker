@@ -4,7 +4,9 @@ namespace TrainingTracker\Http\Users\Requests;
 
 use Illuminate\Support\Facades\Validator;
 use TrainingTracker\App\Interfaces\StoreSpreadsheet;
+use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\Supervisors\Supervisor;
+use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
 
 class StoreUsersSpreadsheet implements StoreSpreadsheet
@@ -58,6 +60,10 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
             	'user_id' => $user->id 
             ]);
         }
+
+        if ($user->hasRole('apprentice')) {
+            $this->createLessons($user);
+        }
 	}
 
 	public function messages ()
@@ -74,7 +80,6 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
 	public function validations()
 	{
 		return [
-            // 'username' => 'unique:users,username,NULL,id,test,' . $result["test"]
             'id' => 'required|exists:mysql2.mdl_user,id|unique:users,moodle_id',
             'role' => 'required|exists:roles,type'
         ];
@@ -91,5 +96,15 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
             "errors" => $validator->errors()->toArray(),
             "data" => $row
         ];
+	}
+
+	protected function createLessons($user)
+	{
+		foreach (Lesson::whereDepricated(0)->get() as $lesson) {
+            UserLesson::create([
+                'user_id' => $user->id,
+                'lesson_id' => $lesson->id
+            ]);
+        }
 	}
 }

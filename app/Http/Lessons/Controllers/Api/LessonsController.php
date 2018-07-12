@@ -15,7 +15,7 @@ class LessonsController extends DatatablesController
 
     public function getDisplayableColumns()
     {
-        return ['id', 'topic_id', 'number', 'name'];
+        return ['id', 'topic_id', 'number', 'name', 'depricated'];
     }
 
     public function index()
@@ -37,7 +37,8 @@ class LessonsController extends DatatablesController
                 'id' => $lesson->id,
                 'topic' => $lesson->topic->number,
                 'number' => $lesson->number,
-                'name' => $lesson->name
+                'name' => $lesson->name,
+                'depricated' => $lesson->depricated === 0 ? 'No' : 'Yes'
             ];
         }
 

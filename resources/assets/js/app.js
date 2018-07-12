@@ -3,6 +3,7 @@ require('./bootstrap');
 import Vue from 'vue';
 import Buefy from 'buefy'
 import fecha from 'fecha'
+import store from './store'
 
 Vue.use(Buefy, {
 	defaultToastDuration: 5000
@@ -60,6 +61,9 @@ Vue.component('datatable', require('./components/Datatable.vue'));
 Vue.component('user-errors', require('./components/UserErrors.vue'));
 Vue.component('appointment-date', require('./components/AppointmentDate.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
+Vue.component('unassigned-user-lessons', require('./components/UnassignedUserLessons.vue'));
+Vue.component('user-lesson', require('./components/userlessons/UserLesson.vue'));
+Vue.component('user-lesson-status', require('./components/userlessons/UserLessonStatus.vue'));
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view
@@ -68,5 +72,6 @@ Vue.component('flash', require('./components/Flash.vue'));
  * @type {Vue}
  */
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store
 });

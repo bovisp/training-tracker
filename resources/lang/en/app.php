@@ -27,6 +27,9 @@ return [
         'rank'=> 'Rank',
         'number'=> 'Number',
         'topic' => 'Topic',
-        'lesson' => 'Lesson'
+        'lesson' => 'Lesson',
+        'package' => 'Lesson Package',
+        'completed' => 'Completed',
+        'depricated' => 'Depricated',
     ],
 ];
