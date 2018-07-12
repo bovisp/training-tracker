@@ -88,6 +88,10 @@ Route::middleware(['profile'])->group(function () {
 
 		Route::get('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@show')
 			->name('userlessons.show');
+
+		Route::get('/userlessons/{userlesson}/api', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@getUserLesson');
+
+		Route::put('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@update');
 	});
 });
 

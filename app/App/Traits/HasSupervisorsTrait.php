@@ -119,4 +119,15 @@ trait HasSupervisorsTrait
             }
         });
     }
+
+    public function hasThisSupervisorWithRoleOf($arr)
+    {
+        return count(
+            array_filter($arr, function($role) {
+                return in_array(
+                    (string) moodleauth()->id(), array_column($this->usersSupervisors($this)[$role], 'id')
+                );
+            })
+        );
+    }
 }

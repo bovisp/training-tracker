@@ -3,7 +3,7 @@
 @section('content')
 
 	<div class="columns is-centered">
-		<div class="column is-three-quarters-tablet is-half-desktop">
+		<div class="column">
 			<p>
 				<strong>Lesson package:</strong>
 
@@ -16,6 +16,11 @@
 
 				{{ $user->moodleuser->firstname }} {{ $user->moodleuser->lastname }}
 			</p>
+
+			<user-lesson 
+				:user-lesson="{{ $userlesson }}"
+				:user="{{ $user }}"
+			></user-lesson>
 
 			<div class="divider divider--relaxed"></div>
 

@@ -20,8 +20,6 @@ class UserLessonsController extends DatatablesController
         return ['id'];
     }
 
-    
-
     public function getUserLessons(User $user)
     {
         return response()->json([
@@ -30,6 +28,36 @@ class UserLessonsController extends DatatablesController
                 'displayable' => $this->getDisplayableColumns(),
             ]
         ]); 
+    }
+
+    public function getUserLesson(User $user, UserLesson $userlesson)
+    {
+        $userlesson = $userlesson->whereId($userlesson->id)
+            ->with('lesson.topic')
+            ->first();
+
+        $user = $user->whereId($user->id)
+            ->with('moodleuser')
+            ->first();
+
+        return [
+            'userlesson' => [
+                'id' => $userlesson->id,
+                'lesson' => $userlesson->lesson,
+                'topic' => $userlesson->lesson->topic,
+                'status' => [
+                    'p9' => $userlesson->p9,
+                    'p18' => $userlesson->p18,
+                    'p30' => $userlesson->p30,
+                    'p42' => $userlesson->p42
+                ]
+            ],
+            'user' => [
+                'id' => $user->id,
+                'firstname' => $user->firstname,
+                'lastname' => $user->lastname
+            ]
+        ];
     }
 
     protected function getLessonRecords(User $user)

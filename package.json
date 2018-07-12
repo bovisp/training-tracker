@@ -13,7 +13,8 @@
         "axios": "^0.17",
         "cross-env": "^5.1",
         "laravel-mix": "^1.0",
-        "vue": "^2.5.7"
+        "vue": "^2.5.7",
+        "vuex": "^3.0.1"
     },
     "dependencies": {
         "buefy": "^0.6.5",

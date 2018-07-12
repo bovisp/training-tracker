@@ -23,5 +23,6 @@ export default class Error {
 
     record(errors) {
         this.errors = errors;
+        console.log(errors)
     }
 }

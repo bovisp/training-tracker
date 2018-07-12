@@ -42,7 +42,7 @@ class CanViewProfile
 
     protected function userIdFromRequest()
     {
-        return (int) array_values(array_slice(explode("/", request()->url()), -1))[0];
+        return (int) explode("/", request()->url())[4];
     }
 
     protected function authenticatedUsersProfile() {
