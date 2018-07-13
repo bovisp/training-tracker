@@ -7,6 +7,7 @@ use TrainingTracker\App\Traits\HasPermissionsTrait;
 use TrainingTracker\App\Traits\HasSupervisorsTrait;
 use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\MoodleUsers\MoodleUser;
+use TrainingTracker\Domains\Objectives\Objective;
 use TrainingTracker\Domains\Supervisors\Supervisor;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
@@ -145,6 +146,25 @@ class User extends Authenticatable
         }
 
         return count($this->getUnassignedUserLessons()) > 0;
+    }
+
+    public function objectives()
+    {
+        return $this->belongsToMany(Objective::class, 'users_objectives');
+    }
+
+    public function completedObjectives()
+    {
+        return $this->objectives()
+            ->pluck('objective_id')
+            ->toArray();
+    }
+
+    public function updateObjectives($allObjectives, $newobjectives)
+    {
+        $this->objectives()->detach($allObjectives);
+
+        $this->objectives()->attach($newobjectives);
     }
 
     public function getFirstnameAttribute()

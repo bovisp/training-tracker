@@ -20774,8 +20774,16 @@ a.has-text-danger:focus {
   margin-top: 1.5rem;
 }
 
+.mt-16 {
+  margin-top: 4rem !important;
+}
+
 .mb-0 {
   margin-bottom: 0 !important;
+}
+
+.mb-4 {
+  margin-bottom: 1rem !important;
 }
 
 .ml-auto {

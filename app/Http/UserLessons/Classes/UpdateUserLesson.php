@@ -5,6 +5,7 @@ namespace TrainingTracker\Http\UserLessons\Classes;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\UserLessons\Requests\UpdateStatusesRequest;
+use TrainingTracker\Http\UserLessons\Requests\UpdateObjectivesRequest;
 
 class UpdateUserLesson {
 	protected $user;
@@ -12,15 +13,10 @@ class UpdateUserLesson {
 	protected $userlesson;
 
 	protected $methods = [
-		'administrator' => ['statuses'],
-		'manager' => ['statuses'],
-		'head_of_operations' => ['statuses']
+		'administrator' => ['statuses', 'objectives'],
+		'manager' => ['statuses', 'objectives'],
+		'head_of_operations' => ['statuses', 'objectives']
 	];
-	// protected $methods = [
-	// 	'administrator' => ['statuses', 'objectives', 'comment', 'completed'],
-	// 	'manager' => ['statuses', 'objectives', 'comment', 'completed'],
-	// 	'head_of_operations' => ['statuses', 'objectives', 'comment']
-	// ];
 
 	public function __construct(User $user, UserLesson $userlesson)
 	{
@@ -49,9 +45,7 @@ class UpdateUserLesson {
 			$actionClass = 'TrainingTracker\Http\UserLessons\Requests\Update' . ucfirst($action) . 'Request';
 
 			$classErrors = (new $actionClass(request($action), $userlesson))->validate();
-
-			$errors = [];
-			
+	
 			if (count($classErrors)) {
 				foreach ($classErrors as $error) {
 					$errors[key($error['errors'])] = current($error['errors']);

@@ -125,7 +125,6 @@
 </template>
 
 <script>
-	import { mapState } from 'vuex'
 	import Error from '../../classes/Error'
 
 	export default {
@@ -193,17 +192,6 @@
 					return this.$store.state.userlessons.userlesson.lesson.p42
 				}
 			}
-			// ...mapState({
-			// 	lessonPeriods: state => {
-			// 		console.log(this.$store.state.userlessons.userlesson)
-			// 		return {
-			// 			p9: state.userlessons.userlesson.lesson.p9,
-			// 			p18: state.userlessons.userlesson.lesson.p18,
-			// 			p30: state.userlessons.userlesson.lesson.p30,
-			// 			p42: state.userlessons.userlesson.lesson.p42
-			// 		}
-			// 	}
-			// })
 		},
 
 		mounted () {

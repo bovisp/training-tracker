@@ -25,3 +25,7 @@ export function updateP30 (state, payload) {
 export function updateP42 (state, payload) {
 	state.userlesson.status.p42 = payload
 }
+
+export function updateCompletedObjectives (state, payload) {
+	state.userlesson.completedObjectives = payload
+}

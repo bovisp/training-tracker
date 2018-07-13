@@ -64,6 +64,7 @@ Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('unassigned-user-lessons', require('./components/UnassignedUserLessons.vue'));
 Vue.component('user-lesson', require('./components/userlessons/UserLesson.vue'));
 Vue.component('user-lesson-status', require('./components/userlessons/UserLessonStatus.vue'));
+Vue.component('user-lesson-objectives', require('./components/userlessons/UserLessonObjectives.vue'));
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view

@@ -11,8 +11,10 @@ export default {
 			p18: '',
 			p30: '',
 			p42: ''
-		}
+		},
+		objectives: {}
 	},
+	// userleson: {},
 	user: {},
 	isLoading: true
 }

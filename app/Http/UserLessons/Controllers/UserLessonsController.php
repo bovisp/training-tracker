@@ -25,9 +25,9 @@ class UserLessonsController extends Controller
         $res = (new UpdateUserLesson($user, $userlesson))
             ->update();
 
-        if (count($res) && !array_key_exists('denied', $res['errors'])) {
+        if (count($res) && !array_key_exists('errors', $res)) {
             return response()->json(['errors' => $res], 422);
-        } else if (count($res) && array_key_exists('denied', $res['errors'])) {
+        } else if (count($res) && array_key_exists('errors', $res)) {
             return response()->json(['errors' => $res], 403);
         } else {
             return response()->json([

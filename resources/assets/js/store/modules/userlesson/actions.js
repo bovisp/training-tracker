@@ -33,6 +33,16 @@ export function updateLessonPackage({ state, commit }) {
 
 	return axios.put(
 		`/users/${state.user.id}/userlessons/${state.userlesson.id}`,
-		{statuses: state.userlesson.status}
+		{
+			statuses: state.userlesson.status,
+			objectives: state.userlesson.completedObjectives
+			// statuses: {
+			// 	p9: 'o',
+			// 	p18: 'o',
+			// 	p30: 'o',
+			// 	p42: 'o'
+			// },
+			// objectives: [ 99999999, 10000000]
+		}
 	)
 }

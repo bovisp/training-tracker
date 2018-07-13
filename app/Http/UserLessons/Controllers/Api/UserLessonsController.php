@@ -50,7 +50,9 @@ class UserLessonsController extends DatatablesController
                     'p18' => $userlesson->p18,
                     'p30' => $userlesson->p30,
                     'p42' => $userlesson->p42
-                ]
+                ],
+                'objectives' => $userlesson->lesson->objectives,
+                'completedObjectives' => $user->completedObjectives()
             ],
             'user' => [
                 'id' => $user->id,

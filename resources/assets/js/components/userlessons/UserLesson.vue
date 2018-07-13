@@ -21,6 +21,8 @@
 		</div>
 
 		<user-lesson-status v-if="!isLoading"></user-lesson-status>
+
+		<user-lesson-objectives v-if="!isLoading"></user-lesson-objectives>
 	</div>
 </template>
 
@@ -62,6 +64,7 @@
 					.catch(error => {
 						if (error.status === 422) {
 						 	window.events.$emit('status-errors', error.data.errors)
+						 	window.events.$emit('objective-errors', error.data.errors)
 	                    }
 
 	                    if (error.status === 403) {
