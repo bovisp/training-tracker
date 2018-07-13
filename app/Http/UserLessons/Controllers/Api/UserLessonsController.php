@@ -52,6 +52,7 @@ class UserLessonsController extends DatatablesController
                     'p42' => $userlesson->p42
                 ],
                 'objectives' => $userlesson->lesson->objectives,
+                'notebooks' => ($userlesson->lesson->objectives)->where('notebook_required', 1),
                 'completedObjectives' => $user->completedObjectives()
             ],
             'user' => [

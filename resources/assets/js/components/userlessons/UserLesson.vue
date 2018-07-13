@@ -23,6 +23,8 @@
 		<user-lesson-status v-if="!isLoading"></user-lesson-status>
 
 		<user-lesson-objectives v-if="!isLoading"></user-lesson-objectives>
+
+		<user-lesson-notebooks v-if="!isLoading"></user-lesson-notebooks>
 	</div>
 </template>
 

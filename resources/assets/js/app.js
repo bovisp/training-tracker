@@ -65,6 +65,7 @@ Vue.component('unassigned-user-lessons', require('./components/UnassignedUserLes
 Vue.component('user-lesson', require('./components/userlessons/UserLesson.vue'));
 Vue.component('user-lesson-status', require('./components/userlessons/UserLessonStatus.vue'));
 Vue.component('user-lesson-objectives', require('./components/userlessons/UserLessonObjectives.vue'));
+Vue.component('user-lesson-notebooks', require('./components/userlessons/UserLessonNotebooks.vue'));
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view

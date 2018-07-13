@@ -511,6 +511,56 @@ module.exports = g;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Error = function () {
+    function Error() {
+        _classCallCheck(this, Error);
+
+        this.errors = {};
+    }
+
+    _createClass(Error, [{
+        key: "get",
+        value: function get(field) {
+            if (this.errors[field]) {
+                return this.errors[field][0];
+            }
+        }
+    }, {
+        key: "has",
+        value: function has(field) {
+            return this.errors.hasOwnProperty(field);
+        }
+    }, {
+        key: "any",
+        value: function any() {
+            return Object.keys(this.errors).length > 0;
+        }
+    }, {
+        key: "clear",
+        value: function clear(field) {
+            delete this.errors[field];
+        }
+    }, {
+        key: "record",
+        value: function record(errors) {
+            this.errors = errors;
+        }
+    }]);
+
+    return Error;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Error);
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -608,56 +658,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Error = function () {
-    function Error() {
-        _classCallCheck(this, Error);
-
-        this.errors = {};
-    }
-
-    _createClass(Error, [{
-        key: "get",
-        value: function get(field) {
-            if (this.errors[field]) {
-                return this.errors[field][0];
-            }
-        }
-    }, {
-        key: "has",
-        value: function has(field) {
-            return this.errors.hasOwnProperty(field);
-        }
-    }, {
-        key: "any",
-        value: function any() {
-            return Object.keys(this.errors).length > 0;
-        }
-    }, {
-        key: "clear",
-        value: function clear(field) {
-            delete this.errors[field];
-        }
-    }, {
-        key: "record",
-        value: function record(errors) {
-            this.errors = errors;
-        }
-    }]);
-
-    return Error;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (Error);
 
 /***/ }),
 /* 5 */
@@ -15609,6 +15609,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('unassigned-user-lessons',
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-lesson', __webpack_require__(64));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-lesson-status', __webpack_require__(67));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-lesson-objectives', __webpack_require__(70));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-lesson-notebooks', __webpack_require__(79));
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view
@@ -15658,7 +15659,7 @@ module.exports = __webpack_require__(18);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(5);
 var Axios = __webpack_require__(20);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 
 /**
  * Create an instance of Axios
@@ -15741,7 +15742,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(29);
 var dispatchRequest = __webpack_require__(30);
@@ -16282,7 +16283,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(31);
 var isCancel = __webpack_require__(9);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(4);
 var isAbsoluteURL = __webpack_require__(32);
 var combineURLs = __webpack_require__(33);
 
@@ -17257,6 +17258,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (immutable) */ __webpack_exports__["updateCompletedObjectives"] = updateCompletedObjectives;
 function initializeUserLesson(state, payload) {
 	state.userlesson = payload;
+	console.log(state.userlesson);
 }
 
 function initializeUser(state, payload) {
@@ -18344,7 +18346,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Error__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Error__ = __webpack_require__(3);
 //
 //
 //
@@ -18725,7 +18727,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_orderby__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_orderby___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash_orderby__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Error__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__classes_Error__ = __webpack_require__(3);
 //
 //
 //
@@ -19256,6 +19258,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -19363,7 +19367,9 @@ var render = function() {
       _vm._v(" "),
       !_vm.isLoading ? _c("user-lesson-status") : _vm._e(),
       _vm._v(" "),
-      !_vm.isLoading ? _c("user-lesson-objectives") : _vm._e()
+      !_vm.isLoading ? _c("user-lesson-objectives") : _vm._e(),
+      _vm._v(" "),
+      !_vm.isLoading ? _c("user-lesson-notebooks") : _vm._e()
     ],
     1
   )
@@ -19431,7 +19437,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Error__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Error__ = __webpack_require__(3);
 //
 //
 //
@@ -20015,7 +20021,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Error__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classes_Error__ = __webpack_require__(3);
 //
 //
 //
@@ -20180,6 +20186,161 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(80)
+/* template */
+var __vue_template__ = __webpack_require__(81)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\userlessons\\UserLessonNotebooks.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8197b43c", Component.options)
+  } else {
+    hotAPI.reload("data-v-8197b43c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	computed: {
+		notebooks: {
+			get: function get() {
+				return this.$store.state.userlessons.userlesson.notebooks;
+			}
+		}
+	}
+});
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h3", { staticClass: "title is-3 mt-16" }, [
+      _vm._v("\n\t\tNotebooks\n\t")
+    ]),
+    _vm._v(" "),
+    _c(
+      "ul",
+      { staticClass: "box" },
+      _vm._l(_vm.notebooks, function(notebook, index) {
+        return _c("li", { key: notebook.id }, [
+          _c("p", [
+            _c("strong", [_vm._v(_vm._s(notebook.number))]),
+            _vm._v(" - " + _vm._s(notebook.name) + "\n\t\t\t")
+          ]),
+          _vm._v(" "),
+          _vm._m(0, true),
+          _vm._v(" "),
+          index !== _vm.notebooks.length - 1 ? _c("hr") : _vm._e()
+        ])
+      })
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-4" }, [
+      _c("button", { staticClass: "button is-info is-small" }, [
+        _vm._v("\n\t\t\t\t\tEdit notebook\n\t\t\t\t")
+      ]),
+      _vm._v(" "),
+      _c("small", { staticClass: "has-text-grey" }, [
+        _vm._v(
+          "\n\t\t\t\t\tEntries: 0 | Last modified by: Some person\n\t\t\t\t"
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-8197b43c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

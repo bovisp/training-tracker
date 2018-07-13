@@ -1,5 +1,6 @@
 export function initializeUserLesson (state, payload) {
 	state.userlesson = payload
+	console.log(state.userlesson)
 }
 
 export function initializeUser (state, payload) {
