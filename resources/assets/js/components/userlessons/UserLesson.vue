@@ -25,14 +25,33 @@
 		<user-lesson-objectives v-if="!isLoading"></user-lesson-objectives>
 
 		<user-lesson-notebooks v-if="!isLoading"></user-lesson-notebooks>
+
+		<h3 class="title is-3 mt-16">
+			Comments
+		</h3>
+
+		<comments :endpoint="commentEndpoint" />
+
+		<h3 class="title is-3 mt-16">
+			Final evaluation
+		</h3>
 	</div>
 </template>
 
 <script>
 	import { mapState, mapActions } from 'vuex'
+	import UserLessonStatus from './UserLessonStatus'
+	import UserLessonObjectives from './UserLessonObjectives'
+	import UserLessonNotebooks from './UserLessonNotebooks'
 
 	export default {
 		props: ['userLesson', 'user'],
+
+		components: {
+			UserLessonStatus,
+			UserLessonObjectives,
+			UserLessonNotebooks
+		},
 
 		data () {
 			return {
@@ -45,7 +64,11 @@
 			...mapState({
 				status: state => state.userlesson.status,
 				isLoading: state => state.isLoading
-			})
+			}),
+
+			commentEndpoint () {
+				return `/users/${this.user.id}/userlessons/${this.userLesson.id}/comments`
+			}
 		},
 
 		methods: {

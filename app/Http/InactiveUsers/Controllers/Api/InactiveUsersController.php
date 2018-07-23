@@ -2,45 +2,33 @@
 
 namespace TrainingTracker\Http\InactiveUsers\Controllers\Api;
 
-use TrainingTracker\App\Controllers\DatatablesController;
+use Illuminate\Routing\Controller;
 use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Http\InactiveUsers\Resources\InactiveUserResource;
 
-class InactiveUsersController extends DatatablesController
+class InactiveUsersController extends Controller
 {
-
-	public function builder()
-    {
-        return User::query();
-    }
-
-    public function getDisplayableColumns()
-    {
-        return ['id'];
-    }
-
     public function index()
     {
-        return response()->json([
-            'data' => [
-                'records' => $this->getRecords(),
-                'displayable' => $this->getDisplayableColumns(),
+        return [
+            'records' => InactiveUserResource::collection(User::whereActive(0)->get()),
+            'meta' => [
+                'displayable' => [
+                    ['key' => 'firstname', 'title' => 'First name'],
+                    ['key' => 'lastname', 'title' => 'Last name'],
+                    ['key' => 'email', 'title' => 'E-mail']
+                ],
+                'orderby' => [
+                    ['key' => 'lastname', 'dir' => 'desc'],
+                    ['key' => 'firstname', 'dir' => 'desc']
+                ],
+                'actionButton' => [
+                    'active' => true,
+                    'endpoint' => '/users/',
+                    'endpointSuffix' => '',
+                    'text' => 'Profile'
+                ]
             ]
-        ]); 
-    }
-
-    protected function getRecords()
-    {
-        $users = [];
-
-        foreach(User::inactive() as $user) {
-            $users[] = [
-                'id' => $user->id,
-                'firstname' => $user->firstname,
-                'lastname' => $user->lastname,
-                'email' => $user->email
-            ];
-        }
-
-        return $users;
+        ];
     }
 }

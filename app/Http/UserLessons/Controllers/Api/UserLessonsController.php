@@ -32,6 +32,10 @@ class UserLessonsController extends DatatablesController
 
     public function getUserLesson(User $user, UserLesson $userlesson)
     {
+        if (!$user->hasThisSupervisorWithRoleOf(['supervisor', 'head_of_operations', 'manager'])) {
+            abort(403, 'You are not authorized to view this lesson package');
+        }
+
         $userlesson = $userlesson->whereId($userlesson->id)
             ->with('lesson.topic')
             ->first();
@@ -58,7 +62,10 @@ class UserLessonsController extends DatatablesController
             'user' => [
                 'id' => $user->id,
                 'firstname' => $user->firstname,
-                'lastname' => $user->lastname
+                'lastname' => $user->lastname,
+            ],
+            'auth' => [
+                'role' => moodleauth()->user()->roles->first()->type
             ]
         ];
     }

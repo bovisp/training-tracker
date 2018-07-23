@@ -20786,11 +20786,19 @@ a.has-text-danger:focus {
   margin-bottom: 1rem !important;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem !important;
+}
+
 .ml-auto {
   margin-left: auto;
 }
 
 .ml-4 {
   margin-left: 1rem;
+}
+
+.mr-4 {
+  margin-right: 1rem;
 }
 

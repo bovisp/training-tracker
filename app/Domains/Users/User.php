@@ -5,6 +5,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use TrainingTracker\App\Traits\HasPermissionsTrait;
 use TrainingTracker\App\Traits\HasSupervisorsTrait;
+use TrainingTracker\Domains\Comments\Comment;
 use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\MoodleUsers\MoodleUser;
 use TrainingTracker\Domains\Objectives\Objective;
@@ -56,25 +57,6 @@ class User extends Authenticatable
     public function userlessons()
     {
         return $this->hasMany(UserLesson::class);
-    }
-
-    /**
-     * Get all active employees.
-     * 
-     * @return model \TrainingTracker\Domains\Users\User
-     */
-    public static function active()
-    {
-        return self::select('id')
-            ->where('active', 1)
-            ->get();
-    }
-
-    public static function inactive()
-    {
-        return self::select('id')
-            ->where('active', 0)
-            ->get();
     }
 
     public static function notIn()
@@ -194,5 +176,10 @@ class User extends Authenticatable
         return MoodleUser::whereId($user->moodle_id)
             ->first()
             ->{$column};
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

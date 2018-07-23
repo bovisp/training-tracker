@@ -12,7 +12,7 @@
 
 				<div class="mt-4">
 					<button class="button is-info is-small">
-						Edit notebook
+						Edit logbook
 					</button>
 
 					<small class="has-text-grey">

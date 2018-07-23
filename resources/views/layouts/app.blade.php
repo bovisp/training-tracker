@@ -16,6 +16,12 @@
             window.App = {
                 'lang': '{{ app()->getLocale() }}'
             };
+
+            window.User = {
+                'name': '{{ moodleauth()->user()->moodleuser->firstname }} {{ moodleauth()->user()->moodleuser->lastname }}',
+                'id': '{{ moodleauth()->id() }}',
+                'role': '{{ moodleauth()->user()->roles->first()->type }}'
+            };
         </script>
     </head>
     <body>

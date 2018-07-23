@@ -95,6 +95,10 @@ trait HasSupervisorsTrait
 
     public function isSupervisedBy()
     {
+        if (moodleauth()->user()->roles->first()->type === 'administrator') {
+            return true;
+        }
+
     	$supervisor = Supervisor::where('user_id', moodleauth()->user()->id)->first();
 
     	return $this->supervisors->contains($supervisor);
@@ -122,6 +126,10 @@ trait HasSupervisorsTrait
 
     public function hasThisSupervisorWithRoleOf($arr)
     {
+        if (moodleauth()->user()->roles->first()->type === 'administrator') {
+            return true;
+        }
+        
         return count(
             array_filter($arr, function($role) {
                 return in_array(

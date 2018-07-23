@@ -1,10 +1,13 @@
 export function initializeUserLesson (state, payload) {
 	state.userlesson = payload
-	console.log(state.userlesson)
 }
 
 export function initializeUser (state, payload) {
 	state.user = payload
+}
+
+export function initializeAuth (state, payload) {
+	state.auth = payload
 }
 
 export function loadStatus (state, payload) {

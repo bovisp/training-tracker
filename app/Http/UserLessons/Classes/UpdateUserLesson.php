@@ -14,8 +14,9 @@ class UpdateUserLesson {
 
 	protected $methods = [
 		'administrator' => ['statuses', 'objectives'],
-		'manager' => ['statuses', 'objectives'],
-		'head_of_operations' => ['statuses', 'objectives']
+		'manager' => [],
+		'head_of_operations' => ['statuses', 'objectives'],
+		'supervisor' => ['statuses', 'objectives']
 	];
 
 	public function __construct(User $user, UserLesson $userlesson)

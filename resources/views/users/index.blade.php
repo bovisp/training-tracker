@@ -15,14 +15,10 @@
 				</div>
 			</div>
 
-			<datatable 
+			<data-table 
 				endpoint="{{ route('users.index.api') }}"
-				:custom-headers="['id', 'firstname', 'lastname', 'email', 'role']"
-				:action-button="true"
-				action-button-endpoint="/users/"
-				action-button-text="Profile"
 			>
-			</datatable>
+			</data-table>
 		</div>
 	</div>
 

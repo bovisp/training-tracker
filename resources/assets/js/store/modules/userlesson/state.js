@@ -14,7 +14,7 @@ export default {
 		},
 		objectives: {}
 	},
-	// userleson: {},
 	user: {},
+	auth: {},
 	isLoading: true
 }

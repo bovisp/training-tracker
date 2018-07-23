@@ -2,46 +2,32 @@
 
 namespace TrainingTracker\Http\Lessons\Controllers\Api;
 
-use TrainingTracker\App\Controllers\DatatablesController;
+use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Lessons\Lesson;
+use TrainingTracker\Http\Lessons\Resources\LessonResource;
 
-
-class LessonsController extends DatatablesController
+class LessonsController extends Controller
 {
-	public function builder()
-    {
-        return Lesson::query();
-    }
-
-    public function getDisplayableColumns()
-    {
-        return ['id', 'topic_id', 'number', 'name', 'depricated'];
-    }
-
     public function index()
     {
-        return response()->json([
-            'data' => [
-                'records' => $this->getRecords(),
-                'displayable' => $this->getDisplayableColumns(),
+        return [
+            'records' => LessonResource::collection(Lesson::all()),
+            'meta' => [
+                'displayable' => [
+                    ['key' => 'lesson', 'title' => 'Lesson'],
+                    ['key' => 'name', 'title' => 'Name'],
+                    ['key' => 'depricated', 'title' => 'Depricated']
+                ],
+                'orderby' => [
+                    ['key' => 'lesson', 'dir' => 'asc']
+                ],
+                'actionButton' => [
+                    'active' => true,
+                    'endpoint' => '/lessons/',
+                    'endpointSuffix' => '/edit',
+                    'text' => 'Edit'
+                ]
             ]
-        ]); 
-    }
-
-    protected function getRecords()
-    {
-        $lessons = [];
-
-        foreach(Lesson::with('topic')->get() as $lesson) {
-            $lessons[] = [
-                'id' => $lesson->id,
-                'topic' => $lesson->topic->number,
-                'number' => $lesson->number,
-                'name' => $lesson->name,
-                'depricated' => $lesson->depricated === 0 ? 'No' : 'Yes'
-            ];
-        }
-
-        return $lessons;
+        ];
     }
 }

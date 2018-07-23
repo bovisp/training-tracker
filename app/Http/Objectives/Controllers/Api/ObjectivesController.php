@@ -2,45 +2,33 @@
 
 namespace TrainingTracker\Http\Objectives\Controllers\Api;
 
-use TrainingTracker\App\Controllers\DatatablesController;
+use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Objectives\Objective;
+use TrainingTracker\Http\Objectives\Resources\ObjectiveResource;
 
-class ObjectivesController extends DatatablesController
+class ObjectivesController extends Controller
 {
-	public function builder()
+	public function index()
     {
-        return Objective::query();
-    }
-
-    public function getDisplayableColumns()
-    {
-        return ['id', 'topic_id', 'number', 'name'];
-    }
-
-    public function index()
-    {
-        return response()->json([
-            'data' => [
-                'records' => $this->getRecords(),
-                'displayable' => $this->getDisplayableColumns(),
+        return [
+            'records' => ObjectiveResource::collection(Objective::all()),
+            'meta' => [
+                'displayable' => [
+                    ['key' => 'lesson', 'title' => 'Lesson'],
+                    ['key' => 'objective', 'title' => 'Objective'],
+                    ['key' => 'description', 'title' => 'Description']
+                ],
+                'orderby' => [
+                    ['key' => 'lesson', 'dir' => 'asc'],
+                    ['key' => 'number', 'dir' => 'asc']
+                ],
+                'actionButton' => [
+                    'active' => true,
+                    'endpoint' => '/objectives/',
+                    'endpointSuffix' => '/edit',
+                    'text' => 'Edit'
+                ]
             ]
-        ]); 
-    }
-
-    protected function getRecords()
-    {
-        $objectives = [];
-
-        foreach(Objective::with('lesson.topic')->get() as $objective) {
-            $objectives[] = [
-                'id' => $objective->id,
-                'topic' => $objective->lesson->topic->number,
-                'lesson' => $objective->lesson->number,
-                'number' => $objective->number,
-                'name' => $objective->name
-            ];
-        }
-
-        return $objectives;
+        ];
     }
 }

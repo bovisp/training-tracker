@@ -6,6 +6,7 @@ export function loadState({ commit }, { userlesson, user }) {
 			return new Promise((resolve, reject) => {
 				commit('initializeUserLesson', data.userlesson)
 				commit('initializeUser', data.user)
+				commit('initializeAuth', data.auth)
 				resolve()
 			})
 		})
