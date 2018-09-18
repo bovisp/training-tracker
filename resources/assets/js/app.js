@@ -67,7 +67,7 @@ Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('unassigned-user-lessons', require('./components/UnassignedUserLessons.vue'));
 Vue.component('user-lesson', require('./components/userlessons/UserLesson.vue'));
 Vue.component('comments', require('./components/comments/Comments.vue'));
-Vue.component('user-create', require('./components/usercreate/UserCreate.vue'))
+Vue.component('user-errors', require('./components/UserErrors.vue'));
 
 Vue.mixin(user)
 

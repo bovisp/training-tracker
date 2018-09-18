@@ -20,7 +20,7 @@ class ObjectivesController extends Controller
                 ],
                 'orderby' => [
                     ['key' => 'lesson', 'dir' => 'asc'],
-                    ['key' => 'number', 'dir' => 'asc']
+                    ['key' => 'objective', 'dir' => 'asc']
                 ],
                 'actionButton' => [
                     'active' => true,

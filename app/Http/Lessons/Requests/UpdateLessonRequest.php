@@ -25,7 +25,7 @@ class UpdateLessonRequest extends FormRequest
     public function rules()
     {
         return [
-            'topic_id' => 'required|integer|min:0|exists:topics,number',
+            'topic_id' => 'required|integer|min:0|exists:topics,id',
             'number' => 'required|min:0|integer',
             'name_en' => 'required|min:3',
             'name_fr' => 'required|min:3',

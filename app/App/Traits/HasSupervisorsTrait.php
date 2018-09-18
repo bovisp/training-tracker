@@ -2,140 +2,98 @@
 
 namespace TrainingTracker\App\Traits;
 
-use TrainingTracker\Domains\Roles\Role;
 use TrainingTracker\Domains\Supervisors\Supervisor;
+use TrainingTracker\Domains\Users\User;
 
 trait HasSupervisorsTrait
 {
-    public $superviseesArray = [];
+    protected $employeeArr = [];
 
-	public function supervisors()
+    protected $supervisorArr = [];
+
+    public function supervisor()
+    {
+        return $this->hasOne(Supervisor::class);
+    }
+
+    public function supervisors()
     {
         return $this->belongsToMany(Supervisor::class, 'users_supervisors');
     }
 
-    public function canSupervise()
+    public function reportingStructure()
     {
-        return Role::whereRank($this->roles()->first()->rank + 1)->exists();
-    }
-
-    public function employeeRoles()
-    {
-        return Role::where('rank', '>', $this->roles()->first()->rank)
-            ->get()
-            ->pluck('type')
-            ->toArray();
-    }
-
-    public function isSupervised()
-    {
-    	return Role::whereRank($this->roles()->first()->rank - 1)->exists();
-    }
-
-    public function supervisorRoles()
-    {
-        return Role::where('rank', '<', $this->roles()->first()->rank)
-            ->get()
-            ->pluck('type')
-            ->toArray();
-    }
-
-    public function directlyManagesRole()
-    {
-        if (!Role::whereRank($this->roles()->first()->rank + 1)->exists()) {
-            return '';
+        if ($this->hasAnyReportingStructure() === true) {
+            return collect();
         }
 
-        return Role::whereRank($this->roles()->first()->rank + 1)
-            ->first()
-            ->type;
+        if (optional($this->supervisors)->count() === 0) {
+            $this->getEmployees();
+
+            return collect($this->employeeArr);
+        }
+
+        if (optional($this->supervisor)->users === null) {
+            $this->getSupervisors();
+
+            return collect($this->supervisorArr);
+        }
+
+        $this->getEmployees();
+
+        $this->getSupervisors();
+
+        return collect($this->supervisorArr)->merge(collect($this->employeeArr));
     }
 
-    public function usersSupervisors($user, $arr = [])
+    protected function getEmployees()
     {
-        if ($user->supervisors->count()) {
-            $supervisor = $user->supervisors->first()->user;
+        $employees = $this->supervisor->users->load('moodleuser', 'roles');
 
-            $role = $user->supervisors->first()->user->roles()->first()->type;
+        $this->mappedEmployees($employees);
+    }
 
-            $arr[$role][] = [
-             'name' => $user->supervisors->first()->user->moodleuser->firstname . ' ' . $user->supervisors->first()->user->moodleuser->lastname,
-             'id' => $user->supervisors->first()->user->id
+    protected function getSupervisors()
+    {
+        $supervisors = $this->supervisors->each->load('user.moodleuser', 'user.roles');
+
+        $this->mappedSupervisors($supervisors);
+    }
+
+    protected function hasAnyReportingStructure()
+    {
+        return optional($this->supervisors)->count() === 0 && optional($this->supervisor)->users === null;
+    }
+
+    protected function mappedEmployees($employees)
+    {
+        foreach ($employees as $employee) {
+            $this->employeeArr[] = [
+                'id' => $employee->id, 
+                'role' => $employee->roles[0]->type, 
+                'firstname' => $employee->moodleuser->firstname, 
+                'lastname' => $employee->moodleuser->lastname
             ];
 
-            if($supervisor->isSupervised()) {
-                $arr =  $this->usersSupervisors($supervisor, $arr);
+            if (optional($employee->supervisor)->users !== null) {
+                $this->mappedEmployees($employee->supervisor->users->load('moodleuser', 'roles'));
             }
         }
-
-		return $arr;
     }
 
-    public function usersSupervisees($user1, $arr = [])
+    protected function mappedSupervisors($supervisors)
     {
-        if ($user1->canSupervise()) {
-            $supervisor = Supervisor::where('user_id', $user1->id)->first();
+        foreach ($supervisors as $supervisor) {
+            $this->supervisorArr[] = [
+                'id' => $supervisor->user_id, 
+                'role' => $supervisor->user->roles[0]->type, 
+                'firstname' => $supervisor->user->moodleuser->firstname, 
+                'lastname' => $supervisor->user->moodleuser->lastname
+            ];
 
-    		foreach($supervisor->users as $user) {
-    			$role = $user->roles()->first()->type;
-
-    			$arr[$role][] = [
-    				'name' => $user->moodleuser->firstname . ' ' . $user->moodleuser->lastname,
-    				'id' => $user->id
-    			];
-
-                if($user->canSupervise()) {
-                    $arr =  $this->usersSupervisees($user, $arr);
-                }
-    		}
-        }
-
-        return $arr;
-    }
-
-    public function isSupervisedBy()
-    {
-        if (moodleauth()->user()->roles->first()->type === 'administrator') {
-            return true;
-        }
-
-    	$supervisor = Supervisor::where('user_id', moodleauth()->user()->id)->first();
-
-    	return $this->supervisors->contains($supervisor);
-    }
-
-    public function supervisorsWithRoleOf($role)
-    {
-        return $this->supervisors->map(function($s) use ($role) {
-            if ($s->user()->first()->hasRole($role->type)) {
-                return $s->user_id;
+            if (optional($supervisor->user)->supervisors !== null) {
+                $this->mappedSupervisors($supervisor->user->supervisors->each->load('user.moodleuser', 'user.roles'));
             }
-        });
-    }
-
-    public function employeesWithRoleOf($role)
-    {
-        $supervisor = Supervisor::whereUserId($this->id)->first();
-
-        return $supervisor->users->map(function($u) use ($role) {
-            if ($u->hasRole($role->type)) {
-                return $u->id;
-            }
-        });
-    }
-
-    public function hasThisSupervisorWithRoleOf($arr)
-    {
-        if (moodleauth()->user()->roles->first()->type === 'administrator') {
-            return true;
         }
-        
-        return count(
-            array_filter($arr, function($role) {
-                return in_array(
-                    (string) moodleauth()->id(), array_column($this->usersSupervisors($this)[$role], 'id')
-                );
-            })
-        );
     }
 }

@@ -7,54 +7,109 @@ use TrainingTracker\Domains\Roles\Role;
 use TrainingTracker\Domains\Supervisors\Supervisor;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\UsersReporting\Requests\StoreUsersReportingSpreadsheet;
+use TrainingTracker\Http\Users\Resources\UserResource;
 
 class UsersReportingController extends Controller
 {
-
-	public function index(User $user, Role $role)
+    public function index(User $user, Role $role)
     {
-        if (in_array($role->type, $user->supervisorRoles())) {
-            $currentSupervisorsWithRole = $user->supervisorsWithRoleOf($role);
-        } else {
-            $currentEmployeesWithRole = $user->employeesWithRoleOf($role);
-        }
-
-        return response()->json([
-            'data' => [
-                'records' => $this->getRecords($role),
-                'displayable' => ["id", "firstname", "lastname"],
-                'checked' => $currentSupervisorsWithRole ?? $currentEmployeesWithRole
+        return [
+            'linkUsers' => true,
+            'records' => Role::with('users')
+                ->find($role->id)
+                ->users
+                ->map(function($u) use ($user) {
+                    return [
+                        'id' => $u->id,
+                        'firstname' => $u->firstname,
+                        'lastname' => $u->lastname,
+                        'checked' => !! $user->reportingStructure()->where('id', $u->id)->count() > 0
+                    ];
+                })
+                ->toArray(),
+            'meta' => [
+                'displayable' => [
+                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
+                ],
+                'orderby' => [
+                    ['key' => 'lastname', 'dir' => 'asc']
+                ],
+                'actionButton' => [
+                    'active' => false
+                ]
             ]
-        ]); 
+        ];
     }
 
     public function store(User $user, Role $role)
     {
-        $validations = new StoreUsersReportingSpreadsheet(request()->all(), $role, $user);
+        $this->detachUsers($user, $role);
 
-       if (count($validations->validate())) {
-            return response()->json([
-                'errors' => $validations->validate()
-            ], 422);
-        } else {
-            return response()->json([
-                'flash' => 'users added successfully!'
-            ]);
-        }
+        $this->attachUsers($user, $role);
+
+       //  $validations = new StoreUsersReportingSpreadsheet(request()->all(), $role, $user);
+
+       // if (count($validations->validate())) {
+       //      return response()->json([
+       //          'errors' => $validations->validate()
+       //      ], 422);
+       //  } else {
+       //      return response()->json([
+       //          'flash' => 'users added successfully!'
+       //      ]);
+       //  }
     }
 
-    protected function getRecords(Role $role)
+    protected function detachUsers(User $user, Role $role)
     {
-        return Role::with('users')
-            ->find($role->id)
-            ->users
-            ->map(function($u) {
-                return [
-                    'id' => $u->id,
-                    'firstname' => $u->firstname,
-                    'lastname' => $u->lastname
-                ];
-            })
-            ->toArray();
+        $isSupervisor = $user->roles->first()->rank < $role->rank;
+
+        if ($isSupervisor) {
+
+            $userIds = collect(request()->all())->pluck('id')->toArray();
+
+            $user->supervisor->users()->detach($userIds);
+
+            return;
+        }
+
+        $userIds = collect(request()->all())->pluck('id')->toArray();
+
+        $supervisorIds = [];
+
+        foreach($userIds as $userId) {
+            $supervisorIds[] = Supervisor::whereUserId($userId)->first()->id;
+        }
+
+        $user->supervisors()->detach($supervisorIds);
+
+        return;
+    }
+
+    protected function attachUsers(User $user, Role $role)
+    {
+        $isSupervisor = $user->roles->first()->rank < $role->rank;
+
+        if ($isSupervisor) {
+
+            $userIds = collect(request()->all())->pluck('id')->toArray();
+
+            $user->supervisor->users()->attach($userIds);
+
+            return;
+        }
+
+        $userIds = collect(request()->all())->pluck('id')->toArray();
+
+        $supervisorIds = [];
+
+        foreach($userIds as $userId) {
+            $supervisorIds[] = Supervisor::whereUserId($userId)->first()->id;
+        }
+
+        $user->supervisors()->attach($supervisorIds);
+
+        return;
     }
 }

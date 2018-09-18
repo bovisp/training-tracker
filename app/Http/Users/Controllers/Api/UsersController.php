@@ -5,6 +5,7 @@ namespace TrainingTracker\Http\Users\Controllers\Api;
 use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Roles\Role;
 use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Http\Roles\Resources\RoleResource;
 use TrainingTracker\Http\Users\Requests\StoreUsersSpreadsheet;
 use TrainingTracker\Http\Users\Requests\UpdateAppointmentUserRequest;
 use TrainingTracker\Http\Users\Resources\UserCreateResource;
@@ -18,10 +19,10 @@ class UsersController extends Controller
             'records' => UserResource::collection(User::whereActive(1)->get()),
             'meta' => [
                 'displayable' => [
-                    ['key' => 'firstname', 'title' => 'First name'],
-                    ['key' => 'lastname', 'title' => 'Last name'],
-                    ['key' => 'email', 'title' => 'E-mail'],
-                    ['key' => 'role', 'title' => 'Role']
+                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
+                    ['field' => 'email', 'label' => 'E-mail', 'sortable' => 'sortable'],
+                    ['field' => 'roleName', 'label' => 'Role', 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'lastname', 'dir' => 'asc']
@@ -40,19 +41,19 @@ class UsersController extends Controller
     {
         return [
             'records' => UserCreateResource::collection(User::notIn()),
+            'roles' => RoleResource::collection(Role::all()),
             'meta' => [
                 'displayable' => [
-                    ['key' => 'firstname', 'title' => 'First name'],
-                    ['key' => 'lastname', 'title' => 'Last name'],
-                    ['key' => 'email', 'title' => 'E-mail']
+                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
+                    ['field' => 'email', 'label' => 'E-mail', 'sortable' => 'sortable'],
                 ],
                 'orderby' => [
                     ['key' => 'lastname', 'dir' => 'asc']
                 ],
                 'actionButton' => [
                     'active' => false
-                ],
-                'roles' => Role::all()
+                ]
             ]
         ];
     }

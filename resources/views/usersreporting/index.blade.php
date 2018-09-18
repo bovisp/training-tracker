@@ -12,15 +12,14 @@
 
 			<user-errors></user-errors>
 
-			<datatable 
+			<data-table 
 				endpoint="{{ route('usersreporting.index.api', ['user' => $user->id, 'role' => $role->id]) }}"
 				redirect-endpoint="{{ route('users.show', ['user' => $user->id]) }}"
-				:custom-headers="['id', 'firstname', 'lastname']"
 				:has-checkbox="true"
-				success-message="Users successfully added"
+				success-message="Users successfully linked"
 				post-endpoint="{{ route('usersreporting.store.api', ['user' => $user->id, 'role' => $role->id]) }}"
 			>
-			</datatable>
+			</data-table>
 		</div>
 	</div>
 

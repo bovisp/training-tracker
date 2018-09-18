@@ -20,6 +20,7 @@ class UserResource extends Resource
             'lastname' => $this->moodleuser->lastname,
             'email' => $this->moodleuser->email,
             'role' => $this->roles->first()->type,
+            'roleName' => $this->roles->first()->name,
             'roleRank' => $this->roles->first()->type ? $this->roles->first()->type : '0'
         ];
     }

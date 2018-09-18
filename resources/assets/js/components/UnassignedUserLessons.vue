@@ -97,7 +97,6 @@
 </template>
 
 <script>
-	import orderBy from 'lodash.orderby'
 	import Error from "../classes/Error";
 
 	export default {
@@ -166,13 +165,13 @@
 			nonDepricatedLessons () {
 				let self = this
 
-				return orderBy(self.unassigned.non_depricated, ['topic.number', 'number'], ['asc', 'asc'])
+				return _.orderBy(self.unassigned.non_depricated, ['topic.number', 'number'], ['asc', 'asc'])
 			},
 
 			depricatedLessons () {
 				let self = this
 
-				return orderBy(self.unassigned.depricated, ['topic.number', 'number'], ['asc', 'asc'])
+				return _.orderBy(self.unassigned.depricated, ['topic.number', 'number'], ['asc', 'asc'])
 			}
 		},
 

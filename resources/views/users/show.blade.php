@@ -57,7 +57,51 @@
 						Reporting
 					</h3>
 
-					@component('users.components.reporting', [
+					@foreach($roles as $role)
+
+						<div class="is-flex items-center mb-4">
+							<h5 class="title is-5 mb-0">{{ $role->name }}</h5>
+
+							@if (moodleauth()->user()->roles->first()->type === 'administrator')
+
+								<a 
+									class="button is-text is-small ml-4"
+									href="/users/{{ $user->id }}/reporting/{{ $role->id }}/edit"
+								>Edit</a>
+
+							@endif
+
+						</div>
+						
+						@if($reporting->where('role', $role->type)->count() > 0)
+
+							<ul class="mt-0">
+
+								@foreach($reporting->where('role', $role->type)->toArray() as $person)
+
+									<li>
+										<a href="/users/{{ $person['id'] }}">
+											{{ $person['firstname'] }} {{ $person['lastname'] }}
+										</a>
+									</li>
+
+								@endforeach
+
+							</ul>
+
+						@else
+
+							<div class="message">
+								<div class="message-body">
+									No one with a role of "{{ $role->name }}" currently {{ $role->rank < $user->roles->first()->rank ? 'supervises' : 'works under' }} {{ $user->moodleuser->firstname }} {{ $user->moodleuser->lastname }}.
+								</div>
+							</div>
+
+						@endif
+
+					@endforeach
+
+					{{-- @component('users.components.reporting', [
 						'roles' => $user->supervisorRoles(),
 						'user' => $user,
 						'users' => $user->usersSupervisors($user)
@@ -71,7 +115,7 @@
 						'users' => $user->usersSupervisees($user)
 					])
 
-					@endcomponent
+					@endcomponent --}}
 
 				@endif
 

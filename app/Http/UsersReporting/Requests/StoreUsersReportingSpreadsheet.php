@@ -55,6 +55,12 @@ class StoreUsersReportingSpreadsheet implements StoreSpreadsheet
 
 	public function persist($row)
 	{
+		$isSupervisor = $this->user->roles->first()->rank < $this->role->rank;
+
+		if ($isSupervisor) {
+			$usersToDetach = $this->user->supervisor->users->;
+		}
+		
 		if (in_array($this->role->type, $this->user->supervisorRoles())) {
             $currentSupervisorsWithRole = $this->user->supervisorsWithRoleOf($this->role);        
 

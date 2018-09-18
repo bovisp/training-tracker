@@ -43,11 +43,6 @@ class User extends Authenticatable
         'appointed_at' => 'datetime:d/m/Y',
     ];
 
-    public function supervisor()
-    {
-        return $this->hasOne(Supervisor::class);
-    }
-
     public function moodleuser()
     {
         return $this->hasOne(MoodleUser::class, 'id', 'moodle_id')
