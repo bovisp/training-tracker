@@ -14,9 +14,9 @@ class LessonsController extends Controller
             'records' => LessonResource::collection(Lesson::all()),
             'meta' => [
                 'displayable' => [
-                    ['key' => 'lesson', 'title' => 'Lesson'],
-                    ['key' => 'name', 'title' => 'Name'],
-                    ['key' => 'depricated', 'title' => 'Depricated']
+                    ['field' => 'lesson', 'label' => 'Lesson', 'sortable' => 'sortable'],
+                    ['field' => 'name', 'label' => 'Name', 'sortable' => 'sortable'],
+                    ['field' => 'depricated', 'label' => 'Depricated', 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'lesson', 'dir' => 'asc']

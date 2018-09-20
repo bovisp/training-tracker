@@ -2,47 +2,42 @@
 
 namespace TrainingTracker\Http\UserLessons\Controllers\Api;
 
-use TrainingTracker\App\Controllers\DatatablesController;
+use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Http\UserLessons\Resources\UserLessonResource;
 
-
-class UserLessonsController extends DatatablesController
+class UserLessonsController extends Controller
 {
-
-	public function builder()
+    public function index(User $user)
     {
-        return UserLesson::query();
-    }
-
-    public function getDisplayableColumns()
-    {
-        return ['id'];
-    }
-
-    public function getUserLessons(User $user)
-    {
-        return response()->json([
-            'data' => [
-                'records' => $this->getLessonRecords($user),
-                'displayable' => $this->getDisplayableColumns(),
+        return [
+            'records' => UserLessonResource::collection(
+                UserLesson::whereUserId($user->id)->with('lesson.topic')->get()
+            ),
+            'meta' => [
+                'displayable' => [
+                    ['field' => 'package', 'label' => 'Lesson package', 'sortable' => 'sortable'],
+                    ['field' => 'completed', 'label' => 'Completed', 'sortable' => 'sortable'],
+                ],
+                'orderby' => [
+                    ['key' => 'package', 'dir' => 'asc']
+                ],
+                'actionButton' => [
+                    'active' => true,
+                    'endpoint' => "/users/{$user->id}/userlessons/",
+                    'endpointSuffix' => '',
+                    'text' => 'View'
+                ]
             ]
-        ]); 
+        ];
     }
 
-    public function getUserLesson(User $user, UserLesson $userlesson)
+    public function show(User $user, UserLesson $userlesson)
     {
-        if (!$user->hasThisSupervisorWithRoleOf(['supervisor', 'head_of_operations', 'manager'])) {
-            abort(403, 'You are not authorized to view this lesson package');
-        }
+        $userlesson->load(['lesson.topic']);
 
-        $userlesson = $userlesson->whereId($userlesson->id)
-            ->with('lesson.topic')
-            ->first();
-
-        $user = $user->whereId($user->id)
-            ->with('moodleuser')
-            ->first();
+        $user->load(['moodleuser']);
 
         return [
             'userlesson' => [
@@ -68,42 +63,5 @@ class UserLessonsController extends DatatablesController
                 'role' => moodleauth()->user()->roles->first()->type
             ]
         ];
-    }
-
-    protected function getLessonRecords(User $user)
-    {
-        $collection = [];
-
-        $userlessons = UserLesson::where('user_id', $user->id)->with('lesson.topic')->get()->sort(function($a, $b) {
-            if($a->lesson->topic->number === $b->lesson->topic->number) {
-                if($a->lesson->number === $b->lesson->number) {
-                    return 0;
-                }
-
-                return $a->lesson->number < $b->lesson->number ? -1 : 1;
-            } 
-            
-            return $a->lesson->topic->number < $b->lesson->topic->number ? -1 : 1;
-        });
-
-        foreach($userlessons as $userlesson) {
-            $collection[] = [
-                'id' => $userlesson->id,
-                'package' => $userlesson->lesson->topic->number . '.' . str_pad($userlesson->lesson->number, 2, '0', STR_PAD_LEFT) . ' ' . $userlesson->lesson->name,
-                'completed' => $userlesson->completed === 1 ? 'Yes' : 'No'
-            ];
-        }
-
-        return $collection;
-    }
-
-    public function index()
-    {
-        //
-    }
-
-    protected function getRecords()
-    {
-        //
     }
 }

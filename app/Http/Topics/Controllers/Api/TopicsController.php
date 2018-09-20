@@ -14,8 +14,8 @@ class TopicsController extends Controller
             'records' => TopicResource::collection(Topic::all()),
             'meta' => [
                 'displayable' => [
-                    ['key' => 'number', 'title' => 'Number'],
-                    ['key' => 'name', 'title' => 'Name']
+                    ['field' => 'number', 'label' => 'Number', 'sortable' => 'sortable'],
+                    ['field' => 'name', 'label' => 'Name', 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'number', 'dir' => 'asc']

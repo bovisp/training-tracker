@@ -14,9 +14,9 @@ class ObjectivesController extends Controller
             'records' => ObjectiveResource::collection(Objective::all()),
             'meta' => [
                 'displayable' => [
-                    ['key' => 'lesson', 'title' => 'Lesson'],
-                    ['key' => 'objective', 'title' => 'Objective'],
-                    ['key' => 'description', 'title' => 'Description']
+                    ['field' => 'lesson', 'label' => 'Lesson', 'sortable' => 'sortable'],
+                    ['field' => 'objective', 'label' => 'Objective', 'sortable' => 'sortable'],
+                    ['field' => 'description', 'label' => 'Description', 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'lesson', 'dir' => 'asc'],

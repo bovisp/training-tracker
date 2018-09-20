@@ -68,12 +68,7 @@ trait HasSupervisorsTrait
     protected function mappedEmployees($employees)
     {
         foreach ($employees as $employee) {
-            $this->employeeArr[] = [
-                'id' => $employee->id, 
-                'role' => $employee->roles[0]->type, 
-                'firstname' => $employee->moodleuser->firstname, 
-                'lastname' => $employee->moodleuser->lastname
-            ];
+            $this->employeeArr[] = $this->getEmployeeMeta($employee);
 
             if (optional($employee->supervisor)->users !== null) {
                 $this->mappedEmployees($employee->supervisor->users->load('moodleuser', 'roles'));
@@ -84,16 +79,31 @@ trait HasSupervisorsTrait
     protected function mappedSupervisors($supervisors)
     {
         foreach ($supervisors as $supervisor) {
-            $this->supervisorArr[] = [
-                'id' => $supervisor->user_id, 
-                'role' => $supervisor->user->roles[0]->type, 
-                'firstname' => $supervisor->user->moodleuser->firstname, 
-                'lastname' => $supervisor->user->moodleuser->lastname
-            ];
+            $this->supervisorArr[] = $this->getSupervisorMeta($supervisor);
 
             if (optional($supervisor->user)->supervisors !== null) {
                 $this->mappedSupervisors($supervisor->user->supervisors->each->load('user.moodleuser', 'user.roles'));
             }
         }
+    }
+
+    protected function getEmployeeMeta($employee)
+    {
+        return [
+            'id' => $employee->id, 
+            'role' => $employee->roles[0]->type, 
+            'firstname' => $employee->moodleuser->firstname, 
+            'lastname' => $employee->moodleuser->lastname
+        ];
+    }
+
+    protected function getSupervisorMeta($supervisor)
+    {
+        return [
+            'id' => $supervisor->user_id, 
+            'role' => $supervisor->user->roles[0]->type, 
+            'firstname' => $supervisor->user->moodleuser->firstname, 
+            'lastname' => $supervisor->user->moodleuser->lastname
+        ];
     }
 }

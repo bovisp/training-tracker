@@ -101,22 +101,6 @@
 
 					@endforeach
 
-					{{-- @component('users.components.reporting', [
-						'roles' => $user->supervisorRoles(),
-						'user' => $user,
-						'users' => $user->usersSupervisors($user)
-					])
-
-					@endcomponent
-
-					@component('users.components.reporting', [
-						'roles' => $user->employeeRoles(),
-						'user' => $user,
-						'users' => $user->usersSupervisees($user)
-					])
-
-					@endcomponent --}}
-
 				@endif
 
 				@if ($user->hasUnassignedLessons() && moodleauth()->user()->hasRole('administrator'))
