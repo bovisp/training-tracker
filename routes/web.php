@@ -83,15 +83,17 @@ Route::middleware(['profile'])->group(function () {
 	Route::prefix('users/{user}')->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')->name('users.show');
 
-		Route::get('/userlessons', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@getUserLessons')
+		Route::get('/userlessons', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@index')
 			->name('userlessons.index.api');
 
 		Route::get('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@show')
 			->name('userlessons.show');
 
-		Route::get('/userlessons/{userlesson}/api', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@getUserLesson');
+		Route::get('/userlessons/{userlesson}/api', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@show');
 
 		Route::put('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@update');
+
+		Route::get('/userlessons/{userlesson}/comments', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@index');
 	});
 });
 
@@ -137,5 +139,11 @@ Route::middleware(['role:administrator'])->group(function () {
 		Route::put('/{objective}', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@update');
 
 		Route::delete('/{objective}', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@destroy');
+	});
+});
+
+Route::middleware(['role:administrator|head_of_operations'])->group(function () {
+	Route::prefix('users/{user}')->group(function () {
+		Route::post('/userlessons/{userlesson}/comments', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@store');
 	});
 });

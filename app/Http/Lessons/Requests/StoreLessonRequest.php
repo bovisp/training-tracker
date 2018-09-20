@@ -25,7 +25,7 @@ class StoreLessonRequest extends FormRequest
     public function rules()
     {
         return [
-            'topic_id' => 'required|integer|min:0|exists:topics,number',
+            'topic_id' => 'required|integer|min:0|exists:topics,id',
             'number' => [
                 'required',
                 'min:0',

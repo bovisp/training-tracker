@@ -6,6 +6,13 @@ use Illuminate\Contracts\Validation\Rule;
 
 class StatusTypes implements Rule
 {
+    protected $value;
+
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
+
     protected $statusTypes = ['c', 'd', 'e'];
 
     /**
@@ -17,7 +24,7 @@ class StatusTypes implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $value === null || in_array($value, $this->statusTypes);
+        return $this->value === null || in_array($this->value, $this->statusTypes);
     }
 
     /**

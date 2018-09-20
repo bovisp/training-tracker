@@ -2,30 +2,31 @@
 
 namespace TrainingTracker\Http\Topics\Controllers\Api;
 
-use TrainingTracker\App\Controllers\DatatablesController;
+use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Topics\Topic;
+use TrainingTracker\Http\Topics\Resources\TopicResource;
 
-
-class TopicsController extends DatatablesController
+class TopicsController extends Controller
 {
-
-	public function builder()
-    {
-        return Topic::query();
-    }
-
-    public function getDisplayableColumns()
-    {
-        return ['id', 'number', 'name'];
-    }
-
     public function index()
     {
-        return response()->json([
-            'data' => [
-                'records' => $this->getRecords(),
-                'displayable' => $this->getDisplayableColumns(),
+        return [
+            'records' => TopicResource::collection(Topic::all()),
+            'meta' => [
+                'displayable' => [
+                    ['field' => 'number', 'label' => 'Number', 'sortable' => 'sortable'],
+                    ['field' => 'name', 'label' => 'Name', 'sortable' => 'sortable']
+                ],
+                'orderby' => [
+                    ['key' => 'number', 'dir' => 'asc']
+                ],
+                'actionButton' => [
+                    'active' => true,
+                    'endpoint' => '/topics/',
+                    'endpointSuffix' => '/edit',
+                    'text' => 'Edit'
+                ]
             ]
-        ]); 
+        ];
     }
 }

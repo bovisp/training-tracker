@@ -5,6 +5,7 @@ namespace TrainingTracker\Http\UserLessons\Classes;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\UserLessons\Requests\UpdateStatusesRequest;
+use TrainingTracker\Http\UserLessons\Requests\UpdateObjectivesRequest;
 
 class UpdateUserLesson {
 	protected $user;
@@ -12,23 +13,19 @@ class UpdateUserLesson {
 	protected $userlesson;
 
 	protected $methods = [
-		'administrator' => ['statuses'],
-		'manager' => ['statuses'],
-		'head_of_operations' => ['statuses']
+		'administrator' => ['statuses', 'objectives'],
+		'manager' => [],
+		'head_of_operations' => ['statuses', 'objectives'],
+		'supervisor' => ['statuses', 'objectives']
 	];
-	// protected $methods = [
-	// 	'administrator' => ['statuses', 'objectives', 'comment', 'completed'],
-	// 	'manager' => ['statuses', 'objectives', 'comment', 'completed'],
-	// 	'head_of_operations' => ['statuses', 'objectives', 'comment']
-	// ];
 
-	public function __construct($user, $userlesson)
+	public function __construct(User $user, UserLesson $userlesson)
 	{
 		$this->user = $user;
 		$this->userlesson = $userlesson;
 	}
 
-	public function update(User $user, UserLesson $userlesson)
+	public function update()
 	{
 		if (moodleauth()->user()->hasRole('apprentice')) {
 			return [
@@ -37,7 +34,7 @@ class UpdateUserLesson {
 		}
 
 		return $this->persist(
-			$this->methods[moodleauth()->user()->roles->first()->type], $userlesson
+			$this->methods[moodleauth()->user()->roles->first()->type], $this->userlesson
 		);
 	}
 
@@ -49,9 +46,11 @@ class UpdateUserLesson {
 			$actionClass = 'TrainingTracker\Http\UserLessons\Requests\Update' . ucfirst($action) . 'Request';
 
 			$classErrors = (new $actionClass(request($action), $userlesson))->validate();
-			
+	
 			if (count($classErrors)) {
-				$errors = array_column($classErrors, 'errors')[0];
+				foreach ($classErrors as $error) {
+					$errors[key($error['errors'])] = current($error['errors']);
+				}
 			}
 		}
 

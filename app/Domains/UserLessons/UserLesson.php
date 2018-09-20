@@ -3,6 +3,7 @@
 namespace TrainingTracker\Domains\UserLessons;
 
 use Illuminate\Database\Eloquent\Model;
+use TrainingTracker\Domains\Comments\Comment;
 use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\Users\User;
 
@@ -20,5 +21,11 @@ class UserLesson extends Model
     public function lesson()
     {
     	return $this->belongsTo(Lesson::class);
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')
+            ->orderBy('created_at', 'asc');
     }
 }

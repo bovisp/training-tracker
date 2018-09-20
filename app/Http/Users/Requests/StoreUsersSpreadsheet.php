@@ -36,6 +36,11 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
 
 	public function validateRow($row)
 	{
+		$row = [
+			'id' => (int) $row[0],
+			'role' => $row[1]
+		];
+
 		$validator = Validator::make(
 			$row, $this->validations(), $this->messages()
 		);
@@ -55,7 +60,7 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
             'moodle_id' => $row["id"]
         ])->assignRole($row["role"]);
 
-        if (!$user->hasRole('apprentice') || !$user->hasRole('administrator')) {
+        if ($user->hasRole(['manager', 'head_of_operations', 'supervisor'])) {
             Supervisor::create([ 
             	'user_id' => $user->id 
             ]);

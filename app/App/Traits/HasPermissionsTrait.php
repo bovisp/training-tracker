@@ -37,15 +37,38 @@ trait HasPermissionsTrait
 	 * 
 	 * @return boolean        If true, the model has that role.
 	 */
-	public function hasRole(...$roles)
+	public function hasRole($roles)
 	{
-		foreach ($roles as $role) {
-			if ($this->roles->contains('type', $role)) {
-				return true;
-			}
-		}
+		if (is_string($roles) && false !== strpos($roles, '|')) {
+            $roles = $this->convertPipeToArray($roles);
+        }
 
-		return false;
+        if (is_string($roles)) {
+            return $this->roles->contains('type', $roles);
+        }
+
+        if ($roles instanceof Role) {
+            return $this->roles->contains('id', $roles->id);
+        }
+
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                if ($this->hasRole($role)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return $roles->intersect($this->roles)->isNotEmpty();
+		// foreach ($roles as $role) {
+		// 	if ($this->roles->contains('type', $role)) {
+		// 		return true;
+		// 	}
+		// }
+
+		// return false;
 	}
 
 	/**
@@ -229,4 +252,26 @@ trait HasPermissionsTrait
 	{
 		return Role::where('type', $role)->get()->first();
 	}
+
+	protected function convertPipeToArray(string $pipeString)
+    {
+        $pipeString = trim($pipeString);
+
+        if (strlen($pipeString) <= 2) {
+            return $pipeString;
+        }
+
+        $quoteCharacter = substr($pipeString, 0, 1);
+        $endCharacter = substr($quoteCharacter, -1, 1);
+
+        if ($quoteCharacter !== $endCharacter) {
+            return explode('|', $pipeString);
+        }
+
+        if (! in_array($quoteCharacter, ["'", '"'])) {
+            return explode('|', $pipeString);
+        }
+
+        return explode('|', trim($pipeString, $quoteCharacter));
+    }
 }

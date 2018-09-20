@@ -14,17 +14,10 @@
 				</div>
 			</div>
 
-			<datatable 
+			<data-table 
 				endpoint="{{ route('lessons.index.api') }}"
-				:custom-headers="['id', 'topic', 'number', 'name', 'depricated']"
-				sort-key="topic"
-				secondary-sort="number"
-				:action-button="true"
-				action-button-endpoint="/lessons/"
-				action-button-endpoint-suffix="/edit"
-				action-button-text="Edit"
 			>
-			</datatable>
+			</data-table>
 		</div>
 	</div>
 

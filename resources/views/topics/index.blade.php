@@ -14,7 +14,7 @@
 				</div>
 			</div>
 
-			<datatable 
+			{{-- <datatable 
 				endpoint="{{ route('topics.index.api') }}"
 				:sort="{key: 'number', order: 'asc'}"
 				:action-button="true"
@@ -22,7 +22,12 @@
 				action-button-endpoint-suffix="/edit"
 				action-button-text="Edit"
 			>
-			</datatable>
+			</datatable> --}}
+
+			<data-table 
+				endpoint="{{ route('topics.index.api') }}"
+			>
+			</data-table>
 		</div>
 	</div>
 

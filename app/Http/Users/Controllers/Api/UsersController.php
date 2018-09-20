@@ -2,44 +2,60 @@
 
 namespace TrainingTracker\Http\Users\Controllers\Api;
 
-use TrainingTracker\App\Controllers\DatatablesController;
+use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Roles\Role;
 use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Http\Roles\Resources\RoleResource;
 use TrainingTracker\Http\Users\Requests\StoreUsersSpreadsheet;
 use TrainingTracker\Http\Users\Requests\UpdateAppointmentUserRequest;
+use TrainingTracker\Http\Users\Resources\UserCreateResource;
+use TrainingTracker\Http\Users\Resources\UserResource;
 
-class UsersController extends DatatablesController
+class UsersController extends Controller
 {
-
-	public function builder()
+	public function index()
     {
-        return User::query();
-    }
-
-    public function getDisplayableColumns()
-    {
-        return ['id'];
-    }
-
-    public function index()
-    {
-        return response()->json([
-            'data' => [
-                'records' => User::active(),
-                'displayable' => $this->getDisplayableColumns(),
+        return [
+            'records' => UserResource::collection(User::whereActive(1)->get()),
+            'meta' => [
+                'displayable' => [
+                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
+                    ['field' => 'email', 'label' => 'E-mail', 'sortable' => 'sortable'],
+                    ['field' => 'roleName', 'label' => 'Role', 'sortable' => 'sortable']
+                ],
+                'orderby' => [
+                    ['key' => 'lastname', 'dir' => 'asc']
+                ],
+                'actionButton' => [
+                    'active' => true,
+                    'endpoint' => '/users/',
+                    'endpointSuffix' => '',
+                    'text' => 'Profile'
+                ]
             ]
-        ]); 
+        ];
     }
 
     public function create()
     {
-        return response()->json([
-            'data' => [
-                'records' => User::notIn(),
-                'displayable' => $this->getDisplayableColumns(),
-                'roles' => Role::all()
+        return [
+            'records' => UserCreateResource::collection(User::notIn()),
+            'roles' => RoleResource::collection(Role::all()),
+            'meta' => [
+                'displayable' => [
+                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
+                    ['field' => 'email', 'label' => 'E-mail', 'sortable' => 'sortable'],
+                ],
+                'orderby' => [
+                    ['key' => 'lastname', 'dir' => 'asc']
+                ],
+                'actionButton' => [
+                    'active' => false
+                ]
             ]
-        ]);
+        ];
     }
 
     public function store()

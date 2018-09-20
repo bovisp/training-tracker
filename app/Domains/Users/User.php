@@ -5,15 +5,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use TrainingTracker\App\Traits\HasPermissionsTrait;
 use TrainingTracker\App\Traits\HasSupervisorsTrait;
+use TrainingTracker\App\Traits\HasUserLessonsTrait;
+use TrainingTracker\Domains\Comments\Comment;
 use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\MoodleUsers\MoodleUser;
+use TrainingTracker\Domains\Objectives\Objective;
 use TrainingTracker\Domains\Supervisors\Supervisor;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasPermissionsTrait, HasSupervisorsTrait;
+    use Notifiable,
+        HasPermissionsTrait,
+        HasSupervisorsTrait,
+        HasUserLessonsTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -41,39 +47,10 @@ class User extends Authenticatable
         'appointed_at' => 'datetime:d/m/Y',
     ];
 
-    public function supervisor()
-    {
-        return $this->hasOne(Supervisor::class);
-    }
-
     public function moodleuser()
     {
         return $this->hasOne(MoodleUser::class, 'id', 'moodle_id')
             ->select('firstname', 'lastname', 'email', 'id');
-    }
-
-    public function userlessons()
-    {
-        return $this->hasMany(UserLesson::class);
-    }
-
-    /**
-     * Get all active employees.
-     * 
-     * @return model \TrainingTracker\Domains\Users\User
-     */
-    public static function active()
-    {
-        return self::select('id')
-            ->where('active', 1)
-            ->get();
-    }
-
-    public static function inactive()
-    {
-        return self::select('id')
-            ->where('active', 0)
-            ->get();
     }
 
     public static function notIn()
@@ -86,65 +63,23 @@ class User extends Authenticatable
             ->get();
     }
 
-    public function hasLessons()
+    public function objectives()
     {
-        return $this->userlessons()->count() > 0;
+        return $this->belongsToMany(Objective::class, 'users_objectives');
     }
 
-    public function getUnassignedUserLessons()
+    public function completedObjectives()
     {
-        $result = [];
-
-        $unassignedNonDepricatedLessonIds = array_values(
-            array_diff(
-                Lesson::whereDepricated(0)
-                    ->pluck('id')
-                    ->toArray(), 
-                UserLesson::whereUserId($this->id)
-                    ->pluck('lesson_id')
-                    ->toArray()
-            )
-        );
-
-        $unassignedDepricatedLessonIds = array_values(
-            array_diff(
-                Lesson::whereDepricated(1)
-                    ->pluck('id')
-                    ->toArray(), 
-                UserLesson::whereUserId($this->id)
-                    ->pluck('lesson_id')
-                    ->toArray()
-            )
-        );
-
-        if (count($unassignedNonDepricatedLessonIds)) {
-            $unassignedNonDepricatedLessons = 
-                Lesson::whereIn('id', $unassignedNonDepricatedLessonIds)
-                    ->with('topic')
-                    ->get();
-
-            $result['non_depricated'] = $unassignedNonDepricatedLessons;
-        }
-
-        if (count($unassignedDepricatedLessonIds)) {
-            $unassignedDepricatedLessons = 
-                Lesson::whereIn('id', $unassignedDepricatedLessonIds)
-                    ->with('topic')
-                    ->get();
-
-            $result['depricated'] = $unassignedDepricatedLessons;
-        }
-
-        return $result;
+        return $this->objectives()
+            ->pluck('objective_id')
+            ->toArray();
     }
 
-    public function hasUnassignedLessons()
+    public function updateObjectives($allObjectives, $newobjectives)
     {
-        if (!$this->hasLessons()) {
-            return false;
-        }
+        $this->objectives()->detach($allObjectives);
 
-        return count($this->getUnassignedUserLessons()) > 0;
+        $this->objectives()->attach($newobjectives);
     }
 
     public function getFirstnameAttribute()
@@ -174,5 +109,10 @@ class User extends Authenticatable
         return MoodleUser::whereId($user->moodle_id)
             ->first()
             ->{$column};
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

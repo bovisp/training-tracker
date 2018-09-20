@@ -23,13 +23,15 @@ class UserLessonsController extends Controller
     public function update(User $user, UserLesson $userlesson)
     {
         $res = (new UpdateUserLesson($user, $userlesson))
-            ->update($user, $userlesson);
+            ->update();
 
-        if (count($res)) {
+        if (count($res) && !array_key_exists('errors', $res)) {
             return response()->json(['errors' => $res], 422);
+        } else if (count($res) && array_key_exists('errors', $res)) {
+            return response()->json(['errors' => $res], 403);
         } else {
             return response()->json([
-                'flash' => 'Lesson package update successfully.'
+                'flash' => 'Lesson package updated successfully.'
             ]);
         }
     }
