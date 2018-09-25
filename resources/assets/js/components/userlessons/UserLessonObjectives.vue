@@ -13,11 +13,28 @@
 				<label 
 					class="checkbox" 
 				>
-					<input 
-						type="checkbox" 
-						v-model="completed" 
-						:value="objective.id"
-					>
+					<template v-if="authUser.hasRoleOf('administrator', 'supervisor', 'head_of_operations')">
+						<input 
+							type="checkbox" 
+							v-model="completed" 
+							:value="objective.id"
+						>
+					</template>
+
+					<template v-else>
+						<span
+							v-if="completed.indexOf(objective.id) > -1"
+							v-html="`&check;`"
+							style="color: green;"
+							class="mr-4"
+						></span>
+
+						<span
+							v-else
+							v-html="`&ndash;`"
+							class="has-text-grey has-text-weight-bold mr-4"
+						></span>
+					</template>
 				
 					<strong>{{ objective.number }} - </strong>{{ objective.name }}
 				</label>
