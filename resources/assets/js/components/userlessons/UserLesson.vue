@@ -13,44 +13,46 @@
 				<button 
 					class="button is-link is-pulled-right"
 					:class="{ 'is-loading' : isLoading }"
-					@click="submit"
+					@click="patch"
 				>
 					Save lesson package
 				</button>
 			</div>
 		</div>
 
-		<user-lesson-status v-if="!isLoading"></user-lesson-status>
+		<user-lesson-status />
 
-		<user-lesson-objectives v-if="!isLoading"></user-lesson-objectives>
+		<user-lesson-objectives />
 
-		<user-lesson-notebooks v-if="!isLoading"></user-lesson-notebooks>
+		<!-- <user-lesson-notebooks v-if="!isLoading"></user-lesson-notebooks> -->
 
 		<h3 class="title is-3 mt-16">
 			Comments
 		</h3>
 
-		<comments :endpoint="commentEndpoint" />
+		<!-- <comments :endpoint="commentEndpoint" /> -->
 
 		<h3 class="title is-3 mt-16">
 			Final evaluation
 		</h3>
+
+		<b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
 	</div>
 </template>
 
 <script>
-	import { mapState, mapActions } from 'vuex'
 	import UserLessonStatus from './UserLessonStatus'
 	import UserLessonObjectives from './UserLessonObjectives'
-	import UserLessonNotebooks from './UserLessonNotebooks'
+	// import UserLessonNotebooks from './UserLessonNotebooks'
+	import { mapGetters, mapActions } from 'vuex'
 
 	export default {
 		props: ['userLesson', 'user'],
 
-		components: {
-			UserLessonStatus,
-			UserLessonObjectives,
-			UserLessonNotebooks
+		computed: {
+			...mapGetters({
+				isLoading: 'userlessons/isLoading'
+			})
 		},
 
 		data () {
@@ -60,45 +62,16 @@
 			}
 		},
 
-		computed: {
-			...mapState({
-				status: state => state.userlesson.status,
-				isLoading: state => state.isLoading
-			}),
-
-			commentEndpoint () {
-				return `/users/${this.user.id}/userlessons/${this.userLesson.id}/comments`
-			}
+		components: {
+			UserLessonStatus,
+			UserLessonObjectives,
+			// UserLessonNotebooks
 		},
 
 		methods: {
-			submit () {
-				this.$store.dispatch('userlessons/updateLessonPackage')
-					.then(({data}) => {
-						this.$toast.open({
-	                        message: data.flash,
-	                        position: 'is-top-right',
-	                        type: 'is-success'
-	                    })
-
-						this.fetch({
-							userlesson: this.userLesson.id,
-							user: this.user.id
-						})
-					})
-					.catch(error => {
-						if (error.status === 422) {
-						 	window.events.$emit('status-errors', error.data.errors)
-						 	window.events.$emit('objective-errors', error.data.errors)
-	                    }
-
-	                    if (error.status === 403) {
-						 	this.errors = error.data.errors.errors
-	                    }
-					})
-			},
 			...mapActions({
-				fetch: 'userlessons/loadState'
+				fetch: 'userlessons/fetch',
+				patch: 'userlessons/patch'
 			})
 		},
 
@@ -107,6 +80,12 @@
 				userlesson: this.userLesson.id,
 				user: this.user.id
 			})
+
+			window.events.$on('userlesson:save-success', message => this.$toast.open({
+                message,
+                position: 'is-top-right',
+                type: 'is-success'
+            }))
 		}
 	}
 </script>

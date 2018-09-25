@@ -1,35 +1,21 @@
-export function initializeUserLesson (state, payload) {
-	state.userlesson = payload
+export const initialize = (state, payload) => {
+	state.userlesson = payload.userlesson
+	state.user = payload.user
+	state.auth = payload.auth
 }
 
-export function initializeUser (state, payload) {
-	state.user = payload
-}
+export const loadingStatus = state => state.isLoading = !state.isLoading
 
-export function initializeAuth (state, payload) {
-	state.auth = payload
-}
+export const updateStatus = (state, payload) => state.userlesson.status[payload.status] = payload.event.target.value
 
-export function loadStatus (state, payload) {
-	state.isLoading = payload
-}
+export const updateCompletedObjectives = (state, payload) => state.userlesson.completedObjectives = payload
 
-export function updateP9 (state, payload) {
-	state.userlesson.status.p9 = payload
-}
+export const setErrors = (state, payload) => state.errors = payload
 
-export function updateP18 (state, payload) {
-	state.userlesson.status.p18 = payload
-}
-
-export function updateP30 (state, payload) {
-	state.userlesson.status.p30 = payload
-}
-
-export function updateP42 (state, payload) {
-	state.userlesson.status.p42 = payload
-}
-
-export function updateCompletedObjectives (state, payload) {
-	state.userlesson.completedObjectives = payload
+export const clearErrors = (state) => state.errors = {
+	p9: [],
+	p18: [],
+	p30: [],
+	p42: [],
+	objectives: []
 }

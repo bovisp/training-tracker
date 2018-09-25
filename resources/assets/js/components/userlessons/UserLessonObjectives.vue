@@ -24,10 +24,10 @@
 			</li>
 		</ul>
 
-		<article v-if="errors.has('objectives')" class="message is-danger mt-4">
+		<article v-if="errors.objectives[0]" class="message is-danger mt-4">
 			<div class="message-body content">
 				<ul class="mt-0">
-					<li v-text="errors.get('objectives')"></li>
+					<li v-text="errors.objectives[0]"></li>
 				</ul>
 			</div>
 		</article>
@@ -35,21 +35,14 @@
 </template>
 
 <script>
-	import Error from '../../classes/Error'
+	import { mapGetters } from 'vuex'
 
 	export default {
-		data () {
-			return {
-				errors: new Error
-			}
-		},
-
 		computed: {
-			objectives: {
-				get () {
-					return this.$store.state.userlessons.userlesson.objectives
-				}
-			},
+			...mapGetters({
+				objectives: 'userlessons/objectives',
+				errors: 'userlessons/errors'
+			}),
 			completed: {
 				get () {
 					return this.$store.state.userlessons.userlesson.completedObjectives

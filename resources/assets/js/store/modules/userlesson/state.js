@@ -16,5 +16,12 @@ export default {
 	},
 	user: {},
 	auth: {},
-	isLoading: true
+	isLoading: false,
+	errors: {
+		p9: [],
+		p18: [],
+		p30: [],
+		p42: [],
+		objectives: []
+	}
 }
