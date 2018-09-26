@@ -1,49 +1,37 @@
-export function loadState({ commit }, { userlesson, user }) {
-	commit('loadStatus', true)
+export const fetch = async ({ commit }, { userlesson, user }) => {
+	await commit('loadingStatus', null, { root: true })
 
-	return axios.get(`/users/${user}/userlessons/${userlesson}/api`)
-		.then(({data}) => {
-			return new Promise((resolve, reject) => {
-				commit('initializeUserLesson', data.userlesson)
-				commit('initializeUser', data.user)
-				commit('initializeAuth', data.auth)
-				resolve()
-			})
-		})
-		.then(() => {
-			return new Promise((resolve, reject) => {
-				commit('loadStatus', false)
-				resolve()
-			})
-		})
-	
+	let response = await axios.get(`/users/${user}/userlessons/${userlesson}/api`)
+
+	await commit('initialize', response.data)
+
+	await commit('loadingStatus', null, { root: true })
 }
 
-export function updateLessonPackage({ state, commit }) {
-	commit('loadStatus', true)
-	
-	axios.interceptors.response.use(
-        response => {
-          return response;
-        },
-        error => {
-        	commit('loadStatus', false)
-            return Promise.reject(error.response);
-        }
-    )
+export const updateStatus = async ({ commit }, payload) => {
+	await commit('updateStatus', payload)
+}
 
+export const patch = ({ state, commit, dispatch }) => {
+	commit('loadingStatus', null, { root: true })
+	
 	return axios.put(
-		`/users/${state.user.id}/userlessons/${state.userlesson.id}`,
-		{
+		`/users/${state.user.id}/userlessons/${state.userlesson.id}`, {
 			statuses: state.userlesson.status,
-			objectives: state.userlesson.completedObjectives
-			// statuses: {
-			// 	p9: 'o',
-			// 	p18: 'o',
-			// 	p30: 'o',
-			// 	p42: 'o'
-			// },
-			// objectives: [ 99999999, 10000000]
+			// objectives: state.userlesson.completedObjectives,
+			objectives: ['foo', 'bar', 'baz']
 		}
-	)
+    )
+    .then(response => {
+		commit('clearErrors', null, { root: true })
+
+	    dispatch('fetch', {
+	    	userlesson: state.userlesson.id,
+	    	user: state.user.id
+	    })
+
+	    commit('loadingStatus', null, { root: true })
+
+	    return Promise.resolve(response)
+	})
 }

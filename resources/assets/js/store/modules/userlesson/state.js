@@ -15,6 +15,5 @@ export default {
 		objectives: {}
 	},
 	user: {},
-	auth: {},
-	isLoading: true
+	auth: {} 
 }
