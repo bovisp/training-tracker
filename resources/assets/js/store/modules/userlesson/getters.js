@@ -1,5 +1,3 @@
-export const isLoading = state => state.isLoading
-
 export const p9 = state => state.userlesson.status.p9
 
 export const p18 = state => state.userlesson.status.p18
@@ -19,5 +17,3 @@ export const lessonPeriodp42 = state => state.userlesson.lesson.p42
 export const objectives = state => state.userlesson.objectives
 
 export const completed = state => state.userlesson.completedObjectives
-
-export const errors = state => state.errors

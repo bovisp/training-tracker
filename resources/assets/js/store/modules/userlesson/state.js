@@ -15,13 +15,5 @@ export default {
 		objectives: {}
 	},
 	user: {},
-	auth: {},
-	isLoading: false,
-	errors: {
-		p9: [],
-		p18: [],
-		p30: [],
-		p42: [],
-		objectives: []
-	}
+	auth: {} 
 }

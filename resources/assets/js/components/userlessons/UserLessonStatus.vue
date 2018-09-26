@@ -12,8 +12,13 @@
 				<div class="field">
 					<label for="p9" class="label">Early EG-03</label>
 
-					<div class="select is-small" :class="{ 'is-danger': errors.p9[0] }" >
-						<select :value="p9" id="p9" @change="updateStatus({ event: $event, status: 'p9'})">
+					<div class="select is-small" :class="{ 'is-danger': errors.p9 }" >
+						<select 
+							:value="p9" 
+							id="p9" 
+							@change="updateStatus({ event: $event, status: 'p9'})"
+							:disabled="!hasRoleOf('supervisor', 'head_of_operations')"
+						>
 							<option value=""></option>
 
 							<option 
@@ -26,7 +31,7 @@
 					</div>
 
 					<p 
-						v-if="errors.p9[0]" 
+						v-if="errors.p9" 
 						v-text="errors.p9[0]"
 						class="help is-danger"
 					></p>
@@ -40,8 +45,13 @@
 				<div class="field">
 					<label for="p18" class="label">Late EG-03</label>
 
-					<div class="select is-small" :class="{ 'is-danger': errors.p18[0] }">
-						<select :value="p18" id="p18" @change="updateStatus({ event: $event, status: 'p18'})">
+					<div class="select is-small" :class="{ 'is-danger': errors.p18 }">
+						<select 
+							:value="p18" 
+							id="p18" 
+							@change="updateStatus({ event: $event, status: 'p18'})"
+							:disabled="!hasRoleOf('supervisor', 'head_of_operations')"
+						>
 							<option value=""></option>
 
 							<option 
@@ -55,7 +65,7 @@
 					</div>
 
 					<p 
-						v-if="errors.p18[0]" 
+						v-if="errors.p18" 
 						v-text="errors.p18[0]"
 						class="help is-danger"
 					></p>
@@ -69,8 +79,13 @@
 				<div class="field">
 					<label for="p30" class="label">Early EG-04</label>
 
-					<div class="select is-small" :class="{ 'is-danger': errors.p30[0] }">
-						<select :value="p30" id="p30" @change="updateStatus({ event: $event, status: 'p30'})">
+					<div class="select is-small" :class="{ 'is-danger': errors.p30 }">
+						<select 
+							:value="p30" 
+							id="p30" 
+							@change="updateStatus({ event: $event, status: 'p30'})"
+							:disabled="!hasRoleOf('supervisor', 'head_of_operations')"
+						>
 							<option value=""></option>
 
 							<option 
@@ -84,7 +99,7 @@
 					</div>
 
 					<p 
-						v-if="errors.p30[0]" 
+						v-if="errors.p30" 
 						v-text="errors.p30[0]"
 						class="help is-danger"
 					></p>
@@ -98,8 +113,13 @@
 				<div class="field">
 					<label for="p42" class="label">late EG-04</label>
 
-					<div class="select is-small" :class="{ 'is-danger': errors.p42[0] }">
-						<select :value="p42" id="p42" @change="updateStatus({ event: $event, status: 'p42'})">
+					<div class="select is-small" :class="{ 'is-danger': errors.p42 }">
+						<select 
+							:value="p42" 
+							id="p42" 
+							@change="updateStatus({ event: $event, status: 'p42'})"
+							:disabled="!hasRoleOf('supervisor', 'head_of_operations')"
+						>
 							<option value=""></option>
 
 							<option 
@@ -113,7 +133,7 @@
 					</div>
 
 					<p 
-						v-if="errors.p42[0]" 
+						v-if="errors.p42" 
 						v-text="errors.p42[0]"
 						class="help is-danger"
 					></p>
@@ -150,7 +170,7 @@
 				lessonPeriodp30: 'userlessons/lessonPeriodp30',
 				lessonPeriodp42: 'userlessons/lessonPeriodp42',
 
-				errors: 'userlessons/errors'
+				errors: 'errors'
 			})
 		},
 

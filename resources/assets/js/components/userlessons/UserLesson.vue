@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<article v-if="errors['denied']" class="message is-danger mt-4">
+		<article v-if="errors.denied" class="message is-danger mt-4">
 			<div class="message-body content">
 				<ul class="mt-0">
 					<li v-for="(error, type) in errors" v-text="error" :key="type"></li>
@@ -8,12 +8,15 @@
 			</div>
 		</article>
 
-		<div class="columns">
+		<div 
+			class="columns" 
+			v-if="hasRoleOf('supervisor', 'head_of_operations', 'manager')"
+		>
 			<div class="column">
 				<button 
 					class="button is-link is-pulled-right"
 					:class="{ 'is-loading' : isLoading }"
-					@click="patch"
+					@click="submit"
 				>
 					Save lesson package
 				</button>
@@ -51,15 +54,9 @@
 
 		computed: {
 			...mapGetters({
-				isLoading: 'userlessons/isLoading'
+				isLoading: 'isLoading',
+				errors: 'errors'
 			})
-		},
-
-		data () {
-			return {
-				formData: {},
-				errors: {}
-			}
 		},
 
 		components: {
@@ -72,7 +69,16 @@
 			...mapActions({
 				fetch: 'userlessons/fetch',
 				patch: 'userlessons/patch'
-			})
+			}),
+
+			submit () {
+				this.patch()
+					.then(response => this.$toast.open({
+			                message: response.data.flash,
+			                position: 'is-top-right',
+			                type: 'is-success'
+            		})).catch(() => {})
+			}
 		},
 
 		mounted () {
@@ -80,12 +86,6 @@
 				userlesson: this.userLesson.id,
 				user: this.user.id
 			})
-
-			window.events.$on('userlesson:save-success', message => this.$toast.open({
-                message,
-                position: 'is-top-right',
-                type: 'is-success'
-            }))
 		}
 	}
 </script>

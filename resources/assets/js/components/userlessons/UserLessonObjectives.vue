@@ -13,7 +13,7 @@
 				<label 
 					class="checkbox" 
 				>
-					<template v-if="authUser.hasRoleOf('administrator', 'supervisor', 'head_of_operations')">
+					<template v-if="hasRoleOf('administrator', 'supervisor', 'head_of_operations')">
 						<input 
 							type="checkbox" 
 							v-model="completed" 
@@ -41,7 +41,7 @@
 			</li>
 		</ul>
 
-		<article v-if="errors.objectives[0]" class="message is-danger mt-4">
+		<article v-if="errors.objectives" class="message is-danger mt-4">
 			<div class="message-body content">
 				<ul class="mt-0">
 					<li v-text="errors.objectives[0]"></li>
@@ -58,7 +58,7 @@
 		computed: {
 			...mapGetters({
 				objectives: 'userlessons/objectives',
-				errors: 'userlessons/errors'
+				errors: 'errors'
 			}),
 			completed: {
 				get () {

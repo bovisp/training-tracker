@@ -1,52 +1,37 @@
 export const fetch = async ({ commit }, { userlesson, user }) => {
-	await commit('loadingStatus')
+	await commit('loadingStatus', null, { root: true })
 
 	let response = await axios.get(`/users/${user}/userlessons/${userlesson}/api`)
 
 	await commit('initialize', response.data)
 
-	await commit('loadingStatus')
+	await commit('loadingStatus', null, { root: true })
 }
 
 export const updateStatus = async ({ commit }, payload) => {
 	await commit('updateStatus', payload)
 }
 
-export const patch = async ({ state, commit, dispatch }) => {
-	await commit('loadingStatus')
+export const patch = ({ state, commit, dispatch }) => {
+	commit('loadingStatus', null, { root: true })
 	
-	axios.interceptors.response.use(
-        response => {
-          return response;
-        },
-        error => {
-            return Promise.reject(error.response);
-        }
+	return axios.put(
+		`/users/${state.user.id}/userlessons/${state.userlesson.id}`, {
+			statuses: state.userlesson.status,
+			// objectives: state.userlesson.completedObjectives,
+			objectives: ['foo', 'bar', 'baz']
+		}
     )
+    .then(response => {
+		commit('clearErrors', null, { root: true })
 
-	try {
-		let response = await axios.put(
-			`/users/${state.user.id}/userlessons/${state.userlesson.id}`, {
-				statuses: state.userlesson.status,
-				objectives: state.userlesson.completedObjectives
-			}
-	    )
-
-	    await commit('clearErrors')
-
-	    await dispatch('fetch', {
+	    dispatch('fetch', {
 	    	userlesson: state.userlesson.id,
 	    	user: state.user.id
 	    })
 
-	    await commit('loadingStatus')
+	    commit('loadingStatus', null, { root: true })
 
-	    window.events.$emit('userlesson:save-success', response.data.flash)
-	} catch(error) {
-		if (error) {
-			await commit('setErrors', error.data.errors)
-
-			await commit('loadingStatus')
-		}
-	}
+	    return Promise.resolve(response)
+	})
 }

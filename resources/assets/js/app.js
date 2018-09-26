@@ -8,6 +8,8 @@ import store from './store'
 
 import user from './mixins/user'
 
+import './helpers/interceptors'
+
 Vue.use(Buefy, {
 	defaultToastDuration: 5000
 })
