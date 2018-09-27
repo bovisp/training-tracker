@@ -7,13 +7,13 @@ axios.interceptors.response.use(
 		if (error.response.status === 422) {
 			store.dispatch('setErrors', error.response.data.errors)
 
-			store.dispatch('loadingStatus')
+			store.dispatch('cancelLoadingStatus')
 		}
 
 		if (error.response.status === 403) {
 			store.dispatch('setErrors', error.response.data.errors.errors)
 
-			store.dispatch('loadingStatus')
+			store.dispatch('cancelLoadingStatus')
 		}
 
 		return Promise.reject(error)

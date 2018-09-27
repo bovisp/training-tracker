@@ -1,92 +1,75 @@
 <template>
 	<div>
+		<!-- <template v-if="reply">
+			<comment-reply :comment="reply" />
+		</template> -->
+
+		<!-- <template v-else> -->
+		<!-- <h5 class="mb-5">{{ meta.total }} {{ pluralize('comment', meta.total) }}</h5> -->
+
 		<new-comment 
 			:endpoint="endpoint" 
-			v-if="this.hasRoleOf('head_of_operations')"
+			v-if="hasRoleOf('supervisor', 'head_of_operations')"
 		/>
-	
+
 		<template v-if="comments.length">
 			<ul>
 				<comment 
-					v-for="comment in comments" 
+					v-for="comment in comments"
 					:key="comment.id"
-					:comment="comment" 
+					:comment="comment"
+					:endpoint="endpoint"
 				/>
 			</ul>
 		</template>
 
-		<article class="message is-info" v-else>
-			<div class="message-body">
-				No comments to display.
-			</div>
-		</article>
+		<!-- <div 
+			class="alert alert-primary" 
+			role="alert"
+			v-else
+		>No comments to display</div>
 
 		<button 
-			class="button mt-6"
+			class="btn btn-light btn-block"
 			@click.prevent="more"
 			v-if="meta.current_page < meta.last_page"
-		>
-			Show more comments
-		</button>
+		>Show more</button> -->
+		<!-- </template> -->
 	</div>
 </template>
 
 <script>
-	import NewComment from './NewComment'
+	import { mapActions, mapGetters } from 'vuex'
 	import Comment from './Comment'
+	import NewComment from './NewComment'
 
 	export default {
-		props: ['endpoint'],
-
-		components: {
-			NewComment,
-			Comment
+		props: {
+			endpoint: {
+				required: true,
+				type: String
+			}
 		},
 
-		data () {
-			return {
-				comments: [],
-				meta: {}
-			}
+		components: {
+			Comment,
+			NewComment
+		},
+
+		computed: {
+			...mapGetters({
+				comments: 'comments/comments'
+			})
 		},
 
 		methods: {
-			async prependComment (comment) {
-				await this.fetchMeta()
-
-				if (this.meta.current_page === this.meta.last_page) {
-					this.comments.push(comment)
-				}
-			},
-
-			fetchMeta () {
-				axios.get(`${this.endpoint}?page=${this.meta.current_page}`)
-					.then(({data}) => {
-						this.meta = data.meta
-					})
-			},
-
-			fetch (page = 1) {
-				axios.get(`${this.endpoint}?page=${page}`)
-					.then(({data}) => {
-						this.comments = data.data
-						this.meta = data.meta
-					})
-			},
-
-			more () {
-				axios.get(`${this.endpoint}?page=${this.meta.current_page + 1}`)
-					.then(({data}) => {
-						this.comments.push(...data.data)
-						this.meta = data.meta
-					})
-			}
+			...mapActions({
+				fetch: 'comments/fetch'
+			})
 		},
 
 		mounted () {
-			this.fetch(1)
-
-			window.events.$on('comment:stored', this.prependComment)
+			this.fetch(this.endpoint)
 		}
 	}
 </script>
