@@ -13,7 +13,7 @@
 				<label 
 					class="checkbox" 
 				>
-					<template v-if="hasRoleOf('administrator', 'supervisor', 'head_of_operations')">
+					<template v-if="hasRoleOf('administrator', 'supervisor', 'head_of_operations') && !isCompleted">
 						<input 
 							type="checkbox" 
 							v-model="completed" 
@@ -58,8 +58,10 @@
 		computed: {
 			...mapGetters({
 				objectives: 'userlessons/objectives',
-				errors: 'errors'
+				errors: 'errors',
+				isCompleted: 'userlessons/isCompleted'
 			}),
+
 			completed: {
 				get () {
 					return this.$store.state.userlessons.userlesson.completedObjectives

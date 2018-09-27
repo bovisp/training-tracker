@@ -24,7 +24,7 @@
 					</p>
 				</div>
 
-				<template v-if="comment.owner && !editing">
+				<template v-if="comment.owner && !editing && !isCompleted">
 					<div class="level">
 						<div class="level-left">
 							<div class="level-item">
@@ -61,6 +61,11 @@
 			endpoint: {
 				required: true,
 				type: String
+			},
+			isCompleted: {
+				required: false,
+				type: Boolean,
+				default: false
 			}
 		},
 

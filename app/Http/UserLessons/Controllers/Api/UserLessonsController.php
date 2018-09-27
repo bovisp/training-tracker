@@ -52,7 +52,7 @@ class UserLessonsController extends Controller
                 ],
                 'objectives' => $userlesson->lesson->objectives,
                 'notebooks' => ($userlesson->lesson->objectives)->where('notebook_required', 1),
-                'completedObjectives' => $user->completedObjectives()
+                'completedObjectives' => $user->completedObjectives(),
             ],
             'user' => [
                 'id' => $user->id,
@@ -61,7 +61,8 @@ class UserLessonsController extends Controller
             ],
             'auth' => [
                 'role' => moodleauth()->user()->roles->first()->type
-            ]
+            ],
+            'completedPackage' => $userlesson->completed
         ];
     }
 }

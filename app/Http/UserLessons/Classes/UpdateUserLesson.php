@@ -6,6 +6,7 @@ use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\UserLessons\Requests\UpdateStatusesRequest;
 use TrainingTracker\Http\UserLessons\Requests\UpdateObjectivesRequest;
+use TrainingTracker\Http\UserLessons\Requests\UpdateCompletedRequest;
 
 class UpdateUserLesson {
 	protected $user;
@@ -13,9 +14,9 @@ class UpdateUserLesson {
 	protected $userlesson;
 
 	protected $methods = [
-		'administrator' => ['statuses', 'objectives'],
-		'manager' => [],
-		'head_of_operations' => ['statuses', 'objectives'],
+		'administrator' => ['statuses', 'objectives', 'completed'],
+		'manager' => ['completed'],
+		'head_of_operations' => ['statuses', 'objectives', 'completed'],
 		'supervisor' => ['statuses', 'objectives']
 	];
 

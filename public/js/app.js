@@ -44203,6 +44203,7 @@ var isLoading = function isLoading(state) {
 		},
 		objectives: {}
 	},
+	completedPackage: 0,
 	user: {},
 	auth: {}
 });
@@ -44216,10 +44217,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialize", function() { return initialize; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateStatus", function() { return updateStatus; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCompletedObjectives", function() { return updateCompletedObjectives; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCompletedPackage", function() { return updateCompletedPackage; });
 var initialize = function initialize(state, payload) {
 	state.userlesson = payload.userlesson;
 	state.user = payload.user;
 	state.auth = payload.auth;
+	state.completedPackage = payload.completedPackage;
 };
 
 var updateStatus = function updateStatus(state, payload) {
@@ -44228,6 +44231,16 @@ var updateStatus = function updateStatus(state, payload) {
 
 var updateCompletedObjectives = function updateCompletedObjectives(state, payload) {
 	return state.userlesson.completedObjectives = payload;
+};
+
+var updateCompletedPackage = function updateCompletedPackage(state) {
+	if (state.completedPackage === 0) {
+		state.completedPackage = 1;
+
+		return;
+	}
+
+	state.completedPackage = 0;
 };
 
 /***/ }),
@@ -44239,6 +44252,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetch", function() { return fetch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateStatus", function() { return updateStatus; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "patch", function() { return patch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCompletedPackage", function() { return updateCompletedPackage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
@@ -44318,7 +44332,8 @@ var patch = function patch(_ref6) {
 
 	return axios.put('/users/' + state.user.id + '/userlessons/' + state.userlesson.id, {
 		statuses: state.userlesson.status,
-		objectives: state.userlesson.completedObjectives
+		objectives: state.userlesson.completedObjectives,
+		completed: state.completedPackage
 		// objectives: ['foo', 'bar', 'baz']
 	}).then(function (response) {
 		commit('clearErrors', null, { root: true });
@@ -44332,6 +44347,11 @@ var patch = function patch(_ref6) {
 
 		return Promise.resolve(response);
 	});
+};
+
+var updateCompletedPackage = function updateCompletedPackage(_ref7) {
+	var commit = _ref7.commit;
+	return commit('updateCompletedPackage');
 };
 
 /***/ }),
@@ -45124,6 +45144,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lessonPeriodp42", function() { return lessonPeriodp42; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "objectives", function() { return objectives; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "completed", function() { return completed; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "completedPackage", function() { return completedPackage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isCompleted", function() { return isCompleted; });
 var p9 = function p9(state) {
   return state.userlesson.status.p9;
 };
@@ -45162,6 +45184,14 @@ var objectives = function objectives(state) {
 
 var completed = function completed(state) {
   return state.userlesson.completedObjectives;
+};
+
+var completedPackage = function completedPackage(state) {
+  return state.completedPackage;
+};
+
+var isCompleted = function isCompleted(state) {
+  return state.completedPackage === 1;
 };
 
 /***/ }),
@@ -47084,9 +47114,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UserLessonStatus___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__UserLessonStatus__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UserLessonObjectives__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UserLessonObjectives___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__UserLessonObjectives__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments_Comments__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments_Comments___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__comments_Comments__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__UserLessonFinal__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__UserLessonFinal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__UserLessonFinal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__comments_Comments__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__comments_Comments___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__comments_Comments__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex__ = __webpack_require__(2);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -47136,6 +47168,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -47146,9 +47182,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['userLesson', 'user'],
 
-	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])({
+	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["c" /* mapGetters */])({
 		isLoading: 'isLoading',
-		errors: 'errors'
+		errors: 'errors',
+		isCompleted: 'userlessons/isCompleted'
 	}), {
 		commentsEndpoint: function commentsEndpoint() {
 			return '/users/' + this.user.id + '/userlessons/' + this.userLesson.id + '/comments';
@@ -47158,13 +47195,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 	components: {
 		UserLessonStatus: __WEBPACK_IMPORTED_MODULE_0__UserLessonStatus___default.a,
 		UserLessonObjectives: __WEBPACK_IMPORTED_MODULE_1__UserLessonObjectives___default.a,
+		UserLessonFinal: __WEBPACK_IMPORTED_MODULE_2__UserLessonFinal___default.a,
 		// UserLessonNotebooks,
-		Comments: __WEBPACK_IMPORTED_MODULE_2__comments_Comments___default.a
+		Comments: __WEBPACK_IMPORTED_MODULE_3__comments_Comments___default.a
 	},
 
-	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])({
+	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_4_vuex__["b" /* mapActions */])({
 		fetch: 'userlessons/fetch',
-		patch: 'userlessons/patch'
+		patch: 'userlessons/patch',
+		updateCompletedPackage: 'userlessons/updateCompletedPackage'
 	}), {
 		submit: function submit() {
 			var _this = this;
@@ -47179,9 +47218,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 				if (error.response.status === 403) {
 					_this.$dialog.alert({
 						title: 'Unauthorized',
-						message: error.denied,
+						message: _this.errors.denied,
 						type: 'is-danger'
 					});
+				}
+
+				if (error.response.status === 422 && _this.errors.completed) {
+					_this.$dialog.alert({
+						title: 'Incomplete',
+						message: _this.errors.completed[0],
+						type: 'is-danger'
+					});
+
+					_this.updateCompletedPackage();
 				}
 			});
 		}
@@ -47419,7 +47468,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		lessonPeriodp30: 'userlessons/lessonPeriodp30',
 		lessonPeriodp42: 'userlessons/lessonPeriodp42',
 
-		errors: 'errors'
+		errors: 'errors',
+
+		isCompleted: 'userlessons/isCompleted'
 	})),
 
 	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])({
@@ -47471,10 +47522,9 @@ var render = function() {
                   {
                     attrs: {
                       id: "p9",
-                      disabled: !_vm.hasRoleOf(
-                        "supervisor",
-                        "head_of_operations"
-                      )
+                      disabled:
+                        !_vm.hasRoleOf("supervisor", "head_of_operations") ||
+                        _vm.isCompleted
                     },
                     domProps: { value: _vm.p9 },
                     on: {
@@ -47535,10 +47585,9 @@ var render = function() {
                   {
                     attrs: {
                       id: "p18",
-                      disabled: !_vm.hasRoleOf(
-                        "supervisor",
-                        "head_of_operations"
-                      )
+                      disabled:
+                        !_vm.hasRoleOf("supervisor", "head_of_operations") ||
+                        _vm.isCompleted
                     },
                     domProps: { value: _vm.p18 },
                     on: {
@@ -47600,10 +47649,9 @@ var render = function() {
                   {
                     attrs: {
                       id: "p30",
-                      disabled: !_vm.hasRoleOf(
-                        "supervisor",
-                        "head_of_operations"
-                      )
+                      disabled:
+                        !_vm.hasRoleOf("supervisor", "head_of_operations") ||
+                        _vm.isCompleted
                     },
                     domProps: { value: _vm.p30 },
                     on: {
@@ -47665,10 +47713,9 @@ var render = function() {
                   {
                     attrs: {
                       id: "p42",
-                      disabled: !_vm.hasRoleOf(
-                        "supervisor",
-                        "head_of_operations"
-                      )
+                      disabled:
+                        !_vm.hasRoleOf("supervisor", "head_of_operations") ||
+                        _vm.isCompleted
                     },
                     domProps: { value: _vm.p42 },
                     on: {
@@ -47833,8 +47880,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
 	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
 		objectives: 'userlessons/objectives',
-		errors: 'errors'
+		errors: 'errors',
+		isCompleted: 'userlessons/isCompleted'
 	}), {
+
 		completed: {
 			get: function get() {
 				return this.$store.state.userlessons.userlesson.completedObjectives;
@@ -47875,7 +47924,11 @@ var render = function() {
             "label",
             { staticClass: "checkbox" },
             [
-              _vm.hasRoleOf("administrator", "supervisor", "head_of_operations")
+              _vm.hasRoleOf(
+                "administrator",
+                "supervisor",
+                "head_of_operations"
+              ) && !_vm.isCompleted
                 ? [
                     _c("input", {
                       directives: [
@@ -48062,6 +48115,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -48072,6 +48126,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		endpoint: {
 			required: true,
 			type: String
+		},
+		isCompleted: {
+			required: false,
+			type: Boolean,
+			default: false
 		}
 	},
 
@@ -48214,6 +48273,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		endpoint: {
 			required: true,
 			type: String
+		},
+		isCompleted: {
+			required: false,
+			type: Boolean,
+			default: false
 		}
 	},
 
@@ -48581,7 +48645,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm.comment.owner && !_vm.editing
+          _vm.comment.owner && !_vm.editing && !_vm.isCompleted
             ? [
                 _c("div", { staticClass: "level" }, [
                   _c("div", { staticClass: "level-left" }, [
@@ -48920,7 +48984,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.hasRoleOf("supervisor", "head_of_operations")
+      _vm.hasRoleOf("supervisor", "head_of_operations") && !_vm.isCompleted
         ? _c("new-comment", { attrs: { endpoint: _vm.endpoint } })
         : _vm._e(),
       _vm._v(" "),
@@ -48931,7 +48995,11 @@ var render = function() {
               _vm._l(_vm.comments, function(comment) {
                 return _c("comment", {
                   key: comment.id,
-                  attrs: { comment: comment, endpoint: _vm.endpoint }
+                  attrs: {
+                    comment: comment,
+                    endpoint: _vm.endpoint,
+                    "is-completed": _vm.isCompleted
+                  }
                 })
               })
             )
@@ -49003,11 +49071,18 @@ var render = function() {
         _vm._v("\n\t\tComments\n\t")
       ]),
       _vm._v(" "),
-      _c("comments", { attrs: { endpoint: _vm.commentsEndpoint } }),
+      _c("comments", {
+        attrs: {
+          endpoint: _vm.commentsEndpoint,
+          "is-completed": _vm.isCompleted
+        }
+      }),
       _vm._v(" "),
       _c("h3", { staticClass: "title is-3 mt-16" }, [
         _vm._v("\n\t\tFinal evaluation\n\t")
       ]),
+      _vm._v(" "),
+      _c("user-lesson-final"),
       _vm._v(" "),
       _c("b-loading", {
         attrs: {
@@ -49176,6 +49251,129 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(105)
+/* template */
+var __vue_template__ = __webpack_require__(106)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/userlessons/UserLessonFinal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-43a75ded", Component.options)
+  } else {
+    hotAPI.reload("data-v-43a75ded", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
+		completedPackage: 'userlessons/completedPackage'
+	})),
+
+	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])({
+		update: 'userlessons/updateCompletedPackage'
+	}))
+});
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", [
+    _c("div", { staticClass: "field" }, [
+      _c("label", { staticClass: "checkbox" }, [
+        _c("input", {
+          attrs: { type: "checkbox" },
+          domProps: {
+            value: _vm.completedPackage,
+            checked: _vm.completedPackage
+          },
+          on: { change: _vm.update }
+        }),
+        _vm._v(" This lesson package has been successfully completed\n\t\t\t")
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-43a75ded", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

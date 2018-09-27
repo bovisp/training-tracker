@@ -12,8 +12,9 @@ export default {
 			p30: '',
 			p42: ''
 		},
-		objectives: {}
+		objectives: {},
 	},
+	completedPackage: 0,
 	user: {},
 	auth: {} 
 }
