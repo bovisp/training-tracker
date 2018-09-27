@@ -62,13 +62,6 @@ trait HasPermissionsTrait
         }
 
         return $roles->intersect($this->roles)->isNotEmpty();
-		// foreach ($roles as $role) {
-		// 	if ($this->roles->contains('type', $role)) {
-		// 		return true;
-		// 	}
-		// }
-
-		// return false;
 	}
 
 	/**

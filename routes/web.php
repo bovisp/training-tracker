@@ -93,7 +93,25 @@ Route::middleware(['profile'])->group(function () {
 
 		Route::put('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@update');
 
-		Route::get('/userlessons/{userlesson}/comments', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@index');
+		Route::get(
+			'/userlessons/{userlesson}/comments',
+			 '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@index'
+		);
+
+		Route::post(
+			'/userlessons/{userlesson}/comments',
+			 '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@store'
+		);
+
+		Route::put(
+			'/userlessons/{userlesson}/comments/{comment}',
+			 '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@update'
+		);
+
+		Route::delete(
+			'/userlessons/{userlesson}/comments/{comment}',
+			 '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@destroy'
+		);
 	});
 });
 

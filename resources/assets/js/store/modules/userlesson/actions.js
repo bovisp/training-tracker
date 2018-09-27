@@ -18,8 +18,8 @@ export const patch = ({ state, commit, dispatch }) => {
 	return axios.put(
 		`/users/${state.user.id}/userlessons/${state.userlesson.id}`, {
 			statuses: state.userlesson.status,
-			// objectives: state.userlesson.completedObjectives,
-			objectives: ['foo', 'bar', 'baz']
+			objectives: state.userlesson.completedObjectives,
+			// objectives: ['foo', 'bar', 'baz']
 		}
     )
     .then(response => {

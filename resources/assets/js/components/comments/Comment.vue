@@ -1,54 +1,66 @@
 <template>
-	<div class="card">
-		<div class="card-content">
-			<p class="title is-5">
-				{{ fullname }}
-			</p>
-			<p class="subtitle is-6 has-text-grey">
-				{{ role }}
-			</p>
-		
-			
-			<template v-if="!editing">
-				<div class="content">
-					<p>{{ comment.body }}</p>
+	<li class="mb-4">
+		<article class="media">
+			<div class="media-content">
+				<div class="content mb-2">
+					<p>
+						<strong>{{ comment.user.firstname }} {{ comment.user.lastname }}</strong> 
 
-					<small class="has-text-grey is-size-7">
-						{{ comment.created_at }}
-					</small>
+						<span class="has-text-grey">
+							<small>added this on: {{ comment.created_at }}</small>
+
+							<small v-if="comment.edited"> | edited: {{ comment.edited }}</small>
+						</span>
+
+						<br>
+
+						<template v-if="!editing">
+							{{ comment.body }}
+						</template>
+
+						<template v-else>
+							<comment-edit :comment="comment" :endpoint="endpoint" />
+						</template>
+					</p>
 				</div>
-			</template>
 
-			<template v-else>
-				<comment-edit :comment="comment" />
-			</template>
+				<template v-if="comment.owner && !editing">
+					<div class="level">
+						<div class="level-left">
+							<div class="level-item">
+								<button
+									class="button is-text is-small"
+									@click.prevent="editing = true"
+								>Edit</button>
+							</div>
 
-			<ul 
-				v-if="canEdit && !editing"
-				class="is-flex"
-			>
-				<li>
-					<button 
-						class="button is-info is-small mr-4"
-						@click.prevent="editing = true"
-					>
-						Edit
-					</button>
-				</li>
-			</ul>
-		</div>
-	</div>
+							<div class="level-item" v-if="hasRoleOf('administrator')">
+								<button
+									class="button is-text is-small has-text-danger"
+									@click.prevent="confirm"
+								>Delete</button>
+							</div>
+						</div>
+					</div>
+				</template>
+			</div>
+		</article>
+	</li>
 </template>
 
 <script>
 	import CommentEdit from './CommentEdit'
+	import { mapActions, mapGetters } from 'vuex'
 
 	export default {
-		props: ['comment'],
-
-		data () {
-			return {
-				editing: false
+		props: {
+			comment: {
+				required: true,
+				type: Object
+			},
+			endpoint: {
+				required: true,
+				type: String
 			}
 		},
 
@@ -56,23 +68,56 @@
 			CommentEdit
 		},
 
+		data () {
+			return { 
+				editing: false
+			}
+		},
+
 		computed: {
-			fullname () {
-				return this.comment.user.profile[0].firstname + ' ' + this.comment.user.profile[0].lastname
+			...mapGetters({
+				errors: 'errors'
+			})
+		},
+
+		methods: {
+			...mapActions({
+				destroy: 'comments/destroy'
+			}),
+
+			confirm () {
+                this.$dialog.confirm({
+                    message: 'Are you sure you want to delete this comment?',
+                    onConfirm: () => this.remove()
+                })
 			},
 
-			role () {
-				return this.comment.user.role
-			},
-
-			canEdit() {
-				return (this.authUser.role === 'administrator') || (this.comment.user.id == this.authUser.id)
+			remove () {
+				this.destroy(`${this.endpoint}/${this.comment.id}`)
+					.then(response => {
+						this.$toast.open({
+			                message: 'Comment successfully deleted.',
+			                position: 'is-top-right',
+			                type: 'is-success'
+	            		})
+					})
+					.catch(error => {
+						if (error.response.status === 403) {
+							this.$dialog.alert({
+			                    title: 'Unauthorized',
+			                    message: this.errors.denied,
+			                    type: 'is-danger'
+			                })
+						}
+					})
 			}
 		},
 
 		mounted () {
-			window.events.$on('comment:edit-cancelled', comment => {
-
+			window.events.$on('comment:edit-cancelled', (comment) => {
+				if (comment.id === this.comment.id) {
+					this.editing = false
+				}
 			})
 		}
 	}

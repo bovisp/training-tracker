@@ -33,7 +33,9 @@
 			Comments
 		</h3>
 
-		<!-- <comments :endpoint="commentEndpoint" /> -->
+		<comments 
+			:endpoint="commentsEndpoint"
+		/>
 
 		<h3 class="title is-3 mt-16">
 			Final evaluation
@@ -46,7 +48,7 @@
 <script>
 	import UserLessonStatus from './UserLessonStatus'
 	import UserLessonObjectives from './UserLessonObjectives'
-	// import UserLessonNotebooks from './UserLessonNotebooks'
+	import Comments from '../comments/Comments'
 	import { mapGetters, mapActions } from 'vuex'
 
 	export default {
@@ -56,13 +58,17 @@
 			...mapGetters({
 				isLoading: 'isLoading',
 				errors: 'errors'
-			})
+			}),
+
+			commentsEndpoint () {
+				return `/users/${this.user.id}/userlessons/${this.userLesson.id}/comments`
+			}
 		},
 
 		components: {
 			UserLessonStatus,
 			UserLessonObjectives,
-			// UserLessonNotebooks
+			Comments
 		},
 
 		methods: {
@@ -77,7 +83,15 @@
 			                message: response.data.flash,
 			                position: 'is-top-right',
 			                type: 'is-success'
-            		})).catch(() => {})
+            		})).catch(error => {
+						if (error.response.status === 403) {
+							this.$dialog.alert({
+			                    title: 'Unauthorized',
+			                    message: error.denied,
+			                    type: 'is-danger'
+			                })
+						}
+            		})
 			}
 		},
 

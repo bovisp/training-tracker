@@ -9,6 +9,7 @@ import * as actions from './actions'
 import * as getters from './getters'
 
 import userlessons from './modules/userlesson'
+import comments from './modules/comments'
 
 export default new Vuex.Store({
 	state, 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
 	actions,
 	getters,
 	modules: {
-		userlessons
+		userlessons,
+		comments
 	} 
 })

@@ -1,48 +1,42 @@
 <template>
 	<div class="mb-6">
 		<button 
-			class="button is-info"
+			class="button is-link is-small"
 			@click.prevent="active = true"
 			v-if="!active"
-		>
-			New comment
-		</button>
+		>Add new comment</button>
 
 		<template v-else>
-			<form
-				@submit.prevent="store"
-				@keydown="form.errors.clear($event.target.name)"
-			>
+			<form>
 				<div class="field">
-					<label class="label" for="body">Comment</label>
+					<label for="body" class="label">Comment</label>
 
 					<div class="control">
-						<textarea 
+						<textarea
+							id="body"
+							rows="10"
 							class="textarea"
-							id="body" 
+							:class="{ 'is-danger': errors.body }"
+							autofocus="autofocus"
 							v-model="form.body"
-							:class="{ 'is-danger' : form.errors.has('body') }"
 						></textarea>
 					</div>
 
-					<p
-						class="help is-danger"
-						v-if="form.errors.has('body')"
-						v-text="form.errors.get('body')"
-					></p>
+					<p class="help is-danger" v-if="errors.body">
+						{{ errors.body[0] }}
+					</p>
 				</div>
 
-				<div class="field is-grouped">
-					<div class="control">
-						<button class="button is-info">Submit</button>
-					</div>
+				<div class="form-group">
+					<button 
+						class="button is-link is-small" 
+						@click.prevent="submit"
+					>Submit</button>
 
-					<div class="control">
-						<button 
-							class="button is-text"
-							@click.prevent="active = false"
-						>Cancel</button>
-					</div>
+					<button 
+						class="button is-text is-small"
+						@click.prevent="active = false"
+					>Cancel</button>
 				</div>
 			</form>
 		</template>
@@ -50,35 +44,62 @@
 </template>
 
 <script>
-	import Form from '../../classes/Form'
+	import { mapActions, mapGetters } from 'vuex'
 
 	export default {
-		props: ['endpoint'],
-
-		data () {
-			return {
-				active: false,
-				form: new Form({
-					'body': ''
-				})
+		props: {
+			endpoint: {
+				required: true,
+				type: String
 			}
 		},
 
+		data () {
+			return {
+				form: {
+					body: ''
+				},
+				active: false
+			}
+		},
+
+		computed: {
+			...mapGetters({
+				errors: 'errors'
+			})
+		},
+
 		methods: {
-			store () {
-				this.form.post(this.endpoint, this.form)
-		        	.then(({data}) => {
-		        		this.active = false
+			...mapActions({
+				store: 'comments/store'
+			}),
 
-		        		window.events.$emit('comment:stored', data)
+			submit () {
+				this.store({
+					endpoint: this.endpoint,
+					data: this.form
+				})
+				.then(response => {
+					this.active = false
 
-		        		this.$toast.open({
-	                        message: 'Comment created.',
-	                        position: 'is-top-right',
-	                        type: 'is-success'
-	                    })
-		        	});
-			}			
+					this.form.body = ''
+
+					this.$toast.open({
+		                message: 'Comment successfully added.',
+		                position: 'is-top-right',
+		                type: 'is-success'
+            		})
+				})
+				.catch(error => {
+					if (error.response.status === 403) {
+						this.$dialog.alert({
+		                    title: 'Unauthorized',
+		                    message: this.errors.denied,
+		                    type: 'is-danger'
+		                })
+					}
+				})
+			}
 		}
 	}
 </script>
