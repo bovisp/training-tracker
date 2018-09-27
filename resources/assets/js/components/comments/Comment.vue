@@ -34,7 +34,7 @@
 								>Edit</button>
 							</div>
 
-							<div class="level-item" v-if="hasRoleOf('administrator')">
+							<div class="level-item">
 								<button
 									class="button is-text is-small has-text-danger"
 									@click.prevent="confirm"

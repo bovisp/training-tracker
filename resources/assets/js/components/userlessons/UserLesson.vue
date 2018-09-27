@@ -27,7 +27,7 @@
 
 		<user-lesson-objectives />
 
-		<!-- <user-lesson-notebooks v-if="!isLoading"></user-lesson-notebooks> -->
+		<!-- <user-lesson-notebooks></user-lesson-notebooks> -->
 
 		<h3 class="title is-3 mt-16">
 			Comments
@@ -48,6 +48,7 @@
 <script>
 	import UserLessonStatus from './UserLessonStatus'
 	import UserLessonObjectives from './UserLessonObjectives'
+	// import UserLessonNotebooks from './UserLessonNotebooks'
 	import Comments from '../comments/Comments'
 	import { mapGetters, mapActions } from 'vuex'
 
@@ -68,6 +69,7 @@
 		components: {
 			UserLessonStatus,
 			UserLessonObjectives,
+			// UserLessonNotebooks,
 			Comments
 		},
 

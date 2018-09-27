@@ -31,8 +31,8 @@ class CanViewProfile
             return $next($request);
         }
 
-        if (in_array($this->userIdFromRequest(), array_flatten(moodleauth()->user()->usersSupervisees(moodleauth()->user())))) {
-            if(moodleauth()->user()->active === 1) {
+        foreach(moodleauth()->user()->reportingStructure() as $employee) {
+            if ($employee['id'] === $this->userIdFromRequest() && moodleauth()->user()->active === 1) {
                 return $next($request);
             }
         }
