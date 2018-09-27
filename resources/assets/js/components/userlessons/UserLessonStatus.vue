@@ -17,7 +17,7 @@
 							:value="p9" 
 							id="p9" 
 							@change="updateStatus({ event: $event, status: 'p9'})"
-							:disabled="!hasRoleOf('supervisor', 'head_of_operations')"
+							:disabled="!hasRoleOf('supervisor', 'head_of_operations') || isCompleted"
 						>
 							<option value=""></option>
 
@@ -50,7 +50,7 @@
 							:value="p18" 
 							id="p18" 
 							@change="updateStatus({ event: $event, status: 'p18'})"
-							:disabled="!hasRoleOf('supervisor', 'head_of_operations')"
+							:disabled="!hasRoleOf('supervisor', 'head_of_operations') || isCompleted"
 						>
 							<option value=""></option>
 
@@ -84,7 +84,7 @@
 							:value="p30" 
 							id="p30" 
 							@change="updateStatus({ event: $event, status: 'p30'})"
-							:disabled="!hasRoleOf('supervisor', 'head_of_operations')"
+							:disabled="!hasRoleOf('supervisor', 'head_of_operations') || isCompleted"
 						>
 							<option value=""></option>
 
@@ -118,7 +118,7 @@
 							:value="p42" 
 							id="p42" 
 							@change="updateStatus({ event: $event, status: 'p42'})"
-							:disabled="!hasRoleOf('supervisor', 'head_of_operations')"
+							:disabled="!hasRoleOf('supervisor', 'head_of_operations') || isCompleted"
 						>
 							<option value=""></option>
 
@@ -170,7 +170,9 @@
 				lessonPeriodp30: 'userlessons/lessonPeriodp30',
 				lessonPeriodp42: 'userlessons/lessonPeriodp42',
 
-				errors: 'errors'
+				errors: 'errors',
+
+				isCompleted: 'userlessons/isCompleted'
 			})
 		},
 

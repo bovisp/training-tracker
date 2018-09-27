@@ -17,3 +17,7 @@ export const lessonPeriodp42 = state => state.userlesson.lesson.p42
 export const objectives = state => state.userlesson.objectives
 
 export const completed = state => state.userlesson.completedObjectives
+
+export const completedPackage = state => state.completedPackage
+
+export const isCompleted = state => state.completedPackage === 1

@@ -9,7 +9,7 @@
 
 		<new-comment 
 			:endpoint="endpoint" 
-			v-if="hasRoleOf('supervisor', 'head_of_operations')"
+			v-if="hasRoleOf('supervisor', 'head_of_operations') && !isCompleted"
 		/>
 
 		<template v-if="comments.length">
@@ -19,6 +19,7 @@
 					:key="comment.id"
 					:comment="comment"
 					:endpoint="endpoint"
+					:is-completed="isCompleted"
 				/>
 			</ul>
 		</template>
@@ -48,7 +49,12 @@
 			endpoint: {
 				required: true,
 				type: String
-			}
+			},
+			isCompleted: {
+				required: false,
+				type: Boolean,
+				default: false
+			} 
 		},
 
 		components: {

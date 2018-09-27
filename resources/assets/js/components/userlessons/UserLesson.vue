@@ -35,11 +35,14 @@
 
 		<comments 
 			:endpoint="commentsEndpoint"
+			:is-completed="isCompleted"
 		/>
 
 		<h3 class="title is-3 mt-16">
 			Final evaluation
 		</h3>
+
+		<user-lesson-final></user-lesson-final>
 
 		<b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
 	</div>
@@ -48,6 +51,7 @@
 <script>
 	import UserLessonStatus from './UserLessonStatus'
 	import UserLessonObjectives from './UserLessonObjectives'
+	import UserLessonFinal from './UserLessonFinal'
 	// import UserLessonNotebooks from './UserLessonNotebooks'
 	import Comments from '../comments/Comments'
 	import { mapGetters, mapActions } from 'vuex'
@@ -58,7 +62,8 @@
 		computed: {
 			...mapGetters({
 				isLoading: 'isLoading',
-				errors: 'errors'
+				errors: 'errors',
+				isCompleted: 'userlessons/isCompleted'
 			}),
 
 			commentsEndpoint () {
@@ -69,6 +74,7 @@
 		components: {
 			UserLessonStatus,
 			UserLessonObjectives,
+			UserLessonFinal,
 			// UserLessonNotebooks,
 			Comments
 		},
@@ -76,7 +82,8 @@
 		methods: {
 			...mapActions({
 				fetch: 'userlessons/fetch',
-				patch: 'userlessons/patch'
+				patch: 'userlessons/patch',
+				updateCompletedPackage: 'userlessons/updateCompletedPackage'
 			}),
 
 			submit () {
@@ -89,9 +96,19 @@
 						if (error.response.status === 403) {
 							this.$dialog.alert({
 			                    title: 'Unauthorized',
-			                    message: error.denied,
+			                    message: this.errors.denied,
 			                    type: 'is-danger'
 			                })
+						}
+
+						if (error.response.status === 422 && this.errors.completed) {
+							this.$dialog.alert({
+			                    title: 'Incomplete',
+			                    message: this.errors.completed[0],
+			                    type: 'is-danger'
+			                })
+
+			                this.updateCompletedPackage()
 						}
             		})
 			}

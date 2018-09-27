@@ -10,7 +10,7 @@ use TrainingTracker\Domains\Users\User;
 class UserLesson extends Model
 {
     protected $fillable = [
-        'lesson_id', 'user_id', 'p9', 'p18', 'p30', 'p42'
+        'lesson_id', 'user_id', 'p9', 'p18', 'p30', 'p42', 'completed'
     ];
 
     public function user()

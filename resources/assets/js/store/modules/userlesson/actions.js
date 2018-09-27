@@ -19,6 +19,7 @@ export const patch = ({ state, commit, dispatch }) => {
 		`/users/${state.user.id}/userlessons/${state.userlesson.id}`, {
 			statuses: state.userlesson.status,
 			objectives: state.userlesson.completedObjectives,
+			completed: state.completedPackage
 			// objectives: ['foo', 'bar', 'baz']
 		}
     )
@@ -35,3 +36,5 @@ export const patch = ({ state, commit, dispatch }) => {
 	    return Promise.resolve(response)
 	})
 }
+
+export const updateCompletedPackage = ({ commit }) => commit('updateCompletedPackage')
