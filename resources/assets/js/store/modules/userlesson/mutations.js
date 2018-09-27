@@ -9,7 +9,7 @@ export const updateStatus = (state, payload) => state.userlesson.status[payload.
 
 export const updateCompletedObjectives = (state, payload) => state.userlesson.completedObjectives = payload
 
-export const updateCompletedPackage = (state) => {
+export const updateCompletedPackage = state => {
 	if (state.completedPackage === 0) {
 		state.completedPackage = 1
 

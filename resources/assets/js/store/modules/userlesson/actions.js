@@ -38,3 +38,5 @@ export const patch = ({ state, commit, dispatch }) => {
 }
 
 export const updateCompletedPackage = ({ commit }) => commit('updateCompletedPackage')
+
+export const keepPackageCompleted = ({ commit }) => commit('keepPackageCompleted')
