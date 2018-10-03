@@ -51092,14 +51092,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            files: [],
+            isDraggedOver: false
+        };
     },
 
 
-    methods: {}
+    methods: {
+        enter: function enter(e) {
+            this.isDraggedOver = true;
+        },
+        leave: function leave(e) {
+            this.isDraggedOver = false;
+        },
+        drop: function drop(e) {
+            this.leave();
+            console.log(e.dataTransfer.files);
+        },
+        select: function select(e) {
+            console.log(this.$refs.input.files);
+        }
+    }
 });
 
 /***/ }),
@@ -51110,28 +51139,60 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    {
+      staticClass: "dragndrop",
+      class: { "dragndrop--dragged": _vm.isDraggedOver },
+      on: {
+        dragover: function($event) {
+          $event.preventDefault()
+          return _vm.enter($event)
+        },
+        dragenter: function($event) {
+          $event.preventDefault()
+          return _vm.enter($event)
+        },
+        dragleave: function($event) {
+          $event.preventDefault()
+          return _vm.leave($event)
+        },
+        dragend: function($event) {
+          $event.preventDefault()
+          return _vm.leave($event)
+        },
+        drop: function($event) {
+          $event.preventDefault()
+          return _vm.drop($event)
+        }
+      }
+    },
+    [
+      _vm._v("\n    " + _vm._s(_vm.isDraggedOver) + "\n\n    "),
+      _c("input", {
+        ref: "input",
+        staticClass: "dragndrop__input",
+        attrs: { type: "file", name: "files[]", id: "file", multiple: "" },
+        on: { change: _vm.select }
+      }),
+      _vm._v(" "),
+      _vm._m(0)
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dragndrop" }, [
-      _c("input", {
-        staticClass: "dragndrop__input",
-        attrs: { type: "file", name: "files[]", id: "file", multiple: "" }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "dragndrop__header", attrs: { for: "file" } },
-        [
-          _c("strong", [_vm._v("Drag files here")]),
-          _vm._v(" or click to select files\n    ")
-        ]
-      )
-    ])
+    return _c(
+      "label",
+      { staticClass: "dragndrop__header", attrs: { for: "file" } },
+      [
+        _c("strong", [_vm._v("Drag files here")]),
+        _vm._v(" or click to select files\n    ")
+      ]
+    )
   }
 ]
 render._withStripped = true
