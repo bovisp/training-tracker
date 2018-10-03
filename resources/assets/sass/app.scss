@@ -22,6 +22,12 @@
 // Import buefy styling
 @import "~buefy/dist/buefy.css";
 
+// Import Quill styling
+.quillWrapper {
+	height: 320px;
+	max-height: 320px;
+}
+
 // Custom horizontal divider
 .divider {
 	border-top: 1px solid rgba(34 ,36, 38, .15);
@@ -63,6 +69,10 @@
 
 	&-6 {
 		margin-top: 1.5rem;
+	}
+
+	&-8 {
+		margin-top: 2rem !important;
 	}
 
 	&-16 {

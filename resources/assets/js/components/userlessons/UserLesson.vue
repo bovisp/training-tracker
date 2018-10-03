@@ -10,7 +10,7 @@
 
 		<div 
 			class="columns" 
-			v-if="hasRoleOf('supervisor', 'head_of_operations', 'manager')"
+			v-if="hasRoleOf(['supervisor', 'head_of_operations', 'manager'])"
 		>
 			<div class="column">
 				<button 
@@ -27,7 +27,7 @@
 
 		<user-lesson-objectives />
 
-		<!-- <user-lesson-notebooks></user-lesson-notebooks> -->
+		<user-lesson-notebooks></user-lesson-notebooks>
 
 		<h3 class="title is-3 mt-16">
 			Comments
@@ -36,6 +36,7 @@
 		<comments 
 			:endpoint="commentsEndpoint"
 			:is-completed="isCompleted"
+			:create-roles="['supervisor', 'head_of_operations']"
 		/>
 
 		<h3 class="title is-3 mt-16">
@@ -52,7 +53,7 @@
 	import UserLessonStatus from './UserLessonStatus'
 	import UserLessonObjectives from './UserLessonObjectives'
 	import UserLessonFinal from './UserLessonFinal'
-	// import UserLessonNotebooks from './UserLessonNotebooks'
+	import UserLessonNotebooks from './UserLessonNotebooks'
 	import Comments from '../comments/Comments'
 	import { mapGetters, mapActions } from 'vuex'
 
@@ -75,7 +76,7 @@
 			UserLessonStatus,
 			UserLessonObjectives,
 			UserLessonFinal,
-			// UserLessonNotebooks,
+			UserLessonNotebooks,
 			Comments
 		},
 

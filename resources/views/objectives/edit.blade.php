@@ -107,6 +107,36 @@
 				</div>
 
 				<div class="field">
+					<label class="label" for="notebook_required">Lesson number</label>
+
+					<div class="control">
+						<div class="select {{ $errors->any() && $errors->has('notebook_required') ? 'is-danger' : '' }}">
+							<select 
+								name="notebook_required" 
+								id="notebook_required" 
+							>
+									<option 
+										value="0" 
+										@if((old('notebook_required') == "0") || ($objective->notebook_required == "0")) selected @endif
+									>No</option>
+
+									<option 
+										value="1" 
+										@if((old('notebook_required') == "1") || ($objective->notebook_required == "1")) selected @endif
+									>Yes</option>
+							</select>
+						</div>
+					</div>
+
+					@if ($errors->any() && $errors->has('notebook_required'))
+
+						<p class="help is-danger">{{ ($errors->get('notebook_required'))[0] }}</p>
+
+					@endif
+
+				</div>
+
+				<div class="field">
 					<div class="control">
 						<button class="button is-link">Edit objective</button>
 					</div>

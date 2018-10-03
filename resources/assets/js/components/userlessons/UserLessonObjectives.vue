@@ -13,7 +13,7 @@
 				<label 
 					class="checkbox" 
 				>
-					<template v-if="hasRoleOf('administrator', 'supervisor', 'head_of_operations') && !isCompleted">
+					<template v-if="hasRoleOf(['administrator', 'supervisor', 'head_of_operations']) && !isCompleted">
 						<input 
 							type="checkbox" 
 							v-model="completed" 

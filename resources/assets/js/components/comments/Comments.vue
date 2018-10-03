@@ -1,15 +1,8 @@
 <template>
 	<div>
-		<!-- <template v-if="reply">
-			<comment-reply :comment="reply" />
-		</template> -->
-
-		<!-- <template v-else> -->
-		<!-- <h5 class="mb-5">{{ meta.total }} {{ pluralize('comment', meta.total) }}</h5> -->
-
 		<new-comment 
 			:endpoint="endpoint" 
-			v-if="hasRoleOf('supervisor', 'head_of_operations') && !isCompleted"
+			v-if="hasRoleOf(createRoles) && !isCompleted"
 		/>
 
 		<template v-if="comments.length">
@@ -24,18 +17,11 @@
 			</ul>
 		</template>
 
-		<!-- <div 
-			class="alert alert-primary" 
-			role="alert"
-			v-else
-		>No comments to display</div>
-
-		<button 
-			class="btn btn-light btn-block"
-			@click.prevent="more"
-			v-if="meta.current_page < meta.last_page"
-		>Show more</button> -->
-		<!-- </template> -->
+		<article class="message is-info" v-else>
+			<div class="message-body">
+				No comments to display
+			</div>
+		</article>
 	</div>
 </template>
 
@@ -54,6 +40,10 @@
 				required: false,
 				type: Boolean,
 				default: false
+			},
+			createRoles: {
+				required: false,
+				type: Array
 			} 
 		},
 

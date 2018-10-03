@@ -1,32 +1,5 @@
 <?php
 
-// use TrainingTracker\Domains\Roles\Role;
-// use TrainingTracker\Domains\Users\User;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-// 	dd((Role::with('users')->whereType('admin')->first())->users->each->moodleuser);
-//     // return view('layouts.app');
-// });
-
-// Route::get('/profile/{user}', function (User $user) {
-// 	dd($user->isSupervisedBy());
-//     // return view('layouts.app');
-// });
-
-// Route::get('/api/users', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@index');
-// Route::post('/api/users', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store');
-
 Route::middleware(['role:administrator'])->group(function () {
 	Route::prefix('roles')->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Roles\Controllers\RolesController@index')->name('roles.index');
@@ -111,6 +84,51 @@ Route::middleware(['profile'])->group(function () {
 		Route::delete(
 			'/userlessons/{userlesson}/comments/{comment}',
 			 '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@destroy'
+		);
+
+		Route::get(
+			'/logbooks/{logbook}/entries',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@index'
+		);
+
+		Route::get(
+			'/logbooks/{logbook}',
+			'\TrainingTracker\Http\Logbooks\Controllers\LogbookController@show'
+		);
+
+		Route::post(
+			'/logbooks/{logbook}',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store'
+		);
+
+		Route::put(
+			'/logbooks/{logbook}/entries/{logbookEntry}',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update'
+		);
+
+		Route::delete(
+			'/logbooks/{logbook}/entries/{logbookEntry}',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@destroy'
+		);
+
+		Route::get(
+			'/entries/{logbookEntry}/comments',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController@index'
+		);
+
+		Route::post(
+			'/entries/{logbookEntry}/comments',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController@store'
+		);
+
+		Route::put(
+			'/entries/{logbookEntry}/comments/{comment}',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController@update'
+		);
+
+		Route::delete(
+			'/entries/{logbookEntry}/comments/{comment}',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController@destroy'
 		);
 	});
 });

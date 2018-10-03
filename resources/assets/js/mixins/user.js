@@ -6,7 +6,7 @@ export default {
 	},
 
 	methods: {
-		hasRoleOf(...roles) {
+		hasRoleOf(roles) {
 			if (this.authUser.role === 'administrator') {
 				return true
 			}

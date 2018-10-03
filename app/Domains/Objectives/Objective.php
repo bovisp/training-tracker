@@ -12,7 +12,12 @@ class Objective extends Model
 
     protected $translatable = ['name'];
 
-    protected $fillable = ['lesson_id', 'name', 'number'];
+    protected $fillable = [
+        'lesson_id', 
+        'name', 
+        'number',
+        'notebook_required'
+    ];
 
     public function lesson()
     {

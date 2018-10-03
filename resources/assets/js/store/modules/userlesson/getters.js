@@ -21,3 +21,7 @@ export const completed = state => state.userlesson.completedObjectives
 export const completedPackage = state => state.completedPackage
 
 export const isCompleted = state => state.completedPackage === 1
+
+export const logbooks = state => _.orderBy(state.userlesson.logbooks, ['objective.name'], ['asc'])
+
+export const user = state => state.user

@@ -3,6 +3,7 @@
 namespace TrainingTracker\App\Traits;
 
 use TrainingTracker\Domains\Lessons\Lesson;
+use TrainingTracker\Domains\Logbooks\Logbook;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 
 trait HasUserLessonsTrait
@@ -10,6 +11,18 @@ trait HasUserLessonsTrait
 	public function userlessons()
     {
         return $this->hasMany(UserLesson::class);
+    }
+
+    public function logbooks()
+    {
+        return $this->hasManyThrough(
+            Logbook::class,
+            UserLesson::class,
+            'user_id',
+            'userlesson_id',
+            'id',
+            'id'
+        )->with(['objective']);
     }
 
     public function hasLessons()

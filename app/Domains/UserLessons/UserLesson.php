@@ -5,6 +5,7 @@ namespace TrainingTracker\Domains\UserLessons;
 use Illuminate\Database\Eloquent\Model;
 use TrainingTracker\Domains\Comments\Comment;
 use TrainingTracker\Domains\Lessons\Lesson;
+use TrainingTracker\Domains\Logbooks\Logbook;
 use TrainingTracker\Domains\Users\User;
 
 class UserLesson extends Model
@@ -28,5 +29,10 @@ class UserLesson extends Model
         return $this->morphMany(Comment::class, 'commentable')
             ->whereNull('parent_id')
             ->orderBy('created_at', 'asc');
+    }
+
+    public function logbooks()
+    {
+        return $this->hasMany(Logbook::class, 'userlesson_id', 'id');
     }
 }

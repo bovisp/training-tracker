@@ -46,7 +46,8 @@ class ObjectivesController extends Controller
             'name' => [
                 'en' => request('name_en'),
                 'fr' => request('name_fr')
-            ]
+            ],
+            'notebook_required' => (int) request('notebook_required')
         ]);
 
         return redirect()
@@ -86,7 +87,8 @@ class ObjectivesController extends Controller
             'name' => [
                 'en' => request('name_en'),
                 'fr' => request('name_fr')
-            ]
+            ],
+            'notebook_required' => (int) request('notebook_required')
         ]);
 
         return redirect()

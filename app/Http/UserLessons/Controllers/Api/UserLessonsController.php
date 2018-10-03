@@ -51,7 +51,7 @@ class UserLessonsController extends Controller
                     'p42' => $userlesson->p42
                 ],
                 'objectives' => $userlesson->lesson->objectives,
-                'notebooks' => ($userlesson->lesson->objectives)->where('notebook_required', 1),
+                'logbooks' => $user->logbooks->whereIn('userlesson_id', [$userlesson->id]),
                 'completedObjectives' => $user->completedObjectives(),
             ],
             'user' => [

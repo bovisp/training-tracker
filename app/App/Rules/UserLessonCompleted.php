@@ -26,7 +26,7 @@ class UserLessonCompleted implements Rule
     public function passes($attribute, $value)
     {
         if ($value === 1 ) {
-            return $this->completedStatus() && $this->completedObjectives();
+            return $this->completedStatus() && $this->completedObjectives() && $this->completedNotebooks();
         }
         
         return true;
@@ -65,6 +65,18 @@ class UserLessonCompleted implements Rule
         });
 
         return $totalObjectives === $completedObjectives;
+    }
+
+    protected function completedNotebooks() {
+        $this->userlesson
+            ->logbooks
+            ->each(function ($logbook) {
+                if ($logbook->entries->count() === 0) {
+                    return false;
+                }
+            });
+
+        return true;
     }
 
     protected function arrSort($a, $b) {

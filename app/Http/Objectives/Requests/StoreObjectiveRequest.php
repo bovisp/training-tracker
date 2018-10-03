@@ -36,7 +36,8 @@ class StoreObjectiveRequest extends FormRequest
                 })
             ],
             'name_en' => 'required|min:3',
-            'name_fr' => 'required|min:3'
+            'name_fr' => 'required|min:3',
+            'notebook_required' => 'required|max:1'
         ];
     }
 
@@ -53,7 +54,9 @@ class StoreObjectiveRequest extends FormRequest
             'name_en.required' => 'Please enter an objective name in English.',
             'name_en.min' => 'The "Name" must be at least three characters long.',
             'name_fr.required' => 'Please enter an objective name in French.',
-            'name_fr.min' => 'The "Name" must be at least three characters long.'
+            'name_fr.min' => 'The "Name" must be at least three characters long.',
+            'notebook_required.required' => 'The "Notebook required" field is required.',
+            'notebook_required.max' => 'The "Notebook required" field has an incorrect value.'
         ];
     }
 }

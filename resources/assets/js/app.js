@@ -2,7 +2,6 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import Buefy from 'buefy'
-import fecha from 'fecha'
 import lodash from 'lodash'
 import store from './store'
 
@@ -18,8 +17,6 @@ window.Vue = Vue
 window._ = lodash
 
 window.events = new Vue()
-
-window.fecha = fecha
 
 /**
  * You first need to create a formatting function to pad numbers to two digits…
@@ -68,7 +65,8 @@ Vue.component('appointment-date', require('./components/AppointmentDate.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('unassigned-user-lessons', require('./components/UnassignedUserLessons.vue'));
 Vue.component('user-lesson', require('./components/userlessons/UserLesson.vue'));
-Vue.component('user-errors', require('./components/UserErrors.vue'));
+Vue.component('logbook', require('./components/logbooks/Logbook.vue')); 
+Vue.component('user-errors', require('./components/UserErrors.vue')); 
 
 Vue.mixin(user)
 

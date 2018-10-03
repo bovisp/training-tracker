@@ -5,6 +5,7 @@ namespace TrainingTracker\Http\Users\Requests;
 use Illuminate\Support\Facades\Validator;
 use TrainingTracker\App\Interfaces\StoreSpreadsheet;
 use TrainingTracker\Domains\Lessons\Lesson;
+use TrainingTracker\Domains\Logbooks\Logbook;
 use TrainingTracker\Domains\Supervisors\Supervisor;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
@@ -106,10 +107,19 @@ class StoreUsersSpreadsheet implements StoreSpreadsheet
 	protected function createLessons($user)
 	{
 		foreach (Lesson::whereDepricated(0)->get() as $lesson) {
-            UserLesson::create([
+            $userlesson = UserLesson::create([
                 'user_id' => $user->id,
                 'lesson_id' => $lesson->id
             ]);
+
+            foreach ($lesson->objectives as $objective) {
+            	if ($objective->notebook_required === 1) {
+            		Logbook::create([
+	            		'objective_id' => $objective->id,
+	            		'userlesson_id' => $userlesson->id
+	            	]);
+            	}
+            }
         }
 	}
 }

@@ -16579,6 +16579,11 @@ a.has-text-danger:focus {
   }
 }
 
+.quillWrapper {
+  height: 320px;
+  max-height: 320px;
+}
+
 .divider {
   border-top: 1px solid rgba(34, 36, 38, 0.15);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -16615,6 +16620,10 @@ a.has-text-danger:focus {
 
 .mt-6 {
   margin-top: 1.5rem;
+}
+
+.mt-8 {
+  margin-top: 2rem !important;
 }
 
 .mt-16 {
