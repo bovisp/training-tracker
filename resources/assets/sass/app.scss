@@ -40,6 +40,39 @@
 	}
 }
 
+// upload file component styling
+$dragndrop-min-height: 200px;
+
+.dragndrop {
+	width: 100%;
+	min-height: $dragndrop-min-height;
+	background-color: #F8F8F8;
+	position: relative;
+	border: 3px dashed rgba(0, 0, 0, .2);
+}
+
+.dragndrop__input {
+	display: none;
+}
+
+.dragndrop__header {
+	display: block;
+	font-size: 1.1em;
+	color: #555;
+	vertical-align: middle;
+	text-align: center;
+	margin: ($dragndrop-min-height / 2) 20px;
+
+	&--compact {
+		margin: ($dragndrop-min-height / 4) 20px;
+	}
+
+	&:hover {
+		text-decoratiom: underline;
+		cursor: pointer;
+	} 
+}
+
 // Flex helpers
 .self {
 	&-end {

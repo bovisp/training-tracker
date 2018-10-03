@@ -16595,6 +16595,36 @@ a.has-text-danger:focus {
   margin: 2rem 0;
 }
 
+.dragndrop {
+  width: 100%;
+  min-height: 200px;
+  background-color: #F8F8F8;
+  position: relative;
+  border: 3px dashed rgba(0, 0, 0, 0.2);
+}
+
+.dragndrop__input {
+  display: none;
+}
+
+.dragndrop__header {
+  display: block;
+  font-size: 1.1em;
+  color: #555;
+  vertical-align: middle;
+  text-align: center;
+  margin: 100px 20px;
+}
+
+.dragndrop__header--compact {
+  margin: 50px 20px;
+}
+
+.dragndrop__header:hover {
+  text-decoratiom: underline;
+  cursor: pointer;
+}
+
 .self-end {
   -ms-flex-item-align: end;
       align-self: flex-end;

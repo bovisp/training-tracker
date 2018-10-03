@@ -36,6 +36,8 @@
 					</div>
 				</div>
 			</div>
+
+			<file-upload />
 		</template>
 	</div>
 </template>
@@ -44,6 +46,7 @@
 	import { VueEditor, Quill } from 'vue2-editor'
 	import { ImageDrop } from 'quill-image-drop-module'
 	import { mapActions, mapGetters } from 'vuex'
+	import FileUpload from '../uploads/FileUpload'
 
 	Quill.register('modules/imageDrop', ImageDrop)
 
@@ -70,7 +73,8 @@
 		},
 
 		components: {
-			VueEditor
+			VueEditor,
+			FileUpload
 		},
 
 		computed: {
