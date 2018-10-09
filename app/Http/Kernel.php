@@ -55,6 +55,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'can' => \TrainingTracker\Http\Middleware\PermissionMiddleware::class,
         'profile' => \TrainingTracker\Http\Middleware\CanViewProfile::class,
+        'download' => \TrainingTracker\Http\Middleware\CanDownloadFile::class,
         'role' => \TrainingTracker\Http\Middleware\RoleMiddleware::class,
     ];
 }

@@ -4,6 +4,7 @@ import store from '../store'
 axios.interceptors.response.use(
 	response => response,
 	error => {
+		console.log(error.response.status)
 		if (error.response.status === 422) {
 			store.dispatch('setErrors', error.response.data.errors)
 

@@ -62,7 +62,8 @@
 			return {
 				creating: false,
 				form: {
-					body: ''
+					body: '',
+					files: []
 				},
 				editorSettings: {
 					modules: {
@@ -110,7 +111,14 @@
 				this.creating = false
 
 				this.form.body = ''
+				this.form.files = []
 			}
+		},
+
+		mounted () {
+			window.events.$on('upload:finished', fileObject => {
+				this.form.files.push(fileObject)
+			})
 		}
 	}
 </script>

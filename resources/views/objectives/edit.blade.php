@@ -107,7 +107,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="notebook_required">Lesson number</label>
+					<label class="label" for="notebook_required">Logbook required</label>
 
 					<div class="control">
 						<div class="select {{ $errors->any() && $errors->has('notebook_required') ? 'is-danger' : '' }}">

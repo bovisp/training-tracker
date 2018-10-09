@@ -17,7 +17,8 @@ class LogbookEntry extends Model
     protected $fillable = [
     	'logbook_id',
     	'body',
-        'user_id'
+        'user_id',
+        'files'
     ];
 
     protected $dates = [
@@ -27,6 +28,10 @@ class LogbookEntry extends Model
     protected $with = [
         'editor',
         'creator'
+    ];
+
+    protected $casts = [
+        'files' => 'array'
     ];
 
     public static function boot()
