@@ -29,8 +29,10 @@
 					</div>
 				</div>
 			</div>
+
+			<logbook-entry-files />
 			
-			<div class="content">
+			<div class="content mt-8">
 				<p>
 					<strong>Logbook entry created: </strong>{{ entry.created_at }}
 					by {{ entry.created_by.firstname }} {{ entry.created_by.lastname }}
@@ -68,11 +70,13 @@
 	import { mapGetters, mapActions } from 'vuex'
 	import LogbookEntryEdit from './LogbookEntryEdit'
 	import Comments from '../comments/Comments'
+	import LogbookEntryFiles from './LogbookEntryFiles'
 
 	export default {
 		components: {
 			LogbookEntryEdit,
-			Comments
+			Comments,
+			LogbookEntryFiles
 		},
 
 		data () {

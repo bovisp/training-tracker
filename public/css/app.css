@@ -16688,6 +16688,10 @@ a.has-text-danger:focus {
   margin-left: 1rem;
 }
 
+.mr-2 {
+  margin-right: .5rem;
+}
+
 .mr-4 {
   margin-right: 1rem;
 }

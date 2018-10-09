@@ -23,7 +23,7 @@ class LogbookEntriesResource extends Resource
             'edited_at' => optional($this->edited_at)->format('m/d/Y'),
             'edited_by' => new UserResource(User::find($this->edited_by)),
             'created_by' => new UserResource(User::find($this->user_id)),
-            'files' => LogbookEntryFileResource::collection(collect(unserialize($this->files)))
+            'files' => unserialize($this->files)
         ];
     }
 }

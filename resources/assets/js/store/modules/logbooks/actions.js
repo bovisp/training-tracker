@@ -70,3 +70,33 @@ export const setLogbookId = async ({ commit }, payload) => {
 export const setUserId = async ({ commit }, payload) => {
 	await commit('setUserId', payload)
 }
+
+export const deleteFile = ({ commit, state }, payload) => {
+	commit('loadingStatus', null, { root: true })
+
+	return axios.delete(`/storage/entries/${state.userId}/${state.entry_id}/${payload}`)
+		.then(response => {
+			commit('clearErrors', null, { root: true })
+
+			commit('deleteFile', payload)
+
+			commit('loadingStatus', null, { root: true })
+
+			return Promise.resolve(response)
+		})
+}
+
+export const patchFiles = ({ commit, state }, payload) => {
+	commit('loadingStatus', null, { root: true })
+
+	return axios.patch(`/storage/entries/${state.userId}/${state.entry_id}/updatefiles`, payload)
+		.then(response => {
+			commit('clearErrors', null, { root: true })
+
+			commit('updateFiles', payload)
+
+			commit('loadingStatus', null, { root: true })
+
+			return Promise.resolve(response)
+		})
+}

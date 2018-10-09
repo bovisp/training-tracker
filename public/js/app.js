@@ -13277,7 +13277,8 @@ __webpack_require__(21);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_buefy___default.a, {
-  defaultToastDuration: 5000
+  defaultToastDuration: 5000,
+  defaultIconPack: 'far'
 });
 
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
@@ -45242,8 +45243,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hideEntry", function() { return hideEntry; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateEntry", function() { return updateEntry; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateEntries", function() { return updateEntries; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteFile", function() { return deleteFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateFiles", function() { return updateFiles; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setLogbookId", function() { return setLogbookId; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setUserId", function() { return setUserId; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+
+
+var _this = this;
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var initialize = function initialize(state, payload) {
 	return state.entries = payload;
 };
@@ -45265,6 +45276,50 @@ var updateEntries = function updateEntries(state, payload) {
 		return entry.id !== payload;
 	});
 };
+
+var deleteFile = function deleteFile(state, payload) {
+	var entry = _.find(state.entries, { id: state.entry_id });
+
+	entry.files = entry.files.filter(function (file) {
+		return file.codedFilename !== payload;
+	});
+
+	_.assign(_.find(state.entries, { id: state.entry_id }), entry);
+};
+
+var updateFiles = function () {
+	var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(state, payload) {
+		var entry;
+		return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+			while (1) {
+				switch (_context.prev = _context.next) {
+					case 0:
+						_context.next = 2;
+						return _.find(state.entries, { id: state.entry_id });
+
+					case 2:
+						entry = _context.sent;
+						_context.next = 5;
+						return _.forEach(payload.files, function (file) {
+							entry.files.push(file);
+						});
+
+					case 5:
+
+						_.assign(_.find(state.entries, { id: state.entry_id }), entry);
+
+					case 6:
+					case "end":
+						return _context.stop();
+				}
+			}
+		}, _callee, _this);
+	}));
+
+	return function updateFiles(_x, _x2) {
+		return _ref.apply(this, arguments);
+	};
+}();
 
 var setLogbookId = function setLogbookId(state, payload) {
 	return state.logbookId = payload;
@@ -45288,6 +45343,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hide", function() { return hide; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setLogbookId", function() { return setLogbookId; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setUserId", function() { return setUserId; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteFile", function() { return deleteFile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "patchFiles", function() { return patchFiles; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
@@ -45480,6 +45537,40 @@ var setUserId = function () {
 		return _ref13.apply(this, arguments);
 	};
 }();
+
+var deleteFile = function deleteFile(_ref14, payload) {
+	var commit = _ref14.commit,
+	    state = _ref14.state;
+
+	commit('loadingStatus', null, { root: true });
+
+	return axios.delete('/storage/entries/' + state.userId + '/' + state.entry_id + '/' + payload).then(function (response) {
+		commit('clearErrors', null, { root: true });
+
+		commit('deleteFile', payload);
+
+		commit('loadingStatus', null, { root: true });
+
+		return Promise.resolve(response);
+	});
+};
+
+var patchFiles = function patchFiles(_ref15, payload) {
+	var commit = _ref15.commit,
+	    state = _ref15.state;
+
+	commit('loadingStatus', null, { root: true });
+
+	return axios.patch('/storage/entries/' + state.userId + '/' + state.entry_id + '/updatefiles', payload).then(function (response) {
+		commit('clearErrors', null, { root: true });
+
+		commit('updateFiles', payload);
+
+		commit('loadingStatus', null, { root: true });
+
+		return Promise.resolve(response);
+	});
+};
 
 /***/ }),
 /* 65 */
@@ -50068,7 +50159,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }).then(function (_ref) {
                 var data = _ref.data;
 
-                fileObject.codedFilename = data;
+                fileObject.codedFilename = data.codedFilename;
+                fileObject.actualFilename = data.actualFilename;
+
                 window.events.$emit('upload:finished', fileObject);
             }).catch(function (e) {
                 // if (!fileObject.canceled) {
@@ -50611,6 +50704,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__LogbookEntryEdit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__LogbookEntryEdit__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments_Comments__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comments_Comments___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__comments_Comments__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LogbookEntryFiles__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LogbookEntryFiles___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__LogbookEntryFiles__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -50679,6 +50774,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+
 
 
 
@@ -50687,7 +50785,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
 	components: {
 		LogbookEntryEdit: __WEBPACK_IMPORTED_MODULE_1__LogbookEntryEdit___default.a,
-		Comments: __WEBPACK_IMPORTED_MODULE_2__comments_Comments___default.a
+		Comments: __WEBPACK_IMPORTED_MODULE_2__comments_Comments___default.a,
+		LogbookEntryFiles: __WEBPACK_IMPORTED_MODULE_3__LogbookEntryFiles___default.a
 	},
 
 	data: function data() {
@@ -51048,7 +51147,9 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "content" }, [
+            _c("logbook-entry-files"),
+            _vm._v(" "),
+            _c("div", { staticClass: "content mt-8" }, [
               _c("p", [
                 _c("strong", [_vm._v("Logbook entry created: ")]),
                 _vm._v(
@@ -51293,6 +51394,394 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(142)
+/* template */
+var __vue_template__ = __webpack_require__(143)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/logbooks/LogbookEntryFiles.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-17627800", Component.options)
+  } else {
+    hotAPI.reload("data-v-17627800", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 142 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uploads_FileUpload__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uploads_FileUpload___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__uploads_FileUpload__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	components: {
+		FileUpload: __WEBPACK_IMPORTED_MODULE_1__uploads_FileUpload___default.a
+	},
+
+	data: function data() {
+		return {
+			updating: false,
+			form: {
+				files: []
+			}
+		};
+	},
+
+
+	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
+		userId: 'logbooks/userId',
+		entry: 'logbooks/entry'
+	})),
+
+	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])({
+		deleteFile: 'logbooks/deleteFile',
+		patchFiles: 'logbooks/patchFiles'
+	}), {
+		icon: function icon(fileName) {
+			var fileExtension = fileName.split('.')[1].toLowerCase();
+
+			switch (fileExtension) {
+				case 'pdf':
+					return 'far fa-file-pdf';
+
+				case 'doc':
+				case 'docx':
+					return 'far fa-file-word';
+
+				case 'xls':
+				case 'xlsx':
+					return 'far fa-file-excel';
+
+				case 'ppt':
+				case 'pptx':
+					return 'far fa-file-powerpoint';
+
+				case 'jpeg':
+				case 'jpg':
+				case 'bmp':
+				case 'tiff':
+				case 'png':
+				case 'gif':
+					return 'far fa-image';
+
+				case 'mp4':
+				case 'avi':
+				case 'wmv':
+				case 'mov':
+					return 'far fa-file-video';
+
+				default:
+					return 'far fa-file';
+			}
+		},
+		removeFile: function removeFile(file) {
+			var _this = this;
+
+			this.$dialog.confirm({
+				title: 'Delete file',
+				message: 'Are you sure you want to <b>delete</b> this file?',
+				confirmText: 'Delete entry',
+				type: 'is-danger',
+				onConfirm: function onConfirm() {
+					return _this.deleteFile(file).then(function (response) {
+						_this.$toast.open({
+							message: 'File successfully deleted',
+							position: 'is-top-right',
+							type: 'is-success'
+						});
+					}).catch(function (error) {
+						_this.$toast.open({
+							message: 'You are not authorized to delete this file.',
+							position: 'is-top-right',
+							type: 'is-danger'
+						});
+					});
+				}
+			});
+		},
+		submit: function submit() {
+			var _this2 = this;
+
+			this.patchFiles(this.form).then(function (response) {
+				_this2.$toast.open({
+					message: response.data.flash,
+					position: 'is-top-right',
+					type: 'is-success'
+				});
+
+				_this2.cancel();
+			}).catch(function (error) {
+				_this2.$toast.open({
+					message: 'You are not authorized to update files for this logbook entry',
+					position: 'is-top-right',
+					type: 'is-danger'
+				});
+			});
+		},
+		cancel: function cancel() {
+			this.updating = false;
+
+			this.form.files = [];
+		}
+	}),
+
+	mounted: function mounted() {
+		var _this3 = this;
+
+		window.events.$on('upload:finished', function (fileObject) {
+			_this3.form.files.push(fileObject);
+		});
+	}
+});
+
+/***/ }),
+/* 143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h3", { staticClass: "title is-3" }, [_vm._v("Files")]),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "ml-4 mb-4" },
+        _vm._l(_vm.entry.files, function(file) {
+          return _c("li", { key: file.id }, [
+            _c("div", { staticClass: "level" }, [
+              _c("div", { staticClass: "level-left" }, [
+                _c("div", { staticClass: "level-item" }, [
+                  _c("i", {
+                    staticClass: "mr-2",
+                    class: _vm.icon(file.codedFilename)
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href:
+                          "/storage/entries/" +
+                          _vm.userId +
+                          "/" +
+                          file.codedFilename
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n\t\t\t\t\t\t\t" +
+                          _vm._s(file.actualFilename) +
+                          "\n\t\t\t\t\t\t"
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "level-item" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button has-text-danger is-text is-small",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.removeFile(file.codedFilename)
+                        }
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "level-right" })
+            ])
+          ])
+        })
+      ),
+      _vm._v(" "),
+      !_vm.updating
+        ? _c(
+            "button",
+            {
+              staticClass: "is-info button is-small",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.updating = true
+                }
+              }
+            },
+            [_vm._v("Add files")]
+          )
+        : [
+            _c("file-upload"),
+            _vm._v(" "),
+            _c("div", { staticClass: "level mt-4" }, [
+              _c("div", { staticClass: "level-left" }, [
+                _c("div", { staticClass: "level-item" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-small is-info",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.submit($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Add")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "level-item" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-small is-text",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.updating = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  )
+                ])
+              ])
+            ])
+          ]
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-17627800", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

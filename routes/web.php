@@ -4,6 +4,16 @@ Route::middleware(['download'])->group(function () {
 		'/storage/entries/{user}/{file}',
 		'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@download'
 	);
+
+	Route::delete(
+		'/storage/entries/{user}/{logbookEntry}/{file}',
+		'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@destroy'
+	);
+
+	Route::patch(
+		'/storage/entries/{user}/{logbookEntry}/updatefiles',
+		'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@update'
+	);
 });
 
 Route::middleware(['role:administrator'])->group(function () {

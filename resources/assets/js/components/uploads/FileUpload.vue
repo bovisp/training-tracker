@@ -140,7 +140,9 @@
                     }
                 })
                 .then(function({ data }) {
-                    fileObject.codedFilename = data
+                    fileObject.codedFilename = data.codedFilename
+                    fileObject.actualFilename = data.actualFilename
+
                     window.events.$emit('upload:finished', fileObject)
                 })
                 .catch(function(e) {
