@@ -16,6 +16,16 @@ axios.interceptors.response.use(
 			store.dispatch('cancelLoadingStatus')
 		}
 
+		if (error.response.status === 500) {
+			store.dispatch('setErrors', {
+				'internal_server_error': [
+					'Internal server error'
+				]
+			})
+
+			store.dispatch('cancelLoadingStatus')
+		}
+
 		return Promise.reject(error)
 	}
 )

@@ -4,6 +4,7 @@ namespace TrainingTracker\Domains\LogbookEntries;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use TrainingTracker\Domains\Comments\Comment;
 use TrainingTracker\Domains\Logbooks\Logbook;
 use TrainingTracker\Domains\Users\User;
@@ -17,7 +18,8 @@ class LogbookEntry extends Model
     protected $fillable = [
     	'logbook_id',
     	'body',
-        'user_id'
+        'user_id',
+        'files'
     ];
 
     protected $dates = [
@@ -36,6 +38,16 @@ class LogbookEntry extends Model
         static::updating(function ($logbookEntry) {
             $logbookEntry->edited_at = Carbon::now();
             $logbookEntry->edited_by = moodleauth()->id();
+        });
+
+        static::deleting(function ($logbookentry) {
+            $files = unserialize($logbookentry->files);
+
+            foreach ($files as $file) {
+                $filePath = '/public/entries/' . $logbookentry->logbook->userlesson->user->id . '/' . $file['codedFilename'];
+
+                Storage::delete($filePath);
+            }
         });
     }
 

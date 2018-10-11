@@ -10,11 +10,12 @@ import user from './mixins/user'
 import './helpers/interceptors'
 
 Vue.use(Buefy, {
-	defaultToastDuration: 5000
+	defaultToastDuration: 5000,
+	defaultIconPack: 'far'
 })
 
 window.Vue = Vue
-window._ = lodash
+// window._ = lodash
 
 window.events = new Vue()
 

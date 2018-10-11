@@ -40,13 +40,15 @@ class LogbookEntriesController extends Controller
     public function store(User $user, Logbook $logbook)
     {
         request()->validate([
-            'body' => 'required'
+            'body' => 'required',
+            'files' => 'array'
         ]);
 
         LogbookEntry::create([
             'body' => request('body'),
             'logbook_id' => $logbook->id,
-            'user_id' => moodleauth()->id()
+            'user_id' => moodleauth()->id(),
+            'files' => serialize(request('files'))
         ]);
 
         return response()->json([

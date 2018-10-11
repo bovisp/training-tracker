@@ -1,4 +1,20 @@
 <?php
+Route::middleware(['download'])->group(function () {
+	Route::get(
+		'/storage/entries/{user}/{file}',
+		'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@download'
+	);
+
+	Route::delete(
+		'/storage/entries/{user}/{logbookEntry}/{file}',
+		'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@destroy'
+	);
+
+	Route::patch(
+		'/storage/entries/{user}/{logbookEntry}/updatefiles',
+		'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@update'
+	);
+});
 
 Route::middleware(['role:administrator'])->group(function () {
 	Route::prefix('roles')->group(function () {
@@ -99,6 +115,16 @@ Route::middleware(['profile'])->group(function () {
 		Route::post(
 			'/logbooks/{logbook}',
 			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store'
+		);
+
+		Route::post(
+			'/logbooks/{logbook}/files/meta',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@meta'
+		);
+
+		Route::post(
+			'/logbooks/{logbook}/files/upload',
+			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@upload'
 		);
 
 		Route::put(
