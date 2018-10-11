@@ -102,9 +102,7 @@
 	            		})
 
 	            		this.cancel()
-					}).catch(error => {
-
-					})
+					}).catch(error => {})
 			},
 
 			cancel () {

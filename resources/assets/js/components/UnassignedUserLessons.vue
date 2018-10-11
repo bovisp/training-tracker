@@ -97,7 +97,8 @@
 </template>
 
 <script>
-	import Error from "../classes/Error";
+	import Error from "../classes/Error"
+	import { orderBy } from 'lodash'
 
 	export default {
 		props: ['userId'],
@@ -165,13 +166,13 @@
 			nonDepricatedLessons () {
 				let self = this
 
-				return _.orderBy(self.unassigned.non_depricated, ['topic.number', 'number'], ['asc', 'asc'])
+				return orderBy(self.unassigned.non_depricated, ['topic.number', 'number'], ['asc', 'asc'])
 			},
 
 			depricatedLessons () {
 				let self = this
 
-				return _.orderBy(self.unassigned.depricated, ['topic.number', 'number'], ['asc', 'asc'])
+				return orderBy(self.unassigned.depricated, ['topic.number', 'number'], ['asc', 'asc'])
 			}
 		},
 

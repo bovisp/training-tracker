@@ -88,6 +88,7 @@
 
 <script>
 	import sort from 'fast-sort'
+	import { forEach, map, filter, find } from 'lodash'
 
 	export default {
 		props: {
@@ -162,7 +163,7 @@
 			},
 
 			makeSortArray () {
-				_.forEach(this.meta.orderby, item => {
+				forEach(this.meta.orderby, item => {
 					this.sortOrder.push({
 						[item.dir]: item.key
 					})
@@ -183,7 +184,7 @@
 	        	if (this.withRoles) {
 	        		postArray = this.prepareNewUsers()
 	        	} else {
-	        		postArray = _.map(this.checkedRows, user => {
+	        		postArray = map(this.checkedRows, user => {
 	        			return {
 	        				id: user.id
 	        			}
@@ -200,10 +201,10 @@
 
 	        	let postArray = []
 
-        		_.forEach(this.checkedRows, user => {
+        		forEach(this.checkedRows, user => {
         			let hasRole = false
 
-        			_.forEach(_.filter(this.rolesModel), value => {
+        			forEach(filter(this.rolesModel), value => {
         				let valueArray = value.split(':')
 
 	        			if (parseInt(valueArray[0]) == user.id) {
@@ -224,10 +225,10 @@
 	        },
 
 	        validateRolesModel () {
-	        	_.forEach(_.filter(this.rolesModel), value => {
+	        	forEach(filter(this.rolesModel), value => {
 	        		let valueArray = value.split(':')
 
-	        		if (_.find(this.checkedRows, ['id', parseInt(valueArray[0])]) === undefined) {
+	        		if (find(this.checkedRows, ['id', parseInt(valueArray[0])]) === undefined) {
 	        			const user = this.findUserId(parseInt(valueArray[0]))
 
 	                    this.errors.push(
@@ -245,16 +246,7 @@
 	                    type: 'is-danger'
 	                })
 	            } else {
-	            	axios.interceptors.response.use(
-		                response => {
-		                  return response;
-		                },
-		                error => {
-		                    return Promise.reject(error.response);
-		                }
-		            )
-
-		            axios.post(this.postEndpoint, postArray)
+	            	axios.post(this.postEndpoint, postArray)
 		                .then(response => {
 		                    this.$toast.open({
 		                        message: this.successMessage,
@@ -275,11 +267,11 @@
 	        },
 
 	        findUserId (key) {
-	        	return _.find(this.records, ['id', key])
+	        	return find(this.records, ['id', key])
 	        },
 
 	        populateCheckedUsers () {
-	        	_.forEach(this.records, user => {
+	        	forEach(this.records, user => {
 	        		if (user.checked) {
 	        			this.checkedRows.push(user)
 	        		}

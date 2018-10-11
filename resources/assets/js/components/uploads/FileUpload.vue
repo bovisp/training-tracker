@@ -21,14 +21,20 @@
         <label 
             for="file"
             class="dragndrop__header" 
+            :class="{ 'dragndrop__header--compact': files.length >= 1 }"
         >
             <strong>Drag files here</strong> or click to select files
         </label>
+
+        <uploads 
+            :files="files"
+        />
     </div>
 </template>
 
 <script>
     import { mapGetters } from 'vuex'
+    import Uploads from './Uploads'
 
     export default {
         data() {
@@ -36,6 +42,10 @@
                 files: [],
                 isDraggedOver: false
             }
+        },
+
+        components: {
+            Uploads
         },
 
         computed: {
@@ -125,7 +135,7 @@
                 form.append('file', fileObject.file)
                 form.append('id', fileObject.id)
 
-                // emit upload init
+                window.events.$emit('upload:initialized')
 
                 axios.post(`/users/${this.userId}/logbooks/${this.logbookId}/files/upload`, form, {
                     headers: {
@@ -135,8 +145,7 @@
                         fileObject.xhr = c;
                     }),
                     onUploadProgress: function(progressEvent) {
-                        console.log(progressEvent)
-                        // EventBus.$emit('progress', fileObject, progressEvent)
+                        window.events.$emit('upload:progress', fileObject, progressEvent)
                     }
                 })
                 .then(function({ data }) {
@@ -145,10 +154,14 @@
 
                     window.events.$emit('upload:finished', fileObject)
                 })
-                .catch(function(e) {
-                    // if (!fileObject.canceled) {
-                    //     EventBus.$emit('failed', fileObject)
-                    // }
+                .catch(function(error) {
+                    if (!fileObject.cancelled) {
+                        window.events.$emit('upload:failed', fileObject)
+
+                        if (error.response.status === 422) {
+                            window.events.$emit('upload:no-validate', fileObject, error.response.data.errors.file[0])
+                        }
+                    }
                 })
             }
         }

@@ -1,3 +1,5 @@
+import { orderBy } from 'lodash'
+
 export const p9 = state => state.userlesson.status.p9
 
 export const p18 = state => state.userlesson.status.p18
@@ -22,6 +24,6 @@ export const completedPackage = state => state.completedPackage
 
 export const isCompleted = state => state.completedPackage === 1
 
-export const logbooks = state => _.orderBy(state.userlesson.logbooks, ['objective.name'], ['asc'])
+export const logbooks = state => orderBy(state.userlesson.logbooks, ['objective.name'], ['asc'])
 
 export const user = state => state.user

@@ -15,7 +15,7 @@ Vue.use(Buefy, {
 })
 
 window.Vue = Vue
-window._ = lodash
+// window._ = lodash
 
 window.events = new Vue()
 

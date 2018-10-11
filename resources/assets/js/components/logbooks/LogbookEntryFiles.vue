@@ -2,7 +2,7 @@
 	<div>
 		<h3 class="title is-3">Files</h3>
 
-		<ul class="ml-4 mb-4">
+		<ul class="ml-4 mb-4" v-if="entry.files.length">
 			<li	v-for="file in entry.files" :key="file.id">
 				<div class="level">
 					<div class="level-left">
@@ -26,6 +26,8 @@
 				</div>					
 			</li>
 		</ul>
+
+		<p class="mb-4" v-else>There are no files for this entry.</p>
 
 		<button 
 			class="is-info button is-small"

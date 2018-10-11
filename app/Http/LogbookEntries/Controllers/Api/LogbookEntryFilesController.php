@@ -19,6 +19,10 @@ class LogbookEntryFilesController extends Controller
 
     public function upload(User $user, Logbook $logbook)
     {
+        request()->validate([
+            'file' => 'required|file|mimes:jpeg,bmp,png,pdf,doc,docx,ppt,pptx,xls,xlsx'
+        ]);
+
         $upload = request()->file('file');
 
         $extension = strtolower(explode('.', request()->file('file')->getClientOriginalName())[1]);
