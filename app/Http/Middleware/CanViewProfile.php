@@ -37,7 +37,7 @@ class CanViewProfile
             }
         }
 
-        return abort(404);
+        return abort(401, "You are not allowed to view this.");
     }
 
     protected function userIdFromRequest()

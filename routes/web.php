@@ -157,11 +157,24 @@ Route::middleware(['profile'])->group(function () {
 			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController@destroy'
 		);
 
-		Route::get('/notifications', '\TrainingTracker\Http\Notifications\Controllers\NotificationsController@index');
+		Route::get(
+			'/notifications', 
+			'\TrainingTracker\Http\Notifications\Controllers\NotificationsController@index'
+		);
 
 		Route::get(
+			'/notifications/api', 
+			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@index'
+		);
+
+		Route::delete(
 			'/notifications/{notificationId}', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@show'
+			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@destroy'
+		);
+
+		Route::put(
+			'/notifications/{notificationId}', 
+			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@update'
 		);
 	});
 });

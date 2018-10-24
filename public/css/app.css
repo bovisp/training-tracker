@@ -20724,3 +20724,7 @@ a.has-text-danger:focus {
   margin-right: 1rem;
 }
 
+.is-full-width {
+  width: 100% !important;
+}
+

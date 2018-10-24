@@ -7,29 +7,30 @@
 		</article>
 
 		<b-tabs v-model="activeTab" v-else>
-			<b-tab-item label="Unread">
+			<b-tab-item label="Unread" v-if="unread.length">
 				<notification 
 					v-for="notification in unread"
 					:key="notification.id"
 					:notification="notification"
-					:user="user"
 				/>
 			</b-tab-item>
 
-			<b-tab-item label="Read">
+			<b-tab-item label="Read" v-if="read.length">
 				<notification 
 					v-for="notification in read"
 					:key="notification.id"
 					:notification="notification"
-					:user="user"
 				/>
 			</b-tab-item>
 		</b-tabs>
+
+		<b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
 	</section>
 </template>
 
 <script>
 	import Notification from './Notification'
+	import { mapActions, mapGetters } from 'vuex'
 
 	export default {
 		props: {
@@ -45,22 +46,27 @@
 
 		data () {
 			return {
-				activeTab: 0,
-				read: [],
-				unread: []
+				activeTab: 0
 			}
 		},
 
 		computed: {
-			hasNotifications () {
-				return this.read.length || this.unread.length
-			}
+			...mapGetters({
+				'isLoading': 'isLoading',
+				'hasNotifications': 'notifications/hasNotifications',
+				'read': 'notifications/read',
+				'unread': 'notifications/unread'
+			})
+		},
+
+		methods: {
+			...mapActions({
+				'fetch': 'notifications/fetch'
+			})
 		},
 
 		mounted () {
-			this.read = filter(this.user.notifications, notification => notification.read_at !== null)
-
-			this.unread = filter(this.user.notifications, notification => notification.read_at === null)
+			this.fetch(this.user.id)
 		}
 	}
 </script>

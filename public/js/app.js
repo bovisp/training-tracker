@@ -13034,10 +13034,12 @@ module.exports = Cancel;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_userlesson__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_comments__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__modules_logbooks__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modules_notifications__ = __webpack_require__(180);
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+
 
 
 
@@ -13056,7 +13058,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 	modules: {
 		userlessons: __WEBPACK_IMPORTED_MODULE_6__modules_userlesson__["a" /* default */],
 		comments: __WEBPACK_IMPORTED_MODULE_7__modules_comments__["a" /* default */],
-		logbooks: __WEBPACK_IMPORTED_MODULE_8__modules_logbooks__["a" /* default */]
+		logbooks: __WEBPACK_IMPORTED_MODULE_8__modules_logbooks__["a" /* default */],
+		notifications: __WEBPACK_IMPORTED_MODULE_9__modules_notifications__["a" /* default */]
 	}
 }));
 
@@ -13322,7 +13325,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(22);
-module.exports = __webpack_require__(151);
+module.exports = __webpack_require__(157);
 
 
 /***/ }),
@@ -46167,7 +46170,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(149)
 /* template */
-var __vue_template__ = __webpack_require__(150)
+var __vue_template__ = __webpack_require__(156)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46211,8 +46214,11 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Notification__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Notification__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Notification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Notification__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(1);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -46243,6 +46249,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -46260,27 +46267,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	data: function data() {
 		return {
-			activeTab: 0,
-			read: [],
-			unread: []
+			activeTab: 0
 		};
 	},
 
 
-	computed: {
-		hasNotifications: function hasNotifications() {
-			return this.read.length || this.unread.length;
-		}
-	},
+	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])({
+		'isLoading': 'isLoading',
+		'hasNotifications': 'notifications/hasNotifications',
+		'read': 'notifications/read',
+		'unread': 'notifications/unread'
+	})),
+
+	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])({
+		'fetch': 'notifications/fetch'
+	})),
 
 	mounted: function mounted() {
-		this.read = filter(this.user.notifications, function (notification) {
-			return notification.read_at !== null;
-		});
-
-		this.unread = filter(this.user.notifications, function (notification) {
-			return notification.read_at === null;
-		});
+		this.fetch(this.user.id);
 	}
 });
 
@@ -46288,107 +46292,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    [
-      !_vm.hasNotifications
-        ? _c("article", { staticClass: "message is-info" }, [
-            _c("div", { staticClass: "message-body" }, [
-              _vm._v("\n\t\t\tYou have no notifications.\n\t\t")
-            ])
-          ])
-        : _c(
-            "b-tabs",
-            {
-              model: {
-                value: _vm.activeTab,
-                callback: function($$v) {
-                  _vm.activeTab = $$v
-                },
-                expression: "activeTab"
-              }
-            },
-            [
-              _c(
-                "b-tab-item",
-                { attrs: { label: "Unread" } },
-                _vm._l(_vm.unread, function(notification) {
-                  return _c("notification", {
-                    key: notification.id,
-                    attrs: { notification: notification, user: _vm.user }
-                  })
-                })
-              ),
-              _vm._v(" "),
-              _c(
-                "b-tab-item",
-                { attrs: { label: "Read" } },
-                _vm._l(_vm.read, function(notification) {
-                  return _c("notification", {
-                    key: notification.id,
-                    attrs: { notification: notification, user: _vm.user }
-                  })
-                })
-              )
-            ],
-            1
-          )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-a665adcc", module.exports)
-  }
-}
-
-/***/ }),
-/* 151 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(175)
+var __vue_script__ = __webpack_require__(151)
 /* template */
-var __vue_template__ = __webpack_require__(176)
+var __vue_template__ = __webpack_require__(155)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46427,14 +46336,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 175 */
+/* 151 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__types_NotificationLogbookAdded__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__types_NotificationLogbookAdded__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__types_NotificationLogbookAdded___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__types_NotificationLogbookAdded__);
-//
 //
 //
 //
@@ -46452,10 +46360,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		notification: {
 			type: Object,
 			required: true
-		},
-		user: {
-			type: Object,
-			required: true
 		}
 	},
 
@@ -46465,45 +46369,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 176 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    [
-      _vm.notification.data.noteType === "logbook_entry_added"
-        ? _c("notification-logbook-added", {
-            attrs: { notification: _vm.notification, user: _vm.user }
-          })
-        : _vm._e()
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-89bbc5ae", module.exports)
-  }
-}
-
-/***/ }),
-/* 177 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(178)
+var __vue_script__ = __webpack_require__(153)
 /* template */
-var __vue_template__ = __webpack_require__(179)
+var __vue_template__ = __webpack_require__(154)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46542,11 +46416,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 178 */
+/* 153 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_dayjs__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_dayjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_dayjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(1);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -46564,56 +46443,201 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: {
 		notification: {
 			type: Object,
 			required: true
-		},
-		user: {
-			type: Object,
-			required: true
 		}
 	},
 
-	data: function data() {
-		return {
-			meta: {}
-		};
-	},
-	mounted: function mounted() {}
+	computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])({
+		'user': 'notifications/user'
+	}), {
+		isRead: function isRead() {
+			return this.notification.data.read_at !== null;
+		},
+		creator: function creator() {
+			return this.notification.meta.logbookEntryCreator;
+		},
+		creatorName: function creatorName() {
+			return this.notification.meta.logbookEntryCreator.firstname + ' ' + this.notification.meta.logbookEntryCreator.lastname;
+		},
+		apprentice: function apprentice() {
+			return this.notification.meta.lessonPackageApprentice;
+		},
+		apprenticeName: function apprenticeName() {
+			return this.notification.meta.lessonPackageApprentice.firstname + ' ' + this.notification.meta.lessonPackageApprentice.lastname;
+		},
+		objective: function objective() {
+			return this.notification.meta.objective;
+		},
+		package: function _package() {
+			return this.notification.meta.lessonPackage.package;
+		},
+		logbookUrl: function logbookUrl() {
+			return '/users/' + this.apprentice.id + '/logbooks/' + this.notification.meta.logbookId;
+		},
+		lessonPackageUrl: function lessonPackageUrl() {
+			return '/users/' + this.apprentice.id + '/userlessons/' + this.notification.meta.lessonPackage.id;
+		},
+		created: function created() {
+			return __WEBPACK_IMPORTED_MODULE_0_dayjs___default()(this.notification.data.created_at).format('MM/DD/YYYY');
+		}
+	}),
+
+	methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])({
+		'deleteNotification': 'notifications/deleteNotification',
+		'markAsRead': 'notifications/markAsRead',
+		'fetch': 'notifications/fetch'
+	}), {
+		destroy: function destroy() {
+			var _this = this;
+
+			this.deleteNotification(this.notification.data.id).then(function (response) {
+				return _this.$toast.open({
+					message: 'Notification successfully deleted.',
+					position: 'is-top-right',
+					type: 'is-success'
+				});
+			});
+		},
+		read: function read() {
+			var _this2 = this;
+
+			this.markAsRead(this.notification.data.id).then(function (response) {
+				return _this2.$toast.open({
+					message: 'Notification marked as read.',
+					position: 'is-top-right',
+					type: 'is-success'
+				});
+			});
+		}
+	})
 });
 
 /***/ }),
-/* 179 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "card mb-6" }, [
+    _c("header", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "level is-full-width" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "level-right" }, [
+          _c("time", { staticClass: "mr-2" }, [_vm._v(_vm._s(_vm.created))])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-content" }, [
+      _c("div", { staticClass: "content" }, [
+        _vm.creator.id !== _vm.apprentice.id
+          ? _c("span", [
+              _vm._v(
+                "\n\t\t\t\t" +
+                  _vm._s(_vm.creatorName) +
+                  " created an entry in " +
+                  _vm._s(_vm.apprenticeName) +
+                  "'s "
+              ),
+              _c("a", { attrs: { href: _vm.logbookUrl } }, [_vm._v("logbook")]),
+              _vm._v(" for the \n\t\t\t")
+            ])
+          : _c("span", [
+              _vm._v(
+                "\n\t\t\t\t" +
+                  _vm._s(_vm.apprenticeName) +
+                  " created an entry in their "
+              ),
+              _c("a", { attrs: { href: _vm.logbookUrl } }, [_vm._v("logbook")]),
+              _vm._v(" for the \n\t\t\t")
+            ]),
+        _vm._v(
+          '\n\n\t\t\tobjective "' +
+            _vm._s(_vm.objective) +
+            '" in lesson package '
+        ),
+        _c("a", { attrs: { href: _vm.lessonPackageUrl } }, [
+          _vm._v('"' + _vm._s(_vm.package) + '"')
+        ]),
+        _vm._v(".\n\t\t")
+      ])
+    ]),
+    _vm._v(" "),
+    _c("footer", { staticClass: "card-footer" }, [
+      _c("div", { staticClass: "card-footer-item" }, [
+        _c(
+          "a",
+          {
+            staticClass: "has-text-danger",
+            attrs: { href: "#" },
+            on: { click: _vm.destroy }
+          },
+          [_vm._v("Delete")]
+        )
+      ]),
+      _vm._v(" "),
+      !_vm.isRead
+        ? _c("div", { staticClass: "card-footer-item" }, [
+            _c("a", { attrs: { href: "#" }, on: { click: _vm.read } }, [
+              _vm._v("Mark as read")
+            ])
+          ])
+        : _vm._e()
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card mb-6" }, [
-      _c("header", { staticClass: "card-header" }, [
+    return _c("div", { staticClass: "level-left" }, [
+      _c("div", { staticClass: "level-item" }, [
         _c("p", { staticClass: "card-header-title" }, [
           _vm._v("New logbook entry")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-content" }, [
-        _c("div", { staticClass: "content" }, [
-          _c("span", [
-            _vm._v("\n\t\t\t\t created an entry"),
-            _vm._v(" for the\n\t\t\t")
-          ]),
-          _vm._v('\n\t\t\tobjective "" lesson package.\n\t\t')
         ])
       ])
     ])
@@ -46627,6 +46651,343 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-3104f472", module.exports)
   }
 }
+
+/***/ }),
+/* 155 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "section",
+    [
+      _vm.notification.data.data.noteType === "logbook_entry_added"
+        ? _c("notification-logbook-added", {
+            attrs: { notification: _vm.notification }
+          })
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-89bbc5ae", module.exports)
+  }
+}
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "section",
+    [
+      !_vm.hasNotifications
+        ? _c("article", { staticClass: "message is-info" }, [
+            _c("div", { staticClass: "message-body" }, [
+              _vm._v("\n\t\t\tYou have no notifications.\n\t\t")
+            ])
+          ])
+        : _c(
+            "b-tabs",
+            {
+              model: {
+                value: _vm.activeTab,
+                callback: function($$v) {
+                  _vm.activeTab = $$v
+                },
+                expression: "activeTab"
+              }
+            },
+            [
+              _vm.unread.length
+                ? _c(
+                    "b-tab-item",
+                    { attrs: { label: "Unread" } },
+                    _vm._l(_vm.unread, function(notification) {
+                      return _c("notification", {
+                        key: notification.id,
+                        attrs: { notification: notification }
+                      })
+                    })
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.read.length
+                ? _c(
+                    "b-tab-item",
+                    { attrs: { label: "Read" } },
+                    _vm._l(_vm.read, function(notification) {
+                      return _c("notification", {
+                        key: notification.id,
+                        attrs: { notification: notification }
+                      })
+                    })
+                  )
+                : _vm._e()
+            ],
+            1
+          ),
+      _vm._v(" "),
+      _c("b-loading", {
+        attrs: {
+          "is-full-page": true,
+          active: _vm.isLoading,
+          "can-cancel": false
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a665adcc", module.exports)
+  }
+}
+
+/***/ }),
+/* 157 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__state__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getters__ = __webpack_require__(184);
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+	namespaced: true,
+	state: __WEBPACK_IMPORTED_MODULE_0__state__["a" /* default */],
+	mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__,
+	actions: __WEBPACK_IMPORTED_MODULE_2__actions__,
+	getters: __WEBPACK_IMPORTED_MODULE_3__getters__
+});
+
+/***/ }),
+/* 181 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+	user: null,
+	unread: [],
+	read: []
+});
+
+/***/ }),
+/* 182 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setReadNotifications", function() { return setReadNotifications; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setUnreadNotifications", function() { return setUnreadNotifications; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setUser", function() { return setUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteNotification", function() { return deleteNotification; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markAsRead", function() { return markAsRead; });
+var setReadNotifications = function setReadNotifications(state, notifications) {
+	state.read = filter(notifications, function (notification) {
+		return notification.data.read_at !== null;
+	});
+};
+
+var setUnreadNotifications = function setUnreadNotifications(state, notifications) {
+	state.unread = filter(notifications, function (notification) {
+		return notification.data.read_at === null;
+	});
+};
+
+var setUser = function setUser(state, user) {
+	return state.user = user;
+};
+
+var deleteNotification = function deleteNotification(state, notificationId) {
+	state.read = filter(state.read, function (notification) {
+		return notificationId !== notification.data.id;
+	});
+
+	state.unread = filter(state.unread, function (notification) {
+		return notificationId !== notification.data.id;
+	});
+};
+
+var markAsRead = function markAsRead(state, notificationId) {
+	state.read = filter(state.read, function (notification) {
+		return notificationId !== notification.data.id;
+	});
+
+	state.read.push(find(state.unread, { meta: { id: notificationId } }));
+};
+
+/***/ }),
+/* 183 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetch", function() { return fetch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteNotification", function() { return deleteNotification; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "markAsRead", function() { return markAsRead; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+
+
+var _this = this;
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+var fetch = function () {
+	var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(_ref, userId) {
+		var commit = _ref.commit;
+		var response;
+		return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+			while (1) {
+				switch (_context.prev = _context.next) {
+					case 0:
+						commit('loadingStatus', null, { root: true });
+
+						_context.next = 3;
+						return axios.get('/users/' + userId + '/notifications/api');
+
+					case 3:
+						response = _context.sent;
+						_context.next = 6;
+						return commit('setUnreadNotifications', response.data.notifications);
+
+					case 6:
+						_context.next = 8;
+						return commit('setReadNotifications', response.data.notifications);
+
+					case 8:
+						_context.next = 10;
+						return commit('setUser', response.data.user.id);
+
+					case 10:
+
+						commit('loadingStatus', null, { root: true });
+
+					case 11:
+					case 'end':
+						return _context.stop();
+				}
+			}
+		}, _callee, _this);
+	}));
+
+	return function fetch(_x, _x2) {
+		return _ref2.apply(this, arguments);
+	};
+}();
+
+var deleteNotification = function deleteNotification(_ref3, notificationId) {
+	var commit = _ref3.commit,
+	    state = _ref3.state;
+
+	commit('loadingStatus', null, { root: true });
+
+	axios.delete('/users/' + state.user + '/notifications/' + notificationId).then(function (response) {
+		commit('deleteNotification', notificationId);
+
+		commit('loadingStatus', null, { root: true });
+
+		return Promise.resolve(response);
+	});
+};
+
+var markAsRead = function markAsRead(_ref4, notificationId) {
+	var state = _ref4.state,
+	    commit = _ref4.commit,
+	    dispatch = _ref4.dispatch;
+
+	commit('loadingStatus', null, { root: true });
+
+	axios.put('/users/' + state.user + '/notifications/' + notificationId).then(function (response) {
+		dispatch('fetch', state.user);
+
+		commit('loadingStatus', null, { root: true });
+
+		return Promise.resolve(response);
+	});
+};
+
+/***/ }),
+/* 184 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasNotifications", function() { return hasNotifications; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "read", function() { return read; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unread", function() { return unread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "user", function() { return user; });
+var hasNotifications = function hasNotifications(state) {
+  return state.unread.length || state.read.length;
+};
+
+var read = function read(state) {
+  return state.read;
+};
+
+var unread = function unread(state) {
+  return state.unread;
+};
+
+var user = function user(state) {
+  return state.user;
+};
 
 /***/ })
 /******/ ]);
