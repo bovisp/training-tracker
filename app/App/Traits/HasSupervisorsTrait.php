@@ -92,6 +92,7 @@ trait HasSupervisorsTrait
         return [
             'id' => $employee->id, 
             'role' => $employee->roles[0]->type, 
+            'rank' => $employee->roles[0]->rank,
             'firstname' => $employee->moodleuser->firstname, 
             'lastname' => $employee->moodleuser->lastname
         ];
@@ -102,6 +103,7 @@ trait HasSupervisorsTrait
         return [
             'id' => $supervisor->user_id, 
             'role' => $supervisor->user->roles[0]->type, 
+            'rank' => $supervisor->user->roles[0]->rank, 
             'firstname' => $supervisor->user->moodleuser->firstname, 
             'lastname' => $supervisor->user->moodleuser->lastname
         ];

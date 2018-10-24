@@ -8,8 +8,6 @@
 
         <title>{{ trans('app.general.appName') }}</title>
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         
         <script>
@@ -27,6 +25,7 @@
     <body>
 
         @include('layouts.partials._lang-switcher')
+        @include('layouts.partials._notifications')
 
         <div id="app">
             <div class="container">
@@ -39,6 +38,8 @@
         </div>        
 
         @include('layouts.partials._trans')
+
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script> 
 
         <script src="{{ mix('js/app.js') }}"></script>
     </body>

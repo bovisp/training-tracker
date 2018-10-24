@@ -1,5 +1,3 @@
-import { orderBy } from 'lodash'
-
 export const p9 = state => state.userlesson.status.p9
 
 export const p18 = state => state.userlesson.status.p18

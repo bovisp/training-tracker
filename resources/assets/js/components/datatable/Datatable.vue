@@ -88,7 +88,6 @@
 
 <script>
 	import sort from 'fast-sort'
-	import { forEach, map, filter, find } from 'lodash'
 
 	export default {
 		props: {

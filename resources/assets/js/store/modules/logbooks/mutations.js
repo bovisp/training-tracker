@@ -1,5 +1,3 @@
-import { assign, find, filter, forEach } from 'lodash'
-
 export const initialize = (state, payload) => state.entries = payload
 
 export const showEntry = (state, payload) => state.entry_id = payload

@@ -35,12 +35,7 @@ class Kernel extends HttpKernel
             \TrainingTracker\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \ied3vil\LanguageSwitcher\Middleware\LanguageSwitcherMiddleware::class,
-        ],
-
-        'api' => [
-            'throttle:60,1',
-            'bindings',
-        ],
+        ]
     ];
 
     /**

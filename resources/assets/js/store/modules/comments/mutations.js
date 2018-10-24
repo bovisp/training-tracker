@@ -1,5 +1,3 @@
-import { assign, find, filter } from 'lodash'
-
 export const setComments = (state, payload) => state.comments = payload
 
 export const addComment = (state, payload) => state.comments.push(payload)

@@ -32,7 +32,7 @@ class CanViewProfile
         }
 
         foreach(moodleauth()->user()->reportingStructure() as $employee) {
-            if ($employee['id'] === $this->userIdFromRequest() && moodleauth()->user()->active === 1) {
+            if ($employee['id'] === $this->userIdFromRequest() && $employee['rank'] > moodleauth()->user()->roles->first()->rank && moodleauth()->user()->active === 1) {
                 return $next($request);
             }
         }

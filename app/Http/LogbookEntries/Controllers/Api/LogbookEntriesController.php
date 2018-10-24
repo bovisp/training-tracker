@@ -3,7 +3,9 @@
 namespace TrainingTracker\Http\LogbookEntries\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use TrainingTracker\App\Controllers\Controller;
+use TrainingTracker\App\Notifications\LogbookEntryAdded;
 use TrainingTracker\Domains\LogbookEntries\LogbookEntry;
 use TrainingTracker\Domains\Logbooks\Logbook;
 use TrainingTracker\Domains\Users\User;
@@ -44,12 +46,28 @@ class LogbookEntriesController extends Controller
             'files' => 'array'
         ]);
 
-        LogbookEntry::create([
+        $logbookEntry = LogbookEntry::create([
             'body' => request('body'),
             'logbook_id' => $logbook->id,
             'user_id' => moodleauth()->id(),
             'files' => serialize(request('files'))
         ]);
+
+        // $logbookEntry->load([
+        //     'logbook', 'creator.moodleuser', 'logbook.userlesson', 'logbook.objective', 'logbook.userlesson.lesson', 'logbook.userlesson.lesson.topic'
+        // ]);
+
+        $users = User::find(
+            $user->reportingStructure()
+                ->map(function ($u) {
+                    if ($u['role'] === 'supervisor' || $u['role'] === 'head_of_operations') {
+                        return $u['id'];
+                    }
+                })
+                ->toArray()
+        );
+
+        Notification::send($users, new LogbookEntryAdded($logbookEntry, $user->id));
 
         return response()->json([
             'flash' => 'Logbook entry successfully created.'
