@@ -30,7 +30,7 @@
 		<p class="mb-4" v-else>There are no files for this entry.</p>
 
 		<button 
-			class="is-info button is-small"
+			class="has-text-info button is-text"
 			v-if="!updating"
 			@click.prevent="updating = true"
 		>Add files</button>

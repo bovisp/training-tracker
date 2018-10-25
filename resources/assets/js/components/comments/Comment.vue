@@ -1,6 +1,6 @@
 <template>
 	<li class="mb-4">
-		<article class="media">
+		<article class="media" :id="commentId">
 			<div class="media-content">
 				<div class="content mb-2">
 					<p>
@@ -82,7 +82,11 @@
 		computed: {
 			...mapGetters({
 				errors: 'errors'
-			})
+			}),
+
+			commentId () {
+				return `comment-${this.comment.id}`
+			}
 		},
 
 		methods: {

@@ -29,7 +29,7 @@ export default {
 		},
 
 		logbookUrl () {
-			return `/users/${this.apprentice.id}/logbooks/${this.notification.meta.logbookId}`
+			return `/users/${this.apprentice.id}/logbooks/${this.notification.meta.logbookId}?entry=${this.notification.meta.logbookEntryId}`
 		},
 
 		lessonPackageUrl () {

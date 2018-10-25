@@ -17,7 +17,7 @@ class LogbookEntriesCommentsController extends Controller
     {
         return CommentResource::collection(
             $logbookEntry->comments()
-                ->with(['children', 'user'])
+                ->with(['children', 'user', 'commentable'])
                 ->get()
         );
     }
@@ -57,8 +57,7 @@ class LogbookEntriesCommentsController extends Controller
 
     public function update(User $user, LogbookEntry $logbookEntry, Comment $comment)
     {
-        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations'];
-        // $allowedRoles = [];
+        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations', 'apprentice'];
 
         if (moodleauth()->user()->hasRole($allowedRoles) === false) {
             return response()->json([
@@ -89,7 +88,7 @@ class LogbookEntriesCommentsController extends Controller
 
     public function destroy(User $user, LogbookEntry $logbookEntry, Comment $comment)
     {
-        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations'];
+        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations', 'apprentice'];
 
         if (moodleauth()->user()->hasRole($allowedRoles) === false) {
             return response()->json([

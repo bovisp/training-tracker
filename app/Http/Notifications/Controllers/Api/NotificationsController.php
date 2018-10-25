@@ -88,7 +88,8 @@ class NotificationsController extends Controller
             'data' => $notification,
             'meta' => [
                 'logbookCommentEntryId' => $logbookCommentEntry->id,
-                'logbookId' => $logbookEntry->id,
+                'logbookId' => $logbookEntry->logbook->id,
+                'logbookEntryId' => $logbookEntry->id,
                 'logbookCommentEntryCreator' => $logbookCommentEntry->user,
                 'logbookCommentEntryEditor' => new UserResource($authUser),
                 'lessonPackage' => new UserLessonResource($logbookEntry->logbook->userlesson),

@@ -25,6 +25,7 @@
 	import LogbookEntries from './LogbookEntries'
 	import LogbookEntry from './LogbookEntry'
 	import { mapGetters, mapActions } from 'vuex'
+	import findGetParameter from '../../mixins/findGetParameter'
 
 	export default {
 		props: {
@@ -48,6 +49,10 @@
 			LogbookEntry
 		},
 
+		mixins: [
+			findGetParameter
+		],
+
 		computed: {
 			...mapGetters({
 				isLoading: 'isLoading',
@@ -63,16 +68,27 @@
 			...mapActions({
 				fetch: 'logbooks/fetch',
 				setLogbookId: 'logbooks/setLogbookId',
-				setUserId: 'logbooks/setUserId'
-			})
+				setUserId: 'logbooks/setUserId',
+				show: 'logbooks/show'
+			}),
+
+			async init () {
+				await this.fetch(this.endpoint)
+
+				await this.setLogbookId(this.logbookId)
+
+				await this.setUserId(this.userId)
+
+				let logbookId = await this.findGetParameter('entry')
+
+				if (logbookId) {
+					this.show(parseInt(logbookId))
+				}
+			}
 		},
 
 		mounted () {
-			this.fetch(this.endpoint)
-
-			this.setLogbookId(this.logbookId)
-
-			this.setUserId(this.userId)
+			this.init()
 		}
 	}
 </script>

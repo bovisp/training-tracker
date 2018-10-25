@@ -29,6 +29,8 @@
 	import { mapActions, mapGetters } from 'vuex'
 	import Comment from './Comment'
 	import NewComment from './NewComment'
+	import findGetParameter from '../../mixins/findGetParameter'
+	import VueScrollTo from 'vue-scrollto'
 
 	export default {
 		props: {
@@ -52,6 +54,10 @@
 			NewComment
 		},
 
+		mixins: [
+			findGetParameter
+		],
+
 		computed: {
 			...mapGetters({
 				comments: 'comments/comments'
@@ -61,11 +67,23 @@
 		methods: {
 			...mapActions({
 				fetch: 'comments/fetch'
-			})
+			}),
+
+			async init () {
+				await this.fetch(this.endpoint)
+
+				let commentId = await this.findGetParameter('comment')
+
+				if (commentId) {
+					VueScrollTo.scrollTo(`#comment-${commentId}`, 500)
+				}
+			}
 		},
 
 		mounted () {
-			this.fetch(this.endpoint)
+			this.init()
+
+			console.log(this.findGetParameter('comment'))
 		}
 	}
 </script>
