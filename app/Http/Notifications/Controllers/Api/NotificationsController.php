@@ -62,6 +62,7 @@ class NotificationsController extends Controller
                 'logbookEntryId' => $logbookEntry->id,
                 'logbookId' => $logbookEntry->logbook->id,
                 'logbookEntryCreator' => $logbookEntry->creator,
+                'logbookEntryEditor' => $logbookEntry->editor,
                 'lessonPackage' => new UserLessonResource($logbookEntry->logbook->userlesson),
                 'lessonPackageApprentice' => $logbookEntry->logbook->userlesson->user,
                 'objective' => $logbookEntry->logbook->objective->number

@@ -4,12 +4,13 @@ namespace TrainingTracker\App\Notifications;
 
 use Illuminate\Notifications\Notification;
 
-class LogbookEntryAdded extends Notification
+class LogbookEntryNotification extends Notification
 {
-    public function __construct($logbookEntry, $apprenticeId)
+    public function __construct($logbookEntry, $apprenticeId, $type)
     {
         $this->logbookEntry = $logbookEntry;
         $this->apprenticeId = $apprenticeId;
+        $this->type = $type;
     }
 
     public function via($notifiable)
@@ -20,7 +21,7 @@ class LogbookEntryAdded extends Notification
     public function toArray($notifiable)
     {
         return [
-            'noteType' => 'logbook_entry_added',
+            'noteType' => $this->type,
             'logbookEntryId' => $this->logbookEntry->id
         ];
     }
