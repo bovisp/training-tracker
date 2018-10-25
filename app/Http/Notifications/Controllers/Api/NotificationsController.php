@@ -5,10 +5,12 @@ namespace TrainingTracker\Http\Notifications\Controllers\Api;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use TrainingTracker\App\Controllers\Controller;
+use TrainingTracker\Domains\Comments\Comment;
 use TrainingTracker\Domains\LogbookEntries\LogbookEntry;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\LogbookEntries\Resources\LogbookEntriesResource;
 use TrainingTracker\Http\UserLessons\Resources\UserLessonResource;
+use TrainingTracker\Http\Users\Resources\UserResource;
 
 class NotificationsController extends Controller
 {
@@ -19,7 +21,14 @@ class NotificationsController extends Controller
         foreach ($user->notifications as $notification) {
             switch ($notification->data['noteType']) {
                 case 'logbook_entry_added':
-                    $notifications[] = $this->logbookEntryAdded($notification);
+                case 'logbook_entry_updated':
+                case 'logbook_entry_deleted':
+                    $notifications[] = $this->logbookEntry($notification);
+                    break;
+                case 'logbook_entry_comment_added':
+                case 'logbook_entry_comment_updated':
+                    $notifications[] = $this->logbookCommentEntry($notification);
+                    break;
             }
         }
 
@@ -53,7 +62,7 @@ class NotificationsController extends Controller
         ], 200);
     }
 
-    protected function logbookEntryAdded($notification) {
+    protected function logbookEntry($notification) {
         $logbookEntry = LogbookEntry::find($notification->data['logbookEntryId']);
 
     	return [
@@ -62,11 +71,30 @@ class NotificationsController extends Controller
                 'logbookEntryId' => $logbookEntry->id,
                 'logbookId' => $logbookEntry->logbook->id,
                 'logbookEntryCreator' => $logbookEntry->creator,
-                'logbookEntryEditor' => $logbookEntry->editor,
+                'logbookEntryCommentEditor' => $logbookEntry->editor,
                 'lessonPackage' => new UserLessonResource($logbookEntry->logbook->userlesson),
                 'lessonPackageApprentice' => $logbookEntry->logbook->userlesson->user,
                 'objective' => $logbookEntry->logbook->objective->number
             ]
     	];
+    }
+
+    protected function logbookCommentEntry($notification) {
+        $logbookCommentEntry = Comment::find($notification->data['commentId']);
+        $authUser = User::find($notification->data['authId']);
+        $logbookEntry = LogBookEntry::find($logbookCommentEntry->commentable_id);
+
+        return [
+            'data' => $notification,
+            'meta' => [
+                'logbookCommentEntryId' => $logbookCommentEntry->id,
+                'logbookId' => $logbookEntry->id,
+                'logbookCommentEntryCreator' => $logbookCommentEntry->user,
+                'logbookCommentEntryEditor' => new UserResource($authUser),
+                'lessonPackage' => new UserLessonResource($logbookEntry->logbook->userlesson),
+                'lessonPackageApprentice' => $logbookEntry->logbook->userlesson->user,
+                'objective' => $logbookEntry->logbook->objective->number
+            ]
+        ];
     }
 }

@@ -24,7 +24,7 @@
 					</p>
 				</div>
 
-				<template v-if="comment.owner && !editing && !isCompleted">
+				<template v-if="(comment.owner || hasRoleOf(['supervisor', 'head_of_operations'])) && !editing && !isCompleted">
 					<div class="level">
 						<div class="level-left">
 							<div class="level-item">

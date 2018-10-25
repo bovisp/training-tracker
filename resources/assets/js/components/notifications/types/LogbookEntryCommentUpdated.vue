@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<span v-if="editor.id !== apprentice.id">
-			{{ editorName }} updated an entry in {{ apprenticeName }}'s <a :href="logbookUrl">logbook</a> for the 
+			{{ editorName }} updated a comment in {{ apprenticeName }}'s <a :href="logbookUrl">logbook</a> for the 
 		</span>
 
 		<span v-else>
-			{{ apprenticeName }} updated an entry in their <a :href="logbookUrl">logbook</a> for the 
+			{{ apprenticeName }} updated a comment in their <a :href="logbookUrl">logbook</a> for the 
 		</span>
 
 		objective "{{ objective }}" in lesson package <a :href="lessonPackageUrl">"{{ package }}"</a>.
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-	import notificationLogbookEntry from '../../../mixins/notificationLogbookEntry'
+	import notificationLogbookCommentEntry from '../../../mixins/notificationLogbookCommentEntry'
 	
 	export default {
 		props: {
@@ -24,7 +24,7 @@
 		},
 
 		mixins: [
-			notificationLogbookEntry
+			notificationLogbookCommentEntry
 		]
 	}
 </script>
