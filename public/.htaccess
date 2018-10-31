@@ -4,6 +4,7 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteBase /radar-renewal/
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
