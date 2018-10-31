@@ -7,7 +7,7 @@
 				<div class="level-left">
 					<div class="level-item">
 						<button 
-							class="button is-info"
+							class="button is-text has-text-info"
 							@click.prevent="editing = true"
 						>Edit entry</button>
 					</div>
@@ -29,8 +29,6 @@
 					</div>
 				</div>
 			</div>
-
-			<logbook-entry-files />
 			
 			<div class="content mt-8">
 				<p>
@@ -56,7 +54,9 @@
 			/>
 		</template>
 
-		<h3 class="title is-3">Comments</h3>
+		<logbook-entry-files />
+
+		<h3 class="title is-3 mt-8">Comments</h3>
 
 		<comments 
 			:endpoint="commentsEndpoint"

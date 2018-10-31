@@ -1,7 +1,7 @@
 <template>
 	<div class="mb-6">
 		<button 
-			class="button is-link is-small"
+			class="button is-text has-text-info"
 			@click.prevent="active = true"
 			v-if="!active"
 		>Add new comment</button>

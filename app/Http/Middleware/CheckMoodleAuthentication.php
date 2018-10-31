@@ -19,7 +19,7 @@ class CheckMoodleAuthentication
                 throw new \Exception("You are not authenticated.");
             }
 
-            abort(404);
+            abort(401, "You are not authenticated on Moodle.");
         }
 
         return $next($request);

@@ -1,6 +1,6 @@
 <template>
 	<li class="mb-4">
-		<article class="media">
+		<article class="media" :id="commentId">
 			<div class="media-content">
 				<div class="content mb-2">
 					<p>
@@ -24,7 +24,7 @@
 					</p>
 				</div>
 
-				<template v-if="comment.owner && !editing && !isCompleted">
+				<template v-if="(comment.owner || hasRoleOf(['supervisor', 'head_of_operations'])) && !editing && !isCompleted">
 					<div class="level">
 						<div class="level-left">
 							<div class="level-item">
@@ -82,7 +82,11 @@
 		computed: {
 			...mapGetters({
 				errors: 'errors'
-			})
+			}),
+
+			commentId () {
+				return `comment-${this.comment.id}`
+			}
 		},
 
 		methods: {

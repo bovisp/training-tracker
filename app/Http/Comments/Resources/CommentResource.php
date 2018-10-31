@@ -29,7 +29,8 @@ class CommentResource extends Resource
             	moodleauth()->user()->roles->first()->type === 'administrator',
             'user' => new UserResource($this->user),
             'created_at' => $this->created_at->format('m/d/Y'),
-            'edited' => optional($this->edited_at)->format('m/d/Y')
+            'edited' => optional($this->edited_at)->format('m/d/Y'),
+            'commentable' => $this->commentable
         ];
     }
 }

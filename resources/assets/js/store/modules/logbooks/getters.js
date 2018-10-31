@@ -1,5 +1,3 @@
-import { find } from 'lodash'
-
 export const entries = state => state.entries
 
 export const entry = state => find(state.entries, { id: state.entry_id })

@@ -39,12 +39,7 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
-        ],
-
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-        ],
+        ]
     ],
 
     /*
@@ -68,12 +63,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => TrainingTracker\Domains\Users\User::class,
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        ]
     ],
 
     /*

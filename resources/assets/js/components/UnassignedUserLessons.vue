@@ -98,7 +98,6 @@
 
 <script>
 	import Error from "../classes/Error"
-	import { orderBy } from 'lodash'
 
 	export default {
 		props: ['userId'],

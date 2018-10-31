@@ -2,8 +2,13 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import Buefy from 'buefy'
-import lodash from 'lodash'
 import store from './store'
+import orderBy from 'lodash.orderby'
+import forEach from 'lodash.foreach'
+import map from 'lodash.map'
+import filter from 'lodash.filter'
+import find from 'lodash.find'
+import assign from 'lodash.assign'
 
 import user from './mixins/user'
 
@@ -15,7 +20,13 @@ Vue.use(Buefy, {
 })
 
 window.Vue = Vue
-// window._ = lodash
+
+window.orderBy = orderBy
+window.forEach = forEach
+window.map = map
+window.filter = filter
+window.find = find
+window.assign = assign
 
 window.events = new Vue()
 
@@ -68,6 +79,7 @@ Vue.component('unassigned-user-lessons', require('./components/UnassignedUserLes
 Vue.component('user-lesson', require('./components/userlessons/UserLesson.vue'));
 Vue.component('logbook', require('./components/logbooks/Logbook.vue')); 
 Vue.component('user-errors', require('./components/UserErrors.vue')); 
+Vue.component('notifications', require('./components/notifications/Notifications.vue')); 
 
 Vue.mixin(user)
 

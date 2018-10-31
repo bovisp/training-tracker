@@ -28,7 +28,6 @@
 	import File from './File'
 	import timeremaining from '../../helpers/timeremaining'
 	import pad from '../../helpers/pad'
-	import { forEach } from 'lodash'
 
 	export default {
 		props: {

@@ -3,7 +3,9 @@
 namespace TrainingTracker\Http\LogbookEntries\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use TrainingTracker\App\Controllers\Controller;
+use TrainingTracker\App\Notifications\LogbookCommentEntryNotification;
 use TrainingTracker\Domains\Comments\Comment;
 use TrainingTracker\Domains\LogbookEntries\LogbookEntry;
 use TrainingTracker\Domains\Users\User;
@@ -15,7 +17,7 @@ class LogbookEntriesCommentsController extends Controller
     {
         return CommentResource::collection(
             $logbookEntry->comments()
-                ->with(['children', 'user'])
+                ->with(['children', 'user', 'commentable'])
                 ->get()
         );
     }
@@ -44,13 +46,18 @@ class LogbookEntriesCommentsController extends Controller
 
         moodleauth()->user()->comments()->save($comment);
 
+        $users = $this->getSupervisorsAndHeadOfOperationsRoles($user);
+
+        Notification::send($users, new LogbookCommentEntryNotification(
+            $comment, $user->id, 'logbook_entry_comment_added', moodleauth()->user()
+        ));
+
         return new CommentResource($comment);
     }
 
     public function update(User $user, LogbookEntry $logbookEntry, Comment $comment)
     {
-        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations'];
-        // $allowedRoles = [];
+        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations', 'apprentice'];
 
         if (moodleauth()->user()->hasRole($allowedRoles) === false) {
             return response()->json([
@@ -70,12 +77,18 @@ class LogbookEntriesCommentsController extends Controller
             'body' => request('body')
         ]);
 
+        $users = $this->getSupervisorsAndHeadOfOperationsRoles($user);
+
+        Notification::send($users, new LogbookCommentEntryNotification(
+            $comment, $user->id, 'logbook_entry_comment_updated', moodleauth()->user()
+        ));
+
         return new CommentResource($comment);
     }
 
     public function destroy(User $user, LogbookEntry $logbookEntry, Comment $comment)
     {
-        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations'];
+        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations', 'apprentice'];
 
         if (moodleauth()->user()->hasRole($allowedRoles) === false) {
             return response()->json([
@@ -90,5 +103,17 @@ class LogbookEntriesCommentsController extends Controller
         $comment->delete();
 
         return new CommentResource($comment);
+    }
+
+    protected function getSupervisorsAndHeadOfOperationsRoles(User $user) {
+        return User::find(
+            $user->reportingStructure()
+                ->map(function ($u) {
+                    if ($u['role'] === 'supervisor' || $u['role'] === 'head_of_operations') {
+                        return $u['id'];
+                    }
+                })
+                ->toArray()
+        );
     }
 }
