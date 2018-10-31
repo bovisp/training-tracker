@@ -24,10 +24,10 @@ class CreateLogbooksTable extends Migration
             //     ->on('user_lessons')
             //     ->onDelete('cascade');
 
-            $table->foreign('objective_id')
-                ->references('id')
-                ->on('objectives')
-                ->onDelete('cascade');
+            // $table->foreign('objective_id')
+            //     ->references('id')
+            //     ->on('objectives')
+            //     ->onDelete('cascade');
         });
     }
 
