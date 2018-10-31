@@ -10,7 +10,7 @@
 				</div>
 
 				<div class="level-right">
-					<a href="{{ route('users.index.api') }}" class="button is-text">Add users</a> | 
+					<a href="{{ route('users.create') }}" class="button is-text">Add users</a> | 
 					<a href="{{ route('inactiveusers.index') }}" class="button is-text">Inactive users</a>
 				</div>
 			</div>
