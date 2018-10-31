@@ -15,8 +15,8 @@ class RolesController extends Controller
             'records' => RoleResource::collection(Role::all()),
             'meta' => [
                 'displayable' => [
-                    ['key' => 'type', 'title' => 'Type'],
-                    ['key' => 'name', 'title' => 'Name']
+                    ['field' => 'name', 'label' => 'Name', 'sortable' => 'sortable'],
+                    ['field' => 'type', 'label' => 'Type', 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'rank', 'dir' => 'asc']
