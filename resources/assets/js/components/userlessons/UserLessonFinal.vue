@@ -7,7 +7,25 @@
 					:value="completedPackage"
 					:checked="completedPackage"
 					@change="update"
-				> This lesson package has been successfully completed
+					v-if="hasRoleOf(['administrator', 'manager', 'head_of_operations'])"
+				> 
+
+				<template v-else>
+					<span
+						v-if="completedPackage"
+						v-html="`&check;`"
+						style="color: green;"
+						class="mr-4"
+					></span>
+
+					<span
+						v-else
+						v-html="`&ndash;`"
+						class="has-text-grey has-text-weight-bold mr-4"
+					></span>
+				</template>
+				
+				This lesson package has been successfully completed
 			</label>
         </div>
 	</section>

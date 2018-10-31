@@ -60,7 +60,9 @@
 
 		computed: {
 			...mapGetters({
-				comments: 'comments/comments'
+				comments: 'comments/comments',
+				userId: 'logbooks/userId',
+				logbookId: 'logbooks/logbookId'
 			})
 		},
 
@@ -76,14 +78,14 @@
 
 				if (commentId) {
 					VueScrollTo.scrollTo(`#comment-${commentId}`, 500)
+
+					window.history.replaceState({}, document.title, `/users/${parseInt(this.userId)}/logbooks/${parseInt(this.logbookId)}`);
 				}
 			}
 		},
 
 		mounted () {
 			this.init()
-
-			console.log(this.findGetParameter('comment'))
 		}
 	}
 </script>
