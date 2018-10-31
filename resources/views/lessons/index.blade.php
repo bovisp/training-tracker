@@ -10,7 +10,7 @@
 				</div>
 
 				<div class="level-right">
-					<a href="/lessons/create" class="button is-text">Add lesson</a>
+					<a href="{{ env('APP_URL') }}/lessons/create" class="button is-text">Add lesson</a>
 				</div>
 			</div>
 

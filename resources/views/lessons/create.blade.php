@@ -6,7 +6,7 @@
 		<div class="column is-three-quarters-tablet is-half-desktop">
 			<h2 class="title is-2">Add Lesson</h2>
 			
-			<form action="/lessons" method="POST">
+			<form action="{{ env('APP_URL') }}/lessons" method="POST">
 				{{ csrf_field() }}
 
 				<div class="field">
