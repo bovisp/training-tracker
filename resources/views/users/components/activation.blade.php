@@ -2,7 +2,7 @@
 
 @if (moodleauth()->user()->hasRole('administrator'))
 
-	<form action="/users/{{ $user->id }}/activation" method="POST">
+	<form action="{{ env('APP_URL') }}/users/{{ $user->id }}/activation" method="POST">
 		@if ($user->active)
 			{{ method_field('DELETE') }}
 		@endif

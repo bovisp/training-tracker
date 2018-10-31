@@ -10,7 +10,7 @@
 				</div>
 
 				<div class="level-right">
-					<a href="/objectives/create" class="button is-text">Add objective</a>
+					<a href="{{ env('APP_URL') }}/objectives/create" class="button is-text">Add objective</a>
 				</div>
 			</div>
 

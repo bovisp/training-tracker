@@ -6,7 +6,7 @@
 		<div class="column is-three-quarters-tablet is-half-desktop">
 			<h2 class="title is-2">Edit Objective</h2>
 			
-			<form action="/objectives/{{ $objective->id }}" method="POST">
+			<form action="{{ env('APP_URL') }}/objectives/{{ $objective->id }}" method="POST">
 				{{ csrf_field() }}
 
 				{{ method_field('put') }}
@@ -161,7 +161,7 @@
 							<div class="level-left"></div>
 
 							<div class="level-right">
-								<form action="/objectives/{{ $objective->id }}" method="POST">
+								<form action="{{ env('APP_URL') }}/objectives/{{ $objective->id }}" method="POST">
 									{{ csrf_field() }}
 
 									{{ method_field('delete') }}

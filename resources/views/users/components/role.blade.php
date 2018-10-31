@@ -1,6 +1,6 @@
 @if (moodleauth()->user()->hasRole('administrator'))
 
-	<form action="/users/{{$user->id}}/role" method="POST">
+	<form action="{{ env('APP_URL') }}/users/{{$user->id}}/role" method="POST">
 		{{ method_field('PUT') }}
 
 		{{ csrf_field() }}

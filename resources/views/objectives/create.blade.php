@@ -6,7 +6,7 @@
 		<div class="column is-three-quarters-tablet is-half-desktop">
 			<h2 class="title is-2">Add Objective</h2>
 			
-			<form action="/objectives" method="POST">
+			<form action="{{ env('APP_URL') }}/objectives" method="POST">
 				{{ csrf_field() }}
 
 				<div class="field">

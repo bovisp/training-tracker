@@ -66,7 +66,7 @@
 
 								<a 
 									class="button is-text is-small ml-4"
-									href="/users/{{ $user->id }}/reporting/{{ $role->id }}/edit"
+									href="{{ env('APP_URL') }}/users/{{ $user->id }}/reporting/{{ $role->id }}/edit"
 								>Edit</a>
 
 							@endif
@@ -80,7 +80,7 @@
 								@foreach($reporting->where('role', $role->type)->toArray() as $person)
 
 									<li>
-										<a href="/users/{{ $person['id'] }}">
+										<a href="{{ env('APP_URL') }}/users/{{ $person['id'] }}">
 											{{ $person['firstname'] }} {{ $person['lastname'] }}
 										</a>
 									</li>

@@ -10,19 +10,9 @@
 				</div>
 
 				<div class="level-right">
-					<a href="/topics/create" class="button is-text">Add topic</a>
+					<a href="{{ env('APP_URL') }}/topics/create" class="button is-text">Add topic</a>
 				</div>
 			</div>
-
-			{{-- <datatable 
-				endpoint="{{ route('topics.index.api') }}"
-				:sort="{key: 'number', order: 'asc'}"
-				:action-button="true"
-				action-button-endpoint="/topics/"
-				action-button-endpoint-suffix="/edit"
-				action-button-text="Edit"
-			>
-			</datatable> --}}
 
 			<data-table 
 				endpoint="{{ route('topics.index.api') }}"

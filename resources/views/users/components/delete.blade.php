@@ -13,7 +13,7 @@
 				<div class="level-left"></div>
 
 				<div class="level-right">
-					<form action="/users/{{ $user->id }}" method="POST">
+					<form action="{{ env('APP_URL') }}/users/{{ $user->id }}" method="POST">
 						{{ csrf_field() }}
 
 						{{ method_field('delete') }}

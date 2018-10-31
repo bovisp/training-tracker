@@ -10,7 +10,7 @@
 				</div>
 
 				<div class="level-right">
-					<a href="/roles/create" class="button is-text">Add role</a>
+					<a href="{{ env('APP_URL') }}/roles/create" class="button is-text">Add role</a>
 				</div>
 			</div>
 

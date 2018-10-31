@@ -13,7 +13,7 @@
 
 				<div class="level-right">
 					<div class="level-item">
-						<a href="/users/{{ $user->id }}/userlessons/{{ $logbook->userlesson_id }}">Back to lesson package</a>
+						<a href="{{ env('APP_URL') }}/users/{{ $user->id }}/userlessons/{{ $logbook->userlesson_id }}">Back to lesson package</a>
 					</div>
 				</div>
 			</div>
@@ -36,7 +36,7 @@
 			</p>
 
 			<logbook 
-				endpoint="/users/{{ $user->id }}/logbooks/{{ $logbook->id }}"
+				endpoint="{{ env('APP_URL') }}/users/{{ $user->id }}/logbooks/{{ $logbook->id }}"
 				logbook-id="{{ $logbook->id }}"
 				user-id="{{ $logbook->userlesson->user->id }}"
 			/>
