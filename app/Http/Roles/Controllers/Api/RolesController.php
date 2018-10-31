@@ -23,7 +23,7 @@ class RolesController extends Controller
                 ],
                 'actionButton' => [
                     'active' => true,
-                    'endpoint' => '/roles/',
+                    'endpoint' => env('APP_URL') . '/roles/',
                     'endpointSuffix' => '/edit',
                     'text' => 'Edit'
                 ]

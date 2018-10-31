@@ -24,7 +24,7 @@ class InactiveUsersController extends Controller
                 ],
                 'actionButton' => [
                     'active' => true,
-                    'endpoint' => '/users/',
+                    'endpoint' => env('APP_URL') . '/users/',
                     'endpointSuffix' => '',
                     'text' => 'Profile'
                 ]

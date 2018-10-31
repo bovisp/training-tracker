@@ -6,7 +6,7 @@
 		<div class="column is-three-quarters-tablet is-half-desktop">
 			<h2 class="title is-2">Add role</h2>
 			
-			<form action="/roles" method="POST">
+			<form action="{{ env('APP_URL') }}/roles" method="POST">
 				{{ csrf_field() }}
 
 				<div class="field">

@@ -24,7 +24,7 @@ class ObjectivesController extends Controller
                 ],
                 'actionButton' => [
                     'active' => true,
-                    'endpoint' => '/objectives/',
+                    'endpoint' => env('APP_URL') . '/objectives/',
                     'endpointSuffix' => '/edit',
                     'text' => 'Edit'
                 ]

@@ -25,7 +25,7 @@ class UserLessonsController extends Controller
                 ],
                 'actionButton' => [
                     'active' => true,
-                    'endpoint' => "/users/{$user->id}/userlessons/",
+                    'endpoint' => env('APP_URL') . "/users/{$user->id}/userlessons/",
                     'endpointSuffix' => '',
                     'text' => 'View'
                 ]

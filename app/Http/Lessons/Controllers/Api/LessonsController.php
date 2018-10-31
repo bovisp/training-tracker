@@ -23,7 +23,7 @@ class LessonsController extends Controller
                 ],
                 'actionButton' => [
                     'active' => true,
-                    'endpoint' => '/lessons/',
+                    'endpoint' => env('APP_URL') . '/lessons/',
                     'endpointSuffix' => '/edit',
                     'text' => 'Edit'
                 ]

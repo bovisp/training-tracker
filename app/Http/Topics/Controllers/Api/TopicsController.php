@@ -22,7 +22,7 @@ class TopicsController extends Controller
                 ],
                 'actionButton' => [
                     'active' => true,
-                    'endpoint' => '/topics/',
+                    'endpoint' => env('APP_URL') . '/topics/',
                     'endpointSuffix' => '/edit',
                     'text' => 'Edit'
                 ]
