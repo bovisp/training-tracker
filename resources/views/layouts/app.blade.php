@@ -8,7 +8,7 @@
 
         <title>{{ trans('app.general.appName') }}</title>
 
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="css/app.css">
         
         <script>
             window.App = {
@@ -41,6 +41,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script> 
 
-        <script src="{{ mix('js/app.js') }}"></script>
+        <script src="js/app.js"></script>
     </body>
 </html>
