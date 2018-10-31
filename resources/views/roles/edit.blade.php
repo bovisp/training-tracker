@@ -32,7 +32,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="rank">Type</label>
+					<label class="label" for="rank">Rank</label>
 
 					<div class="control">
 						<input 
