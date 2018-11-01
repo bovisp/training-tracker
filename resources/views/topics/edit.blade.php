@@ -81,7 +81,7 @@
 
 			<div class="divider divider--relaxed"></div>
 
-			<b-collapse :open="false">
+			<b-collapse :open="false" v-cloak>
 	            <button class="button is-text has-text-danger" slot="trigger">Delete topic</button>
 
 	            <article class="message is-danger mt-4">
