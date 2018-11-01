@@ -22,6 +22,11 @@
 // Import buefy styling
 @import "~buefy/dist/buefy.css";
 
+// Any component wrapped in v-cloak before the component has loaded
+[v-cloak] {
+	display: none;
+}
+
 // Import Quill styling
 .quillWrapper {
 	height: 320px;

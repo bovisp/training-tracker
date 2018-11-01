@@ -24,7 +24,7 @@
       <div class="navbar-end">
         @include('layouts.partials._notifications')
 
-        <b-dropdown v-model="navigation" position="is-bottom-left">
+        <b-dropdown v-model="navigation" position="is-bottom-left" v-cloak>
           <a class="navbar-item" slot="trigger">
             <span>Menu</span>
 
