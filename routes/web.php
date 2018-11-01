@@ -160,7 +160,7 @@ Route::middleware(['profile'])->group(function () {
 		Route::get(
 			'/notifications', 
 			'\TrainingTracker\Http\Notifications\Controllers\NotificationsController@index'
-		);
+		)->name('notifications.index');
 
 		Route::get(
 			'/notifications/api', 

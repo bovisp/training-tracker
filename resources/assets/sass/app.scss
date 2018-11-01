@@ -1,6 +1,3 @@
-// Import fontawesome
-@import "~@fortawesome/fontawesome-free/css/all.css";
-
 // Get all of Bulma's utility helpers.
 @import "~bulma/sass/utilities/_all";
 
@@ -233,4 +230,9 @@ $dragndrop-min-height: 200px;
 // Width utilities
 .is-full-width {
 	width: 100% !important;
+}
+
+// Box shadow utilities
+.has-box-shadow {
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.1)
 }

@@ -9,6 +9,8 @@
         <title>{{ trans('app.general.appName') }}</title>
 
         <link rel="stylesheet" href="{{ env('APP_URL') }}{{ mix('css/app.css') }}">
+
+        <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.8.94/css/materialdesignicons.min.css">
         
         <script>
             window.App = {
@@ -23,14 +25,16 @@
         </script>
     </head>
     <body>
-
-        @include('layouts.partials._lang-switcher')
-        @include('layouts.partials._notifications')
-
         <div id="app">
+            @include('layouts.partials._nav')
+        
             <div class="container">
 
-                @yield('content')
+                <section class="section">
+
+                    @yield('content')
+
+                </section>
                 
             </div>
 

@@ -1,4 +1,7 @@
-<ul>
-    <li style="display: {{ app()->getLocale() === 'en' ? 'none' : 'block' }};"><a href="{{ url('lang/en') }}">English</a></li>
-    <li style="display: {{ app()->getLocale() === 'fr' ? 'none' : 'block' }};"><a href="{{ url('lang/fr') }}">French</a></li>
-</ul>
+<a href="{{ url('lang/en') }}" style="display: {{ app()->getLocale() === 'en' ? 'none' : 'block' }};">
+	English
+</a>
+
+<a href="{{ url('lang/fr') }}" style="display: {{ app()->getLocale() === 'fr' ? 'none' : 'block' }};">
+	French
+</a>

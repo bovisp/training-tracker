@@ -13473,8 +13473,7 @@ __webpack_require__(27);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_buefy___default.a, {
-  defaultToastDuration: 5000,
-  defaultIconPack: 'far'
+  defaultToastDuration: 5000
 });
 
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
@@ -40486,7 +40485,7 @@ var render = function() {
                       _c(
                         "a",
                         {
-                          staticClass: "button is-info is-small",
+                          staticClass: "button is-text has-text-info",
                           attrs: { href: _vm.actionButtonLink(props.row.id) }
                         },
                         [

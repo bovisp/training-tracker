@@ -57,7 +57,7 @@
 		        >
 		        	<a 
                         :href="actionButtonLink(props.row.id)"
-                        class="button is-info is-small"
+                        class="button is-text has-text-info"
                     >
                         {{ meta.actionButton.text }}
                     </a>
