@@ -26,7 +26,7 @@
 										value="{{ $topic->id }}" 
 										{{ $topic->id == old('topic_id') ? 'selected' : '' }}
 									>
-										{{ $topic->number }}. {{ $topic->name }}
+										{{ $topic->name }}
 									</option>
 
 								@endforeach
@@ -49,7 +49,7 @@
 					<div class="control">
 						<input 
 							class="input {{ $errors->any() && $errors->has('number') ? 'is-danger' : '' }}" 
-							type="number" 
+							type="text" 
 							id="number" 
 							name="number"
 							value="{{ old('number') }}"
@@ -126,7 +126,7 @@
 							value="1"
 							{{ old('p18') ? 'checked' : '' }}
 						>
-						Early EG-03 (9-18 months)
+						Late EG-03 (9-18 months)
 					</label>
 
 					<label class="checkbox is-block mt-2">
@@ -146,7 +146,7 @@
 							value="1"
 							{{ old('p42') ? 'checked' : '' }}
 						>
-						Early EG-04 (30-42 months)
+						Late EG-04 (30-42 months)
 					</label>
 
 					@if ($errors->any() && $errors->has('p9'))

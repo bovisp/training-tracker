@@ -3,7 +3,7 @@
 @section('content')
 
 	<div class="columns is-centered">
-		<div class="column is-three-quarters-tablet is-half-desktop">
+		<div class="column is-three-quarters-tablet">
 			<div class="level">
 				<div class="level-left">
 					<h2 class="title is-2">Lessons</h2>

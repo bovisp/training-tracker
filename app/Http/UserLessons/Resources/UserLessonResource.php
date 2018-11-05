@@ -16,7 +16,7 @@ class UserLessonResource extends Resource
     {
         return [
             'id' => $this->id,
-            'package' => $this->lesson->topic->number . '.' . str_pad($this->lesson->number, 2, '0', STR_PAD_LEFT) . ' ' . $this->lesson->name,
+            'package' => $this->lesson->number . ' - ' . $this->lesson->name,
             'completed' => $this->completed === 1 ? 'Yes' : 'No'
         ];
     }

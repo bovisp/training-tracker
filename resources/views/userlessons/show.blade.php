@@ -7,7 +7,7 @@
 			<p>
 				<strong>Lesson package:</strong>
 
-				{{ $userlesson->lesson->topic->number }}.{{ str_pad($userlesson->lesson->number, 2, '0', STR_PAD_LEFT) }} 
+				{{ $userlesson->lesson->topic->number }}: {{ $userlesson->lesson->number }} 
 				- {{ $userlesson->lesson->name }}
 			</p>
 

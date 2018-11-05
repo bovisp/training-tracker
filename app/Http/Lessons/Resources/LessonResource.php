@@ -16,7 +16,8 @@ class LessonResource extends Resource
     {
         return [
             'id' => $this->id,
-            'lesson' => $this->topic->number . '.' . sprintf('%02d', $this->number),
+            'level' => $this->topic->number, 
+            'lesson' => $this->number,
             'name' => $this->name,
             'depricated' => $this->depricated ? 'Yes' : 'No'
         ];

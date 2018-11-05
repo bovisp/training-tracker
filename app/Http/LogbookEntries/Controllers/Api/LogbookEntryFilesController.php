@@ -25,7 +25,9 @@ class LogbookEntryFilesController extends Controller
 
         $upload = request()->file('file');
 
-        $extension = strtolower(explode('.', request()->file('file')->getClientOriginalName())[1]);
+        $extension = strtolower(
+            explode('.', request()->file('file')->getClientOriginalName())[1]
+        );
 
         Storage::putFileAs(
             "/public/entries/{$user->id}", $upload, request('id') . '.' . $extension

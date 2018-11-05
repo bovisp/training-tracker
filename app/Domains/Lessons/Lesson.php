@@ -33,6 +33,39 @@ class Lesson extends Model
         return $this->hasMany(UserLesson::class);
     }
 
+    public function add()
+    {
+        self::create([
+            'topic_id' => request('topic_id'),
+            'number' => request('number'),
+            'name' => [
+                'en' => request('name_en'),
+                'fr' => request('name_fr')
+            ],
+            'p9' => request()->has('p9') ? request('p9') : 0,
+            'p18' => request()->has('p18') ? request('p18') : 0,
+            'p30' => request()->has('p30') ? request('p30') : 0,
+            'p42' => request()->has('p40') ? request('p40') : 0,
+        ]);
+    }
+
+    public function edit()
+    {
+        $this->update([
+            'topic_id' => request('topic_id'),
+            'number' => request('number'),
+            'name' => [
+                'en' => request('name_en'),
+                'fr' => request('name_fr')
+            ],
+            'depricated' => request('depricated'),
+            'p9' => request()->has('p9') ? request('p9') : 0,
+            'p18' => request()->has('p18') ? request('p18') : 0,
+            'p30' => request()->has('p30') ? request('p30') : 0,
+            'p42' => request()->has('p40') ? request('p40') : 0,
+        ]);
+    }
+
     public function toArray()
     {
         $attributes = parent::toArray();

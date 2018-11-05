@@ -28,8 +28,6 @@ class StoreLessonRequest extends FormRequest
             'topic_id' => 'required|integer|min:0|exists:topics,id',
             'number' => [
                 'required',
-                'min:0',
-                'integer',
                 Rule::unique('lessons')->where(function ($query) {
                     $query->where([
                         ['topic_id', request('topic_id')],
@@ -54,21 +52,19 @@ class StoreLessonRequest extends FormRequest
             'topic_id.exists' => "Topic " . $this->topic_id . " does not exist.",
             'topic_id.integer' => 'The topic number must be an integer (i.e. 1, 2, 3 etc.)',
             'number.required' => 'Please enter a lesson number.',
-            'number.min' => 'The lesson number must be greater than 0',
             'number.unique' => "Lesson " . $this->number . " already exists for topic.",
-            'number.integer' => 'The lesson number must be an integer (i.e. 1, 2, 3 etc.)',
             'name_en.required' => 'Please enter a lesson name in English.',
             'name_en.min' => 'The "Name" must be at least three characters long.',
             'name_fr.required' => 'Please enter a lesson name in French.',
             'name_fr.min' => 'The "Name" must be at least three characters long.',
             'p9.integer' => 'The "Early EG-03" period checkbox should have value of 0 or 1.',
             'p9.between' => 'The "Early EG-03" period checkbox should have value of 0 or 1.',
-            'p18.integer' => 'The "Early EG-03" period checkbox should have value of 0 or 1.',
-            'p18.between' => 'The "Early EG-03" period checkbox should have value of 0 or 1.',
-            'p30.integer' => 'The "Early EG-03" period checkbox should have value of 0 or 1.',
-            'p30.between' => 'The "Early EG-03" period checkbox should have value of 0 or 1.',
-            'p42.integer' => 'The "Early EG-03" period checkbox should have value of 0 or 1.',
-            'p42.between' => 'The "Early EG-03" period checkbox should have value of 0 or 1.'
+            'p18.integer' => 'The "Late EG-03" period checkbox should have value of 0 or 1.',
+            'p18.between' => 'The "Late EG-03" period checkbox should have value of 0 or 1.',
+            'p30.integer' => 'The "Early EG-04" period checkbox should have value of 0 or 1.',
+            'p30.between' => 'The "Early EG-04" period checkbox should have value of 0 or 1.',
+            'p42.integer' => 'The "Late EG-04" period checkbox should have value of 0 or 1.',
+            'p42.between' => 'The "Late EG-04" period checkbox should have value of 0 or 1.'
         ];
     }
 }

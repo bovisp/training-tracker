@@ -16,7 +16,7 @@ class ObjectiveResource extends Resource
     {
         return [
             'id' => $this->id,
-            'lesson' => $this->lesson->topic->number . '.' . sprintf('%02d', $this->lesson->number),
+            'lesson' => $this->lesson->number,
             'objective' => $this->number,
             'description' => $this->name
         ];

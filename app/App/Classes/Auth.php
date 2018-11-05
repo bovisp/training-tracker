@@ -66,7 +66,7 @@ class Auth
      * 
      * @return boolean If true then a user is authenticated on Moodle.
      */
-    public function status()
+    protected function status()
     {
     	if (! $this->browserCookie) {
             return false;

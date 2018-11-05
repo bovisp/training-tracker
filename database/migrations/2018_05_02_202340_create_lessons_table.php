@@ -14,7 +14,7 @@ class CreateLessonsTable extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('topic_id');
-            $table->unsignedInteger('number');
+            $table->float('number');
             $table->boolean('depricated')->default(0);
             $table->text('name');
             $table->boolean('p9');

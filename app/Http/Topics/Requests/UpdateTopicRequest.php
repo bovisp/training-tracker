@@ -24,7 +24,7 @@ class UpdateTopicRequest extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'required|integer|min:0',
+            'number' => 'required',
             'name_en' => 'required|min:3',
             'name_fr' => 'required|min:3'
         ];
@@ -34,8 +34,6 @@ class UpdateTopicRequest extends FormRequest
     {
         return [
             'number.required' => 'Please enter a topic number.',
-            'number.min' => 'The topic number must be greater than 0',
-            'number.integer' => 'The topic number must be an integer (i.e. 1, 2, 3 etc.)',
             'name_en.required' => 'Please enter a topic name in English.',
             'name_en.min' => 'The "Name" must be at least three characters long.',
             'name_fr.required' => 'Please enter a topic name in French.',

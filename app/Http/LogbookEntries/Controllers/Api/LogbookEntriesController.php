@@ -9,6 +9,7 @@ use TrainingTracker\App\Notifications\LogbookEntryNotification;
 use TrainingTracker\Domains\LogbookEntries\LogbookEntry;
 use TrainingTracker\Domains\Logbooks\Logbook;
 use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Http\LogbookEntries\Requests\LogbookEntriesStoreRequest;
 use TrainingTracker\Http\LogbookEntries\Resources\LogbookEntriesResource;
 
 class LogbookEntriesController extends Controller
@@ -18,23 +19,11 @@ class LogbookEntriesController extends Controller
         return LogbookEntriesResource::collection($logbook->entries);
     }
 
-    public function store(User $user, Logbook $logbook)
+    public function store(LogbookEntriesStoreRequest $request, User $user, Logbook $logbook)
     {
-        request()->validate([
-            'body' => 'required',
-            'files' => 'array'
-        ]);
+        $logbookEntry = new LogbookEntry;
 
-        $logbookEntry = LogbookEntry::create([
-            'body' => request('body'),
-            'logbook_id' => $logbook->id,
-            'user_id' => moodleauth()->id(),
-            'files' => serialize(request('files'))
-        ]);
-
-        $users = $this->getSupervisorsAndHeadOfOperationsRoles($user);
-
-        Notification::send($users, new LogbookEntryNotification($logbookEntry, $user->id, 'logbook_entry_added'));
+        $logbookEntry->add($user, $logbook);
 
         return response()->json([
             'flash' => 'Logbook entry successfully created.'
@@ -43,7 +32,9 @@ class LogbookEntriesController extends Controller
 
     public function show(User $user, Logbook $logbook)
     {
-        $logbook->load(['objective', 'objective.lesson', 'objective.lesson.topic']);
+        $logbook->load([
+            'objective', 'objective.lesson', 'objective.lesson.topic'
+        ]);
 
         $user->load(['moodleuser']);
 
@@ -56,13 +47,7 @@ class LogbookEntriesController extends Controller
             'body' => 'required'
         ]);
 
-        $logbookEntry->update([
-            'body' => request('body')
-        ]);
-
-        $users = $this->getSupervisorsAndHeadOfOperationsRoles($user);
-
-        Notification::send($users, new LogbookEntryNotification($logbookEntry, $user->id, 'logbook_entry_updated'));
+        $logbookEntry->edit($user);
 
         return (new LogbookEntriesResource($logbookEntry))
             ->additional([
@@ -77,17 +62,5 @@ class LogbookEntriesController extends Controller
         return response()->json([
             'flash' => 'Logbook entry successfully deleted.'
         ]);
-    }
-
-    protected function getSupervisorsAndHeadOfOperationsRoles(User $user) {
-        return User::find(
-            $user->reportingStructure()
-                ->map(function ($u) {
-                    if ($u['role'] === 'supervisor' || $u['role'] === 'head_of_operations') {
-                        return $u['id'];
-                    }
-                })
-                ->toArray()
-        );
     }
 }

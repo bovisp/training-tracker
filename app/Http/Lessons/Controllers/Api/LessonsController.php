@@ -14,11 +14,13 @@ class LessonsController extends Controller
             'records' => LessonResource::collection(Lesson::all()),
             'meta' => [
                 'displayable' => [
+                    ['field' => 'level', 'label' => 'Level', 'sortable' => 'sortable'],
                     ['field' => 'lesson', 'label' => 'Lesson', 'sortable' => 'sortable'],
                     ['field' => 'name', 'label' => 'Name', 'sortable' => 'sortable'],
                     ['field' => 'depricated', 'label' => 'Depricated', 'sortable' => 'sortable']
                 ],
                 'orderby' => [
+                    ['key' => 'level', 'dir' => 'asc'],
                     ['key' => 'lesson', 'dir' => 'asc']
                 ],
                 'actionButton' => [

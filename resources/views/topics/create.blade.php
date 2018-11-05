@@ -15,7 +15,7 @@
 					<div class="control">
 						<input 
 							class="input {{ $errors->any() && $errors->has('number') ? 'is-danger' : '' }}" 
-							type="number" 
+							type="text" 
 							id="number" 
 							name="number"
 							value="{{ old('number') }}"

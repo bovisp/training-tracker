@@ -26,7 +26,7 @@
 										value="{{ $lesson->id }}" 
 										{{ $lesson->id == old('lesson_id') ? 'selected' : '' }}
 									>
-										{{ $lesson->topic->number }}.{{ str_pad($lesson->number, 2, '0', STR_PAD_LEFT) }} {{ $lesson->name }}
+										{{ $lesson->number }} - {{ $lesson->name }}
 									</option>
 
 								@endforeach

@@ -108,4 +108,16 @@ trait HasSupervisorsTrait
             'lastname' => $supervisor->user->moodleuser->lastname
         ];
     }
+
+    public function supervisorsAndHeadOfOperationsRoles(User $user) {
+        return User::find(
+            $user->reportingStructure()
+                ->map(function ($u) {
+                    if ($u['role'] === 'supervisor' || $u['role'] === 'head_of_operations') {
+                        return $u['id'];
+                    }
+                })
+                ->toArray()
+        );
+    }
 }

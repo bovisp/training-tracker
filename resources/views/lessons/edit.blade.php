@@ -28,7 +28,7 @@
 										value="{{ $topic->id }}"
 										{{ $topic->id == old('topic_id') || $topic->id == $lesson->topic_id ? 'selected' : '' }}
 									>
-										{{ $topic->number }}. {{ $topic->name }}
+										{{ $topic->name }}
 									</option>
 
 								@endforeach
@@ -51,7 +51,7 @@
 					<div class="control">
 						<input 
 							class="input {{ $errors->any() && $errors->has('number') ? 'is-danger' : '' }}" 
-							type="number" 
+							type="text" 
 							id="number" 
 							name="number"
 							value="{{ empty($errors->any()) ? $lesson->number : old('number') }}"

@@ -24,73 +24,48 @@ class LogbookEntriesCommentsController extends Controller
 
     public function store(User $user, LogbookEntry $logbookEntry)
     {
-        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations', 'apprentice'];
-
-        if (moodleauth()->user()->hasRole($allowedRoles) === false) {
-            return response()->json([
-                'errors' => [
-                    'errors' => [
-                        'denied' => 'You are not authorized to do that.'
-                    ]
-                ]
-            ], 403);
-        }
+        $this->validateRoles([
+            'administrator', 'supervisor', 'head_of_operations', 'apprentice'
+        ]);
 
         request()->validate([
             'body' => 'required|max:5000'
         ]);
 
-        $comment = $logbookEntry->comments()->make([
-            'body' => request('body')
-        ]);
-
-        moodleauth()->user()->comments()->save($comment);
-
-        $users = $this->getSupervisorsAndHeadOfOperationsRoles($user);
-
-        Notification::send($users, new LogbookCommentEntryNotification(
-            $comment, $user->id, 'logbook_entry_comment_added', moodleauth()->user()
-        ));
+        $comment = $logbookEntry->addComment($user);
 
         return new CommentResource($comment);
     }
 
     public function update(User $user, LogbookEntry $logbookEntry, Comment $comment)
     {
-        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations', 'apprentice'];
-
-        if (moodleauth()->user()->hasRole($allowedRoles) === false) {
-            return response()->json([
-                'errors' => [
-                    'errors' => [
-                        'denied' => 'You are not authorized to do that.'
-                    ]
-                ]
-            ], 403);
-        }
+        $this->validateRoles([
+            'administrator', 'supervisor', 'head_of_operations', 'apprentice'
+        ]);
 
         request()->validate([
             'body' => 'required|max:5000'
         ]);
 
-        $comment->update([
-            'body' => request('body')
-        ]);
-
-        $users = $this->getSupervisorsAndHeadOfOperationsRoles($user);
-
-        Notification::send($users, new LogbookCommentEntryNotification(
-            $comment, $user->id, 'logbook_entry_comment_updated', moodleauth()->user()
-        ));
+        $comment = $logbookEntry->updateComment($comment, $user);
 
         return new CommentResource($comment);
     }
 
     public function destroy(User $user, LogbookEntry $logbookEntry, Comment $comment)
     {
-        $allowedRoles = ['administrator', 'supervisor', 'head_of_operations', 'apprentice'];
+        $this->validateRoles([
+            'administrator', 'supervisor', 'head_of_operations', 'apprentice'
+        ]);
 
-        if (moodleauth()->user()->hasRole($allowedRoles) === false) {
+        $comment->delete();
+
+        return new CommentResource($comment);
+    }
+
+    protected function validateRoles($roles)
+    {
+        if (moodleauth()->user()->hasRole($roles) === false) {
             return response()->json([
                 'errors' => [
                     'errors' => [
@@ -99,21 +74,5 @@ class LogbookEntriesCommentsController extends Controller
                 ]
             ], 403);
         }
-
-        $comment->delete();
-
-        return new CommentResource($comment);
-    }
-
-    protected function getSupervisorsAndHeadOfOperationsRoles(User $user) {
-        return User::find(
-            $user->reportingStructure()
-                ->map(function ($u) {
-                    if ($u['role'] === 'supervisor' || $u['role'] === 'head_of_operations') {
-                        return $u['id'];
-                    }
-                })
-                ->toArray()
-        );
     }
 }
