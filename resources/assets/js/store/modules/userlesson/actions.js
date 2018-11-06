@@ -16,7 +16,7 @@ export const patch = ({ state, commit, dispatch }) => {
 	commit('loadingStatus', null, { root: true })
 	
 	return axios.put(
-		`/users/${state.user.id}/userlessons/${state.userlesson.id}`, {
+		`${urlBase}/users/${state.user.id}/userlessons/${state.userlesson.id}`, {
 			statuses: state.userlesson.status,
 			objectives: state.userlesson.completedObjectives,
 			completed: state.completedPackage

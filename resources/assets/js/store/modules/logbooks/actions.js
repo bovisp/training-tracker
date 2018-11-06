@@ -16,7 +16,7 @@ export const store = ({ state, commit, dispatch }, payload) => {
 export const update = ({ state, commit, dispatch }, payload) => {
 	commit('loadingStatus', null, { root: true })
 
-	return axios.put(`/users/${state.userId}/logbooks/${state.logbookId}/entries/${state.entry_id}`, payload)
+	return axios.put(`${urlBase}/users/${state.userId}/logbooks/${state.logbookId}/entries/${state.entry_id}`, payload)
 	    .then(response => {
 			commit('clearErrors', null, { root: true })
 
@@ -31,7 +31,7 @@ export const update = ({ state, commit, dispatch }, payload) => {
 export const destroy = ({ state, commit, dispatch }) => {
 	commit('loadingStatus', null, { root: true })
 
-	return axios.delete(`/users/${state.userId}/logbooks/${state.logbookId}/entries/${state.entry_id}`)
+	return axios.delete(`${urlBase}/users/${state.userId}/logbooks/${state.logbookId}/entries/${state.entry_id}`)
 	    .then(response => {
 			commit('clearErrors', null, { root: true })
 

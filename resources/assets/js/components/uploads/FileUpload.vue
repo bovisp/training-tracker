@@ -95,7 +95,7 @@
             storeMeta (file) {
                 let fileObject = this.generateFileObject(file)
 
-                return axios.post(`/users/${this.userId}/logbooks/${this.logbookId}/files/meta`, {
+                return axios.post(`${urlBase}/users/${this.userId}/logbooks/${this.logbookId}/files/meta`, {
                     name: file.name
                 })
                 .then(
@@ -137,7 +137,7 @@
 
                 window.events.$emit('upload:initialized')
 
-                axios.post(`/users/${this.userId}/logbooks/${this.logbookId}/files/upload`, form, {
+                axios.post(`${urlBase}/users/${this.userId}/logbooks/${this.logbookId}/files/upload`, form, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },

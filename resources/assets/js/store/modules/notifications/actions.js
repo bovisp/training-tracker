@@ -1,7 +1,7 @@
 export const fetch = async ({ commit }, userId) => {
 	commit('loadingStatus', null, { root: true })
 
-	let response = await axios.get(`/users/${userId}/notifications/api`)
+	let response = await axios.get(`${urlBase}/users/${userId}/notifications/api`)
 
 	await commit('setUnreadNotifications', response.data.notifications)
 
@@ -15,7 +15,7 @@ export const fetch = async ({ commit }, userId) => {
 export const deleteNotification = ({ commit, state }, notificationId) => {
 	commit('loadingStatus', null, { root: true })
 
-	axios.delete(`/users/${state.user}/notifications/${notificationId}`)
+	axios.delete(`${urlBase}/users/${state.user}/notifications/${notificationId}`)
 		.then(response => {
 			commit('deleteNotification', notificationId)
 
@@ -28,7 +28,7 @@ export const deleteNotification = ({ commit, state }, notificationId) => {
 export const markAsRead = ({ state, commit, dispatch }, notificationId) => {
 	commit('loadingStatus', null, { root: true })
 
-	axios.put(`/users/${state.user}/notifications/${notificationId}`)
+	axios.put(`${urlBase}/users/${state.user}/notifications/${notificationId}`)
 		.then(response => {
 			dispatch('fetch', state.user)
 

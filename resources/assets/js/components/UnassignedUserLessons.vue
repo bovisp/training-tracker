@@ -118,7 +118,7 @@
 
 		methods: {
 			fetch () {
-				axios.get(`/users/${this.userId}/userlessons/unassigned`)
+				axios.get(`${urlBase}/users/${this.userId}/userlessons/unassigned`)
 					.then(({data}) => {
 						this.unassigned.non_depricated = data.non_depricated || []
 						this.unassigned.depricated = data.depricated || []
@@ -136,7 +136,7 @@
 		                }
 		            )
 
-					axios.post(`/users/${this.userId}/userlessons/unassigned`, {
+					axios.post(`${urlBase}/users/${this.userId}/userlessons/unassigned`, {
 						userlesson: lesson
 					})
 						.then(response => {

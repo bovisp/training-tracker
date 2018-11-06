@@ -7,7 +7,7 @@ export const fetch = async ({ commit }, endpoint) => {
 export const store = ({ commit }, { endpoint, data }) => {
 	commit('loadingStatus', null, { root: true })
 
-	return axios.post(endpoint, data)
+	return axios.post(`${urlBase}/${endpoint}`, data)
 		.then(response => {
 			commit('clearErrors', null, { root: true })
 
@@ -22,7 +22,7 @@ export const store = ({ commit }, { endpoint, data }) => {
 export const patch = ({ commit }, { endpoint, data }) => {
 	commit('loadingStatus', null, { root: true })
 
-	return axios.put(endpoint, data)
+	return axios.put(`${urlBase}/${endpoint}`, data)
 		.then(response => {
 			commit('clearErrors', null, { root: true })
 
@@ -37,7 +37,7 @@ export const patch = ({ commit }, { endpoint, data }) => {
 export const destroy = ({ commit }, endpoint) => {
 	commit('loadingStatus', null, { root: true })
 
-	return axios.delete(endpoint)
+	return axios.delete(`${urlBase}/${endpoint}`)
 		.then(response => {
 			commit('clearErrors', null, { root: true })
 

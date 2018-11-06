@@ -79,7 +79,7 @@
 	                }
 	            )
 
-				axios.put(`/users/api/${this.user.id}/appointment`, {
+				axios.put(`${urlBase}/users/api/${this.user.id}/appointment`, {
 					appointed_at: (new Date(this.appointmentDate)).toMysqlFormat()
 				})
 					.then(({data}) => {
