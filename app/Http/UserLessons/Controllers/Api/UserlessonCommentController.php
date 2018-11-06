@@ -21,7 +21,6 @@ class UserlessonCommentController extends Controller
 	public function store(User $user, UserLesson $userlesson)
 	{
 		$allowedRoles = ['administrator', 'supervisor', 'head_of_operations'];
-		// $allowedRoles = [];
 
 		if ($this->canModify($allowedRoles, $user) === false) {
 			return response()->json([
@@ -49,7 +48,6 @@ class UserlessonCommentController extends Controller
 	public function update(User $user, UserLesson $userlesson, Comment $comment)
 	{
 		$allowedRoles = ['administrator', 'supervisor', 'head_of_operations'];
-		// $allowedRoles = [];
 
 		if ($this->canModify($allowedRoles, $user) === false) {
 			return response()->json([
@@ -75,8 +73,6 @@ class UserlessonCommentController extends Controller
 	public function destroy(User $user, UserLesson $userlesson, Comment $comment)
 	{
 		$allowedRoles = ['administrator', 'supervisor', 'head_of_operations'];
-
-		// $allowedRoles = [];
 
 		if ($this->canModify($allowedRoles, $user) === false) {
 			return response()->json([

@@ -4,7 +4,7 @@ namespace TrainingTracker\Http\Lessons\Controllers;
 
 use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Lessons\Lesson;
-use TrainingTracker\Domains\Topics\Topic;
+use TrainingTracker\Domains\Levels\Level;
 use TrainingTracker\Http\Lessons\Requests\StoreLessonRequest;
 use TrainingTracker\Http\Lessons\Requests\UpdateLessonRequest;
 
@@ -27,9 +27,9 @@ class LessonsController extends Controller
      */
     public function create()
     {
-        $topics = Topic::all();
+        $levels = Level::all();
 
-        return view('lessons.create', compact('topics'));
+        return view('lessons.create', compact('levels'));
     }
 
     /**
@@ -59,9 +59,9 @@ class LessonsController extends Controller
      */
     public function edit(Lesson $lesson)
     {
-        $topics = Topic::all();
+        $levels = Level::all();
 
-        return view('lessons.edit', compact('lesson', 'topics'));
+        return view('lessons.edit', compact('lesson', 'levels'));
     }
 
     /**

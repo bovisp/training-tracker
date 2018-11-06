@@ -3,7 +3,7 @@
 @section('content')
 
 	<div class="columns is-centered">
-		<div class="column is-half-desktop">
+		<div class="column is-three-quarters-desktop">
 			<h2 class="title is-2">
 				Profile for {{ $user->firstname }} {{ $user->lastname }}
 			</h2>

@@ -24,16 +24,19 @@
 					<template v-else>
 						<span
 							v-if="completed.indexOf(objective.id) > -1"
-							v-html="`&check;`"
 							style="color: green;"
 							class="mr-4"
-						></span>
+						>
+							<i class="mdi mdi-window-minimize"></i>
+						</span>
 
 						<span
 							v-else
 							v-html="`&ndash;`"
 							class="has-text-grey has-text-weight-bold mr-4"
-						></span>
+						>
+							<i class="mdi mdi-check"></i>
+						</span>
 					</template>
 				
 					<strong>{{ objective.number }} - </strong>{{ objective.name }}

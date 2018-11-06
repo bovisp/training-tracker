@@ -25,12 +25,12 @@ class StoreLessonRequest extends FormRequest
     public function rules()
     {
         return [
-            'topic_id' => 'required|integer|min:0|exists:topics,id',
+            'level_id' => 'required|integer|min:0|exists:levels,id',
             'number' => [
                 'required',
                 Rule::unique('lessons')->where(function ($query) {
                     $query->where([
-                        ['topic_id', request('topic_id')],
+                        ['level_id', request('level_id')],
                         ['depricated', 0]
                     ]);
                 })
@@ -47,10 +47,10 @@ class StoreLessonRequest extends FormRequest
     public function messages()
     {
         return [
-            'topic_id.required' => 'Please enter a topic number.',
-            'topic_id.min' => 'The topic number must be greater than 0',
-            'topic_id.exists' => "Topic " . $this->topic_id . " does not exist.",
-            'topic_id.integer' => 'The topic number must be an integer (i.e. 1, 2, 3 etc.)',
+            'level_id.required' => 'Please enter a level name.',
+            'level_id.min' => 'The level id must be greater than 0',
+            'level_id.exists' => "Level " . $this->level_id . " does not exist.",
+            'level_id.integer' => 'The level id must be an integer (i.e. 1, 2, 3 etc.)',
             'number.required' => 'Please enter a lesson number.',
             'number.unique' => "Lesson " . $this->number . " already exists for topic.",
             'name_en.required' => 'Please enter a lesson name in English.',

@@ -12,23 +12,23 @@
 				{{ method_field('put') }}
 
 				<div class="field">
-					<label class="label" for="topic_id">Topic number</label>
+					<label class="label" for="level_id">Level</label>
 
 					<div class="control">
-						<div class="select {{ $errors->any() && $errors->has('topic_id') ? 'is-danger' : '' }}">
+						<div class="select {{ $errors->any() && $errors->has('level_id') ? 'is-danger' : '' }}">
 							<select 
-								name="topic_id" 
-								id="topic_id" 
+								name="level_id" 
+								id="level_id" 
 							>
-								<option value="">Select a topic...</option>
+								<option value="">Select a level...</option>
 
-								@foreach($topics as $topic)
+								@foreach($levels as $level)
 
 									<option 
-										value="{{ $topic->id }}"
-										{{ $topic->id == old('topic_id') || $topic->id == $lesson->topic_id ? 'selected' : '' }}
+										value="{{ $level->id }}"
+										{{ $level->id == old('level_id') || $level->id == $lesson->level_id ? 'selected' : '' }}
 									>
-										{{ $topic->name }}
+										{{ $level->name }}
 									</option>
 
 								@endforeach
@@ -37,9 +37,9 @@
 						</div>
 					</div>
 
-					@if ($errors->any() && $errors->has('topic_id'))
+					@if ($errors->any() && $errors->has('level_id'))
 
-						<p class="help is-danger">{{ ($errors->get('topic_id'))[0] }}</p>
+						<p class="help is-danger">{{ ($errors->get('level_id'))[0] }}</p>
 
 					@endif
 

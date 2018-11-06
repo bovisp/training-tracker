@@ -13,7 +13,7 @@ class CreateLessonsTable extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('topic_id');
+            $table->unsignedInteger('level_id');
             $table->float('number');
             $table->boolean('depricated')->default(0);
             $table->text('name');
@@ -23,7 +23,7 @@ class CreateLessonsTable extends Migration
             $table->boolean('p42');
             $table->timestamps();
 
-            $table->foreign('topic_id')
+            $table->foreign('level_id')
                 ->references('id')
                 ->on('topics')
                 ->onDelete('cascade');

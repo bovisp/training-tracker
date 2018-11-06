@@ -33,11 +33,11 @@ export default {
 		},
 
 		logbookUrl () {
-			return `/users/${this.apprentice.id}/logbooks/${this.notification.meta.logbookId}?entry=${this.notification.meta.logbookEntryId}&comment=${this.notification.meta.logbookCommentEntryId}`
+			return `${urlBase}/users/${this.apprentice.id}/logbooks/${this.notification.meta.logbookId}?entry=${this.notification.meta.logbookEntryId}&comment=${this.notification.meta.logbookCommentEntryId}`
 		},
 
 		lessonPackageUrl () {
-			return `/users/${this.apprentice.id}/userlessons/${this.notification.meta.lessonPackage.id}`
+			return `${urlBase}/users/${this.apprentice.id}/userlessons/${this.notification.meta.lessonPackage.id}`
 		}
 	}
 }

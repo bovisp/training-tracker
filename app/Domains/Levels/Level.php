@@ -1,18 +1,18 @@
 <?php
 
-namespace TrainingTracker\Domains\Topics;
+namespace TrainingTracker\Domains\Levels;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use TrainingTracker\Domains\Lessons\Lesson;
 
-class Topic extends Model
+class Level extends Model
 {
     use HasTranslations;
 
     public $translatable = ['name'];
     
-    protected $fillable = ['name', 'number'];
+    protected $fillable = ['name'];
 
     public function lessons()
     {

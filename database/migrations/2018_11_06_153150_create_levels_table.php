@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-class CreateTopicsTable extends Migration
+
+class CreateLevelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +13,13 @@ class CreateTopicsTable extends Migration
      */
     public function up()
     {
-        Schema::create('topics', function (Blueprint $table) {
+        Schema::create('levels', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('number')->unique();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -26,6 +27,6 @@ class CreateTopicsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topics');
+        Schema::dropIfExists('levels');
     }
 }

@@ -16,6 +16,7 @@ class UserLessonResource extends Resource
     {
         return [
             'id' => $this->id,
+            'level' => $this->lesson->level->name,
             'package' => $this->lesson->number . ' - ' . $this->lesson->name,
             'completed' => $this->completed === 1 ? 'Yes' : 'No'
         ];

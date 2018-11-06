@@ -9,7 +9,7 @@
 						<div class="level-item">
 							<i :class="icon(file.codedFilename)" class="mr-2"></i>
 
-							<a :href="`/storage/entries/${userId}/${file.codedFilename}`">
+							<a :href="`${urlBase}/storage/entries/${userId}/${file.codedFilename}`">
 								{{ file.actualFilename }}
 							</a>
 						</div>
@@ -96,19 +96,19 @@
 
 				switch (fileExtension) {
 					case 'pdf':
-						return 'far fa-file-pdf'
+						return 'mdi mdi-file-pdf'
 
 					case 'doc':
 					case 'docx':
-						return 'far fa-file-word'
+						return 'mdi mdi-file-word'
 
 					case 'xls':
 					case 'xlsx':
-						return 'far fa-file-excel'
+						return 'mdi mdi-file-excel'
 
 					case 'ppt':
 					case 'pptx':
-						return 'far fa-file-powerpoint'
+						return 'mdi mdi-file-powerpoint'
 
 					case 'jpeg':
 					case 'jpg':
@@ -116,16 +116,16 @@
 					case 'tiff':
 					case 'png':
 					case 'gif':
-						return 'far fa-image'
+						return 'mdi mdi-file-image'
 
 					case 'mp4':
 					case 'avi':
 					case 'wmv':
 					case 'mov':
-						return 'far fa-file-video'
+						return 'mdi mdi-file-video'
 
 					default:
-						return 'far fa-file'
+						return 'mdi mdi-file'
 				}
 			},
 

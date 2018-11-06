@@ -54,8 +54,8 @@
           </b-dropdown-item>
 
           <b-dropdown-item has-link>
-            <a href="{{ route('topics.index') }}">
-              Manage topics
+            <a href="{{ route('levels.index') }}">
+              Manage levels
             </a>
           </b-dropdown-item>
 

@@ -19,11 +19,16 @@
 			</div>
 
 			<p>
+				<strong>Level: </strong>
+				{{ 
+					$logbook->objective->lesson->level->name
+				}}
+			</p>
+
+			<p>
 				<strong>Lesson: </strong>
 				{{ 
-					$logbook->objective->lesson->topic->number . '.' . 
-					str_pad($logbook->objective->lesson->number, 2, '0', STR_PAD_LEFT) . ' ' . 
-					$logbook->objective->lesson->name 
+					$logbook->objective->lesson->number . ' - ' . $logbook->objective->lesson->name 
 				}}
 			</p>
 

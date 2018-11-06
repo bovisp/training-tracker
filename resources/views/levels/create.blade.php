@@ -4,30 +4,10 @@
 
 	<div class="columns is-centered">
 		<div class="column is-three-quarters-tablet is-half-desktop">
-			<h2 class="title is-2">Add topics</h2>
+			<h2 class="title is-2">Add levels</h2>
 			
-			<form action="{{ env('APP_URL') }}/topics" method="POST">
+			<form action="{{ env('APP_URL') }}/levels" method="POST">
 				{{ csrf_field() }}
-
-				<div class="field">
-					<label class="label" for="type">Number</label>
-
-					<div class="control">
-						<input 
-							class="input {{ $errors->any() && $errors->has('number') ? 'is-danger' : '' }}" 
-							type="text" 
-							id="number" 
-							name="number"
-							value="{{ old('number') }}"
-						>
-					</div>
-
-					@if ($errors->any() && $errors->has('number'))
-
-						<p class="help is-danger">{{ ($errors->get('number'))[0] }}</p>
-
-					@endif
-				</div>
 
 				<div class="field">
 					<label class="label" for="name_en">Name (English)</label>
@@ -72,7 +52,7 @@
 
 				<div class="field">
 					<div class="control">
-						<button class="button is-link">Add topic</button>
+						<button class="button is-link">Add level</button>
 					</div>
 				</div>
 			</form>

@@ -13,14 +13,16 @@ class UserLessonsController extends Controller
     {
         return [
             'records' => UserLessonResource::collection(
-                UserLesson::whereUserId($user->id)->with('lesson.topic')->get()
+                UserLesson::whereUserId($user->id)->with('lesson.level')->get()
             ),
             'meta' => [
                 'displayable' => [
+                    ['field' => 'level', 'label' => 'Level', 'sortable' => 'sortable'],
                     ['field' => 'package', 'label' => 'Lesson package', 'sortable' => 'sortable'],
                     ['field' => 'completed', 'label' => 'Completed', 'sortable' => 'sortable'],
                 ],
                 'orderby' => [
+                    ['key' => 'level', 'dir' => 'asc'],
                     ['key' => 'package', 'dir' => 'asc']
                 ],
                 'actionButton' => [
@@ -35,7 +37,7 @@ class UserLessonsController extends Controller
 
     public function show(User $user, UserLesson $userlesson)
     {
-        $userlesson->load(['lesson.topic']);
+        $userlesson->load(['lesson.level']);
 
         $user->load(['moodleuser']);
 
@@ -43,7 +45,7 @@ class UserLessonsController extends Controller
             'userlesson' => [
                 'id' => $userlesson->id,
                 'lesson' => $userlesson->lesson,
-                'topic' => $userlesson->lesson->topic,
+                'level' => $userlesson->lesson->level,
                 'status' => [
                     'p9' => $userlesson->p9,
                     'p18' => $userlesson->p18,

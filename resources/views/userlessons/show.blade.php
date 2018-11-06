@@ -5,10 +5,13 @@
 	<div class="columns is-centered">
 		<div class="column">
 			<p>
+				<strong>Level:</strong>	{{ $userlesson->lesson->level->name }}
+			</p>
+
+			<p>
 				<strong>Lesson package:</strong>
 
-				{{ $userlesson->lesson->topic->number }}: {{ $userlesson->lesson->number }} 
-				- {{ $userlesson->lesson->name }}
+				{{ $userlesson->lesson->number }} - {{ $userlesson->lesson->name }}
 			</p>
 
 			<p>

@@ -30,7 +30,7 @@
 						v-for="lesson in nonDepricatedLessons"
 						:key="lesson.id"
 					>
-						{{ lesson.topic.number }}.{{ lesson.number }} {{ lesson.name }}
+						{{ lesson.number }} - {{ lesson.name }}
 					</option>
 				</select>
 			</div>
@@ -68,7 +68,7 @@
 						v-for="lesson in depricatedLessons"
 						:key="lesson.id"
 					>
-						{{ lesson.topic.number }}.{{ lesson.number }} {{ lesson.name }}
+						{{ lesson.number }} - {{ lesson.name }}
 					</option>
 				</select>
 			</div>
@@ -165,13 +165,13 @@
 			nonDepricatedLessons () {
 				let self = this
 
-				return orderBy(self.unassigned.non_depricated, ['topic.number', 'number'], ['asc', 'asc'])
+				return orderBy(self.unassigned.non_depricated, ['number'], ['asc'])
 			},
 
 			depricatedLessons () {
 				let self = this
 
-				return orderBy(self.unassigned.depricated, ['topic.number', 'number'], ['asc', 'asc'])
+				return orderBy(self.unassigned.depricated, ['number'], [ 'asc'])
 			}
 		},
 

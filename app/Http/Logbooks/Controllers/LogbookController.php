@@ -12,7 +12,7 @@ class LogbookController extends Controller
     public function show(User $user, Logbook $logbook)
     {
         $logbook->load([
-            'objective', 'objective.lesson', 'objective.lesson.topic'
+            'objective', 'objective.lesson', 'objective.lesson.level'
         ]);
 
         $user->load(['moodleuser']);

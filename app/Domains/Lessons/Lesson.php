@@ -4,8 +4,8 @@ namespace TrainingTracker\Domains\Lessons;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use TrainingTracker\Domains\Levels\Level;
 use TrainingTracker\Domains\Objectives\Objective;
-use TrainingTracker\Domains\Topics\Topic;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 
 class Lesson extends Model
@@ -15,12 +15,12 @@ class Lesson extends Model
     protected $translatable = ['name'];
 
     protected $fillable = [
-        'topic_id', 'name', 'number', 'depricated', 'p9', 'p18', 'p30', 'p42'
+        'level_id', 'name', 'number', 'depricated', 'p9', 'p18', 'p30', 'p42'
     ];
 
-    public function topic()
+    public function level()
     {
-    	return $this->belongsTo(Topic::class);
+    	return $this->belongsTo(Level::class);
     }
 
     public function objectives()
@@ -36,7 +36,7 @@ class Lesson extends Model
     public function add()
     {
         self::create([
-            'topic_id' => request('topic_id'),
+            'level_id' => request('level_id'),
             'number' => request('number'),
             'name' => [
                 'en' => request('name_en'),
@@ -52,7 +52,7 @@ class Lesson extends Model
     public function edit()
     {
         $this->update([
-            'topic_id' => request('topic_id'),
+            'level_id' => request('level_id'),
             'number' => request('number'),
             'name' => [
                 'en' => request('name_en'),

@@ -6,16 +6,16 @@
 		<div class="column is-three-quarters-tablet is-half-desktop">
 			<div class="level">
 				<div class="level-left">
-					<h2 class="title is-2">Topics</h2>
+					<h2 class="title is-2">Levels</h2>
 				</div>
 
 				<div class="level-right">
-					<a href="{{ env('APP_URL') }}/topics/create" class="button is-text">Add topic</a>
+					<a href="{{ env('APP_URL') }}/levels/create" class="button is-text">Add level</a>
 				</div>
 			</div>
 
 			<data-table 
-				endpoint="{{ route('topics.index.api') }}"
+				endpoint="{{ route('levels.index.api') }}"
 			>
 			</data-table>
 		</div>

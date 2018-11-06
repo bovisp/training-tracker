@@ -1,14 +1,14 @@
 <?php
 
-namespace TrainingTracker\Http\Topics\Controllers;
+namespace TrainingTracker\Http\Levels\Controllers;
 
 use Illuminate\Http\Request;
 use TrainingTracker\App\Controllers\Controller;
-use TrainingTracker\Domains\Topics\Topic;
-use TrainingTracker\Http\Topics\Requests\StoreTopicRequest;
-use TrainingTracker\Http\Topics\Requests\UpdateTopicRequest;
+use TrainingTracker\Domains\Levels\Level;
+use TrainingTracker\Http\Levels\Requests\StoreLevelRequest;
+use TrainingTracker\Http\Levels\Requests\UpdateLevelRequest;
 
-class TopicsController extends Controller
+class LevelsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class TopicsController extends Controller
      */
     public function index()
     {
-        return view('topics.index');
+        return view('levels.index');
     }
 
     /**
@@ -27,7 +27,7 @@ class TopicsController extends Controller
      */
     public function create()
     {
-        return view('topics.create');
+        return view('levels.create');
     }
 
     /**
@@ -36,10 +36,9 @@ class TopicsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTopicRequest $request)
+    public function store(StoreLevelRequest $request)
     {
-        Topic::create([
-            'number' => request('number'),
+        Level::create([
             'name' => [
                 'en' => request('name_en'),
                 'fr' => request('name_fr')
@@ -47,10 +46,10 @@ class TopicsController extends Controller
         ]);
 
         return redirect()
-            ->route('topics.index')
+            ->route('levels.index')
             ->with([
                 'flash' => [
-                    'message' => 'Topic successfully added.'
+                    'message' => 'Level successfully added.'
                 ]
             ]);
     }
@@ -61,9 +60,9 @@ class TopicsController extends Controller
      * @param  \TrainingTracker\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function edit(Topic $topic)
+    public function edit(Level $level)
     {
-        return view('topics.edit', compact('topic'));
+        return view('levels.edit', compact('level'));
     }
 
     /**
@@ -73,10 +72,9 @@ class TopicsController extends Controller
      * @param  \TrainingTracker\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTopicRequest $request, Topic $topic)
+    public function update(UpdateLevelRequest $request, Level $level)
     {
-        $topic->update([
-            'number' => request('number'),
+        $level->update([
             'name' => [
                 'en' => request('name_en'),
                 'fr' => request('name_fr')
@@ -84,10 +82,10 @@ class TopicsController extends Controller
         ]);
 
         return redirect()
-            ->route('topics.index')
+            ->route('levels.index')
             ->with([
                 'flash' => [
-                    'message' => 'Topic successfully updated.'
+                    'message' => 'Level successfully updated.'
                 ]
             ]);
     }
@@ -98,15 +96,15 @@ class TopicsController extends Controller
      * @param  \TrainingTracker\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Topic $topic)
+    public function destroy(Level $level)
     {
-        $topic->delete();
+        $level->delete();
 
         return redirect()
-            ->route('topics.index')
+            ->route('levels.index')
             ->with([
                 'flash' => [
-                    'message' => 'Topic successfully deleted.'
+                    'message' => 'Level successfully deleted.'
                 ]
             ]);
     }

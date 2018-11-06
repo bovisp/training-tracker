@@ -25,7 +25,7 @@ class UpdateLessonRequest extends FormRequest
     public function rules()
     {
         return [
-            'topic_id' => 'required|integer|min:0|exists:topics,id',
+            'level_id' => 'required|integer|min:0|exists:levels,id',
             'number' => 'required',
             'name_en' => 'required|min:3',
             'name_fr' => 'required|min:3',
@@ -40,10 +40,10 @@ class UpdateLessonRequest extends FormRequest
     public function messages()
     {
         return [
-            'topic_id.required' => 'Please enter a topic number.',
-            'topic_id.min' => 'The topic number must be greater than 0',
-            'topic_id.exists' => "Topic " . $this->topic_id . " does not exist.",
-            'topic_id.integer' => 'The topic number must be an integer (i.e. 1, 2, 3 etc.)',
+            'level_id.required' => 'Please enter a level.',
+            'level_id.min' => 'The level id must be greater than 0',
+            'level_id.exists' => "Level " . $this->level_id . " does not exist.",
+            'level_id.integer' => 'The level id must be an integer (i.e. 1, 2, 3 etc.)',
             'number.required' => 'Please enter a lesson number.',
             'name_en.required' => 'Please enter a lesson name in English.',
             'name_en.min' => 'The "Name" must be at least three characters long.',

@@ -20,7 +20,6 @@ export const patch = ({ state, commit, dispatch }) => {
 			statuses: state.userlesson.status,
 			objectives: state.userlesson.completedObjectives,
 			completed: state.completedPackage
-			// objectives: ['foo', 'bar', 'baz']
 		}
     )
     .then(response => {

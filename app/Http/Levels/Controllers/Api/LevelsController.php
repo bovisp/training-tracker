@@ -1,28 +1,27 @@
 <?php
 
-namespace TrainingTracker\Http\Topics\Controllers\Api;
+namespace TrainingTracker\Http\Levels\Controllers\Api;
 
 use TrainingTracker\App\Controllers\Controller;
-use TrainingTracker\Domains\Topics\Topic;
-use TrainingTracker\Http\Topics\Resources\TopicResource;
+use TrainingTracker\Domains\Levels\Level;
+use TrainingTracker\Http\Levels\Resources\LevelResource;
 
-class TopicsController extends Controller
+class LevelsController extends Controller
 {
     public function index()
     {
         return [
-            'records' => TopicResource::collection(Topic::all()),
+            'records' => LevelResource::collection(Level::all()),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'number', 'label' => 'Number', 'sortable' => 'sortable'],
                     ['field' => 'name', 'label' => 'Name', 'sortable' => 'sortable']
                 ],
                 'orderby' => [
-                    ['key' => 'number', 'dir' => 'asc']
+                    ['key' => 'name', 'dir' => 'asc']
                 ],
                 'actionButton' => [
                     'active' => true,
-                    'endpoint' => env('APP_URL') . '/topics/',
+                    'endpoint' => env('APP_URL') . '/levels/',
                     'endpointSuffix' => '/edit',
                     'text' => 'Edit'
                 ]

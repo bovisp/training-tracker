@@ -16,7 +16,7 @@ class LessonResource extends Resource
     {
         return [
             'id' => $this->id,
-            'level' => $this->topic->number, 
+            'level' => $this->level->name, 
             'lesson' => $this->number,
             'name' => $this->name,
             'depricated' => $this->depricated ? 'Yes' : 'No'

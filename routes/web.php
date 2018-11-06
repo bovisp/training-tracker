@@ -180,17 +180,17 @@ Route::middleware(['profile'])->group(function () {
 });
 
 Route::middleware(['role:administrator'])->group(function () {
-	Route::prefix('topics')->group(function () {
-		Route::get('/', '\TrainingTracker\Http\Topics\Controllers\TopicsController@index')->name('topics.index');
-		Route::get('/api', '\TrainingTracker\Http\Topics\Controllers\Api\TopicsController@index')->name('topics.index.api');
+	Route::prefix('levels')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\Levels\Controllers\LevelsController@index')->name('levels.index');
+		Route::get('/api', '\TrainingTracker\Http\Levels\Controllers\Api\LevelsController@index')->name('levels.index.api');
 
-		Route::get('/create', '\TrainingTracker\Http\Topics\Controllers\TopicsController@create')->name('topics.create');
-		Route::post('/', '\TrainingTracker\Http\Topics\Controllers\TopicsController@store');
+		Route::get('/create', '\TrainingTracker\Http\Levels\Controllers\LevelsController@create')->name('levels.create');
+		Route::post('/', '\TrainingTracker\Http\Levels\Controllers\LevelsController@store');
 
-		Route::get('/{topic}/edit', '\TrainingTracker\Http\Topics\Controllers\TopicsController@edit');
-		Route::put('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@update');
+		Route::get('/{level}/edit', '\TrainingTracker\Http\Levels\Controllers\LevelsController@edit');
+		Route::put('/{level}', '\TrainingTracker\Http\Levels\Controllers\LevelsController@update');
 
-		Route::delete('/{topic}', '\TrainingTracker\Http\Topics\Controllers\TopicsController@destroy');
+		Route::delete('/{level}', '\TrainingTracker\Http\Levels\Controllers\LevelsController@destroy');
 	});
 });
 

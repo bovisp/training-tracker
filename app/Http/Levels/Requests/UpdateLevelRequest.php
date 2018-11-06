@@ -1,10 +1,10 @@
 <?php
 
-namespace TrainingTracker\Http\Topics\Requests;
+namespace TrainingTracker\Http\Levels\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTopicRequest extends FormRequest
+class UpdateLevelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class StoreTopicRequest extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'required|unique:topics,number',
             'name_en' => 'required|min:3',
             'name_fr' => 'required|min:3'
         ];
@@ -33,11 +32,9 @@ class StoreTopicRequest extends FormRequest
     public function messages()
     {
         return [
-            'number.required' => 'Please enter a topic number.',
-            'number.unique' => "Topic " . $this->number . " aleady exists.",
-            'name_en.required' => 'Please enter a topic name in English.',
+            'name_en.required' => 'Please enter a level name in English.',
             'name_en.min' => 'The "Name" must be at least three characters long.',
-            'name_fr.required' => 'Please enter a topic name in French.',
+            'name_fr.required' => 'Please enter a level name in French.',
             'name_fr.min' => 'The "Name" must be at least three characters long.'
         ];
     }

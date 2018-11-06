@@ -16,7 +16,9 @@
 						v-html="`&check;`"
 						style="color: green;"
 						class="mr-4"
-					></span>
+					>
+						<i class=""></i>mdi-window-minimize
+					</span>
 
 					<span
 						v-else

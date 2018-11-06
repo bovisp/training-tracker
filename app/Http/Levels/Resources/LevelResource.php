@@ -1,10 +1,10 @@
 <?php
 
-namespace TrainingTracker\Http\Topics\Resources;
+namespace TrainingTracker\Http\Levels\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class TopicResource extends Resource
+class LevelResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,6 @@ class TopicResource extends Resource
     {
         return [
             'id' => $this->id,
-            'number' => $this->number,
             'name' => $this->name
         ];
     }
