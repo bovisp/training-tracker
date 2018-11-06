@@ -1,7 +1,7 @@
 export const fetch = async ({ commit }, { userlesson, user }) => {
 	await commit('loadingStatus', null, { root: true })
 
-	let response = await axios.get(`/users/${user}/userlessonsapi/${userlesson}`)
+	let response = await axios.get(`${urlBase}/users/${user}/userlessons/${userlesson}/api`)
 
 	await commit('initialize', response.data)
 

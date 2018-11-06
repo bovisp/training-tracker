@@ -78,7 +78,7 @@ Route::middleware(['profile'])->group(function () {
 		Route::get('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@show')
 			->name('userlessons.show');
 
-		Route::get('/userlessonsapi/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@show');
+		Route::get('/userlessons/{userlesson}/api', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@show');
 
 		Route::put('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@update');
 

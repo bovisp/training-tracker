@@ -22,6 +22,8 @@
                 'id': '{{ moodleauth()->id() }}',
                 'role': '{{ moodleauth()->user()->roles->first()->type }}'
             };
+
+            var urlBase = '{{ env('APP_URL') }}';
         </script>
     </head>
     <body>

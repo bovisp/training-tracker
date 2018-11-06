@@ -27155,7 +27155,7 @@ var fetch = function () {
 
 					case 2:
 						_context.next = 4;
-						return axios.get('/users/' + user + '/userlessonsapi/' + userlesson);
+						return axios.get(urlBase + '/users/' + user + '/userlessons/' + userlesson + '/api');
 
 					case 4:
 						response = _context.sent;
@@ -28174,7 +28174,7 @@ var fetch = function () {
 				switch (_context.prev = _context.next) {
 					case 0:
 						_context.next = 2;
-						return axios.get(endpoint);
+						return axios.get(urlBase + '/' + endpoint);
 
 					case 2:
 						response = _context.sent;

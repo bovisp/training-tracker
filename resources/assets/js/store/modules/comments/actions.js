@@ -1,5 +1,5 @@
 export const fetch = async ({ commit }, endpoint) => {
-	let response = await axios.get(endpoint)
+	let response = await axios.get(`${urlBase}/${endpoint}`)
 
 	await commit('setComments', response.data.data)
 }
