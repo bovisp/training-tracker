@@ -4,7 +4,7 @@
     </IfModule>
 
     RewriteEngine On
-    RewriteBase /radar-renewal/
+    RewriteBase /water-survey/
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
