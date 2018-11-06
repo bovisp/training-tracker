@@ -74,7 +74,7 @@ export const setUserId = async ({ commit }, payload) => {
 export const deleteFile = ({ commit, state }, payload) => {
 	commit('loadingStatus', null, { root: true })
 
-	return axios.delete(`/storage/entries/${state.userId}/${state.entry_id}/${payload}`)
+	return axios.delete(`${urlBase}/storage/entries/${state.userId}/${state.entry_id}/${payload}`)
 		.then(response => {
 			commit('clearErrors', null, { root: true })
 
@@ -89,7 +89,7 @@ export const deleteFile = ({ commit, state }, payload) => {
 export const patchFiles = ({ commit, state }, payload) => {
 	commit('loadingStatus', null, { root: true })
 
-	return axios.patch(`/storage/entries/${state.userId}/${state.entry_id}/updatefiles`, payload)
+	return axios.patch(`${urlBase}/storage/entries/${state.userId}/${state.entry_id}/updatefiles`, payload)
 		.then(response => {
 			commit('clearErrors', null, { root: true })
 
