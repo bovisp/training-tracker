@@ -23,7 +23,7 @@
                 'role': '{{ moodleauth()->user()->roles->first()->type }}'
             };
 
-            var urlBase = '{{ env('APP_URL') }}';
+            window.urlBase = '{{ env('APP_URL') }}';
         </script>
     </head>
     <body>

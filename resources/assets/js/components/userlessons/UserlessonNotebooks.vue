@@ -30,7 +30,7 @@
 							<div class="level-item">
 								<a 
 									class="button is-info is-small"
-									:href="`/users/${user.id}/logbooks/${logbook.id}`"
+									:href="`${urlBase}/users/${user.id}/logbooks/${logbook.id}`"
 								>Edit logbook</a>
 							</div>
 						</div>

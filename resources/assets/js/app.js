@@ -11,6 +11,7 @@ import find from 'lodash.find'
 import assign from 'lodash.assign'
 
 import user from './mixins/user'
+import getUrlBase from './mixins/urlBase'
 
 import './helpers/interceptors'
 
@@ -81,6 +82,7 @@ Vue.component('user-errors', require('./components/UserErrors.vue'));
 Vue.component('notifications', require('./components/notifications/Notifications.vue')); 
 
 Vue.mixin(user)
+Vue.mixin(getUrlBase)
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view
