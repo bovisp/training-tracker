@@ -15,11 +15,26 @@
 			<p 
 				v-if="errors.body"
 				v-text="errors.body[0]"
-				class="has-text-danger"
-				style="margin-top: 80px; margin-bottom: -50px;" 
+				class="mt-4 mb-4 has-text-danger"
 			></p>
+			
+			<div class="mt-4 mb-4">
+				<template v-if="addFiles">
+					<file-upload />
 
-			<div class="level" style="margin-top: 80px;">
+					<button class="button is-text is-small" @click="addFiles = false">
+						Cancel adding files
+					</button>
+				</template>
+
+				<template v-else>
+					<button class="button is-text" @click="addFiles = true">
+						<i class="mdi mdi-plus"></i> Add files
+					</button>
+				</template>
+			</div>
+			
+			<div class="level">
 				<div class="level-left">
 					<div class="level-item">
 						<button
@@ -36,8 +51,6 @@
 					</div>
 				</div>
 			</div>
-
-			<file-upload />
 		</template>
 	</div>
 </template>
@@ -69,7 +82,8 @@
 					modules: {
 						imageDrop: true,
 					}
-				}
+				},
+				addFiles: false
 			}
 		},
 
