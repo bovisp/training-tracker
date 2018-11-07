@@ -22,6 +22,11 @@ class CreateLessonsTable extends Migration
             $table->boolean('p30');
             $table->boolean('p42');
             $table->timestamps(); 
+
+            $table->foreign('level_id')
+                ->references('id')
+                ->on('levels')
+                ->onDelete('cascade');
         });
     }
     /**

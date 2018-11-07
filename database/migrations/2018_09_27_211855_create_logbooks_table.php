@@ -18,6 +18,16 @@ class CreateLogbooksTable extends Migration
             $table->integer('userlesson_id');
             $table->integer('objective_id');
             $table->timestamps();
+
+            $table->foreign('userlesson_id')
+                ->references('id')
+                ->on('user_lessons')
+                ->onDelete('cascade');
+
+            $table->foreign('objective_id')
+                ->references('id')
+                ->on('objectives')
+                ->onDelete('cascade');
         });
     }
 
