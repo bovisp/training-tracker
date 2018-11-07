@@ -1,3 +1,5 @@
+<strong class="mr-2">Switch to:</strong>
+
 <a href="{{ url('lang/en') }}" style="display: {{ app()->getLocale() === 'en' ? 'none' : 'block' }};">
 	English
 </a>

@@ -14,9 +14,9 @@ class InactiveUsersController extends Controller
             'records' => InactiveUserResource::collection(User::whereActive(0)->get()),
             'meta' => [
                 'displayable' => [
-                    ['key' => 'firstname', 'title' => 'First name'],
-                    ['key' => 'lastname', 'title' => 'Last name'],
-                    ['key' => 'email', 'title' => 'E-mail']
+                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
+                    ['field' => 'email', 'label' => 'E-mail', 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'lastname', 'dir' => 'desc'],

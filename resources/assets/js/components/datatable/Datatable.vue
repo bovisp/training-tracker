@@ -8,30 +8,44 @@
             </div>
         </div>
 
-		<div class="level mb-8">
-        	<div class="level-left">
-        		<b-field>
-		            <b-select v-model="perPage">
+		<div class="columns">
+			<div class="column" v-if="postEndpoint">
+				<div class="is-flex">
+					<button 
+	                    class="button is-link ml-auto self-end" 
+	                    @click="validate" 
+	                >
+	                    Add users
+	                </button>
+                </div>
+			</div>
+		</div>
+
+		<div class="columns">
+			<div class="column is-half">
+				<b-field>
+		            <b-select v-model="perPage" expanded>
 		                <option value="5">5 per page</option>
 		                <option value="10">10 per page</option>
 		                <option value="25">25 per page</option>
 		                <option value="50">50 per page</option>
 		            </b-select>
 		        </b-field>
-        	</div>
+			</div>
 
-        	<div class="level-right" v-if="postEndpoint">
-        		<button 
-                    class="button is-link ml-auto self-end" 
-                    @click="validate" 
-                >
-                    Add users
-                </button>
-        	</div>
-        </div>
+			<div class="column is-half">
+				<b-field>
+		            <b-input placeholder="Search..."
+		                type="search"
+		                icon="magnify"
+		                v-model="search">
+		            </b-input>
+		        </b-field>
+			</div>
+		</div>
 
 		<b-table 
-			:data="records" 
+			:data="filteredRecords" 
 			:mobile-cards="true"
 			:loading="isLoading"
 			:paginated="true"
@@ -132,7 +146,22 @@
 	    		checkedRows: [],
 	    		roles: [],
 	    		rolesModel: [],
-	    		errors: []
+	    		errors: [],
+	    		search: ''
+			}
+		},
+
+		computed: {
+			filteredRecords () {
+				let data = this.records
+
+				data = filter(data, row => {
+					return Object.keys(row).some(key => {
+						return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1
+					})
+				})
+
+				return data
 			}
 		},
 
