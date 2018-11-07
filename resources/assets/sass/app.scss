@@ -27,12 +27,6 @@
 	display: none;
 }
 
-// Import Quill styling
-// .quillWrapper {
-// 	height: 320px;
-// 	max-height: 320px;
-// }
-
 // Custom horizontal divider
 .divider {
 	border-top: 1px solid rgba(34 ,36, 38, .15);
@@ -210,6 +204,10 @@ $dragndrop-min-height: 200px;
 	&-8 {
 		margin-bottom: 2rem !important;
 	}
+
+	&-16 {
+		margin-bottom: 4rem !important;
+	}
 }
 
 .ml {
@@ -229,6 +227,16 @@ $dragndrop-min-height: 200px;
 
 	&-4 {
 		margin-right: 1rem;
+	}
+}
+
+.p {
+	&-2 {
+		padding: .5rem;
+	}
+
+	&-4 {
+		padding: 1rem;
 	}
 }
 

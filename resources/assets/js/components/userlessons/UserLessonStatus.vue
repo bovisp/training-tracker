@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h3 class="title is-3 mt-6">
+		<h3 class="title is-3 mt-16">
 			Status
 		</h3>
 

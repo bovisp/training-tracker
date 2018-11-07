@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="columns is-centered">
+	<div class="columns is-centered mb-16">
 		<div class="column">
 			<p>
 				<strong>Level:</strong>	{{ $userlesson->lesson->level->name }}
@@ -17,7 +17,9 @@
 			<p>
 				<strong>Name:</strong>
 
-				{{ $user->moodleuser->firstname }} {{ $user->moodleuser->lastname }}
+				<a href="{{ env('APP_URL') }}/users/{{ $user->id }}">
+					{{ $user->moodleuser->firstname }} {{ $user->moodleuser->lastname }}
+				</a>
 			</p>
 
 			<user-lesson 

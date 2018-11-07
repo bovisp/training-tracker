@@ -9,18 +9,18 @@
 		</article>
 
 		<div 
-			class="columns" 
+			style="position: fixed; bottom: 0; left: 0; background: #FFF; display: flex; width: 100%; z-index: 10;"
+			class="p-4 has-background-white-ter" 
 			v-if="hasRoleOf(['supervisor', 'head_of_operations', 'manager'])"
 		>
-			<div class="column">
 				<button 
-					class="button is-link is-pulled-right"
+					class="button is-info ml-auto"
 					:class="{ 'is-loading' : isLoading }"
 					@click="submit"
 				>
+					<i class="mdi mdi-content-save mr-2"></i>
 					Save lesson package
 				</button>
-			</div>
 		</div>
 
 		<user-lesson-status />

@@ -22,7 +22,7 @@
 				<template v-if="addFiles">
 					<file-upload />
 
-					<button class="button is-text is-small" @click="addFiles = false">
+					<button class="button is-text is-small mt-2" @click="addFiles = false">
 						Cancel adding files
 					</button>
 				</template>

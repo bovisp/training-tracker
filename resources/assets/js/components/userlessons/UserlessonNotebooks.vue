@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h3 class="title is-3 mt-16">
-			Notebooks
+			Logbooks
 		</h3>
 
 		<ul class="box">
@@ -29,9 +29,13 @@
 						<div class="level-right">
 							<div class="level-item">
 								<a 
-									class="button is-info is-small"
+									class="button is-text has-text-info"
 									:href="`${urlBase}/users/${user.id}/logbooks/${logbook.id}`"
-								>Edit logbook</a>
+								>
+									<i class="mdi mdi-square-edit-outline mr-2"></i>
+
+									Edit logbook
+								</a>
 							</div>
 						</div>
 					</div>
