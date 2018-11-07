@@ -21,7 +21,7 @@ class CreateLogbooksTable extends Migration
 
             $table->foreign('userlesson_id')
                 ->references('id')
-                ->on('user_lessons')
+                ->on('userlessons')
                 ->onDelete('cascade');
 
             $table->foreign('objective_id')
