@@ -28,7 +28,7 @@
 			<p>
 				<strong>Lesson: </strong>
 				{{ 
-					$logbook->objective->lesson->number . ' - ' . $logbook->objective->lesson->name 
+					number_format($logbook->objective->lesson->number) . ' - ' . $logbook->objective->lesson->name 
 				}}
 			</p>
 

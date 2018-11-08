@@ -11,7 +11,7 @@
 			<p>
 				<strong>Lesson package:</strong>
 
-				{{ $userlesson->lesson->number }} - {{ $userlesson->lesson->name }}
+				{{ number_format($userlesson->lesson->number, 2) }} - {{ $userlesson->lesson->name }}
 			</p>
 
 			<p>

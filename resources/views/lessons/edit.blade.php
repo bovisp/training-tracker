@@ -139,7 +139,7 @@
 
 				<div class="field">
 					<p>
-						<strong>Period(s) in which this training should be iniated:</strong>
+						<strong>Period(s) in which this training should be initiated:</strong>
 					</p>
 
 					<label class="checkbox is-block mt-2">

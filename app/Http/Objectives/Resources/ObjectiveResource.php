@@ -16,7 +16,7 @@ class ObjectiveResource extends Resource
     {
         return [
             'id' => $this->id,
-            'lesson' => $this->lesson->number,
+            'lesson' => number_format($this->lesson->number, 2),
             'objective' => $this->number,
             'description' => $this->name
         ];
