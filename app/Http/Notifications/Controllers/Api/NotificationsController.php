@@ -38,7 +38,7 @@ class NotificationsController extends Controller
         ];
     }
 
-    public function update(User $user, $notificationId)
+    public function read(User $user, $notificationId)
     {
         DB::table('notifications')
             ->where('id', $notificationId)
@@ -48,6 +48,19 @@ class NotificationsController extends Controller
 
         return response()->json([
             'flash' => 'Notification marked as read.'
+        ], 200);
+    }
+
+    public function unread(User $user, $notificationId)
+    {
+        DB::table('notifications')
+            ->where('id', $notificationId)
+            ->update([
+                'read_at' => null
+            ]);
+
+        return response()->json([
+            'flash' => 'Notification marked as unread.'
         ], 200);
     }
 

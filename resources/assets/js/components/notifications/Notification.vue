@@ -33,12 +33,23 @@
 				>Delete</a>
 			</div>
 
-			<div class="card-footer-item" v-if="!isRead">
-				<a
-					href="#"
-					@click="read"
-				>Mark as read</a>
-			</div>
+			<template v-if="!isRead">
+				<div class="card-footer-item" >
+					<a
+						href="#"
+						@click="read"
+					>Mark as read</a>
+				</div>
+			</template>
+			
+			<template v-else>
+				<div class="card-footer-item" >
+					<a
+						href="#"
+						@click="unread"
+					>Mark as unread</a>
+				</div>
+			</template>
 		</footer>
 	</div>
 </template>
@@ -75,7 +86,8 @@
 		methods: {
 			...mapActions({
 				'deleteNotification': 'notifications/deleteNotification',
-				'markAsRead': 'notifications/markAsRead'
+				'markAsRead': 'notifications/markAsRead',
+				'markAsUnread': 'notifications/markAsUnread'
 			}),
 
 			destroy () {
@@ -91,6 +103,15 @@
 				this.markAsRead(this.notification.data.id)
 					.then(response => this.$toast.open({
 		                message: 'Notification marked as read.',
+		                position: 'is-top-right',
+		                type: 'is-success'
+            		}))
+			},
+
+			unread () {
+				this.markAsUnread(this.notification.data.id)
+					.then(response => this.$toast.open({
+		                message: 'Notification marked as unread.',
 		                position: 'is-top-right',
 		                type: 'is-success'
             		}))

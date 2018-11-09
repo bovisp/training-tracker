@@ -122,7 +122,7 @@ class ObjectivesController extends Controller
     protected function sortedLessons()
     {
         return Lesson::all()->load('level')->sort(function($a, $b) {
-            if($a->topic->name === $b->topic->name) {
+            if($a->level->name === $b->level->name) {
                 if($a->number === $b->number) {
                     return 0;
                 }
@@ -130,7 +130,7 @@ class ObjectivesController extends Controller
                 return $a->number < $b->number ? -1 : 1;
             } 
             
-            return $a->topic->name < $b->topic->name ? -1 : 1;
+            return $a->level->name < $b->level->name ? -1 : 1;
         });
     }
 }

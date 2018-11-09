@@ -167,14 +167,39 @@ Route::middleware(['profile'])->group(function () {
 			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@index'
 		);
 
+		Route::put(
+			'/notifications/read', 
+			'\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@read'
+		);
+
+		Route::put(
+			'/notifications/unread', 
+			'\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@unread'
+		);
+
+		Route::delete(
+			'/notifications/read', 
+			'\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@destroyRead'
+		);
+
+		Route::delete(
+			'/notifications/unread', 
+			'\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@destroyUnread'
+		);
+
 		Route::delete(
 			'/notifications/{notificationId}', 
 			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@destroy'
 		);
 
 		Route::put(
-			'/notifications/{notificationId}', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@update'
+			'/notifications/{notificationId}/read', 
+			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@read'
+		);
+
+		Route::put(
+			'/notifications/{notificationId}/unread', 
+			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@unread'
 		);
 	});
 });
