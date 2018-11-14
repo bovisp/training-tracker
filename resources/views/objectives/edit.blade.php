@@ -28,7 +28,7 @@
 										value="{{ $lesson->id }}" 
 										@if(($lesson->id == old('lesson_id')) || ($lesson->id == $objective->lesson_id)) selected @endif
 									> 
-										{{ $lesson->number }} - {{ $lesson->name }}
+										{{ number_format($lesson->number, 2) }} - {{ $lesson->name }}
 									</option>
 
 								@endforeach
