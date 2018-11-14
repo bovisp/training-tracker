@@ -233,9 +233,14 @@
         			let hasRole = false
 
         			forEach(filter(this.rolesModel), value => {
-        				let valueArray = value.split(':')
+        				let tempArray = value.split(':')
 
-	        			if (parseInt(valueArray[0]) == user.id) {
+        				let valueArray = {
+        					id: tempArray[0],
+        					role: tempArray[1]
+        				}
+
+	        			if (parseInt(tempArray[0]) == user.id) {
 	        				postArray.push(valueArray)
 
 	        				hasRole = true

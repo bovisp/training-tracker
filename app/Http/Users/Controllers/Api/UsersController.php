@@ -6,7 +6,8 @@ use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\Roles\Role;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\Roles\Resources\RoleResource;
-use TrainingTracker\Http\Users\Requests\StoreUsersSpreadsheet;
+use TrainingTracker\Http\Users\Classes\CreateUser;
+use TrainingTracker\Http\Users\Requests\StoreUsersRequest;
 use TrainingTracker\Http\Users\Requests\UpdateAppointmentUserRequest;
 use TrainingTracker\Http\Users\Resources\UserCreateResource;
 use TrainingTracker\Http\Users\Resources\UserResource;
@@ -58,18 +59,12 @@ class UsersController extends Controller
         ];
     }
 
-    public function store()
+    public function store(StoreUsersRequest $request)
     {
-        $validations = new StoreUsersSpreadsheet(request()->all());
+        (new CreateUser)->add();
 
-        if (count($validations->validate())) {
-            return response()->json([
-                'errors' => $validations->validate()
-            ], 422);
-        } else {
-            return response()->json([
-                'flash' => 'users added successfully!'
-            ]);
-        }
+        return response()->json([
+            'flash' => 'users added successfully!'
+        ], 200);
     }
 }

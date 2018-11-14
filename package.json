@@ -18,12 +18,11 @@
         "vuex": "^3.0.1"
     },
     "dependencies": {
-        "buefy": "^0.6.5",
-        "bulma": "^0.7.1",
+        "buefy": "^0.7.0",
+        "bulma": "^0.7.2",
         "dayjs": "^1.7.7",
         "es6-promise": "^4.2.5",
         "fast-sort": "^1.5.3",
-        "lodash": "^4.17.10",
         "lodash.assign": "^4.2.0",
         "lodash.filter": "^4.6.0",
         "lodash.find": "^4.6.0",
