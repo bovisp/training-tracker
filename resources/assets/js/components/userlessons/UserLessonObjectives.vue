@@ -24,18 +24,16 @@
 					<template v-else>
 						<span
 							v-if="completed.indexOf(objective.id) > -1"
-							style="color: green;"
-							class="mr-4"
+							class="mr-4 has-text-success has-text-weight-bold"
 						>
-							<i class="mdi mdi-window-minimize"></i>
+							<i class="mdi mdi-check"></i>
 						</span>
 
 						<span
 							v-else
-							v-html="`&ndash;`"
-							class="has-text-grey has-text-weight-bold mr-4"
+							class="has-text-grey mr-4"
 						>
-							<i class="mdi mdi-check"></i>
+							<i class="mdi mdi-window-minimize"></i>
 						</span>
 					</template>
 				

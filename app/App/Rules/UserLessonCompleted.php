@@ -26,7 +26,10 @@ class UserLessonCompleted implements Rule
     public function passes($attribute, $value)
     {
         if ($value === 1 ) {
-            return $this->completedStatus() && $this->completedObjectives() && $this->completedNotebooks();
+            return $this->completedStatus() && 
+                   $this->completedObjectives() && 
+                   $this->completedNotebooks() &&
+                   $this->completedEvaluation();
         }
         
         return true;
@@ -77,6 +80,11 @@ class UserLessonCompleted implements Rule
             });
 
         return true;
+    }
+
+    protected function completedEvaluation()
+    {
+        return $this->userlesson->comments->count() >= 1;
     }
 
     protected function arrSort($a, $b) {

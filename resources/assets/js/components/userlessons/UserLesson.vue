@@ -30,7 +30,7 @@
 		<user-lesson-notebooks></user-lesson-notebooks>
 
 		<h3 class="title is-3 mt-16">
-			Comments
+			Final evaluation
 		</h3>
 
 		<comments 
@@ -40,7 +40,7 @@
 		/>
 
 		<h3 class="title is-3 mt-16">
-			Final evaluation
+			Sign off by Head of Operations or Manager
 		</h3>
 
 		<user-lesson-final></user-lesson-final>
