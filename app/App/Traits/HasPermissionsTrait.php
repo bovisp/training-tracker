@@ -4,6 +4,7 @@ namespace TrainingTracker\App\Traits;
 
 use TrainingTracker\Domains\Permissions\Permission;
 use TrainingTracker\Domains\Roles\Role;
+use TrainingTracker\Domains\Supervisors\Supervisor;
 
 /**
  * Allows a Model to inherit the ability to have permissions.
@@ -218,6 +219,14 @@ trait HasPermissionsTrait
 	public function updateRole($role)
 	{
 		$this->roles()->detach();
+
+		if ($role !== 'apprentice') {
+			Supervisor::create([
+				'user_id' => $this->id
+			]);
+		} else {
+			$this->supervisor()->delete();
+		}
 
 		return $this->assignRole($role);
 	}

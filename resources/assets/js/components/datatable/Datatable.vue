@@ -287,8 +287,8 @@
 		                    }, 3000)
 		                })
 		                .catch(error => {
-		                    if (error.status === 422) {
-		                        window.events.$emit('users-create-error', error.data.errors)
+		                    if (error.response.status === 422) {
+		                        window.events.$emit('users-create-error', error.response.data.errors)
 		                    }
 		                })
 	            }

@@ -34,44 +34,16 @@ trait HasUserLessonsTrait
     {
         $result = [];
 
-        $unassignedNonDepricatedLessonIds = array_values(
-            array_diff(
-                Lesson::whereDepricated(0)
-                    ->pluck('id')
-                    ->toArray(), 
-                UserLesson::whereUserId($this->id)
-                    ->pluck('lesson_id')
-                    ->toArray()
-            )
-        );
+        $unassignedNonDepricatedLessonIds = $this->getUnassignedNonDepricatedLessonIds();
 
-        $unassignedDepricatedLessonIds = array_values(
-            array_diff(
-                Lesson::whereDepricated(1)
-                    ->pluck('id')
-                    ->toArray(), 
-                UserLesson::whereUserId($this->id)
-                    ->pluck('lesson_id')
-                    ->toArray()
-            )
-        );
+        $unassignedDepricatedLessonIds = $this->getUnassignedDepricatedLessonIds(); 
 
         if (count($unassignedNonDepricatedLessonIds)) {
-            $unassignedNonDepricatedLessons = 
-                Lesson::whereIn('id', $unassignedNonDepricatedLessonIds)
-                    ->with('topic')
-                    ->get();
-
-            $result['non_depricated'] = $unassignedNonDepricatedLessons;
+            $result['non_depricated'] = $this->getUnassignedNonDepricatedLessons($unassignedNonDepricatedLessonIds);
         }
 
         if (count($unassignedDepricatedLessonIds)) {
-            $unassignedDepricatedLessons = 
-                Lesson::whereIn('id', $unassignedDepricatedLessonIds)
-                    ->with('topic')
-                    ->get();
-
-            $result['depricated'] = $unassignedDepricatedLessons;
+            $result['depricated'] = $this->getUnassignedDepricatedLessons($unassignedDepricatedLessonIds);
         }
 
         return $result;
@@ -84,5 +56,47 @@ trait HasUserLessonsTrait
         }
 
         return count($this->getUnassignedUserLessons()) > 0;
+    }
+
+    protected function getUnassignedNonDepricatedLessonIds()
+    {
+        return array_values(
+            array_diff(
+                Lesson::whereDepricated(0)
+                    ->pluck('id')
+                    ->toArray(), 
+                UserLesson::whereUserId($this->id)
+                    ->pluck('lesson_id')
+                    ->toArray()
+            )
+        );
+    }
+
+    protected function getUnassignedDepricatedLessonIds()
+    {
+        return array_values(
+            array_diff(
+                Lesson::whereDepricated(1)
+                    ->pluck('id')
+                    ->toArray(), 
+                UserLesson::whereUserId($this->id)
+                    ->pluck('lesson_id')
+                    ->toArray()
+            )
+        );
+    }
+
+    protected function getUnassignedNonDepricatedLessons($unassignedNonDepricatedLessonIds)
+    {
+        return Lesson::whereIn('id', $unassignedNonDepricatedLessonIds)
+            ->with('level')
+            ->get();
+    }
+
+    protected function getUnassignedDepricatedLessons()
+    {
+        return Lesson::whereIn('id', $unassignedDepricatedLessonIds)
+            ->with('level')
+            ->get();
     }
 }

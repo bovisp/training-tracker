@@ -1,4 +1,7 @@
 <?php
+/**
+ * Download middleware routes for downloading logbook entry files.
+ */
 Route::middleware(['download'])->group(function () {
 	Route::get(
 		'/storage/entries/{user}/{file}',
@@ -16,47 +19,112 @@ Route::middleware(['download'])->group(function () {
 	);
 });
 
+/**
+ * All routes that can only be viewed by administrators.
+ */
 Route::middleware(['role:administrator'])->group(function () {
-	Route::prefix('roles')->group(function () {
-		Route::get('/', '\TrainingTracker\Http\Roles\Controllers\RolesController@index')->name('roles.index');
-		Route::get('/api', '\TrainingTracker\Http\Roles\Controllers\Api\RolesController@index')->name('roles.index.api');
 
-		Route::get('/create', '\TrainingTracker\Http\Roles\Controllers\RolesController@create')->name('roles.create');
-		Route::post('/', '\TrainingTracker\Http\Roles\Controllers\RolesController@store');
+	/**
+	 * Various API "role" routes.
+	 */
+	Route::get('/roles/api', '\TrainingTracker\Http\Roles\Controllers\Api\RolesController@index')
+		->name('roles.index.api');
 
-		Route::get('/{role}/edit', '\TrainingTracker\Http\Roles\Controllers\RolesController@edit');
-		Route::put('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@update');
+	/**
+	 * Role HTTP resource routes.
+	 */
+	Route::resource('roles', '\TrainingTracker\Http\Roles\Controllers\RolesController', [
+		'names' => [
+			'index' => 'roles.index',
+			'create' => 'roles.create'
+		],
+		'except' => [
+			'show'
+		]
+	]);
 
-		Route::delete('/{role}', '\TrainingTracker\Http\Roles\Controllers\RolesController@destroy');
+	/**
+	 * Various API "user" routes.
+	 */
+	Route::prefix('/users/api')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@index')
+			->name('users.index.api');
+
+		Route::get('/create', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@create')
+			->name('users.create.api');
+
+		Route::post('/', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store')
+			->name('users.store.api');
+
+		Route::put('/{user}/appointment', '\TrainingTracker\Http\UsersAppointment\Controllers\Api\UsersAppointmentController@update');
+
+		Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@index')
+			->name('usersreporting.index.api');
+
+		Route::post('/{user}/reporting/{role}', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@store')
+			->name('usersreporting.store.api');
+
+		Route::get('/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\Api\InactiveUsersController@index')
+			->name('inactiveusers.index.api');
 	});
-});
 
-Route::middleware(['role:administrator'])->group(function () {
-	Route::prefix('users')->group(function () {
-		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@index')->name('users.index');
-		Route::get('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@index')->name('users.index.api');
-
-		Route::get('/create', '\TrainingTracker\Http\Users\Controllers\UsersController@create')->name('users.create');
-		Route::get('/api/create', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@create')->name('users.create.api');
-		Route::post('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store')->name('users.store.api');
-
+	/**
+	 * Various "user" HTTP routes.
+	 */
+	Route::prefix('/users')->group(function () {
 		Route::put('/{user}/role', '\TrainingTracker\Http\UsersRole\Controllers\UsersRoleController@update');
-		Route::delete('/{user}', '\TrainingTracker\Http\Users\Controllers\UsersController@destroy');
 
-		Route::put('/api/{user}/appointment', '\TrainingTracker\Http\UsersAppointment\Controllers\Api\UsersAppointmentController@update');
-
-		Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\UsersReportingController@index')->name('usersreporting.index');
-		Route::get('/api/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@index')->name('usersreporting.index.api');
-		Route::post('/api/{user}/reporting/{role}', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@store')->name('usersreporting.store.api');
+		Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\UsersReportingController@index')
+			->name('usersreporting.index');
 
 		Route::post('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@store');
+
 		Route::delete('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@destroy');
 
-		Route::get('/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\InactiveUsersController@index')->name('inactiveusers.index');
-		Route::get('/api/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\Api\InactiveUsersController@index')->name('inactiveusers.index.api');
+		Route::get('/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\InactiveUsersController@index')
+			->name('inactiveusers.index');
 
 		Route::get('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@index');
 	});
+
+	/**
+	 * Role HTTP resource routes.
+	 */
+	Route::resource('users', '\TrainingTracker\Http\Users\Controllers\UsersController', [
+		'names' => [
+			'index' => 'users.index',
+			'create' => 'users.create'
+		],
+		'only' => [
+			'index', 'create', 'destroy'
+		]
+	]);
+
+	// Route::prefix('users')->group(function () {
+		// Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@index')->name('users.index');
+		// Route::get('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@index')->name('users.index.api');
+
+		// Route::get('/create', '\TrainingTracker\Http\Users\Controllers\UsersController@create')->name('users.create');
+		// Route::get('/api/create', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@create')->name('users.create.api');
+		// Route::post('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store')->name('users.store.api');
+
+		// Route::put('/{user}/role', '\TrainingTracker\Http\UsersRole\Controllers\UsersRoleController@update');
+		// Route::delete('/{user}', '\TrainingTracker\Http\Users\Controllers\UsersController@destroy');
+
+		// Route::put('/api/{user}/appointment', '\TrainingTracker\Http\UsersAppointment\Controllers\Api\UsersAppointmentController@update');
+
+		// Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\UsersReportingController@index')->name('usersreporting.index');
+		// Route::get('/api/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@index')->name('usersreporting.index.api');
+		// Route::post('/api/{user}/reporting/{role}', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@store')->name('usersreporting.store.api');
+
+		// Route::post('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@store');
+		// Route::delete('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@destroy');
+
+		// Route::get('/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\InactiveUsersController@index')->name('inactiveusers.index');
+		// Route::get('/api/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\Api\InactiveUsersController@index')->name('inactiveusers.index.api');
+
+		// Route::get('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@index');
+	// });
 });
 
 Route::middleware(['role:administrator'])->group(function () {

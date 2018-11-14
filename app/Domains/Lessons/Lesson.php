@@ -45,7 +45,7 @@ class Lesson extends Model
             'p9' => request()->has('p9') ? request('p9') : 0,
             'p18' => request()->has('p18') ? request('p18') : 0,
             'p30' => request()->has('p30') ? request('p30') : 0,
-            'p42' => request()->has('p40') ? request('p40') : 0,
+            'p42' => request()->has('p42') ? request('p42') : 0,
         ]);
     }
 
@@ -62,7 +62,7 @@ class Lesson extends Model
             'p9' => request()->has('p9') ? request('p9') : 0,
             'p18' => request()->has('p18') ? request('p18') : 0,
             'p30' => request()->has('p30') ? request('p30') : 0,
-            'p42' => request()->has('p40') ? request('p40') : 0,
+            'p42' => request()->has('p42') ? request('p42') : 0,
         ]);
     }
 

@@ -25,13 +25,11 @@ class UsersActivationController extends Controller
 
     public function destroy(User $user)
     {
-        $user->supervisors()->detach($user->supervisors);
-
-        if ($user->hasRole('apprentice') === false) {
-            $supervisor = Supervisor::whereUserId($user->id)->first();
-
-            $supervisor->users()->detach($supervisor->users);
+        if (optional($user->supervisor) === null) {
+            $user->supervisor->users()->detach();
         }
+        
+        $user->supervisors()->detach();
 
     	$user->update([
             'active' => 0

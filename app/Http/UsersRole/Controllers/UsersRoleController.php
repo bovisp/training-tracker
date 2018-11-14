@@ -11,13 +11,11 @@ class UsersRoleController extends Controller
 {
     public function update(User $user, UpdateUserRoleRequest $request)
     {
-        $user->supervisors()->detach($user->supervisors);
-
-        if ($user->hasRole('apprentice') === false) {
-            $supervisor = Supervisor::whereUserId($user->id)->first();
-
-            $supervisor->users()->detach($supervisor->users);
+        if (optional($user->supervisor) === null) {
+            $user->supervisor->users()->detach();
         }
+        
+        $user->supervisors()->detach();
 
         $user->updateRole($request->role);
 

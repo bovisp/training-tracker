@@ -3,15 +3,12 @@ namespace TrainingTracker\Domains\Users;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use TrainingTracker\App\Traits\HasObjectivesTrait;
 use TrainingTracker\App\Traits\HasPermissionsTrait;
 use TrainingTracker\App\Traits\HasSupervisorsTrait;
 use TrainingTracker\App\Traits\HasUserLessonsTrait;
 use TrainingTracker\Domains\Comments\Comment;
-use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\MoodleUsers\MoodleUser;
-use TrainingTracker\Domains\Objectives\Objective;
-use TrainingTracker\Domains\Supervisors\Supervisor;
-use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
 
 class User extends Authenticatable
@@ -19,7 +16,8 @@ class User extends Authenticatable
     use Notifiable,
         HasPermissionsTrait,
         HasSupervisorsTrait,
-        HasUserLessonsTrait;
+        HasUserLessonsTrait,
+        HasObjectivesTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -47,6 +45,10 @@ class User extends Authenticatable
         'appointed_at' => 'datetime:d/m/Y',
     ];
 
+    protected $with = [
+        'roles'
+    ];
+
     public function moodleuser()
     {
         return $this->hasOne(MoodleUser::class, 'id', 'moodle_id')
@@ -61,26 +63,7 @@ class User extends Authenticatable
             ->where('id', '>', 1)
             ->whereNotIn('id', $employees)
             ->get();
-    }
-
-    public function objectives()
-    {
-        return $this->belongsToMany(Objective::class, 'users_objectives');
-    }
-
-    public function completedObjectives()
-    {
-        return $this->objectives()
-            ->pluck('objective_id')
-            ->toArray();
-    }
-
-    public function updateObjectives($allObjectives, $newobjectives)
-    {
-        $this->objectives()->detach($allObjectives);
-
-        $this->objectives()->attach($newobjectives);
-    }
+    }    
 
     public function getFirstnameAttribute()
     {
