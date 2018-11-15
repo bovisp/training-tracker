@@ -69,7 +69,7 @@ Route::middleware(['role:administrator'])->group(function () {
 	});
 
 	/**
-	 * Various "user" HTTP routes.
+	 * Various HTTP "user" routes.
 	 */
 	Route::prefix('/users')->group(function () {
 		Route::put('/{user}/role', '\TrainingTracker\Http\UsersRole\Controllers\UsersRoleController@update');
@@ -88,7 +88,7 @@ Route::middleware(['role:administrator'])->group(function () {
 	});
 
 	/**
-	 * Role HTTP resource routes.
+	 * User HTTP resource routes.
 	 */
 	Route::resource('users', '\TrainingTracker\Http\Users\Controllers\UsersController', [
 		'names' => [
@@ -100,225 +100,181 @@ Route::middleware(['role:administrator'])->group(function () {
 		]
 	]);
 
-	// Route::prefix('users')->group(function () {
-		// Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@index')->name('users.index');
-		// Route::get('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@index')->name('users.index.api');
+	/**
+	 * Various "userlessons" HTTP and API routes.
+	 */
+	Route::prefix('users/{user}/userlessons')->group(function () {
+		Route::get('/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@index');
+		Route::post('/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@store');
 
-		// Route::get('/create', '\TrainingTracker\Http\Users\Controllers\UsersController@create')->name('users.create');
-		// Route::get('/api/create', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@create')->name('users.create.api');
-		// Route::post('/api', '\TrainingTracker\Http\Users\Controllers\Api\UsersController@store')->name('users.store.api');
+		Route::delete('/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@destroy');
+	});
 
-		// Route::put('/{user}/role', '\TrainingTracker\Http\UsersRole\Controllers\UsersRoleController@update');
-		// Route::delete('/{user}', '\TrainingTracker\Http\Users\Controllers\UsersController@destroy');
+	/**
+	 * Level HTTP resource routes.
+	 */
+	Route::resource('levels', '\TrainingTracker\Http\Levels\Controllers\LevelsController', [
+		'names' => [
+			'index' => 'levels.index',
+			'create' => 'levels.create'
+		],
+		'except' => [
+			'show'
+		]
+	]);
 
-		// Route::put('/api/{user}/appointment', '\TrainingTracker\Http\UsersAppointment\Controllers\Api\UsersAppointmentController@update');
+	/**
+	 * Various API "level" routes.
+	 */
+	Route::prefix('levels')->group(function () {
+		Route::get('/api', '\TrainingTracker\Http\Levels\Controllers\Api\LevelsController@index')
+			->name('levels.index.api');
+	});
 
-		// Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\UsersReportingController@index')->name('usersreporting.index');
-		// Route::get('/api/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@index')->name('usersreporting.index.api');
-		// Route::post('/api/{user}/reporting/{role}', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@store')->name('usersreporting.store.api');
+	/**
+	 * Lesson HTTP resource routes.
+	 */
+	Route::resource('lessons', '\TrainingTracker\Http\Lessons\Controllers\LessonsController', [
+		'names' => [
+			'index' => 'lessons.index',
+			'create' => 'lessons.create'
+		],
+		'except' => [
+			'show'
+		]
+	]);
 
-		// Route::post('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@store');
-		// Route::delete('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@destroy');
+	/**
+	 * Various API "lesson" routes.
+	 */
+	Route::prefix('lessons')->group(function () {
+		Route::get('/api', '\TrainingTracker\Http\Lessons\Controllers\Api\LessonsController@index')
+			->name('lessons.index.api');
+	});
 
-		// Route::get('/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\InactiveUsersController@index')->name('inactiveusers.index');
-		// Route::get('/api/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\Api\InactiveUsersController@index')->name('inactiveusers.index.api');
+	/**
+	 * Lesson HTTP resource routes.
+	 */
+	Route::resource('objectives', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController', [
+		'names' => [
+			'index' => 'objectives.index',
+			'create' => 'objectives.create'
+		],
+		'except' => [
+			'show'
+		]
+	]);
 
-		// Route::get('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@index');
-	// });
-});
-
-Route::middleware(['role:administrator'])->group(function () {
-	Route::prefix('users/{user}')->group(function () {
-		Route::get('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@index');
-		Route::post('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@store');
-
-		Route::delete('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@destroy');
+	/**
+	 * Various API "objective" routes.
+	 */
+	Route::prefix('objectives')->group(function () {
+		Route::get('/api', '\TrainingTracker\Http\Objectives\Controllers\Api\ObjectivesController@index')
+			->name('objectives.index.api');
 	});
 });
 
+/**
+ * All routes that can only be viewed by a particular user
+ * and, possibly, employees in their reporting structure
+ * higher than them.
+ */
 Route::middleware(['profile'])->group(function () {
+
+	/**
+	 * Various HTTP "user" routes.
+	 */
 	Route::prefix('users/{user}')->group(function () {
-		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')->name('users.show');
+		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')
+			->name('users.show');
+	});
 
-		Route::get('/userlessons', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@index')
-			->name('userlessons.index.api');
-
-		Route::get('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@show')
+	/**
+	 * Various HTTP "userlesson" routes.
+	 */
+	Route::prefix('users/{user}/userlessons')->group(function () {
+		Route::get('/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@show')
 			->name('userlessons.show');
 
-		Route::get('/userlessons/{userlesson}/api', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@show');
-
-		Route::put('/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@update');
-
-		Route::get(
-			'/userlessons/{userlesson}/comments',
-			 '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@index'
-		);
-
-		Route::post(
-			'/userlessons/{userlesson}/comments',
-			 '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@store'
-		);
-
-		Route::put(
-			'/userlessons/{userlesson}/comments/{comment}',
-			 '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@update'
-		);
-
-		Route::delete(
-			'/userlessons/{userlesson}/comments/{comment}',
-			 '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@destroy'
-		);
-
-		Route::get(
-			'/logbooks/{logbook}/entries',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@index'
-		);
-
-		Route::get(
-			'/logbooks/{logbook}',
-			'\TrainingTracker\Http\Logbooks\Controllers\LogbookController@show'
-		);
-
-		Route::post(
-			'/logbooks/{logbook}',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store'
-		);
-
-		Route::post(
-			'/logbooks/{logbook}/files/meta',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@meta'
-		);
-
-		Route::post(
-			'/logbooks/{logbook}/files/upload',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@upload'
-		);
-
-		Route::put(
-			'/logbooks/{logbook}/entries/{logbookEntry}',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update'
-		);
-
-		Route::delete(
-			'/logbooks/{logbook}/entries/{logbookEntry}',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@destroy'
-		);
-
-		Route::get(
-			'/entries/{logbookEntry}/comments',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController@index'
-		);
-
-		Route::post(
-			'/entries/{logbookEntry}/comments',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController@store'
-		);
-
-		Route::put(
-			'/entries/{logbookEntry}/comments/{comment}',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController@update'
-		);
-
-		Route::delete(
-			'/entries/{logbookEntry}/comments/{comment}',
-			'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController@destroy'
-		);
-
-		Route::get(
-			'/notifications', 
-			'\TrainingTracker\Http\Notifications\Controllers\NotificationsController@index'
-		)->name('notifications.index');
-
-		Route::get(
-			'/notifications/api', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@index'
-		);
-
-		Route::put(
-			'/notifications/read', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@read'
-		);
-
-		Route::put(
-			'/notifications/unread', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@unread'
-		);
-
-		Route::delete(
-			'/notifications/read', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@destroyRead'
-		);
-
-		Route::delete(
-			'/notifications/unread', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@destroyUnread'
-		);
-
-		Route::delete(
-			'/notifications/{notificationId}', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@destroy'
-		);
-
-		Route::put(
-			'/notifications/{notificationId}/read', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@read'
-		);
-
-		Route::put(
-			'/notifications/{notificationId}/unread', 
-			'\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@unread'
-		);
+		Route::put('/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\UserLessonsController@update');
 	});
-});
 
-Route::middleware(['role:administrator'])->group(function () {
-	Route::prefix('levels')->group(function () {
-		Route::get('/', '\TrainingTracker\Http\Levels\Controllers\LevelsController@index')->name('levels.index');
-		Route::get('/api', '\TrainingTracker\Http\Levels\Controllers\Api\LevelsController@index')->name('levels.index.api');
+	/**
+	 * Various API "userlesson" routes.
+	 */
+	Route::prefix('users/{user}/userlessons')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@index')
+			->name('userlessons.index.api');
 
-		Route::get('/create', '\TrainingTracker\Http\Levels\Controllers\LevelsController@create')->name('levels.create');
-		Route::post('/', '\TrainingTracker\Http\Levels\Controllers\LevelsController@store');
-
-		Route::get('/{level}/edit', '\TrainingTracker\Http\Levels\Controllers\LevelsController@edit');
-		Route::put('/{level}', '\TrainingTracker\Http\Levels\Controllers\LevelsController@update');
-
-		Route::delete('/{level}', '\TrainingTracker\Http\Levels\Controllers\LevelsController@destroy');
+		Route::get('/{userlesson}/api', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@show');
 	});
-});
 
-Route::middleware(['role:administrator'])->group(function () {
-	Route::prefix('lessons')->group(function () {
-		Route::get('/', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@index')->name('lessons.index');
-		Route::get('/api', '\TrainingTracker\Http\Lessons\Controllers\Api\LessonsController@index')->name('lessons.index.api');
+	/**
+	 * Userlesson comments API resource routes.
+	 */
+	Route::resource(
+		'users/{user}/userlessons/{userlesson}/comments',
+		'\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController',
+		[
+			'except' => [
+				'show', 'edit', 'create'
+			]
+		]
+	);
 
-		Route::get('/create', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@create')->name('lessons.create');
-		Route::post('/', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@store');
+	/**
+	 * Various API and HTTP "logbook" routes.
+	 */
+	Route::prefix('users/{user}/logbooks/{logbook}')->group(function () {
+		Route::get('/entries', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@index');
 
-		Route::get('/{lesson}/edit', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@edit');
-		Route::put('/{lesson}', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@update');
+		Route::get('/', '\TrainingTracker\Http\Logbooks\Controllers\LogbookController@show');
 
-		Route::delete('/{lesson}', '\TrainingTracker\Http\Lessons\Controllers\LessonsController@destroy');
+		Route::post('/', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store');
+
+		Route::post('/files/meta', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@meta');
+
+		Route::post('/files/upload', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@upload');
+
+		Route::put('/entries/{logbookEntry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update');
+
+		Route::delete('/entries/{logbookEntry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@destroy');
 	});
-});
 
-Route::middleware(['role:administrator'])->group(function () {
-	Route::prefix('objectives')->group(function () {
-		Route::get('/', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@index')->name('objectives.index');
-		Route::get('/api', '\TrainingTracker\Http\Objectives\Controllers\Api\ObjectivesController@index')->name('objectives.index.api');
+	/**
+	 * Logbook comments API resource routes.
+	 */
+	Route::resource(
+		'users/{user}/entries/{logbookEntry}/comments',
+		'\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesCommentsController',
+		[
+			'except' => [
+				'show', 'edit', 'create'
+			]
+		]
+	);
 
-		Route::get('/create', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@create')->name('objectives.create');
-		Route::post('/', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@store');
+	/**
+	 * Various API and HTTP user "notification" routes.
+	 */
+	Route::prefix('users/{user}/notifications')->group(function () {
+		Route::get('/', '\TrainingTracker\Http\Notifications\Controllers\NotificationsController@index')
+			->name('notifications.index');
 
-		Route::get('/{objective}/edit', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@edit');
-		Route::put('/{objective}', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@update');
+		Route::get('/api', '\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@index');
 
-		Route::delete('/{objective}', '\TrainingTracker\Http\Objectives\Controllers\ObjectivesController@destroy');
-	});
-});
+		Route::put('/read', '\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@read');
 
-Route::middleware(['role:administrator|head_of_operations'])->group(function () {
-	Route::prefix('users/{user}')->group(function () {
-		Route::post('/userlessons/{userlesson}/comments', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonCommentController@store');
+		Route::put('/unread', '\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@unread');
+
+		Route::delete('/read', '\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@destroyRead');
+
+		Route::delete('/unread', '\TrainingTracker\Http\Notifications\Controllers\Api\AllNotificationsController@destroyUnread');
+
+		Route::delete('/{notificationId}', '\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@destroy');
+
+		Route::put('/{notificationId}/read', '\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@read');
+
+		Route::put('/{notificationId}/unread', '\TrainingTracker\Http\Notifications\Controllers\Api\NotificationsController@unread');
 	});
 });
