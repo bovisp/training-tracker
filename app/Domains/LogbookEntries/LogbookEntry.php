@@ -34,26 +34,6 @@ class LogbookEntry extends Model
         'creator'
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::updating(function ($logbookEntry) {
-            $logbookEntry->edited_at = Carbon::now();
-            $logbookEntry->edited_by = moodleauth()->id();
-        });
-
-        static::deleting(function ($logbookentry) {
-            $files = unserialize($logbookentry->files);
-
-            foreach ($files as $file) {
-                $filePath = '/public/entries/' . $logbookentry->logbook->userlesson->user->id . '/' . $file['codedFilename'];
-
-                Storage::delete($filePath);
-            }
-        });
-    }
-
     public function logbook()
     {
     	return $this->belongsTo(Logbook::class);
