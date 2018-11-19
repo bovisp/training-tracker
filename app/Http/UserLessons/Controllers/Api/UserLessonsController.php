@@ -17,9 +17,9 @@ class UserLessonsController extends Controller
             ),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'level', 'label' => 'Level', 'sortable' => 'sortable'],
-                    ['field' => 'package', 'label' => 'Lesson package', 'sortable' => 'sortable'],
-                    ['field' => 'completed', 'label' => 'Completed', 'sortable' => 'sortable'],
+                    ['field' => 'level', 'label' => trans('app.datatable.label.level'), 'sortable' => 'sortable'],
+                    ['field' => 'package', 'label' => trans('app.datatable.label.lessonpackage'), 'sortable' => 'sortable'],
+                    ['field' => 'completed', 'label' => trans('app.datatable.label.completed'), 'sortable' => 'sortable'],
                 ],
                 'orderby' => [
                     ['key' => 'level', 'dir' => 'asc'],
@@ -29,7 +29,7 @@ class UserLessonsController extends Controller
                     'active' => true,
                     'endpoint' => env('APP_URL') . "/users/{$user->id}/userlessons/",
                     'endpointSuffix' => '',
-                    'text' => 'View'
+                    'text' => trans('app.datatable.buttons.view')
                 ]
             ]
         ];

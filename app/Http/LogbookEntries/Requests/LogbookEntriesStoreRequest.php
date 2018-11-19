@@ -32,9 +32,9 @@ class LogbookEntriesStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'body.required' => 'Please add some text to your entry.',
-            'body.min' => 'Your entry must be at least 20 characters long.',
-            'files.array' => 'The files you uploaded are not valid'
+            'body.required' => trans('app.errors.logbookentries.body.required'),
+            'body.min' => trans('app.errors.logbookentries.body.min'),
+            'files.array' => trans('app.errors.logbookentries.files.array')
         ];       
     }
 }

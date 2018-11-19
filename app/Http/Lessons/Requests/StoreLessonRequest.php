@@ -47,24 +47,24 @@ class StoreLessonRequest extends FormRequest
     public function messages()
     {
         return [
-            'level_id.required' => 'Please enter a level name.',
-            'level_id.min' => 'The level id must be greater than 0',
-            'level_id.exists' => "Level " . $this->level_id . " does not exist.",
-            'level_id.integer' => 'The level id must be an integer (i.e. 1, 2, 3 etc.)',
-            'number.required' => 'Please enter a lesson number.',
-            'number.unique' => "Lesson " . $this->number . " already exists for topic.",
-            'name_en.required' => 'Please enter a lesson name in English.',
-            'name_en.min' => 'The "Name" must be at least three characters long.',
-            'name_fr.required' => 'Please enter a lesson name in French.',
-            'name_fr.min' => 'The "Name" must be at least three characters long.',
-            'p9.integer' => 'The "Early EG-03" period checkbox should have value of 0 or 1.',
-            'p9.between' => 'The "Early EG-03" period checkbox should have value of 0 or 1.',
-            'p18.integer' => 'The "Late EG-03" period checkbox should have value of 0 or 1.',
-            'p18.between' => 'The "Late EG-03" period checkbox should have value of 0 or 1.',
-            'p30.integer' => 'The "Early EG-04" period checkbox should have value of 0 or 1.',
-            'p30.between' => 'The "Early EG-04" period checkbox should have value of 0 or 1.',
-            'p42.integer' => 'The "Late EG-04" period checkbox should have value of 0 or 1.',
-            'p42.between' => 'The "Late EG-04" period checkbox should have value of 0 or 1.'
+            'level_id.required' => trans('app.errors.lessons.levelId.required'),
+            'level_id.min' => trans('app.errors.lessons.levelId.min'),
+            'level_id.exists' => trans('app.errors.lessons.levelId.exists1') . $this->level_id . trans('app.errors.lessons.levelId.exists2'),
+            'level_id.integer' => trans('app.errors.lessons.levelId.integer'),
+            'number.required' => trans('app.errors.lessons.number.required'),
+            'number.unique' => trans('app.errors.lessons.number.unique1') . $this->number . trans('app.errors.lessons.number.unique2'),
+            'name_en.required' => trans('app.errors.lessons.nameEn.required'),
+            'name_en.min' => trans('app.errors.lessons.nameEn.min'),
+            'name_fr.required' => trans('app.errors.lessons.nameFr.required'),
+            'name_fr.min' => trans('app.errors.lessons.nameFr.min'),
+            'p9.integer' => trans('app.errors.lessons.p9.integer'),
+            'p9.between' => trans('app.errors.lessons.p9.between'),
+            'p18.integer' => trans('app.errors.lessons.p18.integer'),
+            'p18.between' => trans('app.errors.lessons.p18.between'),
+            'p30.integer' => trans('app.errors.lessons.p30.integer'),
+            'p30.between' => trans('app.errors.lessons.p30.between'),
+            'p42.integer' => trans('app.errors.lessons.p42.integer'),
+            'p42.between' => trans('app.errors.lessons.p42.between')
         ];
     }
 }

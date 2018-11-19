@@ -20,10 +20,10 @@ class UsersController extends Controller
             'records' => UserResource::collection(User::whereActive(1)->get()),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
-                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
-                    ['field' => 'email', 'label' => 'E-mail', 'sortable' => 'sortable'],
-                    ['field' => 'roleName', 'label' => 'Role', 'sortable' => 'sortable']
+                    ['field' => 'firstname', 'label' => trans('app.datatable.label.firstname'), 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => trans('app.datatable.label.lastname'), 'sortable' => 'sortable'],
+                    ['field' => 'email', 'label' => trans('app.datatable.label.email'), 'sortable' => 'sortable'],
+                    ['field' => 'roleName', 'label' => trans('app.datatable.label.role'), 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'lastname', 'dir' => 'asc']
@@ -32,7 +32,7 @@ class UsersController extends Controller
                     'active' => true,
                     'endpoint' => env('APP_URL') . '/users/',
                     'endpointSuffix' => '',
-                    'text' => 'Profile'
+                    'text' => trans('app.datatable.buttons.profile')
                 ]
             ]
         ];
@@ -45,9 +45,9 @@ class UsersController extends Controller
             'roles' => RoleResource::collection(Role::all()),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
-                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
-                    ['field' => 'email', 'label' => 'E-mail', 'sortable' => 'sortable'],
+                    ['field' => 'firstname', 'label' => trans('app.datatable.label.firstname'), 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => trans('app.datatable.label.lastname'), 'sortable' => 'sortable'],
+                    ['field' => 'email', 'label' => trans('app.datatable.label.email'), 'sortable' => 'sortable'],
                 ],
                 'orderby' => [
                     ['key' => 'lastname', 'dir' => 'asc']
@@ -64,7 +64,7 @@ class UsersController extends Controller
         (new CreateUser)->add();
 
         return response()->json([
-            'flash' => 'users added successfully!'
+            'flash' => trans('app.flash.usersadded')
         ], 200);
     }
 }

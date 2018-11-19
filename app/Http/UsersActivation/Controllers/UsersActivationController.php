@@ -18,7 +18,7 @@ class UsersActivationController extends Controller
             ->route('users.show', ['user' => $user->id])
             ->with([
                 'flash' => [
-                    'message' => "User successfully activated."
+                    'message' => trans('app.flash.useractivated')
                 ]
             ]);
     }
@@ -39,7 +39,7 @@ class UsersActivationController extends Controller
             ->route('users.show', ['user' => $user->id])
             ->with([
                 'flash' => [
-                    'message' => "User successfully deactivated."
+                    'message' => trans('app.flash.userdeactivated')
                 ]
             ]);
     }

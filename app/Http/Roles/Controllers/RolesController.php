@@ -34,7 +34,7 @@ class RolesController extends Controller
             ->route('roles.index')
             ->with([
                 'flash' => [
-                    'message' => "Role created successfully."
+                    'message' => trans('app.flash.roleadded')
                 ]
             ]);
     }
@@ -59,7 +59,7 @@ class RolesController extends Controller
             ->route('roles.index')
             ->with([
                 'flash' => [
-                    'message' => "Role updated successfully."
+                    'message' => trans('app.flash.roleupdated')
                 ]
             ]);
     }
@@ -72,7 +72,7 @@ class RolesController extends Controller
             ->route('roles.index')
             ->with([
                 'flash' => [
-                    'message' => "Role delete successfully."
+                    'message' => trans('app.flash.roledeleted')
                 ]
             ]);
     }

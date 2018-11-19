@@ -15,7 +15,7 @@ class UsersAppointmentController extends Controller
         ]);
 
         return response()->json([
-            'flash' => 'Date of appointment updated successfully.',
+            'flash' => trans('app.flash.appointmentdateupdated'),
             'date' => $user->appointed_at
         ]);
     }

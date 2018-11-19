@@ -49,7 +49,7 @@ class LevelsController extends Controller
             ->route('levels.index')
             ->with([
                 'flash' => [
-                    'message' => 'Level successfully added.'
+                    'message' => trans('app.flash.leveladded')
                 ]
             ]);
     }
@@ -85,7 +85,7 @@ class LevelsController extends Controller
             ->route('levels.index')
             ->with([
                 'flash' => [
-                    'message' => 'Level successfully updated.'
+                    'message' => trans('app.flash.levelupdated')
                 ]
             ]);
     }
@@ -104,7 +104,7 @@ class LevelsController extends Controller
             ->route('levels.index')
             ->with([
                 'flash' => [
-                    'message' => 'Level successfully deleted.'
+                    'message' => trans('app.flash.leveldeleted')
                 ]
             ]);
     }

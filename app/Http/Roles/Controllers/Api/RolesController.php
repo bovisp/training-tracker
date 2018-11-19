@@ -15,8 +15,8 @@ class RolesController extends Controller
             'records' => RoleResource::collection(Role::all()),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'name', 'label' => 'Name', 'sortable' => 'sortable'],
-                    ['field' => 'type', 'label' => 'Type', 'sortable' => 'sortable']
+                    ['field' => 'name', 'label' => trans('app.datatable.label.name'), 'sortable' => 'sortable'],
+                    ['field' => 'type', 'label' => trans('app.datatable.label.type'), 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'rank', 'dir' => 'asc']
@@ -25,7 +25,7 @@ class RolesController extends Controller
                     'active' => true,
                     'endpoint' => env('APP_URL') . '/roles/',
                     'endpointSuffix' => '/edit',
-                    'text' => 'Edit'
+                    'text' => trans('app.datatable.buttons.edit')
                 ]
             ]
         ];

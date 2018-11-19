@@ -31,8 +31,8 @@ class UpdateUsersReportingRequest extends FormRequest
     public function messages()
     {
         return [
-            '*.id.required' => 'Please select a user you wish to link.',
-            '*.id.exists' => 'A user with an id of :input does not exist.'
+            '*.id.required' => trans('app.errors.usersreporting.id.required'),
+            '*.id.exists' => trans('app.errors.usersreporting.id.exists')
         ];
     }
 }

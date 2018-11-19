@@ -34,6 +34,6 @@ class StatusTypes implements Rule
      */
     public function message()
     {
-        return 'This is not a valid status type';
+        return trans('app.errors.userlessons.statusTypes');
     }
 }

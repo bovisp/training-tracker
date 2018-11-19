@@ -54,7 +54,7 @@ class ObjectivesController extends Controller
             ->route('objectives.index')
             ->with([
                 'flash' => [
-                    'message' => 'Objective successfully added.'
+                    'message' => trans('app.flash.objectiveadded')
                 ]
             ]);
     }
@@ -95,7 +95,7 @@ class ObjectivesController extends Controller
             ->route('objectives.index')
             ->with([
                 'flash' => [
-                    'message' => 'Objective successfully updated.'
+                    'message' => trans('app.flash.objectiveupdated')
                 ]
             ]);
     }
@@ -114,7 +114,7 @@ class ObjectivesController extends Controller
             ->route('objectives.index')
             ->with([
                 'flash' => [
-                    'message' => 'Objective successfully deleted.'
+                    'message' => trans('app.flash.objectivedeleted')
                 ]
             ]);
     }

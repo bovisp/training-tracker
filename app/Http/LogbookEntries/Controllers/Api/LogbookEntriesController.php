@@ -26,7 +26,7 @@ class LogbookEntriesController extends Controller
         $logbookEntry->add($user, $logbook);
 
         return response()->json([
-            'flash' => 'Logbook entry successfully created.'
+            'flash' => trans('app.flash.logbookentryadded')
         ]);
     }
 
@@ -51,7 +51,7 @@ class LogbookEntriesController extends Controller
 
         return (new LogbookEntriesResource($logbookEntry))
             ->additional([
-                'flash' => 'Logbook entry successfully updated.'
+                'flash' => trans('app.flash.logbookentryupdated')
             ]);
     }
 
@@ -60,7 +60,7 @@ class LogbookEntriesController extends Controller
         $logbookEntry->delete();
 
         return response()->json([
-            'flash' => 'Logbook entry successfully deleted.'
+            'flash' => trans('app.flash.logbookentrydeleted')
         ]);
     }
 }

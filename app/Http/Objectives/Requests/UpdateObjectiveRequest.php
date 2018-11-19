@@ -36,18 +36,18 @@ class UpdateObjectiveRequest extends FormRequest
     public function messages()
     {
         return [
-            'lesson_id.required' => 'Please enter a lesson number.',
-            'lesson_id.min' => 'The lesson number must be greater than 0',
-            'lesson_id.exists' => "Lesson " . $this->lesson_id . " does not exist.",
-            'lesson_id.integer' => 'The lesson number must be an integer (i.e. 1, 2, 3 etc.)',
-            'number.required' => 'Please enter an objective number.',
-            'number.min' => 'The objective number must be one or more characters long',
-            'name_en.required' => 'Please enter an objective name in English.',
-            'name_en.min' => 'The "Name" must be at least three characters long.',
-            'name_fr.required' => 'Please enter an objective name in French.',
-            'name_fr.min' => 'The "Name" must be at least three characters long.',
-            'notebook_required.required' => 'The "Notebook required" field is required.',
-            'notebook_required.max' => 'The "Notebook required" field has an incorrect value.'
+            'lesson_id.required' => trans('app.errors.objectives.lessonId.required'),
+            'lesson_id.min' => trans('app.errors.objectives.lessonId.min'),
+            'lesson_id.exists' => trans('app.errors.objectives.lessonId.exists1') . $this->lesson_id . trans('app.errors.objectives.lessonId.exists2'),
+            'lesson_id.integer' => trans('app.errors.objectives.lessonId.integer'),
+            'number.required' => trans('app.errors.objectives.number.required'),
+            'number.min' => trans('app.errors.objectives.number.min'),
+            'name_en.required' => trans('app.errors.objectives.nameEn.required'),
+            'name_en.min' => trans('app.errors.objectives.nameEn.min'),
+            'name_fr.required' => trans('app.errors.objectives.nameFr.required'),
+            'name_fr.min' => trans('app.errors.objectives.nameFr.min'),
+            'notebook_required.required' => trans('app.errors.objectives.notebookRequired.required'),
+            'notebook_required.max' => trans('app.errors.objectives.notebookRequired.max')
         ];
     }
 }

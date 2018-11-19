@@ -52,7 +52,7 @@ class LogbookEntryFilesController extends Controller
         ]);
 
         return response()->json([
-            'flash' => 'Files successfult updated.'
+            'flash' => trans('app.flash.filesupdated')
         ]);
     }
 
@@ -78,7 +78,7 @@ class LogbookEntryFilesController extends Controller
         ]);
 
         return response()->json([
-            'flash' => 'File successfully deleted.'
+            'flash' => trans('app.flash.filedeleted')
         ]);
     }
 

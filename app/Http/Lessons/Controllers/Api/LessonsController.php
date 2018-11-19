@@ -14,10 +14,10 @@ class LessonsController extends Controller
             'records' => LessonResource::collection(Lesson::all()),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'level', 'label' => 'Level', 'sortable' => 'sortable'],
-                    ['field' => 'lesson', 'label' => 'Lesson', 'sortable' => 'sortable'],
-                    ['field' => 'name', 'label' => 'Name', 'sortable' => 'sortable'],
-                    ['field' => 'depricated', 'label' => 'Depricated', 'sortable' => 'sortable']
+                    ['field' => 'level', 'label' => trans('app.datatable.label.level'), 'sortable' => 'sortable'],
+                    ['field' => 'lesson', 'label' => trans('app.datatable.label.lesson'), 'sortable' => 'sortable'],
+                    ['field' => 'name', 'label' => trans('app.datatable.label.name'), 'sortable' => 'sortable'],
+                    ['field' => 'depricated', 'label' => trans('app.datatable.label.depricated'), 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'level', 'dir' => 'asc'],
@@ -27,7 +27,7 @@ class LessonsController extends Controller
                     'active' => true,
                     'endpoint' => env('APP_URL') . '/lessons/',
                     'endpointSuffix' => '/edit',
-                    'text' => 'Edit'
+                    'text' => trans('app.datatable.buttons.edit')
                 ]
             ]
         ];

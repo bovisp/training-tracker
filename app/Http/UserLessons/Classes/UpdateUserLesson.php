@@ -30,7 +30,9 @@ class UpdateUserLesson {
 	{
 		if (moodleauth()->user()->hasRole('apprentice')) {
 			return [
-				'errors' => ['denied' => 'You do not have permission to do this']
+				'errors' => [
+					'denied' => trans('app.errors.general.denied')
+				]
 			];
 		}
 

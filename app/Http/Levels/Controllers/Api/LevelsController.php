@@ -14,7 +14,7 @@ class LevelsController extends Controller
             'records' => LevelResource::collection(Level::all()),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'name', 'label' => 'Name', 'sortable' => 'sortable']
+                    ['field' => 'name', 'label' => trans('app.datatable.label.name'), 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'name', 'dir' => 'asc']
@@ -23,7 +23,7 @@ class LevelsController extends Controller
                     'active' => true,
                     'endpoint' => env('APP_URL') . '/levels/',
                     'endpointSuffix' => '/edit',
-                    'text' => 'Edit'
+                    'text' => trans('app.datatable.buttons.edit')
                 ]
             ]
         ];

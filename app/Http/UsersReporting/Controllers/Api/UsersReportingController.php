@@ -28,8 +28,8 @@ class UsersReportingController extends Controller
                 ->toArray(),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
-                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
+                    ['field' => 'firstname', 'label' => trans('app.datatable.label.firstname'), 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => trans('app.datatable.label.lastname'), 'sortable' => 'sortable'],
                 ],
                 'orderby' => [
                     ['key' => 'lastname', 'dir' => 'asc']

@@ -22,7 +22,7 @@ class UnassignedUserLessonsController extends Controller
 		]);
 
 		return response()->json([
-            'flash' => 'Lesson package added successfully.'
+            'flash' => trans('app.flash.unassigneduserlessonadded')
         ]);
 	}
 }

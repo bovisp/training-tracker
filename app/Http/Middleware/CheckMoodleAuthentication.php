@@ -16,10 +16,10 @@ class CheckMoodleAuthentication
     {
         if (! moodleauth()->check()) {
             if ($request->expectsJson()) {
-                throw new \Exception("You are not authenticated.");
+                throw new \Exception(trans('app.errors.general.notauthenticated'));
             }
 
-            abort(401, "You are not authenticated on Moodle.");
+            abort(401, trans('app.errors.general.notauthenticated'));
         }
 
         return $next($request);

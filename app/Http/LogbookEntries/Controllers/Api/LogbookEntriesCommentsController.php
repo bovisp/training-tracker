@@ -69,7 +69,7 @@ class LogbookEntriesCommentsController extends Controller
             return response()->json([
                 'errors' => [
                     'errors' => [
-                        'denied' => 'You are not authorized to do that.'
+                        'denied' => trans('errors.general.denied')
                     ]
                 ]
             ], 403);

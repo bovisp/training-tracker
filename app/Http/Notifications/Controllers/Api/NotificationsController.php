@@ -43,7 +43,7 @@ class NotificationsController extends Controller
             ]);
 
         return response()->json([
-            'flash' => 'Notification marked as read.'
+            'flash' => trans('app.flash.notificationread')
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class NotificationsController extends Controller
             ]);
 
         return response()->json([
-            'flash' => 'Notification marked as unread.'
+            'flash' => trans('app.flash.notificationunread')
         ], 200);
     }
 
@@ -67,7 +67,7 @@ class NotificationsController extends Controller
             ->delete();
 
         return response()->json([
-            'flash' => 'Notification successfully deleted.'
+            'flash' => trans('app.flash.notificationdeleted')
         ], 200);
     }
 }

@@ -37,7 +37,7 @@ class CanViewProfile
             }
         }
 
-        return abort(401, "You are not allowed to view this.");
+        return abort(401, trans('app.errors.general.denied'));
     }
 
     protected function userIdFromRequest()

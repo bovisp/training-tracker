@@ -31,10 +31,10 @@ class StoreUnassignedUserLessonRequest extends FormRequest
     public function messages()
     {
         return [
-            'userlesson.required' => 'Please enter a lesson number.',
-            'userlesson.min' => 'The lesson number must be greater than 0',
-            'userlesson.exists' => "Lesson " . $this->lesson . " does not exist.",
-            'userlesson.integer' => 'The lesson number must be an integer (i.e. 1, 2, 3 etc.)'
+            'userlesson.required' => trans('app.errors.userlessons.required'),
+            'userlesson.min' => trans('app.errors.userlessons.min'),
+            'userlesson.exists' => trans('app.errors.userlessons.exists1') . $this->lesson . trans('app.errors.userlessons.exists2'),
+            'userlesson.integer' => trans('app.errors.userlessons.integer')
         ];
     }
 }

@@ -38,7 +38,7 @@ class UpdateObjectivesRequest implements StoreSpreadsheet
 				[
 					'errors' => [
 						'objectives' => [
-							'One or more of the objectives is invalid'
+							trans('app.errors.userlessons.objectives')
 						]
 					]
 				]

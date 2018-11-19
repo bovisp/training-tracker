@@ -34,13 +34,13 @@ class UpdateRoleRequest extends FormRequest
     public function messages()
     {
         return [
-            'type.required' => 'Please enter a role type.',
-            'type.min' => 'The "Type" must be at least three characters long.',
-            'rank.integer' => 'The "Rank" must be a number',
-            'name_en.required' => 'Please enter a role name in English.',
-            'name_en.min' => 'The "Name" must be at least three characters long.',
-            'name_fr.required' => 'Please enter a role name in French.',
-            'name_fr.min' => 'The "Name" must be at least three characters long.'
+            'type.required' => trans('app.errors.roles.type.required'),
+            'type.min' => trans('app.errors.roles.type.min'),
+            'rank.integer' => trans('app.errors.roles.rank.integer'),
+            'name_en.required' => trans('app.errors.roles.nameEn.required'),
+            'name_en.min' => trans('app.errors.roles.nameEn.min'),
+            'name_fr.required' => trans('app.errors.roles.nameFr.required'),
+            'name_fr.min' => trans('app.errors.roles.nameFr.min')
         ];
     }
 }

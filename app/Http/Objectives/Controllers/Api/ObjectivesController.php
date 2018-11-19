@@ -14,9 +14,9 @@ class ObjectivesController extends Controller
             'records' => ObjectiveResource::collection(Objective::all()),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'lesson', 'label' => 'Lesson', 'sortable' => 'sortable'],
-                    ['field' => 'objective', 'label' => 'Objective', 'sortable' => 'sortable'],
-                    ['field' => 'description', 'label' => 'Description', 'sortable' => 'sortable']
+                    ['field' => 'lesson', 'label' => trans('app.datatable.label.lesson'), 'sortable' => 'sortable'],
+                    ['field' => 'objective', 'label' => trans('app.datatable.label.objective'), 'sortable' => 'sortable'],
+                    ['field' => 'description', 'label' => trans('app.datatable.label.description'), 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'lesson', 'dir' => 'asc'],
@@ -26,7 +26,7 @@ class ObjectivesController extends Controller
                     'active' => true,
                     'endpoint' => env('APP_URL') . '/objectives/',
                     'endpointSuffix' => '/edit',
-                    'text' => 'Edit'
+                    'text' => trans('app.datatable.buttons.edit.description')
                 ]
             ]
         ];

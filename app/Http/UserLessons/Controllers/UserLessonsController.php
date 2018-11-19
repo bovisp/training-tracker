@@ -31,7 +31,7 @@ class UserLessonsController extends Controller
             return response()->json(['errors' => $res], 403);
         } else {
             return response()->json([
-                'flash' => 'Lesson package updated successfully.'
+                'flash' => trans('app.flash.lessonpackageupdated')
             ]);
         }
     }
@@ -50,7 +50,7 @@ class UserLessonsController extends Controller
             ->route('users.show', ['user' => $user->id])
             ->with([
                 'flash' => [
-                    'message' => 'Lesson package successfully deleted.'
+                    'message' => trans('app.flash.lessonpackagedeleted')
                 ]
             ]);
     }

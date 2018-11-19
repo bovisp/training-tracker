@@ -31,8 +31,8 @@ class UpdateAppointmentUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'appointed_at.required' => 'Please enter a date.',
-            'appointed_at.date' => 'Please enter a valid date.'
+            'appointed_at.required' => trans('app.errors.users.appointedAt.required'),
+            'appointed_at.date' => trans('app.errors.users.appointedAt.date')
         ];
     }
 }

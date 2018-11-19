@@ -35,7 +35,7 @@ class UsersController extends Controller
             ->route('users.index')
             ->with([
                 'flash' => [
-                    'message' => "User deleted successfully."
+                    'message' => trans('app.flash.userdeleted')
                 ]
             ]);
     }

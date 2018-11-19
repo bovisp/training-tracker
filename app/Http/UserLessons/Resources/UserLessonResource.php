@@ -18,7 +18,7 @@ class UserLessonResource extends Resource
             'id' => $this->id,
             'level' => $this->lesson->level->name,
             'package' => number_format($this->lesson->number, 2) . ' - ' . $this->lesson->name,
-            'completed' => $this->completed === 1 ? 'Yes' : 'No'
+            'completed' => $this->completed === 1 ? trans('app.general.yes') : trans('app.general.no')
         ];
     }
 }

@@ -26,7 +26,7 @@ class UserlessonCommentController extends Controller
 			return response()->json([
 				'errors' => [
 					'errors' => [
-						'denied' => 'You are not authorized to do that.'
+						'denied' => trans('app.errors.general.denied')
 					]
 				]
 			], 403);
@@ -53,7 +53,7 @@ class UserlessonCommentController extends Controller
 			return response()->json([
 				'errors' => [
 					'errors' => [
-						'denied' => 'You are not authorized to do that.'
+						'denied' => trans('app.errors.general.denied')
 					]
 				]
 			], 403);
@@ -78,7 +78,7 @@ class UserlessonCommentController extends Controller
 			return response()->json([
 				'errors' => [
 					'errors' => [
-						'denied' => 'You are not authorized to do that.'
+						'denied' => trans('app.errors.general.denied')
 					]
 				]
 			], 403);

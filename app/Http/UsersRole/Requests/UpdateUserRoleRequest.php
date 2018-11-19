@@ -31,8 +31,8 @@ class UpdateUserRoleRequest extends FormRequest
     public function messages()
     {
         return [
-            'role.required' => 'Please enter a role type.',
-            'role.exists' => "A role 'Type' with a value of '" . $this->role . "' does not exist."
+            'role.required' => trans('app.errors.usersrole.role.required'),
+            'role.exists' => trans('app.errors.usersrole.role.exists1') . $this->role . trans('app.errors.usersrole.role.exists2')
         ];
     }
 }

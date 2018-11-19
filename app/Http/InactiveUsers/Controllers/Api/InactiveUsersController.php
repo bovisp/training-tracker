@@ -14,9 +14,9 @@ class InactiveUsersController extends Controller
             'records' => InactiveUserResource::collection(User::whereActive(0)->get()),
             'meta' => [
                 'displayable' => [
-                    ['field' => 'firstname', 'label' => 'First name', 'sortable' => 'sortable'],
-                    ['field' => 'lastname', 'label' => 'Last name', 'sortable' => 'sortable'],
-                    ['field' => 'email', 'label' => 'E-mail', 'sortable' => 'sortable']
+                    ['field' => 'firstname', 'label' => trans('app.datatable.label.firstname'), 'sortable' => 'sortable'],
+                    ['field' => 'lastname', 'label' => trans('app.datatable.label.lastname'), 'sortable' => 'sortable'],
+                    ['field' => 'email', 'label' => trans('app.datatable.label.email'), 'sortable' => 'sortable']
                 ],
                 'orderby' => [
                     ['key' => 'lastname', 'dir' => 'desc'],
@@ -26,7 +26,7 @@ class InactiveUsersController extends Controller
                     'active' => true,
                     'endpoint' => env('APP_URL') . '/users/',
                     'endpointSuffix' => '',
-                    'text' => 'Profile'
+                    'text' => trans('app.datatable.buttons.profile')
                 ]
             ]
         ];

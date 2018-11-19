@@ -32,10 +32,10 @@ class StoreLevelRequest extends FormRequest
     public function messages()
     {
         return [
-            'name_en.required' => 'Please enter a level name in English.',
-            'name_en.min' => 'The "Name" must be at least three characters long.',
-            'name_fr.required' => 'Please enter a level name in French.',
-            'name_fr.min' => 'The "Name" must be at least three characters long.'
+            'name_en.required' => trans('app.errors.levels.nameEn.required'),
+            'name_en.min' => trans('app.errors.levels.nameEn.min'),
+            'name_fr.required' => trans('app.errors.levels.nameFr.required'),
+            'name_fr.min' => trans('app.errors.levels.nameFr.min')
         ];
     }
 }

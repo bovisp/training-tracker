@@ -12,7 +12,7 @@ class AllNotificationsController extends Controller
         $user->unreadNotifications->markAsRead();
 
         return response()->json([
-            'flash' => 'All notifications marked as read.'
+            'flash' => trans('app.flash.allnotificationsread')
         ], 200);
     }
 
@@ -25,7 +25,7 @@ class AllNotificationsController extends Controller
         }
 
         return response()->json([
-            'flash' => 'All read notifications deleted.'
+            'flash' => trans('app.flash.allreadnotificationsdeleted')
         ], 200);
     }
 
@@ -38,7 +38,7 @@ class AllNotificationsController extends Controller
         }
 
         return response()->json([
-            'flash' => 'All notifications marked as read.'
+            'flash' => trans('app.flash.allnotificationsunread')
         ], 200);
     }
 
@@ -47,7 +47,7 @@ class AllNotificationsController extends Controller
         $user->unreadNotifications()->delete();
 
         return response()->json([
-            'flash' => 'All notifications marked as read.'
+            'flash' => trans('app.flash.allunreadnotificationsdeleted')
         ], 200);
     }
 }

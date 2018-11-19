@@ -23,7 +23,7 @@ class UsersRoleController extends Controller
             ->route('users.show', [ 'user' => $user->id ])
             ->with([
                 'flash' => [
-                    'message' => "Role update successfully."
+                    'message' => trans('app.flash.usersroleupdated')
                 ]
             ]);
     }

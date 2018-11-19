@@ -32,11 +32,11 @@ class StoreUsersRequest extends FormRequest
     public function messages()
     {
         return [
-            '*.id.required' => 'You have not checked the checkbox next to one or more of your selected users.',
-            '*.id.exists' => 'The user with an id of :input is not registered on Moodle. Please ask them to register.',
-            '*.id.unique' => 'The user with an id of :input has already been added to this application.',
-            '*.role.required' => 'You have not added a role for one or more selected users.',
-            '*.role.exists' => 'The role :input does not exist'
+            '*.id.required' => trans('app.errors.users.id.required'),
+            '*.id.exists' => trans('app.errors.users.id.exists'),
+            '*.id.unique' => trans('app.errors.users.id.unique'),
+            '*.role.required' => trans('app.errors.users.role.required'),
+            '*.role.exists' => trans('app.errors.users.role.exists')
         ];
     }
 }

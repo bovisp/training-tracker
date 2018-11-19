@@ -34,15 +34,15 @@ class StoreRoleRequest extends FormRequest
     public function messages()
     {
         return [
-            'type.required' => 'Please enter a role type.',
-            'type.min' => 'The "Type" must be at least three characters long.',
-            'type.unique' => "A role 'Type' with a value of '" . $this->type . "' aleady exists.",
-            'rank.integer' => 'The "Rank" must be a number',
-            'rank.unique' => "A role with a 'Rank' of '" . $this->rank . "' aleady exists.",
-            'name_en.required' => 'Please enter a role name in English.',
-            'name_en.min' => 'The "Name" must be at least three characters long.',
-            'name_fr.required' => 'Please enter a role name in French.',
-            'name_fr.min' => 'The "Name" must be at least three characters long.'
+            'type.required' => trans('app.errors.roles.type.required'),
+            'type.min' => trans('app.errors.roles.type.min'),
+            'type.unique' => trans('app.errors.roles.type.unique1') . $this->type . trans('app.errors.roles.type.unique2'),
+            'rank.integer' => trans('app.errors.roles.rank.integer'),
+            'rank.unique' => trans('app.errors.roles.rank.unique1') . $this->rank . trans('app.errors.roles.rank.unique2'),
+            'name_en.required' => trans('app.errors.roles.nameEn.required'),
+            'name_en.min' => trans('app.errors.roles.nameEn.min'),
+            'name_fr.required' => trans('app.errors.roles.nameFr.required'),
+            'name_fr.min' => trans('app.errors.roles.nameFr.min')
         ];
     }
 }

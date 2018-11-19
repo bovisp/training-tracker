@@ -42,7 +42,7 @@ class UserLessonCompleted implements Rule
      */
     public function message()
     {
-        return 'This lesson package is not complete';
+        return trans('app.errors.userlessons.completed');
     }
 
     protected function completedStatus() {

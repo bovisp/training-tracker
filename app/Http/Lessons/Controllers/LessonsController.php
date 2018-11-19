@@ -46,7 +46,7 @@ class LessonsController extends Controller
             ->route('lessons.index')
             ->with([
                 'flash' => [
-                    'message' => 'Lesson successfully added.'
+                    'message' => trans('app.flash.lessonadded');
                 ]
             ]);
     }
@@ -79,7 +79,7 @@ class LessonsController extends Controller
             ->route('lessons.index')
             ->with([
                 'flash' => [
-                    'message' => 'Lesson successfully updated.'
+                    'message' => trans('app.flash.lessonupdated');
                 ]
             ]);
     }
@@ -98,7 +98,7 @@ class LessonsController extends Controller
             ->route('lessons.index')
             ->with([
                 'flash' => [
-                    'message' => 'Lesson successfully deleted.'
+                    'message' => trans('app.flash.lessondeleted');
                 ]
             ]);
     }
