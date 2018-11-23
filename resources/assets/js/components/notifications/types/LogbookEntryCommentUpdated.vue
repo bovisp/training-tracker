@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<span v-if="editor.id !== apprentice.id">
-			{{ editorName }} updated a comment in {{ apprenticeName }}'s <a :href="logbookUrl">logbook</a> for the 
+			{{ editorName }} {{ trans('app.components.notifications.logbookentrycommentupdatedmessage1') }} {{ apprenticeName }}'s <a :href="logbookUrl">{{ trans('app.components.notifications.logbookentrycommentupdatedmessage2') }}</a> {{ trans('app.components.notifications.logbookentrycommentupdatedmessage3') }} 
 		</span>
 
 		<span v-else>
-			{{ apprenticeName }} updated a comment in their <a :href="logbookUrl">logbook</a> for the 
+			{{ apprenticeName }} {{ trans('app.components.notifications.logbookentrycommentupdatedmessage4') }} <a :href="logbookUrl">{{ trans('app.components.notifications.logbookentrycommentupdatedmessage5') }}</a> {{ trans('app.components.notifications.logbookentrycommentupdatedmessage6') }} 
 		</span>
 
-		objective "{{ objective }}" in lesson package <a :href="lessonPackageUrl">"{{ package }}"</a>.
+		{{ trans('app.components.notifications.logbookentrycommentupdatedmessage7') }} "{{ objective }}" {{ trans('app.components.notifications.logbookentrycommentupdatedmessage8') }} <a :href="lessonPackageUrl">"{{ package }}"</a>.
 	</div>
 </template>
 

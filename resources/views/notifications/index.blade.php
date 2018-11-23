@@ -5,7 +5,7 @@
 	<div class="columns is-centered">
 		<div class="column is-half-desktop">
 			<h2 class="title is-2">
-				Notifications for {{ $user->firstname }} {{ $user->lastname }}
+				{{ trans('app.pages.notifications.for') }} {{ $user->firstname }} {{ $user->lastname }}
 			</h2>
 
 			<notifications 

@@ -15,7 +15,7 @@
 	<div class="navbar-item">
 		<a 
 			href="{{ route('notifications.index', [ 'user' => moodleauth()->id() ]) }}" 
-			title="You have no unread notifications"
+			title="{{ trans('app.pages.layouts.notifications.nonotifications') }}"
 		>
 			<div class="icon">
 				<i class="mdi mdi-bell-off has-text-black"></i>

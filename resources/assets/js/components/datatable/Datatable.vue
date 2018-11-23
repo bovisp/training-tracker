@@ -15,7 +15,7 @@
 	                    class="button is-link ml-auto self-end" 
 	                    @click="validate" 
 	                >
-	                    Add users
+	                    {{ trans('app.components.datatable.addusers') }}
 	                </button>
                 </div>
 			</div>
@@ -25,17 +25,17 @@
 			<div class="column is-half">
 				<b-field>
 		            <b-select v-model="perPage" expanded>
-		                <option value="5">5 per page</option>
-		                <option value="10">10 per page</option>
-		                <option value="25">25 per page</option>
-		                <option value="50">50 per page</option>
+		                <option value="5">{{ trans('app.components.datatable.fiveperpage') }}</option>
+		                <option value="10">{{ trans('app.components.datatable.tenperpage') }}</option>
+		                <option value="25">{{ trans('app.components.datatable.twentyfiveperpage') }}</option>
+		                <option value="50">{{ trans('app.components.datatable.fiftyperpage') }}</option>
 		            </b-select>
 		        </b-field>
 			</div>
 
 			<div class="column is-half">
 				<b-field>
-		            <b-input placeholder="Search..."
+		            <b-input placeholder="trans('app.components.datatable.search')"
 		                type="search"
 		                icon="magnify"
 		                v-model="search">
@@ -79,7 +79,7 @@
 
 		        <b-table-column 
 		        	v-if="withRoles"
-		        	label="Select a role..."
+		        	label="trans('app.components.datatable.selectrole')"
 		        >
                     <div class="select">
                         <select v-model="rolesModel[props.row.id]">
@@ -249,7 +249,7 @@
 
         			if (hasRole === false) {
         				this.errors.push(
-        					`You have not yet assigned a role to ${user.firstname} ${user.lastname}. Please select a role from the dropdown menu.`
+        					`${this.trans('app.components.datatable.roleerrormessage1')} ${user.firstname} ${user.lastname}. ${this.trans('app.components.datatable.roleerrormessage2')}`
         				)
         			}
         		})
@@ -265,7 +265,7 @@
 	        			const user = this.findUserId(parseInt(valueArray[0]))
 
 	                    this.errors.push(
-	                        `You have not selected ${user.firstname} ${user.lastname} to be added, but you have selected a role. Please check the checkbox to the left of the user's name to add this person to the application`
+	                        `${this.trans('app.components.datatable.roleerrormessage3')} ${user.firstname} ${user.lastname} ${this.trans('app.components.datatable.roleerrormessage4')}`
 	                    )
 	        		}
 	        	})
@@ -274,7 +274,7 @@
 	        post (postArray) {
 	        	if (postArray.length === 0) {
 	                this.$toast.open({
-	                    message: `Please add some users.`,
+	                    message: `${this.trans('app.components.datatable.usererror')}`,
 	                    position: 'is-top-right',
 	                    type: 'is-danger'
 	                })

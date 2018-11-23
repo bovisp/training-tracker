@@ -26,48 +26,48 @@
 
         <b-dropdown position="is-bottom-left" v-cloak>
           <a class="navbar-item" slot="trigger">
-            <span>Menu</span>
+            <span>{{ trans('app.pages.layouts.nav.menu') }}</span>
 
             <b-icon icon="menu-down"></b-icon>
           </a>
 
           <b-dropdown-item custom>
-            Logged in as <b>{{ moodleauth()->user()->firstname }} {{ moodleauth()->user()->lastname }}</b>
+            {{ trans('app.pages.layouts.nav.loggedinas') }}<b>{{ moodleauth()->user()->firstname }} {{ moodleauth()->user()->lastname }}</b>
           </b-dropdown-item>
 
           <hr class="dropdown-divider">
 
           <b-dropdown-item custom>
-            <h6 class="title is-6">Actions:</h6>
+            <h6 class="title is-6">{{ trans('app.pages.layouts.nav.actions') }}</h6>
           </b-dropdown-item>
 
           <b-dropdown-item has-link>
             <a href="{{ route('users.index') }}">
-              Manage users
+              {{ trans('app.pages.layouts.nav.manageusers') }}
             </a>
           </b-dropdown-item>
 
           <b-dropdown-item has-link>
             <a href="{{ route('roles.index') }}">
-              Manage roles
+              {{ trans('app.pages.layouts.nav.manageroles') }}
             </a>
           </b-dropdown-item>
 
           <b-dropdown-item has-link>
             <a href="{{ route('levels.index') }}">
-              Manage levels
+             {{ trans('app.pages.layouts.nav.managelevels') }}
             </a>
           </b-dropdown-item>
 
           <b-dropdown-item has-link>
             <a href="{{ route('lessons.index') }}">
-              Manage lessons
+              {{ trans('app.pages.layouts.nav.managelessons') }}
             </a>
           </b-dropdown-item>
 
           <b-dropdown-item has-link>
             <a href="{{ route('objectives.index') }}">
-              Manage objectives
+              {{ trans('app.pages.layouts.nav.manageobjectives') }}
             </a>
           </b-dropdown-item>
 
@@ -77,7 +77,7 @@
             <a href="{{ route('users.show', [ 'user' => moodleauth()->id() ]) }}">
               <b-icon icon="account"></b-icon>
 
-              Profile
+              {{ trans('app.pages.layouts.nav.profile') }}
             </a>
           </b-dropdown-item>
 
@@ -87,7 +87,7 @@
             <a href="http://msc-educ-smc.cmc.ec.gc.ca/moodle">
               <b-icon icon="exit-to-app"></b-icon>
 
-              Return to Moodle
+              {{ trans('app.pages.layouts.nav.returntomoodle') }}
             </a>
           </b-dropdown-item> 
         </b-dropdown>

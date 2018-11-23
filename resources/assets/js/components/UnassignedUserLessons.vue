@@ -6,7 +6,7 @@
 				class="button is-link is-small"
 				@click="editingNonDepricated = true"
 			>
-				Add new lesson package
+				{{ trans('app.components.unassigneduserlessons.addnewpackage') }}
 			</button>
 
 			<button 
@@ -14,7 +14,7 @@
 				class="button is-link is-small ml-4"
 				@click="editingDepricated = true"
 			>
-				Add depricated lesson package
+				{{ trans('app.components.unassigneduserlessons.adddepricatedpackage') }}
 			</button>
 		</div>
 
@@ -23,7 +23,9 @@
 				:class="{ 'is-danger': errors.has('userlesson') }"
 			>
 				<select v-model="nonDepricated">
-					<option value="" selected>Choose a lesson package...</option>
+					<option value="" selected>
+						{{ trans('app.components.unassigneduserlessons.choosepackage') }}
+					</option>
 
 					<option 
 						:value="lesson.id" 
@@ -39,14 +41,14 @@
 				class="button is-link is-small ml-4"
 				@click="submit(nonDepricated)"
 			>
-				Add lesson package
+				{{ trans('app.components.unassigneduserlessons.addpackage') }}
 			</button>
 
 			<button 
 				class="button is-text has-text-danger is-small ml-4"
 				@click="editingNonDepricated = false"
 			>
-				Cancel
+				{{ trans('app.general.buttons.cancel') }}
 			</button>
 
 			<div 
@@ -61,7 +63,9 @@
 				:class="{ 'is-danger': errors.has('userlesson') }"
 			>
 				<select v-model="depricated">
-					<option value="" selected>Choose a lesson package...</option>
+					<option value="" selected>
+						{{ trans('app.components.unassigneduserlessons.choosepackage') }}
+					</option>
 
 					<option 
 						:value="lesson.id" 
@@ -77,14 +81,14 @@
 				class="button is-link is-small ml-4"
 				@click="submit(depricated)"
 			>
-				Add lesson package
+				{{ trans('app.components.unassigneduserlessons.addpackage') }}
 			</button>
 
 			<button 
 				class="button is-text has-text-danger is-small ml-4"
 				@click="editingDepricated = false"
 			>
-				Cancel
+				{{ trans('app.general.buttons.cancel') }}
 			</button>
 
 			<div 

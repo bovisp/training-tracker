@@ -1,4 +1,4 @@
-{{ $user->active === 1 ? 'Yes' : 'No' }}
+{{ $user->active === 1 ? trans('app.general.yes') : trans('app.general.no') }}
 
 @if (moodleauth()->user()->hasRole('administrator'))
 
@@ -10,7 +10,7 @@
 		{{ csrf_field() }}
 
 		<button class="button is-text is-small">
-			{{ $user->active === 1 ? 'Deactivate' : 'Activate' }}
+			{{ $user->active === 1 ? trans('app.pages.users.activation.deactivate') : trans('app.pages.users.activation.activate') }}
 		</button>
 	</form>
 

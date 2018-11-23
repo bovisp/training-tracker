@@ -4,13 +4,13 @@
 
 	<div class="columns is-centered">
 		<div class="column is-three-quarters-tablet is-half-desktop">
-			<h2 class="title is-2">Add Lesson</h2>
+			<h2 class="title is-2">{{ trans('app.pages.lessons.create.title') }}</h2>
 			
 			<form action="{{ env('APP_URL') }}/lessons" method="POST">
 				{{ csrf_field() }}
 
 				<div class="field">
-					<label class="label" for="level_id">Level</label>
+					<label class="label" for="level_id">{{ trans('app.pages.lessons.fields.level') }}</label>
 
 					<div class="control">
 						<div class="select {{ $errors->any() && $errors->has('level_id') ? 'is-danger' : '' }}">
@@ -18,7 +18,7 @@
 								name="level_id" 
 								id="level_id" 
 							>
-								<option value="">Select a level...</option>
+								<option value="">{{ trans('app.pages.lessons.fields.selectlevel') }}</option>
 
 								@foreach($levels as $level)
 
@@ -44,7 +44,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="number">Lesson number</label>
+					<label class="label" for="number">{{ trans('app.pages.lessons.fields.number') }}</label>
 
 					<div class="control">
 						<input 
@@ -64,7 +64,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_en">Name (English)</label>
+					<label class="label" for="name_en">{{ trans('app.general.fields.nameen') }}</label>
 
 					<div class="control">
 						<input 
@@ -85,7 +85,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_fr">Name (French)</label>
+					<label class="label" for="name_fr">{{ trans('app.general.fields.namefr') }}</label>
 
 					<div class="control">
 						<input 
@@ -106,7 +106,7 @@
 
 				<div class="field">
 					<p>
-						<strong>Period(s) in which this training should be covered:</strong>
+						<strong>{{ trans('app.pages.lessons.fields.periodscovered') }}</strong>
 					</p>
 
 					<label class="checkbox is-block mt-2">
@@ -116,7 +116,7 @@
 							value="1" 
 							{{ old('p9') ? 'checked' : '' }}
 						>
-						Early EG-03 (0-9 months)
+						{{ trans('app.pages.lessons.fields.period9') }}
 					</label>
 
 					<label class="checkbox is-block mt-2">
@@ -126,7 +126,7 @@
 							value="1"
 							{{ old('p18') ? 'checked' : '' }}
 						>
-						Late EG-03 (9-18 months)
+						{{ trans('app.pages.lessons.fields.period18') }}
 					</label>
 
 					<label class="checkbox is-block mt-2">
@@ -136,7 +136,7 @@
 							value="1"
 							{{ old('p30') ? 'checked' : '' }}
 						>
-						Early EG-04 (18-30 months)
+						{{ trans('app.pages.lessons.fields.period30') }}
 					</label>
 
 					<label class="checkbox is-block mt-2">
@@ -146,7 +146,7 @@
 							value="1"
 							{{ old('p42') ? 'checked' : '' }}
 						>
-						Late EG-04 (30-42 months)
+						{{ trans('app.pages.lessons.fields.period42') }}
 					</label>
 
 					@if ($errors->any() && $errors->has('p9'))
@@ -176,7 +176,7 @@
 
 				<div class="field">
 					<div class="control">
-						<button class="button is-link">Add lesson</button>
+						<button class="button is-link">{{ trans('app.pages.lessons.buttons.addlesson') }}</button>
 					</div>
 				</div>
 			</form>

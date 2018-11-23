@@ -4,12 +4,12 @@
 			class="button is-text has-text-info"
 			@click.prevent="active = true"
 			v-if="!active"
-		>Add new comment</button>
+		>{{ trans('app.components.comments.addcomment') }}</button>
 
 		<template v-else>
 			<form>
 				<div class="field">
-					<label for="body" class="label">Comment</label>
+					<label for="body" class="label">{{ trans('app.components.comments.comment') }}</label>
 
 					<div class="control">
 						<textarea
@@ -31,12 +31,12 @@
 					<button 
 						class="button is-link is-small" 
 						@click.prevent="submit"
-					>Submit</button>
+					>{{ trans('app.general.buttons.submit') }}</button>
 
 					<button 
 						class="button is-text is-small"
 						@click.prevent="active = false"
-					>Cancel</button>
+					>{{ trans('app.general.buttons.cancel') }}</button>
 				</div>
 			</form>
 		</template>
@@ -85,7 +85,7 @@
 					this.form.body = ''
 
 					this.$toast.open({
-		                message: 'Comment successfully added.',
+		                message: this.trans('app.components.comments.commentadded'),
 		                position: 'is-top-right',
 		                type: 'is-success'
             		})
@@ -93,7 +93,7 @@
 				.catch(error => {
 					if (error.response.status === 403) {
 						this.$dialog.alert({
-		                    title: 'Unauthorized',
+		                    title: this.trans('app.general.unauthorized'),
 		                    message: this.errors.denied,
 		                    type: 'is-danger'
 		                })

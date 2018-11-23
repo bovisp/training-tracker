@@ -31,7 +31,7 @@
 			</div>
 
 			<div class="control">
-				<button class="button is-text is-small">Update role</button>
+				<button class="button is-text is-small">{{ trans('app.pages.users.buttons.updaterole') }}</button>
 			</div>
 		</div>
 

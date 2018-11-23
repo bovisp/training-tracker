@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h3 class="title is-3 mt-16">
-			Status
+			{{ trans('app.components.userlessons.status') }}
 		</h3>
 
 		 <div class="columns is-desktop">
@@ -10,7 +10,7 @@
 				:class="{ 'has-background-grey-lighter': lessonPeriodp9 }"
 			>
 				<div class="field">
-					<label for="p9" class="label">Early EG-03</label>
+					<label for="p9" class="label">{{ trans('app.components.userlessons.earlyegthree') }}</label>
 
 					<div class="select is-small" :class="{ 'is-danger': errors.p9 }" >
 						<select 
@@ -43,7 +43,7 @@
 				:class="{ 'has-background-grey-lighter': lessonPeriodp18 }"
 			>
 				<div class="field">
-					<label for="p18" class="label">Late EG-03</label>
+					<label for="p18" class="label">{{ trans('app.components.userlessons.lateegthree') }}</label>
 
 					<div class="select is-small" :class="{ 'is-danger': errors.p18 }">
 						<select 
@@ -77,7 +77,7 @@
 				:class="{ 'has-background-grey-lighter': lessonPeriodp30 }"
 			>
 				<div class="field">
-					<label for="p30" class="label">Early EG-04</label>
+					<label for="p30" class="label">{{ trans('app.components.userlessons.earlyegfour') }}</label>
 
 					<div class="select is-small" :class="{ 'is-danger': errors.p30 }">
 						<select 
@@ -111,7 +111,7 @@
 				:class="{ 'has-background-grey-lighter': lessonPeriodp42 }"
 			>
 				<div class="field">
-					<label for="p42" class="label">late EG-04</label>
+					<label for="p42" class="label">{{ trans('app.components.userlessons.lateegfour') }}</label>
 
 					<div class="select is-small" :class="{ 'is-danger': errors.p42 }">
 						<select 
@@ -150,9 +150,9 @@
 		data () {
 			return {
 				statusTypes: [
-					{ type: 'c', name: 'C – Module Complete' },
-					{ type: 'd', name: 'D – Deferred to next evaluation period' },
-					{ type: 'e', name: 'E – Exempt based on location requirements' }
+					{ type: 'c', name: this.trans('app.components.userlessons.cstatus') },
+					{ type: 'd', name: this.trans('app.components.userlessons.dstatus') },
+					{ type: 'e', name: this.trans('app.components.userlessons.estatus') }
 				],
 				statusPeriods: [ 'p9', 'p18', 'p30', 'p42' ]
 			}

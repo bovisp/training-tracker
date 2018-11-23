@@ -16,6 +16,410 @@ return [
     	'appName' => 'MSC Training Tracker',
         'yes' => 'Yes',
         'no' => 'No',
+        'unauthorized' => 'Unauthorized',
+
+        'fields' => [
+            'nameen' => 'Name (English)',
+            'namefr' => 'Name (French)',
+        ],
+
+        'buttons' => [
+            'edit' => 'Edit',
+            'delete' => 'Delete',
+            'add' => 'Add',
+            'cancel' => 'Cancel',
+            'submit' => 'Submit',
+            'update' => 'Update',
+            'create' => 'Create',
+            'save' => 'Save',
+        ],
+    ],
+
+    'components' => [
+        'comments' => [
+            'addedon' => 'added this on:',
+            'edited' => 'edited',
+            'deletecomment' => 'Are you sure you want to delete this comment?',
+            'commentdeleted' => 'Comment successfully deleted.',
+            'commentupdated' => 'Comment successfully updated.',
+            'nocomments' => 'No comments to display',
+            'addcomment' => 'Add new comment',
+            'comment' => 'Comment',
+            'commentadded' => 'Comment successfully added.',
+        ],
+
+        'datatable' => [
+            'addusers' => 'Add users',
+            'fiveperpage' => '5 per page',
+            'tenperpage' => '10 per page',
+            'twentyfiveperpage' => '25 per page',
+            'fiftyperpage' => '50 per page',
+            'search' => 'Search...',
+            'selectrole' => 'Select a role...',
+            'roleerrormessage1' => 'You have not yet assigned a role to',
+            'roleerrormessage2' => 'Please select a role from the dropdown menu.',
+            'roleerrormessage3' => 'You have not selected',
+            'roleerrormessage4' => 'to be added, but you have selected a role. Please check the checkbox to the left of the user\'s name to add this person to the application',
+            'usererror' => 'Please add some users.',
+        ],
+
+        'logbooks' => [
+            'entries' => 'Entries',
+            'noentries' => 'There are currently no entries for this logbook',
+            'editentry' => 'Edit entry',
+            'deleteentry' => 'Delete entry',
+            'returntoentries' => 'Return to entries',
+            'entrycreated' => 'Logbook entry created:',
+            'by' => 'by',
+            'entryedited' => 'Logbook entry edited:',
+            'comments' => 'Comments',
+            'deleteentryconfirm' => 'Are you sure you want to <b>delete</b> this logbook entry?',
+            'files' => 'Files',
+            'nofiles' => 'There are no files for this entry.',
+            'addfiles' => 'Add files',
+            'add' => 'Add',
+            'deletefile' => 'Delete file',
+            'deletefileconfirm' => 'Are you sure you want to <b>delete</b> this file?',
+            'filedeleted' => 'File successfully deleted',
+            'cantdeletefile' => 'You are not authorized to delete this file.',
+            'cantupdatefiles' => 'You are not authorized to update files for this logbook entry',
+            'entrycreatedat' => 'Entry created at:',
+            'entryeditedat' => 'Edited at:',
+            'newentry' => 'New logbook entry',
+            'canceladdfiles' => 'Cancel adding files',
+            ''
+        ],
+
+        'notifications' => [
+            'logbookaddedmessage1' => 'created an entry in',
+            'logbookaddedmessage2' => 'logbook',
+            'logbookaddedmessage3' => 'for the',
+            'logbookaddedmessage4' => 'created an entry in their',
+            'logbookaddedmessage5' => 'logbook',
+            'logbookaddedmessage6' => 'for the',
+            'logbookaddedmessage7' => 'objective',
+            'logbookaddedmessage8' => 'in lesson package',
+
+            'logbookentrycommentaddedmessage1' => 'added a new comment in',
+            'logbookentrycommentaddedmessage2' => 'logbook',
+            'logbookentrycommentaddedmessage3' => 'for the',
+            'logbookentrycommentaddedmessage4' => 'added a new comment in their',
+            'logbookentrycommentaddedmessage5' => 'logbook',
+            'logbookentrycommentaddedmessage6' => 'for the',
+            'logbookentrycommentaddedmessage7' => 'objective',
+            'logbookentrycommentaddedmessage8' => 'in lesson package',
+
+            'logbookentrycommentupdatedmessage1' => 'updated a comment in',
+            'logbookentrycommentupdatedmessage2' => 'logbook',
+            'logbookentrycommentupdatedmessage3' => 'for the',
+            'logbookentrycommentupdatedmessage4' => 'updated a comment in their',
+            'logbookentrycommentupdatedmessage5' => 'logbook',
+            'logbookentrycommentupdatedmessage6' => 'for the',
+            'logbookentrycommentupdatedmessage7' => 'objective',
+            'logbookentrycommentupdatedmessage8' => 'in lesson package',
+
+            'logbookupdatedmessage1' => 'updated an entry in',
+            'logbookupdatedmessage2' => 'logbook',
+            'logbookupdatedmessage3' => 'for the',
+            'logbookupdatedmessage4' => 'updated an entry in their',
+            'logbookupdatedmessage5' => 'logbook',
+            'logbookupdatedmessage6' => 'for the',
+            'logbookupdatedmessage7' => 'objective',
+            'logbookupdatedmessage8' => 'in lesson package',
+
+            'markasread' => 'Mark as read',
+            'markasunread' => 'Mark as unread',
+            'notificationdeleted' => 'Notification successfully deleted.',
+            'notificationread' => 'Notification marked as read.',
+            'notificationunread' => 'Notification marked as unread.',
+            'nonotifications' => 'You have no notifications.',
+            'markallread' => 'Mark all as read',
+            'deleteallread' => 'Delete all unread',
+            'markallunread' => 'Mark all as unread',
+            'deleteallread' => 'Delete all read',
+            'notificationsmarkedread' => 'Notifications marked as read.',
+            'notificationsmarkedunread' => 'Notifications marked as unread.',
+            'notificationsdeleted' => 'Read notifications deleted.',
+            'unreadnotificationsdeleted' => 'Unread notifications deleted.',
+            'newlogbookentry' => 'New logbook entry',
+            'updatedlogbookentry' => 'Updated logbook entry',
+            'updatedlogbookentrycomment' => 'Updated logbook entry comment',
+            'addedlogbookentrycomment' => 'Logbook entry comment added',
+        ],
+
+        'uploads' => [
+            'secondsremaining' => 'seconds remaining',
+            'failed' => 'Failed',
+            'complete' => 'Complete',
+            'cancelled' => 'Cancelled',
+            'dragfiles' => 'Drag files here',
+            'selectfiles' => 'or click to select files',
+            'numberoffiles' => 'Files:',
+            'percentage' => 'Percentage:',
+            'timeremaining' => 'Time remaining:',
+            'calculating' => 'Calculating',
+        ],
+
+        'userlessons' => [
+            'save' => 'Save lesson package',
+            'finalevaluation' => 'Final evaluation',
+            'signoff' => 'Sign off by Head of Operations or Manager',
+            'incomplete' => 'Incomplete',
+            'packagecompleted' => 'This lesson package has been successfully completed',
+            'logbooks' => 'Logbooks',
+            'logbookentries' => 'Entries:',
+            'entrycreatedmessage1' => 'Latest entry created by:',
+            'entrycreatedmessage2' => 'on',
+            'updatedentrymessage1' => 'Last updated by:',
+            'updatedentrymessage2' => 'on',
+            'editlogbook' => 'Edit logbook',
+            'objectives' => 'Objectives',
+            'status' => 'Status',
+            'earlyegthree' => 'Early EG-03',
+            'lateegthree' => 'Late EG-03',
+            'earlyegfour' => 'Early EG-04',
+            'lateegfour' => 'Late EG-04',
+            'cstatus' => 'C – Module Complete',
+            'dstatus' => 'D – Deferred to next evaluation period',
+            'estatus' => 'E – Exempt based on location requirements',
+        ],
+
+        'appointmentdate' => [
+            'select' => 'Click to select...',
+            'noappointmentset' => 'No appointment date set.',
+        ],
+
+        'unassigneduserlessons' => [
+            'addnewpackage' => 'Add new lesson package',
+            'adddepricatedpackage' => 'Add depricated lesson package',
+            'choosepackage' => 'Choose a lesson package...',
+            'addpackage' => 'Add lesson package',
+        ],
+    ],
+
+    'pages' => [
+        'inactiveusers' => [
+            'title' => 'Inactive users',
+            'activeuserslink' => 'Active users',
+        ],
+
+        'layouts' => [
+            'langswitcher' => [
+                'english' => 'English',
+                'french' => 'French',
+                'switchto' => 'Switch to:',
+            ],
+
+            'nav' => [
+                'menu' => 'Menu',
+                'loggedinas' => 'Logged in as ',
+                'actions' => 'Actions:',
+                'manageusers' => 'Manage users',
+                'manageroles' => 'Manage roles',
+                'managelevels' => 'Manage levels',
+                'managelessons' => 'Manage lessons',
+                'manageobjectives' => 'Manage objectives',
+                'profile' => 'Profile',
+                'returntomoodle' => 'Return to Moodle',
+            ],
+
+            'notifications' => [
+                'nonotifications' => 'You have no unread notifications',
+            ],
+        ],
+
+        'lessons' => [
+            'fields' => [
+                'level' => 'Level',
+                'selectlevel' => 'Select a level...',
+                'number' => 'Lesson number',
+                'periodscovered' => 'Period(s) in which this training should be covered:',
+                'period9' => 'Early EG-03 (0-9 months)',
+                'period18' => 'Late EG-03 (9-18 months)',
+                'period30' => 'Early EG-04 (18-30 months)',
+                'period42' => 'Late EG-04 (30-42 months)',
+                'depricated' => 'Depricated',
+            ],
+
+            'buttons' => [
+                'addlesson' => 'Add lesson',
+                'updatelesson' => 'Update lesson',
+                'deletelesson' => 'Delete lesson',
+                'deletethislesson' => 'Delete this lesson',
+            ],
+
+            'create' => [
+                'title' => 'Add Lesson',
+            ],
+
+            'edit' => [
+                'title' => 'Edit Lesson',
+                'deletemessage1' => 'Are you sure you want to do this? All data associated with this lesson (objectives, user lesson plans etc.) will be permanently deleted. ',
+                'deletemessage2' => 'Only do this if you are absolutely sure this is what you want.',
+            ],
+
+            'index' => [
+                'title' => 'Lessons',
+            ],
+        ],
+
+        'levels' => [
+            'create' => [
+                'title' => 'Add levels',
+            ],
+
+            'index' => [
+                'title' => 'Levels',
+            ],
+
+            'edit' => [
+                'title' => 'Edit level',
+                'deletemessage1' => 'Are you sure you want to do this? All data associated with this level (lessons, objectives, apprentice lesson packages etc.) will be permanently deleted. ',
+                'deletemessage2' => 'Only do this if you are absolutely sure this is what you want.',
+            ],
+
+            'edit' => [
+                'title' => 'Levels',
+            ],
+
+            'buttons' => [
+                'addlevel' => 'Add level',
+                'editlevel' => 'Edit level',
+                'deletelevel' => 'Delete level', 
+                'deletethislevel' => 'Delete this level',
+            ],
+        ],
+
+        'logbooks' => [
+            'show' => [
+                'title' => 'Logbook',
+                'backtopackage' => 'Back to lesson package',
+                'level' => 'Level: ',
+                'lesson' => 'Lesson: ',
+                'objective' => 'Objective:',
+            ]
+        ],
+
+        'notifications' => [
+            'for' => 'Notifications for',
+        ],
+
+        'objectives' => [
+            'create' => [
+                'title' => 'Add Objective',
+            ],
+
+            'edit' => [
+                'title' => 'Edit Objective',
+            ],
+
+            'index' => [
+                'title' => 'Objectives',
+            ],
+
+            'fields' => [
+                'lessonnumber' => 'Lesson number',
+                'selectlesson' => 'Select a lesson...',
+                'objectivenumber' => 'Objective number',
+                'logbookrequired' => 'Logbook required',
+            ],
+
+            'buttons' => [
+                'addobjective' => 'Add objective',
+                'editobjective' => 'Edit objective',
+            ],
+        ],
+
+        'roles' => [
+            'create' => [
+                'title' => 'Add role',
+            ],
+
+            'index' => [
+                'title' => 'Roles',
+            ],
+
+            'edit' => [
+                'title' => 'Edit role',
+                'deletemessage1' => 'Are you sure you want to do this? Any users with this role will be immediately denied access to the application. ',
+                'deletemessage2' => 'Only do this if you are absolutely sure this is what you want.',
+            ],
+
+            'fields' => [
+                'type' => 'Type',
+                'rank' => 'Rank',
+            ],
+
+            'buttons' => [
+                'addrole' => 'Add role',
+                'editrole' => 'Edit role',
+                'deleterole' => 'Delete role',
+                'deletethisrole' => 'Delete this role',
+            ],
+        ],
+
+        'userlessons' => [
+            'show' => [
+                'level' => 'Level:',
+                'lessonpackage' => 'Lesson package:',
+                'name' => 'Name:',
+                'deletemessage1' => 'Are you sure you want to do this? All data associated with this package (objectives completed, comments, status and logbooks) will be permanently deleted. ',
+                'deletemessage2' => 'Only do this if you are absolutely sure this is what you want.',
+            ],
+
+            'buttons' => [
+                'deletepackage' => 'Delete lesson package',
+                'deletethispackage' => 'Delete this lesson package',
+            ],
+        ],
+
+        'userreporting' => [
+            'userreporting' => 'Users successfully linked',
+        ],
+
+        'users' => [
+            'activation' => [
+                'deactivate' => 'Deactivate',
+                'activate' => 'Activate',
+            ],
+
+            'delete' => [
+                'deletemessage1' => 'Are you sure you want to do this? All information about this user will be permenantly deleted. ',
+                'deletemessage2' => 'Only do this if you are absolutely sure this is what you want.',
+            ],
+
+            'create' => [
+                'title' => 'Add users',
+                'usersadded' => 'Users successfully added.',
+            ],
+
+            'index' => [
+                'title' => 'Users',
+            ],
+
+            'show' => [
+                'profilefor' => 'Profile for',
+                'role' => 'Role',
+                'email' => 'Email',
+                'active' => 'Active',
+                'appointdate' => 'Appointment date',
+                'reporting' => 'Reporting',
+                'norole1' => 'No one with a role of',
+                'norole2' => 'currently',
+                'norole3' => 'supervises',
+                'norole4' => 'works under',
+                'addusassignedlessons' => 'Add Unassigned Lesson Packages',
+                'lessonpackages' => 'Lesson Packages',
+            ],
+
+            'buttons' => [
+                'deleteuser' => 'Delete user',
+                'deletethisuser' => 'Delete this user',
+                'updaterole' => 'Update role',
+                'addusers' => 'Add users',
+                'inactiveusers' => 'Inactive users',
+            ],
+        ]
     ],
 
     'errors' => [
@@ -173,7 +577,7 @@ return [
         'users' => [
             'id' => [
                 'required' => 'You have not checked the checkbox next to one or more of your selected users.',
-                'exists' => 'The user with an id of :input is not registered on Moodle. Please ask them to register.'
+                'exists' => 'The user with an id of :input is not registered on Moodle. Please ask them to register.',
                 'unique' => 'The user with an id of :input has already been added to this application.',
             ],
 

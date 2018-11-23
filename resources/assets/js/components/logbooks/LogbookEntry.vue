@@ -9,14 +9,14 @@
 						<button 
 							class="button is-text has-text-info"
 							@click.prevent="editing = true"
-						>Edit entry</button>
+						>{{ trans('app.components.logbooks.editentry') }}</button>
 					</div>
 
 					<div class="level-item">
 						<button 
 							class="button is-text has-text-danger"
 							@click.prevent="remove"
-						>Delete entry</button>
+						>{{ trans('app.components.logbooks.deleteentry') }}</button>
 					</div>
 				</div>
 
@@ -25,21 +25,21 @@
 						<a 
 							href="#"
 							@click.prevent="hide"
-						>Return to entries</a>
+						>{{ trans('app.components.logbooks.returntoentries') }}</a>
 					</div>
 				</div>
 			</div>
 			
 			<div class="content mt-8">
 				<p>
-					<strong>Logbook entry created: </strong>{{ entry.created_at }}
-					by {{ entry.created_by.firstname }} {{ entry.created_by.lastname }}
+					<strong>{{ trans('app.components.logbooks.entrycreated') }} </strong>{{ entry.created_at }}
+					{{ trans('app.components.logbooks.by') }} {{ entry.created_by.firstname }} {{ entry.created_by.lastname }}
 					(<strong>{{ entry.created_by.role }}</strong>)
 				</p>
 
 				<p v-if="entry.edited_at">
-					<strong>Logbook entry edited: </strong>
-					{{ entry.edited_at }} by 
+					<strong>{{ trans('app.components.logbooks.entryedited') }} </strong>
+					{{ entry.edited_at }} {{ trans('app.components.logbooks.by') }} 
 					{{ entry.edited_by.firstname }} {{ entry.edited_by.lastname }} 
 					(<strong>{{ entry.edited_by.role }}</strong>)
 				</p>
@@ -56,7 +56,7 @@
 
 		<logbook-entry-files />
 
-		<h3 class="title is-3 mt-8">Comments</h3>
+		<h3 class="title is-3 mt-8">{{ trans('app.components.logbooks.comments') }}</h3>
 
 		<comments 
 			:endpoint="commentsEndpoint"
@@ -105,9 +105,9 @@
 
 			remove () {
 				this.$dialog.confirm({
-                    title: 'Delete entry',
-                    message: 'Are you sure you want to <b>delete</b> this logbook entry?',
-                    confirmText: 'Delete entry',
+                    title: this.trans('app.components.logbooks.deleteentry'),
+                    message: this.trans('app.components.logbooks.deleteentryconfirm'),
+                    confirmText: this.trans('app.components.logbooks.deleteentry'),
                     type: 'is-danger',
                     onConfirm: () => this.destroy()
                     	.then(response => {

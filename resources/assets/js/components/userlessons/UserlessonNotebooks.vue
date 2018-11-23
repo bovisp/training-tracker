@@ -1,26 +1,26 @@
 <template>
 	<div>
 		<h3 class="title is-3 mt-16">
-			Logbooks
+			{{ trans('app.components.userlessons.logbooks') }}
 		</h3>
 
 		<ul class="box">
 			<li v-for="(logbook, index) in logbooks" :key="logbook.id">
-				<p>
+				<p v-if="logbook.objective">
 					<strong>{{ logbook.objective.number }}</strong> - {{ logbook.objective.name }}
 				</p>
 
 				<div class="mt-4"> 
 					<p class="has-text-grey mt-2">
-						Entries: {{ logbook.entries.length }}
+						{{ trans('app.components.userlessons.logbookentries') }} {{ logbook.entries.length }}
 					</p>
 
 					<p class="has-text-grey mt-2" v-if="logbook.lastEntryCreated">
-						Latest entry created by: {{ creatorName(logbook) }} (<strong>{{ creatorRole(logbook) }}</strong>) on {{ createdAt(logbook) }}
+						{{ trans('app.components.userlessons.entrycreatedmessage1') }} {{ creatorName(logbook) }} (<strong>{{ creatorRole(logbook) }}</strong>) {{ trans('app.components.userlessons.entrycreatedmessage2') }} {{ createdAt(logbook) }}
 					</p>
 
 					<p class="has-text-grey mt-2" v-if="logbook.lastEntryUpdateExists">
-						Last updated by: {{ editorName(logbook) }} (<strong>{{ editorRole(logbook) }}</strong>) on {{ editedAt(logbook) }}
+						{{ trans('app.components.userlessons.updatedentrymessage1') }} {{ editorName(logbook) }} (<strong>{{ editorRole(logbook) }}</strong>) {{ trans('app.components.userlessons.updatedentrymessage2') }} {{ editedAt(logbook) }}
 					</p>
 
 					<div class="level">
@@ -34,7 +34,7 @@
 								>
 									<i class="mdi mdi-square-edit-outline mr-2"></i>
 
-									Edit logbook
+									{{ trans('app.components.userlessons.editlogbook') }}
 								</a>
 							</div>
 						</div>

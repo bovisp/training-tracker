@@ -26,7 +26,7 @@ class ObjectivesController extends Controller
                     'active' => true,
                     'endpoint' => env('APP_URL') . '/objectives/',
                     'endpointSuffix' => '/edit',
-                    'text' => trans('app.datatable.buttons.edit.description')
+                    'text' => trans('app.datatable.buttons.edit')
                 ]
             ]
         ];

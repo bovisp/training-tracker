@@ -5,17 +5,17 @@
 	<div class="columns is-centered mb-16">
 		<div class="column">
 			<p>
-				<strong>Level:</strong>	{{ $userlesson->lesson->level->name }}
+				<strong>{{ trans('app.pages.userlessons.show.level') }}</strong>	{{ $userlesson->lesson->level->name }}
 			</p>
 
 			<p>
-				<strong>Lesson package:</strong>
+				<strong>{{ trans('app.pages.userlessons.show.lessonpackage') }}</strong>
 
 				{{ number_format($userlesson->lesson->number, 2) }} - {{ $userlesson->lesson->name }}
 			</p>
 
 			<p>
-				<strong>Name:</strong>
+				<strong>{{ trans('app.pages.userlessons.show.name') }}</strong>
 
 				<a href="{{ env('APP_URL') }}/users/{{ $user->id }}">
 					{{ $user->moodleuser->firstname }} {{ $user->moodleuser->lastname }}
@@ -32,15 +32,14 @@
 			@if (moodleauth()->user()->hasRole('administrator'))
 
 				<b-collapse :open="false">
-		            <button class="button is-text has-text-danger" slot="trigger">Delete lesson package</button>
+		            <button class="button is-text has-text-danger" slot="trigger">
+		            	{{ trans('app.pages.userlessons.buttons.deletepackage') }}
+		            </button>
 
 		            <article class="message is-danger mt-4">
 						<div class="message-body">
 							<p>
-								Are you sure you want to do this? All data associated
-								with this package (objectives completed, comments, status and logbooks)
-								will be permanently deleted. <strong>Only do this if you are
-								absolutely sure this is what you want.</strong>
+								{{ trans('app.pages.userlessons.show.deletemessage1') }}<strong>{{ trans('app.pages.userlessons.show.deletemessage2') }}</strong>
 							</p>
 
 							<div class="level">
@@ -55,7 +54,7 @@
 										<div class="field">
 											<div class="control">
 												<button class="button is-small is-danger">
-													Delete this lesson package
+													{{ trans('app.pages.userlessons.buttons.deletethispackage') }}
 												</button>
 											</div>
 										</div>

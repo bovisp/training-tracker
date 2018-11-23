@@ -4,7 +4,7 @@
 
 	<div class="columns is-centered">
 		<div class="column is-three-quarters-tablet is-half-desktop">
-			<h2 class="title is-2">Edit Objective</h2>
+			<h2 class="title is-2">{{ trans('app.pages.objectives.edit.title') }}</h2>
 			
 			<form action="{{ env('APP_URL') }}/objectives/{{ $objective->id }}" method="POST">
 				{{ csrf_field() }}
@@ -12,7 +12,7 @@
 				{{ method_field('put') }}
 
 				<div class="field">
-					<label class="label" for="lesson_id">Lesson number</label>
+					<label class="label" for="lesson_id">{{ trans('app.pages.objectives.fields.lessonnumber') }}</label>
 
 					<div class="control">
 						<div class="select {{ $errors->any() && $errors->has('lesson_id') ? 'is-danger' : '' }}">
@@ -20,7 +20,7 @@
 								name="lesson_id" 
 								id="lesson_id" 
 							>
-								<option value="">Select a lesson...</option>
+								<option value="">{{ trans('app.pages.objectives.fields.selectlesson') }}</option>
 
 								@foreach($lessons as $lesson)
 
@@ -46,7 +46,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="number">Objective number</label>
+					<label class="label" for="number">{{ trans('app.pages.objectives.fields.objectivenumber') }}</label>
 
 					<div class="control">
 						<input 
@@ -66,7 +66,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_en">Name (English)</label>
+					<label class="label" for="name_en">{{ trans('app.general.fields.nameen') }}</label>
 
 					<div class="control">
 						<input 
@@ -87,7 +87,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_fr">Name (French)</label>
+					<label class="label" for="name_fr">{{ trans('app.general.fields.namefr') }}</label>
 
 					<div class="control">
 						<input 
@@ -107,7 +107,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="notebook_required">Logbook required</label>
+					<label class="label" for="notebook_required">{{ trans('app.pages.objectives.fields.logbookrequired') }}</label>
 
 					<div class="control">
 						<div class="select {{ $errors->any() && $errors->has('notebook_required') ? 'is-danger' : '' }}">
@@ -138,7 +138,7 @@
 
 				<div class="field">
 					<div class="control">
-						<button class="button is-link">Edit objective</button>
+						<button class="button is-link">{{ trans('app.pages.objectives.buttons.editobjective') }}</button>
 					</div>
 				</div>
 			</form>

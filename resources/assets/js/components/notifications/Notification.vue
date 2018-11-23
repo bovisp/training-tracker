@@ -30,7 +30,7 @@
 					href="#" 
 					class="has-text-danger"
 					@click="destroy"
-				>Delete</a>
+				>{{ trans('app.general.buttons.delete') }}</a>
 			</div>
 
 			<template v-if="!isRead">
@@ -38,7 +38,7 @@
 					<a
 						href="#"
 						@click="read"
-					>Mark as read</a>
+					>{{ trans('app.components.notifications.markasread') }}</a>
 				</div>
 			</template>
 			
@@ -47,7 +47,7 @@
 					<a
 						href="#"
 						@click="unread"
-					>Mark as unread</a>
+					>{{ trans('app.components.notifications.markasunread') }}</a>
 				</div>
 			</template>
 		</footer>
@@ -93,7 +93,7 @@
 			destroy () {
 				this.deleteNotification(this.notification.data.id)
 					.then(response => this.$toast.open({
-		                message: 'Notification successfully deleted.',
+		                message: this.trans('app.components.notifications.notificationdeleted'),
 		                position: 'is-top-right',
 		                type: 'is-success'
             		}))
@@ -102,7 +102,7 @@
 			read () {
 				this.markAsRead(this.notification.data.id)
 					.then(response => this.$toast.open({
-		                message: 'Notification marked as read.',
+		                message: this.trans('app.components.notifications.notificationread'),
 		                position: 'is-top-right',
 		                type: 'is-success'
             		}))
@@ -111,7 +111,7 @@
 			unread () {
 				this.markAsUnread(this.notification.data.id)
 					.then(response => this.$toast.open({
-		                message: 'Notification marked as unread.',
+		                message: this.trans('app.components.notifications.notificationunread'),
 		                position: 'is-top-right',
 		                type: 'is-success'
             		}))

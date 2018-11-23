@@ -1,12 +1,12 @@
 <b-collapse :open="false" v-cloak>
-    <button class="button is-text has-text-danger" slot="trigger">Delete user</button>
+    <button class="button is-text has-text-danger" slot="trigger">
+    	{{ trans('app.pages.users.buttons.deleteuser') }}
+    </button>
 
     <article class="message is-danger mt-4">
 		<div class="message-body">
 			<p>
-				Are you sure you want to do this? All information about this
-				user will be permenantly deleted. <strong>Only do this if you are
-				absolutely sure this is what you want.</strong>
+				{{ trans('app.pages.users.delete.deletemessage1') }}<strong>{{ trans('app.pages.users.delete.deletemessage2') }}</strong>
 			</p>
 
 			<div class="level">
@@ -21,7 +21,7 @@
 						<div class="field">
 							<div class="control">
 								<button class="button is-small is-danger">
-									Delete this user
+									{{ trans('app.pages.users.buttons.deletethisuser') }}
 								</button>
 							</div>
 						</div>

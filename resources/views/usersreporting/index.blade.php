@@ -16,7 +16,7 @@
 				endpoint="{{ route('usersreporting.index.api', ['user' => $user->id, 'role' => $role->id]) }}"
 				redirect-endpoint="{{ route('users.show', ['user' => $user->id]) }}"
 				:has-checkbox="true"
-				success-message="Users successfully linked"
+				success-message="{{ trans('app.pages.userreporting.userslinked') }}"
 				post-endpoint="{{ route('usersreporting.store.api', ['user' => $user->id, 'role' => $role->id]) }}"
 			>
 			</data-table>

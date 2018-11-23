@@ -7,33 +7,35 @@
 			<div class="level">
 				<div class="level-left">
 					<div class="level-item">
-						<h2 class="title is-2">Logbook</h2>
+						<h2 class="title is-2">{{ trans('app.pages.logbooks.show.title') }}</h2>
 					</div>
 				</div>
 
 				<div class="level-right">
 					<div class="level-item">
-						<a href="{{ env('APP_URL') }}/users/{{ $user->id }}/userlessons/{{ $logbook->userlesson_id }}">Back to lesson package</a>
+						<a href="{{ env('APP_URL') }}/users/{{ $user->id }}/userlessons/{{ $logbook->userlesson_id }}">
+							{{ trans('app.pages.logbooks.show.backtopackage') }}
+						</a>
 					</div>
 				</div>
 			</div>
 
 			<p>
-				<strong>Level: </strong>
+				<strong>{{ trans('app.pages.logbooks.show.level') }}</strong>
 				{{ 
 					$logbook->objective->lesson->level->name
 				}}
 			</p>
 
 			<p>
-				<strong>Lesson: </strong>
+				<strong>{{ trans('app.pages.logbooks.show.lesson') }}</strong>
 				{{ 
 					number_format($logbook->objective->lesson->number) . ' - ' . $logbook->objective->lesson->name 
 				}}
 			</p>
 
 			<p class="mb-8">
-				<strong>Objective:</strong>
+				<strong>{{ trans('app.pages.logbooks.show.objective') }}</strong>
 				{{
 					$logbook->objective->number . ' - ' .
 					$logbook->objective->name

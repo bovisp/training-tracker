@@ -4,7 +4,7 @@
 			v-if="!creating"
 			@click.prevent="creating = true"
 			class="button is-info"
-		>New logbook entry</button>
+		>{{ trans('app.components.logbooks.newentry') }}</button>
 
 		<template v-else>
 			<vue-editor 
@@ -23,13 +23,13 @@
 					<file-upload />
 
 					<button class="button is-text is-small mt-2" @click="addFiles = false">
-						Cancel adding files
+						{{ trans('app.components.logbooks.canceladdfiles') }}
 					</button>
 				</template>
 
 				<template v-else>
 					<button class="button is-text" @click="addFiles = true">
-						<i class="mdi mdi-plus"></i> Add files
+						<i class="mdi mdi-plus"></i> {{ trans('app.components.logbooks.addfiles') }}
 					</button>
 				</template>
 			</div>
@@ -40,14 +40,14 @@
 						<button
 							@click.prevent="submit"
 							class="button is-info"
-						>Create</button>
+						>{{ trans('app.general.buttons.create') }}</button>
 					</div>
 
 					<div class="level-item">
 						<button
 							@click.prevent="cancel"
 							class="button is-text"
-						>Cancel</button>
+						>{{ trans('app.general.buttons.cancel') }}</button>
 					</div>
 				</div>
 			</div>

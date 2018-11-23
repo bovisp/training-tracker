@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h3 class="title is-3 mt-16">
-			Objectives
+			{{ trans('app.components.userlessons.objectives') }}
 		</h3>
 
 		<ul>

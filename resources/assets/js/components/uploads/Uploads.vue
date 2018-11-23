@@ -3,15 +3,15 @@
 		<div class="dragndrop__status" v-if="files.length">
 			<ul class="list-inline">
 				<li class="list-inline__item">
-					Files: {{ files.length }}
+					{{ trans('app.components.uploads.numberoffiles') }} {{ files.length }}
 				</li>
 
 				<li class="list-inline__item">
-					Percentage: {{ overallProgress }}%
+					{{ trans('app.components.uploads.percentage') }} {{ overallProgress }}%
 				</li>
 
 				<li class="list-inline__item list-inline__item--last">
-					Time remaining: {{ timeRemaining }}
+					{{ trans('app.components.uploads.timeremaining') }} {{ timeRemaining }}
 				</li>
 			</ul>
 		</div>
@@ -42,7 +42,7 @@
 				overallProgress: 0,
 				interval: null,
 				secondsRemaining: 0,
-				timeRemaining: 'Calculating'
+				timeRemaining: this.trans('app.components.uploads.calculating')
 			}
 		},
 

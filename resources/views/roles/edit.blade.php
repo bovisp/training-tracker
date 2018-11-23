@@ -4,7 +4,7 @@
 
 	<div class="columns is-centered">
 		<div class="column is-three-quarters-tablet is-half-desktop">
-			<h2 class="title is-2">Edit role</h2>
+			<h2 class="title is-2">{{ trans('app.pages.roles.edit.title') }}</h2>
 			
 			<form action="{{ env('APP_URL') }}/roles/{{ $role->id }}" method="POST">
 				{{ csrf_field() }}
@@ -12,7 +12,7 @@
 				{{ method_field('put') }}
 
 				<div class="field">
-					<label class="label" for="type">Type</label>
+					<label class="label" for="type">{{ trans('app.pages.roles.fields.type') }}</label>
 
 					<div class="control">
 						<input 
@@ -32,7 +32,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="rank">Rank</label>
+					<label class="label" for="rank">{{ trans('app.pages.roles.fields.rank') }}</label>
 
 					<div class="control">
 						<input 
@@ -52,7 +52,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_en">Name (English)</label>
+					<label class="label" for="name_en">{{ trans('app.general.fields.nameen') }}</label>
 
 					<div class="control">
 						<input 
@@ -73,7 +73,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_fr">Name (French)</label>
+					<label class="label" for="name_fr">{{ trans('app.general.fields.namefr') }}</label>
 
 					<div class="control">
 						<input 
@@ -94,7 +94,7 @@
 
 				<div class="field">
 					<div class="control">
-						<button class="button is-link">Edit role</button>
+						<button class="button is-link">{{ trans('app.pages.roles.buttons.editrole') }}</button>
 					</div>
 				</div>
 			</form>
@@ -102,15 +102,12 @@
 			<div class="divider divider--relaxed"></div>
 
 			<b-collapse :open="false" v-cloak>
-	            <button class="button is-text has-text-danger" slot="trigger">Delete role</button>
+	            <button class="button is-text has-text-danger" slot="trigger">{{ trans('app.pages.roles.buttons.deleterole') }}</button>
 
 	            <article class="message is-danger mt-4">
 					<div class="message-body">
 						<p>
-							Are you sure you want to do this? Any users with this 
-							role will be immediately denied access to the
-							application. <strong>Only do this if you are
-							absolutely sure this is what you want.</strong>
+							{{ trans('app.pages.roles.edit.deletemessage1') }}<strong>{{ trans('app.pages.roles.edit.deletemessage2') }}</strong>
 						</p>
 
 						<div class="level">
@@ -125,7 +122,7 @@
 									<div class="field">
 										<div class="control">
 											<button class="button is-small is-danger">
-												Delete this role
+												{{ trans('app.pages.roles.buttons.deletethisrole') }}
 											</button>
 										</div>
 									</div>

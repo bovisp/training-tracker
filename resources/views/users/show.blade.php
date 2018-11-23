@@ -5,12 +5,15 @@
 	<div class="columns is-centered">
 		<div class="column is-three-quarters-desktop">
 			<h2 class="title is-2">
-				Profile for {{ $user->firstname }} {{ $user->lastname }}
+				{{ trans('app.pages.users.show.profilefor') }} {{ $user->firstname }} {{ $user->lastname }}
 			</h2>
 
 			<div class="content">
 				<dl>
-					<dt><strong>Role</strong></dt>
+					<dt>
+						<strong>{{ trans('app.pages.users.show.role') }}</strong>
+					</dt>
+
 					<dd>
 						
 						@component('users.components.role', [
@@ -21,10 +24,16 @@
 						@endcomponent
 					</dd>
 
-					<dt><strong>Email</strong></dt>
+					<dt>
+						<strong>{{ trans('app.pages.users.show.email') }}</strong>
+					</dt>
+
 					<dd>{{ $user->email }}</dd>
 
-					<dt><strong>Active</strong></dt>
+					<dt>
+						<strong>{{ trans('app.pages.users.show.active') }}</strong>
+					</dt>
+
 					<dd class="is-flex items-center">
 						
 						@component('users.components.activation', ['user' => $user])
@@ -33,7 +42,10 @@
 
 					</dd>
 
-					<dt><strong>Appointment date</strong></dt>
+					<dt>
+						<strong>{{ trans('app.pages.users.show.appointdate') }}</strong>
+					</dt>
+
 					<dd class="is-flex items-center">
 
 						@if (!$user->hasRole('administrator'))
@@ -54,7 +66,7 @@
 					<div class="divider divider--relaxed"></div>
 
 					<h3 class="title is-3">
-						Reporting
+						{{ trans('app.pages.users.show.reporting') }}
 					</h3>
 
 					@foreach($roles as $role)
@@ -67,7 +79,7 @@
 								<a 
 									class="button is-text is-small ml-4"
 									href="{{ env('APP_URL') }}/users/{{ $user->id }}/reporting/{{ $role->id }}/edit"
-								>Edit</a>
+								>{{ trans('app.general.buttons.edit') }}</a>
 
 							@endif
 
@@ -93,7 +105,7 @@
 
 							<div class="message">
 								<div class="message-body">
-									No one with a role of "{{ $role->name }}" currently {{ $role->rank < $user->roles->first()->rank ? 'supervises' : 'works under' }} {{ $user->moodleuser->firstname }} {{ $user->moodleuser->lastname }}.
+									{{ trans('app.pages.users.show.norole1') }} "{{ $role->name }}" {{ trans('app.pages.users.show.norole2') }} {{ $role->rank < $user->roles->first()->rank ?  trans('app.pages.users.show.norole3')  :  trans('app.pages.users.show.norole4')  }} {{ $user->moodleuser->firstname }} {{ $user->moodleuser->lastname }}.
 								</div>
 							</div>
 
@@ -108,7 +120,7 @@
 					<div class="divider divider--relaxed"></div>
 
 					<h3 class="title is-3">
-						Add Unassigned Lesson Packages
+						{{ trans('app.pages.users.show.addusassignedlessons') }}
 					</h3>
 
 					<unassigned-user-lessons user-id="{{ $user->id }}"></unassigned-user-lessons>
@@ -120,7 +132,7 @@
 					<div class="divider divider--relaxed"></div>
 
 					<h3 class="title is-3">
-						Lesson Packages
+						{{ trans('app.pages.users.show.lessonpackages') }}
 					</h3>
 
 					@component('users.components.lesson-packages', ['user' => $user])

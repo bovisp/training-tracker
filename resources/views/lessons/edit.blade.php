@@ -4,7 +4,7 @@
 
 	<div class="columns is-centered">
 		<div class="column is-three-quarters-tablet is-half-desktop">
-			<h2 class="title is-2">Add Lesson</h2>
+			<h2 class="title is-2">{{ trans('app.pages.lessons.edit.title') }}</h2>
 			
 			<form action="{{ env('APP_URL') }}/lessons/{{ $lesson->id }}" method="POST">
 				{{ csrf_field() }}
@@ -12,7 +12,7 @@
 				{{ method_field('put') }}
 
 				<div class="field">
-					<label class="label" for="level_id">Level</label>
+					<label class="label" for="level_id">{{ trans('app.pages.lessons.fields.level') }}</label>
 
 					<div class="control">
 						<div class="select {{ $errors->any() && $errors->has('level_id') ? 'is-danger' : '' }}">
@@ -20,7 +20,7 @@
 								name="level_id" 
 								id="level_id" 
 							>
-								<option value="">Select a level...</option>
+								<option value="">{{ trans('app.pages.lessons.fields.selectlevel') }}</option>
 
 								@foreach($levels as $level)
 
@@ -46,7 +46,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="number">Lesson number</label>
+					<label class="label" for="number">{{ trans('app.pages.lessons.fields.number') }}</label>
 
 					<div class="control">
 						<input 
@@ -66,7 +66,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_en">Name (English)</label>
+					<label class="label" for="name_en">{{ trans('app.general.fields.nameen') }}</label>
 
 					<div class="control">
 						<input 
@@ -87,7 +87,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_fr">Name (French)</label>
+					<label class="label" for="name_fr">{{ trans('app.general.fields.namefr') }}</label>
 
 					<div class="control">
 						<input 
@@ -107,7 +107,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="depricated">Depricated</label>
+					<label class="label" for="depricated">{{ trans('app.pages.lessons.fields.depricated') }}</label>
 
 					<div class="control">
 						<div class="select {{ $errors->any() && $errors->has('depricated') ? 'is-danger' : '' }}">
@@ -139,7 +139,7 @@
 
 				<div class="field">
 					<p>
-						<strong>Period(s) in which this training should be covered:</strong>
+						<strong>{{ trans('app.pages.lessons.fields.periodscovered') }}</strong>
 					</p>
 
 					<label class="checkbox is-block mt-2">
@@ -149,7 +149,7 @@
 							value="1" 
 							{{ old('p9') || $lesson->p9 === 1 ? 'checked' : '' }}
 						>
-						Early EG-03 (0-9 months)
+						{{ trans('app.pages.lessons.fields.period9') }}
 					</label>
 
 					<label class="checkbox is-block mt-2">
@@ -159,7 +159,7 @@
 							value="1" 
 							{{ old('p18') || $lesson->p18 === 1 ? 'checked' : '' }}
 						>
-						Late EG-03 (9-18 months)
+						{{ trans('app.pages.lessons.fields.period18') }}
 					</label>
 
 					<label class="checkbox is-block mt-2">
@@ -169,7 +169,7 @@
 							value="1" 
 							{{ old('p30') || $lesson->p30 === 1 ? 'checked' : '' }}
 						>
-						Early EG-04 (18-30 months)
+						{{ trans('app.pages.lessons.fields.period30') }}
 					</label>
 
 					<label class="checkbox is-block mt-2">
@@ -179,13 +179,13 @@
 							value="1" 
 							{{ old('p42') || $lesson->p42 === 1 ? 'checked' : '' }}
 						>
-						Late EG-04 (30-42 months)
+						{{ trans('app.pages.lessons.fields.period42') }}
 					</label>
 				</div>
 
 				<div class="field mt-6">
 					<div class="control">
-						<button class="button is-link">Update lesson</button>
+						<button class="button is-link">{{ trans('app.pages.lessons.buttons.updatelesson') }}</button>
 					</div>
 				</div>
 			</form>
@@ -193,15 +193,12 @@
 			<div class="divider divider--relaxed"></div>
 
 			<b-collapse :open="false" v-cloak>
-	            <button class="button is-text has-text-danger" slot="trigger">Delete lesson</button>
+	            <button class="button is-text has-text-danger" slot="trigger">{{ trans('app.pages.lessons.buttons.deletelesson') }}</button>
 
 	            <article class="message is-danger mt-4">
 					<div class="message-body">
 						<p>
-							Are you sure you want to do this? All data associated
-							with this lesson (objectives, user lesson plans etc.)
-							will be permanently deleted. <strong>Only do this if you are
-							absolutely sure this is what you want.</strong>
+							{{ trans('app.pages.lessons.buttons.deletemessage1') }}<strong>{{ trans('app.pages.lessons.buttons.deletemessage2') }}</strong>
 						</p>
 
 						<div class="level">
@@ -216,7 +213,7 @@
 									<div class="field">
 										<div class="control">
 											<button class="button is-small is-danger">
-												Delete this lesson
+												{{ trans('app.pages.lessons.buttons.deletethislesson') }}
 											</button>
 										</div>
 									</div>

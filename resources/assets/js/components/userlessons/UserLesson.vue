@@ -19,7 +19,8 @@
 					@click="submit"
 				>
 					<i class="mdi mdi-content-save mr-2"></i>
-					Save lesson package
+
+					{{ trans('app.components.userlessons.save') }}
 				</button>
 		</div>
 
@@ -30,7 +31,7 @@
 		<user-lesson-notebooks></user-lesson-notebooks>
 
 		<h3 class="title is-3 mt-16">
-			Final evaluation
+			{{ trans('app.components.userlessons.finalevaluation') }}
 		</h3>
 
 		<comments 
@@ -40,7 +41,7 @@
 		/>
 
 		<h3 class="title is-3 mt-16">
-			Sign off by Head of Operations or Manager
+			{{ trans('app.components.userlessons.signoff') }}
 		</h3>
 
 		<user-lesson-final></user-lesson-final>
@@ -96,7 +97,7 @@
             		})).catch(error => {
 						if (error.response.status === 403) {
 							this.$dialog.alert({
-			                    title: 'Unauthorized',
+			                    title: this.trans('app.general.unauthorized'),
 			                    message: this.errors.denied,
 			                    type: 'is-danger'
 			                })
@@ -104,7 +105,7 @@
 
 						if (error.response.status === 422 && this.errors.completed) {
 							this.$dialog.alert({
-			                    title: 'Incomplete',
+			                    title: this.trans('app.components.userlessons.incomplete'),
 			                    message: this.errors.completed[0],
 			                    type: 'is-danger'
 			                })

@@ -22,14 +22,14 @@
 					class="button is-link is-small" 
 					type="submit"
 					@click.prevent="submit"
-				>Edit</button>
+				>{{ trans('app.general.buttons.edit') }}</button>
 			</div>
 
 			<div class="control">
 				<button 
 					class="button is-text is-small"
 					@click.prevent="cancel"
-				>Cancel</button>
+				>{{ trans('app.general.buttons.cancel') }}</button>
 			</div>
 		</div>
 	</form>
@@ -89,14 +89,14 @@
 						this.cancel()
 
 						this.$toast.open({
-			                message: 'Comment successfully updated.',
+			                message: this.trans('app.components.comments.commentupdated'),
 			                position: 'is-top-right',
 			                type: 'is-success'
 	            		})
 					}).catch(error => {
 						if (error.response.status === 403) {
 							this.$dialog.alert({
-			                    title: 'Unauthorized',
+			                    title: this.trans('app.general.unauthorized'),
 			                    message: this.errors.denied,
 			                    type: 'is-danger'
 			                })

@@ -18,14 +18,14 @@
 					<button
 						@click.prevent="submit"
 						class="button is-info"
-					>Update</button>
+					>{{ trans('app.general.buttons.update') }}</button>
 				</div>
 
 				<div class="level-item">
 					<button
 						@click.prevent="cancel"
 						class="button is-text"
-					>Cancel</button>
+					>{{ trans('app.general.buttons.cancel') }}</button>
 				</div>
 			</div>
 		</div>

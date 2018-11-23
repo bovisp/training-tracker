@@ -1,11 +1,11 @@
 <template>
 	<div class="mt-8">
-		<h3 class="title is-3 mb-8">Entries</h3>
+		<h3 class="title is-3 mb-8">{{ trans('app.components.logbooks.entries') }}</h3>
 
 		<template v-if="!entries.length">
 			<article class="message is-info">
 				<div class="message-body">
-					There are currently no entries for this logbook
+					{{ trans('app.components.logbooks.noentries') }}
 				</div>
 			</article>
 		</template>

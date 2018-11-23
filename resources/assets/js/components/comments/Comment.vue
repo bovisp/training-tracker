@@ -7,9 +7,9 @@
 						<strong>{{ comment.user.firstname }} {{ comment.user.lastname }}</strong> 
 
 						<span class="has-text-grey">
-							<small>added this on: {{ comment.created_at }}</small>
+							<small>{{ trans('app.components.comments.addedon') }} {{ comment.created_at }}</small>
 
-							<small v-if="comment.edited"> | edited: {{ comment.edited }}</small>
+							<small v-if="comment.edited"> | {{ trans('app.components.comments.edited') }} {{ comment.edited }}</small>
 						</span>
 
 						<br>
@@ -31,14 +31,14 @@
 								<button
 									class="button is-text is-small"
 									@click.prevent="editing = true"
-								>Edit</button>
+								>{{ trans('app.general.buttons.edit') }}</button>
 							</div>
 
 							<div class="level-item">
 								<button
 									class="button is-text is-small has-text-danger"
 									@click.prevent="confirm"
-								>Delete</button>
+								>{{ trans('app.general.buttons.delete') }}</button>
 							</div>
 						</div>
 					</div>
@@ -96,7 +96,7 @@
 
 			confirm () {
                 this.$dialog.confirm({
-                    message: 'Are you sure you want to delete this comment?',
+                    message: this.trans('app.components.comments.deletecomment'),
                     onConfirm: () => this.remove()
                 })
 			},
@@ -105,7 +105,7 @@
 				this.destroy(`${this.endpoint}/${this.comment.id}`)
 					.then(response => {
 						this.$toast.open({
-			                message: 'Comment successfully deleted.',
+			                message: this.trans('app.components.comments.commentdeleted'),
 			                position: 'is-top-right',
 			                type: 'is-success'
 	            		})
@@ -113,7 +113,7 @@
 					.catch(error => {
 						if (error.response.status === 403) {
 							this.$dialog.alert({
-			                    title: 'Unauthorized',
+			                    title: this.trans('app.general.unauthorized'),
 			                    message: this.errors.denied,
 			                    type: 'is-danger'
 			                })

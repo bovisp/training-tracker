@@ -2,7 +2,7 @@
 	<section>
 		<article class="message is-info" v-if="!hasNotifications">
 			<div class="message-body">
-				You have no notifications.
+				{{ trans('app.components.notifications.nonotifications') }}
 			</div>
 		</article>
 
@@ -18,14 +18,14 @@
 							<button 
 								class="button is-text has-text-info"
 								@click="allRead"
-							>Mark all as read</button>
+							>{{ trans('app.components.notifications.markallread') }}</button>
 						</div>
 
 						<div class="level-item">
 							<button 
 								class="button is-text has-text-danger"
 								@click="deleteUnread"
-							>Delete all unread</button>
+							>{{ trans('app.components.notifications.deleteallread') }}</button>
 						</div>
 					</div>
 
@@ -46,14 +46,14 @@
 							<button 
 								class="button is-text has-text-info"
 								@click="allUnread"
-							>Mark all as unread</button>
+							>{{ trans('app.components.notifications.markallunread') }}</button>
 						</div>
 
 						<div class="level-item">
 							<button 
 								class="button is-text has-text-danger"
 								@click="deleteRead"
-							>Delete all read</button>
+							>{{ trans('app.components.notifications.deleteallread') }}</button>
 						</div>
 					</div>
 
@@ -115,7 +115,7 @@
 			allRead () {
 				this.markAllAsRead()
 					.then(response => this.$toast.open({
-		                message: 'Notifications marked as read.',
+		                message: this.trans('app.components.notifications.notificationsmarkedread'),
 		                position: 'is-top-right',
 		                type: 'is-success'
             		}))
@@ -124,7 +124,7 @@
 			allUnread () {
 				this.markAllAsUnread()
 					.then(response => this.$toast.open({
-		                message: 'Notifications marked as unread.',
+		                message: this.trans('app.components.notifications.notificationsmarkedunread'),
 		                position: 'is-top-right',
 		                type: 'is-success'
             		}))
@@ -133,7 +133,7 @@
 			deleteRead () {
 				this.deleteAllRead()
 					.then(response => this.$toast.open({
-		                message: 'Read notifications deleted.',
+		                message: this.trans('app.components.notifications.notificationsdeleted'),
 		                position: 'is-top-right',
 		                type: 'is-success'
             		}))
@@ -142,7 +142,7 @@
 			deleteUnread () {
 				this.deleteAllUnread()
 					.then(response => this.$toast.open({
-		                message: 'Unread notifications deleted.',
+		                message: this.trans('app.components.notifications.unreadnotificationsdeleted'),
 		                position: 'is-top-right',
 		                type: 'is-success'
             		}))

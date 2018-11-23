@@ -19,7 +19,7 @@
 
 		<article class="message is-info" v-else>
 			<div class="message-body">
-				No comments to display
+				{{ trans('app.components.comments.nocomments') }}
 			</div>
 		</article>
 	</div>

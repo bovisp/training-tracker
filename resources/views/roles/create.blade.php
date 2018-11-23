@@ -5,13 +5,13 @@
 
 	<div class="columns is-centered">
 		<div class="column is-three-quarters-tablet is-half-desktop">
-			<h2 class="title is-2">Add role</h2>
+			<h2 class="title is-2">{{ trans('app.pages.roles.create.title') }}</h2>
 			
 			<form action="{{ env('APP_URL') }}/roles" method="POST">
 				{{ csrf_field() }}
 
 				<div class="field">
-					<label class="label" for="type">Type</label>
+					<label class="label" for="type">{{ trans('app.pages.roles.fields.type') }}</label>
 
 					<div class="control">
 						<input 
@@ -31,7 +31,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="rank">Rank</label>
+					<label class="label" for="rank">{{ trans('app.pages.roles.fields.rank') }}</label>
 
 					<div class="control">
 						<input 
@@ -51,7 +51,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_en">Name (English)</label>
+					<label class="label" for="name_en">{{ trans('app.general.fields.nameen') }}</label>
 
 					<div class="control">
 						<input 
@@ -72,7 +72,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_fr">Name (French)</label>
+					<label class="label" for="name_fr">{{ trans('app.general.fields.namefr') }}</label>
 
 					<div class="control">
 						<input 
@@ -93,7 +93,7 @@
 
 				<div class="field">
 					<div class="control">
-						<button class="button is-link">Add role</button>
+						<button class="button is-link">{{ trans('app.pages.roles.buttons.addrole') }}</button>
 					</div>
 				</div>
 			</form>

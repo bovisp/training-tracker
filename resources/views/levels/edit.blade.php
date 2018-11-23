@@ -4,7 +4,7 @@
 
 	<div class="columns is-centered">
 		<div class="column is-three-quarters-tablet is-half-desktop">
-			<h2 class="title is-2">Edit level</h2>
+			<h2 class="title is-2">{{ trans('app.pages.levels.edit.title') }}</h2>
 			
 			<form action="{{ env('APP_URL') }}/levels/{{ $level->id }}" method="POST">
 				{{ csrf_field() }}
@@ -12,7 +12,7 @@
 				{{ method_field('put') }}
 
 				<div class="field">
-					<label class="label" for="name_en">Name (English)</label>
+					<label class="label" for="name_en">{{ trans('app.general.fields.nameen') }}</label>
 
 					<div class="control">
 						<input 
@@ -33,7 +33,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_fr">Name (French)</label>
+					<label class="label" for="name_fr">{{ trans('app.general.fields.namefr') }}</label>
 
 					<div class="control">
 						<input 
@@ -54,7 +54,7 @@
 
 				<div class="field">
 					<div class="control">
-						<button class="button is-link">Edit level</button>
+						<button class="button is-link">{{ trans('app.pages.levels.buttons.editlevel') }}</button>
 					</div>
 				</div>
 			</form>
@@ -62,15 +62,12 @@
 			<div class="divider divider--relaxed"></div>
 
 			<b-collapse :open="false" v-cloak>
-	            <button class="button is-text has-text-danger" slot="trigger">Delete level</button>
+	            <button class="button is-text has-text-danger" slot="trigger">{{ trans('app.pages.levels.buttons.deletelevel') }}</button>
 
 	            <article class="message is-danger mt-4">
 					<div class="message-body">
 						<p>
-							Are you sure you want to do this? All data associated
-							with this level (lessons, objectives, user lesson packages etc.)
-							will be permanently deleted. <strong>Only do this if you are
-							absolutely sure this is what you want.</strong>
+							{{ trans('app.pages.levels.edit.deletemessage1') }}<strong>{{ trans('app.pages.levels.edit.deletemessage2') }}</strong>
 						</p>
 
 						<div class="level">
@@ -85,7 +82,7 @@
 									<div class="field">
 										<div class="control">
 											<button class="button is-small is-danger">
-												Delete this level
+												{{ trans('app.pages.levels.buttons.deletethislevel') }}
 											</button>
 										</div>
 									</div>

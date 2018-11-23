@@ -23,7 +23,7 @@
             class="dragndrop__header" 
             :class="{ 'dragndrop__header--compact': files.length >= 1 }"
         >
-            <strong>Drag files here</strong> or click to select files
+            <strong>{{ trans('app.components.uploads.dragfiles') }}</strong> {{ trans('app.components.uploads.selectfiles') }}
         </label>
 
         <uploads 

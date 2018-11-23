@@ -8,7 +8,7 @@
 
 				<span
 					v-if="!file.failed && !file.finished && !file.cancelled"
-				>({{ file.secondsRemaining }} seconds remaining)</span>
+				>({{ file.secondsRemaining }} {{ trans('app.components.uploads.secondsremaining') }})</span>
 			</div>
 
 			<div 
@@ -23,11 +23,11 @@
 			<div 
 				class="progress__percentage"
 			>
-				<span v-if="file.failed">Failed</span>
+				<span v-if="file.failed">{{ trans('app.components.uploads.failed') }}</span>
 
-				<span v-if="file.finished">Complete</span>
+				<span v-if="file.finished">{{ trans('app.components.uploads.complete') }}</span>
 
-				<span v-if="file.cancelled">Cancelled</span>
+				<span v-if="file.cancelled">{{ trans('app.components.uploads.cancelled') }}</span>
 
 				<span v-if="!file.finished && !file.failed && !file.cancelled">
 					{{ file.progress }}%
@@ -39,7 +39,7 @@
 				class="progress__cancel" 
 				v-if="!file.finished && !file.cancelled && !file.failed"
 				@click.prevent="cancelUpload"
-			>Cancel</a>
+			>{{ trans('app.general.buttons.cancel') }}</a>
 
 			<p
 				v-if="file.failed"

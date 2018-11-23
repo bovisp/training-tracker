@@ -27,7 +27,7 @@
 					></span>
 				</template>
 				
-				This lesson package has been successfully completed
+				{{ trans('app.components.userlessons.packagecompleted') }}
 			</label>
         </div>
 	</section>

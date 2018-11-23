@@ -15,16 +15,16 @@
 			typeString () {
 				switch (this.type) {
 					case 'logbook_entry_added':
-						return 'New logbook entry'
+						return this.trans('app.components.notifications.newlogbookentry')
 
 					case 'logbook_entry_updated':
-						return 'Updated logbook entry'
+						return this.trans('app.components.notifications.updatedlogbookentry')
 
 					case 'logbook_entry_comment_updated':
-						return 'Updated logbook entry comment'
+						return this.trans('app.components.notifications.updatedlogbookentrycomment')
 
 					case 'logbook_entry_comment_added':
-						return 'Logbook entry comment added'
+						return this.trans('app.components.notifications.addedlogbookentrycomment')
 				}
 			}
 		}

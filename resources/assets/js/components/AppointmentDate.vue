@@ -8,7 +8,7 @@
 			<template v-if="role === 'administrator'">
 				<b-field v-if="editing" class="mb-0">
 			        <b-datepicker
-			            placeholder="Click to select..."
+			            :placeholder="trans('app.components.appointmentdate.select')"
 			            icon="calendar-today"
 			            v-model="appointmentDate"
 			            size="is-small">
@@ -16,16 +16,16 @@
 			    </b-field>
 
 			    <button class="button is-text is-small ml-4" @click="editing = true" v-if="!editing">
-			    	Edit
+			    	{{ trans('app.general.buttons.edit') }}
 			    </button>
 
 			    <template v-if="editing">
 				    <button class="button is-text is-small ml-4" @click="update">
-				    	Save
+				    	{{ trans('app.general.buttons.save') }}
 				    </button>
 
 				    <button class="button is-text is-small ml-4 has-text-danger" @click="editing = false">
-				    	Cancel
+				    	{{ trans('app.general.buttons.cancel') }}
 				    </button>	
 			    </template>
 		    </template>
@@ -59,7 +59,7 @@
 		computed: {
 			appointedAt () {
 				if (this.appointmentDate === null) {
-					return 'No appointment date set.'
+					return this.trans('app.components.appointmentdate.noappointmentset')
 				}
 
 				let date = new Date(this.appointmentDate)

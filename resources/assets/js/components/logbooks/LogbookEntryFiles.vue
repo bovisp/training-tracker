@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h3 class="title is-3">Files</h3>
+		<h3 class="title is-3">{{ trans('app.components.logbooks.files') }}</h3>
 
 		<ul class="ml-4 mb-4" v-if="entry.files.length">
 			<li	v-for="file in entry.files" :key="file.id">
@@ -18,7 +18,7 @@
 							<button 
 								class="button has-text-danger is-text is-small"
 								@click.prevent="removeFile(file.codedFilename)"
-							>Delete</button>
+							>{{ trans('app.general.buttons.delete') }}</button>
 						</div>
 					</div>
 
@@ -27,13 +27,15 @@
 			</li>
 		</ul>
 
-		<p class="mb-4" v-else>There are no files for this entry.</p>
+		<p class="mb-4" v-else>
+			{{ trans('app.components.logbooks.nofiles') }}
+		</p>
 
 		<button 
 			class="has-text-info button is-text"
 			v-if="!updating"
 			@click.prevent="updating = true"
-		>Add files</button>
+		>{{ trans('app.components.logbooks.addfiles') }}</button>
 
 		<template v-else>
 			<file-upload />
@@ -44,14 +46,14 @@
 						<button 
 							class="button is-small is-info"
 							@click.prevent="submit"
-						>Add</button>
+						>{{ trans('app.components.logbooks.add') }}</button>
 					</div>
 
 					<div class="level-item">
 						<button 
 							class="button is-small is-text"
 							@click.prevent="updating = false"
-						>Cancel</button>
+						>{{ trans('app.general.buttons.cancel') }}</button>
 					</div>
 				</div>
 			</div>
@@ -131,21 +133,21 @@
 
 			removeFile (file) {
 				this.$dialog.confirm({
-                    title: 'Delete file',
-                    message: 'Are you sure you want to <b>delete</b> this file?',
-                    confirmText: 'Delete entry',
+                    title: this.trans('app.components.logbooks.deletefile'),
+                    message: this.trans('app.components.logbooks.deletefileconfirm'),
+                    confirmText: this.trans('app.components.logbooks.deletefile'),
                     type: 'is-danger',
                     onConfirm: () => this.deleteFile(file)
 						.then(response => {
 							this.$toast.open({
-				                message: 'File successfully deleted',
+				                message: this.trans('app.components.logbooks.filedeleted'),
 				                position: 'is-top-right',
 				                type: 'is-success'
 	            			})
 						})
 						.catch(error => {
 							this.$toast.open({
-				                message: 'You are not authorized to delete this file.',
+				                message: this.trans('app.components.logbooks.cantdeletefile'),
 				                position: 'is-top-right',
 				                type: 'is-danger'
 	            			})
@@ -165,7 +167,7 @@
 	            		this.cancel()
 					}).catch(error => {
 						this.$toast.open({
-			                message: 'You are not authorized to update files for this logbook entry',
+			                message: this.trans('app.components.logbooks.cantupdatefiles'),
 			                position: 'is-top-right',
 			                type: 'is-danger'
 	            		})

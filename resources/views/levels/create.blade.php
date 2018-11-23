@@ -4,13 +4,13 @@
 
 	<div class="columns is-centered">
 		<div class="column is-three-quarters-tablet is-half-desktop">
-			<h2 class="title is-2">Add levels</h2>
+			<h2 class="title is-2">{{ trans('app.pages.levels.create.title') }}</h2>
 			
 			<form action="{{ env('APP_URL') }}/levels" method="POST">
 				{{ csrf_field() }}
 
 				<div class="field">
-					<label class="label" for="name_en">Name (English)</label>
+					<label class="label" for="name_en">{{ trans('app.general.fields.nameen') }}</label>
 
 					<div class="control">
 						<input 
@@ -31,7 +31,7 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="name_fr">Name (French)</label>
+					<label class="label" for="name_fr">{{ trans('app.general.fields.namefr') }}</label>
 
 					<div class="control">
 						<input 
@@ -52,7 +52,7 @@
 
 				<div class="field">
 					<div class="control">
-						<button class="button is-link">Add level</button>
+						<button class="button is-link">{{ trans('app.pages.levels.buttons.addlevel') }}</button>
 					</div>
 				</div>
 			</form>
