@@ -35,7 +35,7 @@
 
 			<div class="column is-half">
 				<b-field>
-		            <b-input placeholder="trans('app.components.datatable.search')"
+		            <b-input :placeholder="trans('app.components.datatable.search')"
 		                type="search"
 		                icon="magnify"
 		                v-model="search">
@@ -79,7 +79,7 @@
 
 		        <b-table-column 
 		        	v-if="withRoles"
-		        	label="trans('app.components.datatable.selectrole')"
+		        	:label="trans('app.components.datatable.selectrole')"
 		        >
                     <div class="select">
                         <select v-model="rolesModel[props.row.id]">

@@ -374,7 +374,7 @@ return [
         ],
 
         'userreporting' => [
-            'userreporting' => 'Users successfully linked',
+            'userslinked' => 'Users successfully linked',
         ],
 
         'users' => [

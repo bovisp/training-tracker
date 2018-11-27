@@ -198,7 +198,7 @@
 	            <article class="message is-danger mt-4">
 					<div class="message-body">
 						<p>
-							{{ trans('app.pages.lessons.buttons.deletemessage1') }}<strong>{{ trans('app.pages.lessons.buttons.deletemessage2') }}</strong>
+							{{ trans('app.pages.lessons.edit.deletemessage1') }}<strong>{{ trans('app.pages.lessons.edit.deletemessage2') }}</strong>
 						</p>
 
 						<div class="level">
