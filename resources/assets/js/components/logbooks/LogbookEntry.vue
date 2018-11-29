@@ -9,6 +9,7 @@
 						<button 
 							class="button is-text has-text-info"
 							@click.prevent="editing = true"
+							v-if="!completedPackage"
 						>{{ trans('app.components.logbooks.editentry') }}</button>
 					</div>
 
@@ -16,6 +17,7 @@
 						<button 
 							class="button is-text has-text-danger"
 							@click.prevent="remove"
+							v-if="!completedPackage"
 						>{{ trans('app.components.logbooks.deleteentry') }}</button>
 					</div>
 				</div>
@@ -61,6 +63,7 @@
 		<comments 
 			:endpoint="commentsEndpoint"
 			:create-roles="['supervisor', 'head_of_operations', 'apprentice']"
+			:is-completed="completedPackage === 1 ? true : false"
 		/>
 		
 	</div>
@@ -89,7 +92,8 @@
 			...mapGetters({
 				entry: 'logbooks/entry',
 				userId: 'logbooks/userId',
-				entryId: 'logbooks/entryId'
+				entryId: 'logbooks/entryId',
+				completedPackage: 'logbooks/completedPackage'
 			}),
 
 			commentsEndpoint () {

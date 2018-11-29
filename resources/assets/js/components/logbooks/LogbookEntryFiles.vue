@@ -33,11 +33,11 @@
 
 		<button 
 			class="has-text-info button is-text"
-			v-if="!updating"
+			v-if="!updating && !completedPackage"
 			@click.prevent="updating = true"
 		>{{ trans('app.components.logbooks.addfiles') }}</button>
 
-		<template v-else>
+		<template v-if="updating">
 			<file-upload />
 
 			<div class="level mt-4">
@@ -84,6 +84,7 @@
 			...mapGetters({
 				userId: 'logbooks/userId',
 				entry: 'logbooks/entry',
+				completedPackage: 'logbooks/completedPackage',
 			})
 		},
 

@@ -16,11 +16,18 @@ class LogbookEntriesController extends Controller
 {
     public function index(User $user, Logbook $logbook)
     {
-        return LogbookEntriesResource::collection($logbook->entries);
+        return LogbookEntriesResource::collection($logbook->entries)
+            ->additional([
+                'completedPackage' => $logbook->userlesson->completed
+            ]);
     }
 
     public function store(LogbookEntriesStoreRequest $request, User $user, Logbook $logbook)
     {
+        if ($logbook->userlesson->completed === 1) {
+            abort(403);
+        }
+        
         $logbookEntry = new LogbookEntry;
 
         $logbookEntry->add($user, $logbook);
@@ -33,7 +40,7 @@ class LogbookEntriesController extends Controller
     public function show(User $user, Logbook $logbook)
     {
         $logbook->load([
-            'objective', 'objective.lesson', 'objective.lesson.level'
+            'objective', 'objective.lesson', 'objective.lesson.level', 'userlesson'
         ]);
 
         $user->load(['moodleuser']);

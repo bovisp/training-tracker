@@ -32,9 +32,13 @@
 									class="button is-text has-text-info"
 									:href="`${urlBase}/users/${user.id}/logbooks/${logbook.id}`"
 								>
-									<i class="mdi mdi-square-edit-outline mr-2"></i>
+									<template v-if="!completedPackage">
+										<i class="mdi mdi-square-edit-outline mr-2"></i>
 
-									{{ trans('app.components.userlessons.editlogbook') }}
+										<span>{{ trans('app.components.userlessons.editlogbook') }}</span>
+									</template>
+
+									<span v-else>{{ trans('app.components.userlessons.viewlogbook') }}</span>
 								</a>
 							</div>
 						</div>
@@ -52,6 +56,12 @@
 	import dayjs from 'dayjs'
 
 	export default {
+		data () {
+			return {
+				completedPackage: false
+			}
+		},
+
 		computed: {
 			...mapGetters({
 				logbooks: 'userlessons/logbooks',
@@ -88,6 +98,12 @@
 			creatorRole(logbook) {
 				return logbook.lastEntryCreated.creator.role
 			}
+		},
+
+		mounted () {
+			window.events.$on('completedPackage', () => {
+				this.completedPackage = !this.completedPackage
+			})
 		}
 	}
 </script>

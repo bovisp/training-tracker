@@ -3,6 +3,7 @@
 		<template v-if="!reading">
 			<new-logbook-entry 
 				:endpoint="endpoint"
+				v-if="completedPackage !== 1"
 			/>
 
 			<logbook-entries />
@@ -56,7 +57,8 @@
 		computed: {
 			...mapGetters({
 				isLoading: 'isLoading',
-				entryId: 'logbooks/entryId'
+				entryId: 'logbooks/entryId',
+				completedPackage: 'logbooks/completedPackage'
 			}),
 
 			reading () {
@@ -89,6 +91,10 @@
 
 		mounted () {
 			this.init()
+
+			window.events.$on('completedPackage', () => {
+				this.completedPackage = !this.completedPackage
+			})
 		}
 	}
 </script>

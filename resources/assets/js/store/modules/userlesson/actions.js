@@ -5,6 +5,10 @@ export const fetch = async ({ commit }, { userlesson, user }) => {
 
 	await commit('initialize', response.data)
 
+	if (response.data.completedPackage === 1) {
+		window.events.$emit('completedPackage')
+	}
+
 	await commit('loadingStatus', null, { root: true })
 }
 

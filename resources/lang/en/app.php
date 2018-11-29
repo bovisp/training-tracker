@@ -162,7 +162,7 @@ return [
 
         'userlessons' => [
             'save' => 'Save lesson package',
-            'finalevaluation' => 'Final evaluation',
+            'finalevaluation' => 'Statement of Competency',
             'signoff' => 'Sign off by Head of Operations or Manager',
             'incomplete' => 'Incomplete',
             'packagecompleted' => 'This lesson package has been successfully completed',
@@ -173,6 +173,7 @@ return [
             'updatedentrymessage1' => 'Last updated by:',
             'updatedentrymessage2' => 'on',
             'editlogbook' => 'Edit logbook',
+            'viewlogbook' => 'View logbook',
             'objectives' => 'Objectives',
             'status' => 'Status',
             'earlyegthree' => 'Early EG-03',
@@ -578,6 +579,7 @@ return [
             'exists2' => ' does not exist.',
             'integer' => 'The lesson number must be an integer (i.e. 1, 2, 3 etc.)',
             'objectives' => 'One or more of the objectives is invalid',
+            'completed' => 'This lesson package has not been completed.'
         ],
 
         'users' => [
