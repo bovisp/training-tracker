@@ -13,7 +13,7 @@ return [
     */
 
     'general' => [
-    	'appName' => 'MSC Training Tracker',
+    	'appName' => 'HT - APTP',
         'yes' => 'Yes',
         'no' => 'No',
         'unauthorized' => 'Unauthorized',
@@ -187,6 +187,11 @@ return [
         'appointmentdate' => [
             'select' => 'Click to select...',
             'noappointmentset' => 'No appointment date set.',
+        ],
+
+        'deactivation' => [
+            'nodeactivateddate' => 'No deactivation date set',
+            'noreactivateddate' => 'No reactivation date set',
         ],
 
         'unassigneduserlessons' => [
@@ -410,6 +415,7 @@ return [
                 'norole4' => 'works under',
                 'addusassignedlessons' => 'Add Unassigned Lesson Packages',
                 'lessonpackages' => 'Lesson Packages',
+                'deactivation' => 'Deactivation',
             ],
 
             'buttons' => [
@@ -589,7 +595,7 @@ return [
             'appointedAt' => [
                 'required' => 'Please enter a date.',
                 'date' => 'Please enter a valid date.',
-            ],
+            ]
         ],
 
         'usersreporting' => [
@@ -666,5 +672,6 @@ return [
         'userdeactivated' => 'User successfully deactivated.',
         'appointmentdateupdated' => 'Date of appointment updated successfully.',
         'usersroleupdated' => 'Role updated successfully.',
+        'deactivationupdated' => 'Deactivation information updated successfully.',
     ],
 ];

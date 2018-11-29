@@ -48,16 +48,28 @@
 
 					<dd class="is-flex items-center">
 
-						@if (!$user->hasRole('administrator'))
+						@component('users.components.appointment', ['user' => $user])
 
-							<appointment-date 
-								:user="{{ json_encode($user) }}"
-								role="{{ moodleauth()->user()->roles()->first()->type }}"
-							></appointment-date>
-
-						@endif
+						@endcomponent
 						
 					</dd>
+					
+					@if (!$user->active || $user->deactivated_at)
+
+						<dt>
+							<strong>{{ trans('app.pages.users.show.deactivation') }}</strong>
+						</dt>
+
+						<dd class="is-flex items-center">
+
+							@component('users.components.deactivation', ['user' => $user])
+
+							@endcomponent
+							
+						</dd>
+
+					@endif
+
 				</dl>
 			
 

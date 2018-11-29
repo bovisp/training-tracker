@@ -43,7 +43,7 @@
 </template>
 
 <script>
-	import Error from '../classes/Error'
+	import Error from '../../classes/Error'
 
 	export default {
 		props: ['user', 'role'],
@@ -70,15 +70,6 @@
 
 		methods: {
 			update () {
-				axios.interceptors.response.use(
-	                response => {
-	                  return response;
-	                },
-	                error => {
-	                    return Promise.reject(error.response);
-	                }
-	            )
-
 				axios.put(`${urlBase}/users/api/${this.user.id}/appointment`, {
 					appointed_at: (new Date(this.appointmentDate)).toMysqlFormat()
 				})
@@ -96,7 +87,7 @@
 	                    this.appointmentDate = new Date(data.date)
 					})
 					.catch(error => {
-						if (error.status === 422) {
+						if (error.response.status === 422) {
 	                        this.errors.record(error.data.errors)
 	                    }
 					})

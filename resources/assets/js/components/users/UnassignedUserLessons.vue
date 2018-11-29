@@ -101,7 +101,7 @@
 </template>
 
 <script>
-	import Error from "../classes/Error"
+	import Error from "../../classes/Error"
 
 	export default {
 		props: ['userId'],

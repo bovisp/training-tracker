@@ -136,7 +136,7 @@
 
 				<div class="field">
 					<div class="control">
-						<button class="button is-link">{{ trans('app.pages.objectives.fields.addobjective') }}</button>
+						<button class="button is-link">{{ trans('app.pages.objectives.buttons.addobjective') }}</button>
 					</div>
 				</div>
 			</form>

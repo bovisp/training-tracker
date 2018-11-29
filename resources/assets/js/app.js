@@ -9,6 +9,7 @@ import map from 'lodash.map'
 import filter from 'lodash.filter'
 import find from 'lodash.find'
 import assign from 'lodash.assign'
+import sortBy from 'lodash.sortby'
 
 import user from './mixins/user'
 import getUrlBase from './mixins/urlBase'
@@ -102,9 +103,10 @@ Vue.prototype.trans = (key) => {
 }
 
 Vue.component('data-table', require('./components/datatable/Datatable.vue'));
-Vue.component('appointment-date', require('./components/AppointmentDate.vue'));
+Vue.component('appointment-date', require('./components/users/AppointmentDate.vue'));
+Vue.component('deactivation', require('./components/users/Deactivation.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
-Vue.component('unassigned-user-lessons', require('./components/UnassignedUserLessons.vue'));
+Vue.component('unassigned-user-lessons', require('./components/users/UnassignedUserLessons.vue'));
 Vue.component('user-lesson', require('./components/userlessons/UserLesson.vue'));
 Vue.component('logbook', require('./components/logbooks/Logbook.vue')); 
 Vue.component('user-errors', require('./components/UserErrors.vue')); 

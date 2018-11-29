@@ -58,6 +58,8 @@ Route::middleware(['role:administrator'])->group(function () {
 
 		Route::put('/{user}/appointment', '\TrainingTracker\Http\UsersAppointment\Controllers\Api\UsersAppointmentController@update');
 
+		Route::put('/{user}/deactivation', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@update');
+
 		Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@index')
 			->name('usersreporting.index.api');
 

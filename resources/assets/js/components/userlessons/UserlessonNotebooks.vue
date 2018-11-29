@@ -1,11 +1,11 @@
 <template>
-	<div>
+	<div v-if="logbooks.length">
 		<h3 class="title is-3 mt-16">
 			{{ trans('app.components.userlessons.logbooks') }}
 		</h3>
 
 		<ul class="box">
-			<li v-for="(logbook, index) in logbooks" :key="logbook.id">
+			<li v-for="(logbook, index) in sortedLogbooks" :key="logbook.id">
 				<p v-if="logbook.objective">
 					<strong>{{ logbook.objective.number }}</strong> - {{ logbook.objective.name }}
 				</p>
@@ -56,7 +56,11 @@
 			...mapGetters({
 				logbooks: 'userlessons/logbooks',
 				user: 'userlessons/user'
-			})
+			}),
+
+			sortedLogbooks () {
+				return orderBy(this.logbooks, ['objective.number'], ['asc'])
+			}
 		},
 
 		methods: {
