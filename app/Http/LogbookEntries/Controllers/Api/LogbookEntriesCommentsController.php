@@ -24,9 +24,15 @@ class LogbookEntriesCommentsController extends Controller
 
     public function store(User $user, LogbookEntry $logbookEntry)
     {
-        $this->validateRoles([
-            'administrator', 'supervisor', 'head_of_operations', 'apprentice'
-        ]);
+        if ($logbookEntry->logbook->userlesson->completed === 1) {
+            return response()->json([
+                'errors' => [
+                    'errors' => [
+                        'denied' => 'You cannot do this as the lesson package has been marked as complete.'
+                    ]
+                ]
+            ], 403);
+        }
 
         request()->validate([
             'body' => 'required|max:5000'
@@ -39,9 +45,25 @@ class LogbookEntriesCommentsController extends Controller
 
     public function update(User $user, LogbookEntry $logbookEntry, Comment $comment)
     {
-        $this->validateRoles([
-            'administrator', 'supervisor', 'head_of_operations', 'apprentice'
-        ]);
+        if ($logbookEntry->logbook->userlesson->completed === 1) {
+            return response()->json([
+                'errors' => [
+                    'errors' => [
+                        'denied' => 'You cannot do this as the lesson package has been marked as complete.'
+                    ]
+                ]
+            ], 403);
+        }
+
+        if ($this->validateRoles($comment) === false) {
+            return response()->json([
+                'errors' => [
+                    'errors' => [
+                        'denied' => trans('app.errors.general.denied')
+                    ]
+                ]
+            ], 403);
+        }
 
         request()->validate([
             'body' => 'required|max:5000'
@@ -54,25 +76,43 @@ class LogbookEntriesCommentsController extends Controller
 
     public function destroy(User $user, LogbookEntry $logbookEntry, Comment $comment)
     {
-        $this->validateRoles([
-            'administrator', 'supervisor', 'head_of_operations', 'apprentice'
-        ]);
+        if ($logbookEntry->logbook->userlesson->completed === 1) {
+            return response()->json([
+                'errors' => [
+                    'errors' => [
+                        'denied' => 'You cannot do this as the lesson package has been marked as complete.'
+                    ]
+                ]
+            ], 403);
+        }
+
+        if ($this->validateRoles($comment) === false) {
+            return response()->json([
+                'errors' => [
+                    'errors' => [
+                        'denied' => trans('app.errors.general.denied')
+                    ]
+                ]
+            ], 403);
+        }
 
         $comment->delete();
 
         return new CommentResource($comment);
     }
 
-    protected function validateRoles($roles)
+    protected function validateRoles(Comment $comment)
     {
-        if (moodleauth()->user()->hasRole($roles) === false) {
-            return response()->json([
-                'errors' => [
-                    'errors' => [
-                        'denied' => trans('errors.general.denied')
-                    ]
-                ]
-            ], 403);
+        if (moodleauth()->user()->hasRole('administrator')) {
+            return true;
+        }
+
+        if (moodleauth()->id() == $comment->user->id) {
+            return true;
+        }
+
+        if (moodleauth()->user()->roles->first()->rank > $comment->user->roles->first()->rank) {
+            return false;
         }
     }
 }

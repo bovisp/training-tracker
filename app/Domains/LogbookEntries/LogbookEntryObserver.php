@@ -2,6 +2,8 @@
 
 namespace TrainingTracker\Domains\LogbookEntry;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use TrainingTracker\Domains\LogbookEntries\LogbookEntry;
 
@@ -15,6 +17,11 @@ class LogbookEntryObserver
 
 	public function deleting(LogbookEntry $logbookEntry)
 	{
+		// Delete all associated notifications for this entry
+		$test = DB::table('notifications')
+			->where('data','LIKE','%"logbookEntryId":' . $logbookEntry->id . '%')
+			->delete();
+
 		// Delete all comments associated with a userlesson
 		$logbookEntry->comments->each->delete();
 

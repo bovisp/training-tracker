@@ -112,8 +112,8 @@ trait HasSupervisorsTrait
     public function supervisorsAndHeadOfOperationsRoles(User $user) {
         return User::find(
             $user->reportingStructure()
-                ->map(function ($u) {
-                    if ($u['role'] === 'supervisor' || $u['role'] === 'head_of_operations') {
+                ->map(function ($u) use ($user) {
+                    if (($u['role'] === 'supervisor' || $u['role'] === 'head_of_operations') && ($u['id'] !== moodleauth()->id())) {
                         return $u['id'];
                     }
                 })

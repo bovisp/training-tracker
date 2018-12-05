@@ -24,7 +24,7 @@
 					</p>
 				</div>
 
-				<template v-if="(comment.owner || hasRoleOf(['supervisor', 'head_of_operations'])) && !editing && !isCompleted">
+				<template v-if="canEdit && !editing && !isCompleted">
 					<div class="level">
 						<div class="level-left">
 							<div class="level-item">
@@ -86,6 +86,10 @@
 
 			commentId () {
 				return `comment-${this.comment.id}`
+			},
+
+			canEdit () {
+				return (this.authUser.id == this.comment.user.id) || (this.authUser.rank < this.comment.user.roleRank)
 			}
 		},
 

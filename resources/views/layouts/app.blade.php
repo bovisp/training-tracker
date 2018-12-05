@@ -20,7 +20,8 @@
             window.User = {
                 'name': '{{ moodleauth()->user()->moodleuser->firstname }} {{ moodleauth()->user()->moodleuser->lastname }}',
                 'id': '{{ moodleauth()->id() }}',
-                'role': '{{ moodleauth()->user()->roles->first()->type }}'
+                'role': '{{ moodleauth()->user()->roles->first()->type }}',
+                'rank': '{{ moodleauth()->user()->roles->first()->rank }}'
             };
 
             window.urlBase = '{{ env('APP_URL') }}';

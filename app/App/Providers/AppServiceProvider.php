@@ -4,6 +4,8 @@ namespace TrainingTracker\App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use TrainingTracker\Domains\Comments\Comment;
+use TrainingTracker\Domains\Comments\CommentObserver;
 use TrainingTracker\Domains\Lessons\Lesson;
 use TrainingTracker\Domains\Lessons\LessonObserver;
 use TrainingTracker\Domains\Levels\Level;
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         LogbookEntry::observe(LogbookEntryObserver::class);
         Logbook::observe(LogbookObserver::class);
         Objective::observe(ObjectiveObserver::class);
+        Comment::observe(CommentObserver::class);
     }
 
     /**

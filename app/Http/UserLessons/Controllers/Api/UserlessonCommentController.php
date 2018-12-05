@@ -59,6 +59,16 @@ class UserlessonCommentController extends Controller
 			], 403);
 		}
 
+		if ($this->validateRoles($comment) === false) {
+            return response()->json([
+                'errors' => [
+                    'errors' => [
+                        'denied' => trans('app.errors.general.denied')
+                    ]
+                ]
+            ], 403);
+        }
+
 		request()->validate([
     		'body' => 'required|max:5000'
     	]);
@@ -83,6 +93,16 @@ class UserlessonCommentController extends Controller
 				]
 			], 403);
 		}
+
+		if ($this->validateRoles($comment) === false) {
+            return response()->json([
+                'errors' => [
+                    'errors' => [
+                        'denied' => trans('app.errors.general.denied')
+                    ]
+                ]
+            ], 403);
+        }
 
     	$comment->delete();
 
@@ -109,4 +129,19 @@ class UserlessonCommentController extends Controller
 			->where('id', moodleauth()->id())
 			->count() > 0;
 	}
+
+	protected function validateRoles(Comment $comment)
+    {
+        if (moodleauth()->user()->hasRole('administrator')) {
+            return true;
+        }
+
+        if (moodleauth()->id() == $comment->user->id) {
+            return true;
+        }
+
+        if (moodleauth()->user()->roles->first()->rank > $comment->user->roles->first()->rank) {
+            return false;
+        }
+    }
 }

@@ -12,6 +12,10 @@ export default {
 			return `${this.notification.meta.logbookEntryCreator.firstname} ${this.notification.meta.logbookEntryCreator.lastname}`
 		},
 
+		editorName () {
+			return `${this.notification.meta.logbookEntryEditor.firstname} ${this.notification.meta.logbookEntryEditor.lastname}`
+		},
+
 		apprentice () {
 			return this.notification.meta.lessonPackageApprentice
 		},

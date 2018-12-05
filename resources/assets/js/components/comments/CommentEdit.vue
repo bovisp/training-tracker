@@ -100,6 +100,8 @@
 			                    message: this.errors.denied,
 			                    type: 'is-danger'
 			                })
+
+			                this.cancel()
 						}
             		})
 			}

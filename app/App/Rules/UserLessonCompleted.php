@@ -11,6 +11,8 @@ class UserLessonCompleted implements Rule
 
     protected $errors = [];
 
+    protected $commentsCount = 0;
+
     protected $statusPeriods = ['p9', 'p18', 'p30', 'p42'];
 
     public function __construct(UserLesson $userlesson)
@@ -31,7 +33,8 @@ class UserLessonCompleted implements Rule
             return $this->completedStatus() && 
                    $this->completedObjectives() && 
                    $this->completedNotebooks() &&
-                   $this->completedEvaluation();
+                   $this->completedEvaluation() &&
+                   $this->completedComments();
         }
         
         return true;
@@ -103,6 +106,29 @@ class UserLessonCompleted implements Rule
         $this->errors[] = 'There are no entries for Statement of Competency.';
 
         return false;
+    }
+
+    protected function completedComments()
+    {
+        $this->userlesson
+            ->logbooks
+            ->each(function ($logbook) {
+                $logbook->entries->each(function ($entry) {
+                    $this->commentsCount += $entry->comments->count();
+                });
+
+                if ($this->commentsCount === 0) {                    
+                    $this->errors[] = 'There are no comments in any of the logbook entries pertaining to the objective ' . $logbook->objective->number . '.';
+                }
+
+                $this->commentsCount = 0;
+            });
+
+        if (count($this->errors) > 0) {
+            return false;
+        }
+
+        return true;
     }
 
     protected function arrSort($a, $b) {

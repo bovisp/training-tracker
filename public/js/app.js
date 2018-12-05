@@ -13362,6 +13362,9 @@ module.exports = Component.exports
 		creatorName: function creatorName() {
 			return this.notification.meta.logbookEntryCreator.firstname + " " + this.notification.meta.logbookEntryCreator.lastname;
 		},
+		editorName: function editorName() {
+			return this.notification.meta.logbookEntryEditor.firstname + " " + this.notification.meta.logbookEntryEditor.lastname;
+		},
 		apprentice: function apprentice() {
 			return this.notification.meta.lessonPackageApprentice;
 		},
@@ -28445,18 +28448,14 @@ var fetch = function () {
 
 					case 4:
 						response = _context.sent;
-
-
-						console.log(response.data);
-
-						_context.next = 8;
+						_context.next = 7;
 						return commit('initialize', response.data);
 
-					case 8:
-						_context.next = 10;
+					case 7:
+						_context.next = 9;
 						return commit('loadingStatus', null, { root: true });
 
-					case 10:
+					case 9:
 					case 'end':
 						return _context.stop();
 				}
@@ -28746,22 +28745,26 @@ var fetch = function () {
 
 					case 3:
 						response = _context.sent;
-						_context.next = 6;
+
+
+						console.log(response);
+
+						_context.next = 7;
 						return commit('setUnreadNotifications', response.data.notifications);
 
-					case 6:
-						_context.next = 8;
+					case 7:
+						_context.next = 9;
 						return commit('setReadNotifications', response.data.notifications);
 
-					case 8:
-						_context.next = 10;
+					case 9:
+						_context.next = 11;
 						return commit('setUser', response.data.user.id);
 
-					case 10:
+					case 11:
 
 						commit('loadingStatus', null, { root: true });
 
-					case 11:
+					case 12:
 					case 'end':
 						return _context.stop();
 				}
@@ -42519,6 +42522,7 @@ __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function
 	}
 
 	if (error.response.status === 403) {
+		console.log(error.response.data.errors.errors);
 		__WEBPACK_IMPORTED_MODULE_1__store__["a" /* default */].dispatch('setErrors', error.response.data.errors.errors);
 
 		__WEBPACK_IMPORTED_MODULE_1__store__["a" /* default */].dispatch('cancelLoadingStatus');
@@ -46695,6 +46699,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 	}), {
 		commentId: function commentId() {
 			return 'comment-' + this.comment.id;
+		},
+		canEdit: function canEdit() {
+			return this.authUser.id == this.comment.user.id || this.authUser.rank < this.comment.user.roleRank;
 		}
 	}),
 
@@ -46895,6 +46902,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 						message: _this.errors.denied,
 						type: 'is-danger'
 					});
+
+					_this.cancel();
 				}
 			});
 		}
@@ -47058,10 +47067,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          (_vm.comment.owner ||
-            _vm.hasRoleOf(["supervisor", "head_of_operations"])) &&
-          !_vm.editing &&
-          !_vm.isCompleted
+          _vm.canEdit && !_vm.editing && !_vm.isCompleted
             ? [
                 _c("div", { staticClass: "level" }, [
                   _c("div", { staticClass: "level-left" }, [
@@ -47273,6 +47279,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 						message: _this.errors.denied,
 						type: 'is-danger'
 					});
+
+					_this.active = false;
 				}
 			});
 		}
@@ -48435,7 +48443,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue2_editor__["Quill"].register('modules/imageDrop',
 				});
 
 				_this.cancel();
-			}).catch(function (error) {});
+			}).catch(function (error) {
+				if (error.response.status === 403) {
+					_this.$dialog.alert({
+						title: _this.trans('app.general.unauthorized'),
+						message: _this.errors,
+						type: 'is-danger'
+					});
+				}
+			});
 		},
 		cancel: function cancel() {
 			this.creating = false;

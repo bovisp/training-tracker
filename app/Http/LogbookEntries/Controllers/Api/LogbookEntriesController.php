@@ -25,7 +25,11 @@ class LogbookEntriesController extends Controller
     public function store(LogbookEntriesStoreRequest $request, User $user, Logbook $logbook)
     {
         if ($logbook->userlesson->completed === 1) {
-            abort(403);
+            return response()->json([
+                'errors' => [
+                    'errors' => 'You cannot do this as the lesson package has been marked as complete.'
+                ]
+            ], 403);
         }
         
         $logbookEntry = new LogbookEntry;

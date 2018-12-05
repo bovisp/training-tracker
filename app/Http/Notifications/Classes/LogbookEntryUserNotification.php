@@ -23,6 +23,7 @@ class LogbookEntryUserNotification implements UserNotificationsInterface
                 'logbookEntryId' => $this->logbookEntry->id,
                 'logbookId' => $this->logbookEntry->logbook->id,
                 'logbookEntryCreator' => $this->logbookEntry->creator,
+                'logbookEntryEditor' => $this->logbookEntry->editor,
                 'logbookEntryCommentEditor' => $this->logbookEntry->editor,
                 'lessonPackage' => new UserLessonResource($this->logbookEntry->logbook->userlesson),
                 'lessonPackageApprentice' => $this->logbookEntry->logbook->userlesson->user,

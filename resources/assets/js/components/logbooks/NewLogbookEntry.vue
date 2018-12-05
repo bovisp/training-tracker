@@ -116,7 +116,15 @@
 	            		})
 
 	            		this.cancel()
-					}).catch(error => {})
+					}).catch(error => {
+						if (error.response.status === 403) {
+							this.$dialog.alert({
+			                    title: this.trans('app.general.unauthorized'),
+			                    message: this.errors,
+			                    type: 'is-danger',
+			                })
+						}
+					})
 			},
 
 			cancel () {

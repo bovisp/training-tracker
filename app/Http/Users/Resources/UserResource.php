@@ -21,7 +21,7 @@ class UserResource extends Resource
             'email' => $this->moodleuser->email,
             'role' => $this->roles->first()->type,
             'roleName' => $this->roles->first()->name,
-            'roleRank' => $this->roles->first()->type ? $this->roles->first()->type : '0'
+            'roleRank' => $this->roles->first()->rank ? $this->roles->first()->rank : 0
         ];
     }
 }

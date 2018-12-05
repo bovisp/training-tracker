@@ -137,14 +137,20 @@ class Auth
             return '';
         }
 
-        return User::where('moodle_id', $this->moodleid())
+        $user = User::where('moodle_id', $this->moodleid())
             ->get()
             ->first();
+
+        if ($user === null) {
+            return '';
+        }
+
+        return $user;
     }
 
     public function id()
     {
-        return $this->user()->id;
+        return optional($this->user())->id;
     }
 
     /**

@@ -97,6 +97,8 @@
 		                    message: this.errors.denied,
 		                    type: 'is-danger'
 		                })
+
+		                this.active = false
 					}
 				})
 			}

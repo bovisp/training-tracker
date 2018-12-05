@@ -3,6 +3,8 @@ export const fetch = async ({ commit }, userId) => {
 
 	let response = await axios.get(`${urlBase}/users/${userId}/notifications/api`)
 
+	console.log(response)
+
 	await commit('setUnreadNotifications', response.data.notifications)
 
 	await commit('setReadNotifications', response.data.notifications)

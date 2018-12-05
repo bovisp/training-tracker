@@ -50,8 +50,6 @@ export const fetch = async ({ commit }, payload) => {
 
 	let response = await axios.get(`${payload}/entries`)
 
-	console.log(response.data)
-
 	await commit('initialize', response.data)
 
 	await commit('loadingStatus', null, { root: true })
