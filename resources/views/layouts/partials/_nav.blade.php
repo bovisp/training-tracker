@@ -22,7 +22,11 @@
       </div>
 
       <div class="navbar-end">
-        @include('layouts.partials._notifications')
+        <div class="navbar-item">
+          <unread-notifications 
+            :user="{{ moodleauth()->user() }}"
+          />
+        </div>
 
         <b-dropdown position="is-bottom-left" v-cloak>
           <a class="navbar-item" slot="trigger">

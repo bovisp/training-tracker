@@ -111,6 +111,7 @@ Vue.component('user-lesson', require('./components/userlessons/UserLesson.vue'))
 Vue.component('logbook', require('./components/logbooks/Logbook.vue')); 
 Vue.component('user-errors', require('./components/UserErrors.vue')); 
 Vue.component('notifications', require('./components/notifications/Notifications.vue')); 
+Vue.component('unread-notifications', require('./components/notifications/UnreadNotifications.vue')); 
 
 Vue.mixin(user)
 Vue.mixin(getUrlBase)
