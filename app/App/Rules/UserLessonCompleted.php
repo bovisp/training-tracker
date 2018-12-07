@@ -114,11 +114,15 @@ class UserLessonCompleted implements Rule
             ->logbooks
             ->each(function ($logbook) {
                 $logbook->entries->each(function ($entry) {
-                    $this->commentsCount += $entry->comments->count();
+                    $entry->comments->each(function ($comment) use ($entry) {
+                        if ($comment->user->hasRole(['supervisor', 'head_of_operations', 'administrator'])) {
+                            $this->commentsCount += 1;
+                        }
+                    });
                 });
 
                 if ($this->commentsCount === 0) {                    
-                    $this->errors[] = 'There are no comments in any of the logbook entries pertaining to the objective ' . $logbook->objective->number . '.';
+                    $this->errors[] = 'There are no comments by any Supervispr or Head of Operations in any of the logbook entries pertaining to the objective ' . $logbook->objective->number . '.';
                 }
 
                 $this->commentsCount = 0;

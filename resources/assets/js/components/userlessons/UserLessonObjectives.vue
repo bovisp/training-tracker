@@ -73,6 +73,12 @@
 			}
 		},
 
+		watch: {
+			completed () {
+				window.events.$emit('allObjectivesCompleted', this.completed)
+			}
+		},
+
 		mounted () {
 			window.events.$on('objective-errors', (errors) => {
 				this.errors.record(errors)

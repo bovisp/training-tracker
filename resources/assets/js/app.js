@@ -9,7 +9,6 @@ import map from 'lodash.map'
 import filter from 'lodash.filter'
 import find from 'lodash.find'
 import assign from 'lodash.assign'
-import sortBy from 'lodash.sortby'
 
 import user from './mixins/user'
 import getUrlBase from './mixins/urlBase'

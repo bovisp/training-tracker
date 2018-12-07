@@ -22,7 +22,7 @@
 							<option value=""></option>
 
 							<option 
-								v-for="status in statusTypes" 
+								v-for="status in filteredStatusTypes" 
 								:value="status.type" 
 								:key="status.type" 
 								v-text="status.name"
@@ -55,7 +55,7 @@
 							<option value=""></option>
 
 							<option 
-								v-for="status in statusTypes" 
+								v-for="status in filteredStatusTypes" 
 								:value="status.type" 
 								:key="status.type" 
 								v-text="status.name"
@@ -89,7 +89,7 @@
 							<option value=""></option>
 
 							<option 
-								v-for="status in statusTypes" 
+								v-for="status in filteredStatusTypes" 
 								:value="status.type" 
 								:key="status.type" 
 								v-text="status.name"
@@ -123,7 +123,7 @@
 							<option value=""></option>
 
 							<option 
-								v-for="status in statusTypes" 
+								v-for="status in filteredStatusTypes" 
 								:value="status.type" 
 								:key="status.type" 
 								v-text="status.name"
@@ -154,7 +154,8 @@
 					{ type: 'd', name: this.trans('app.components.userlessons.dstatus') },
 					{ type: 'e', name: this.trans('app.components.userlessons.estatus') }
 				],
-				statusPeriods: [ 'p9', 'p18', 'p30', 'p42' ]
+				statusPeriods: [ 'p9', 'p18', 'p30', 'p42' ],
+				allObjectivesCompleted: false
 			}
 		},
 
@@ -172,8 +173,26 @@
 
 				errors: 'errors',
 
-				isCompleted: 'userlessons/isCompleted'
-			})
+				isCompleted: 'userlessons/isCompleted',
+				objectives: 'userlessons/objectives',
+			}),
+
+			completed: {
+				get () {
+					return this.$store.state.userlessons.userlesson.completedObjectives
+				},
+				set (value) {
+					this.$store.commit('userlessons/updateCompletedObjectives', value)
+				}
+			},
+
+			filteredStatusTypes () {
+				if (this.allObjectivesCompleted) {
+					return this.statusTypes
+				}
+				
+				return filter(this.statusTypes, status => status.type !== 'c')
+			}
 		},
 
 		methods: {
@@ -185,6 +204,10 @@
 		mounted () {
 			window.events.$on('status-errors', (errors) => {
 				this.errors.record(errors)
+			})
+
+			window.events.$on('allObjectivesCompleted', completedObjectives => {
+				this.allObjectivesCompleted = completedObjectives.length === this.objectives.length
 			})
 		}
 	}

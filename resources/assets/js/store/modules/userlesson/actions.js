@@ -9,6 +9,8 @@ export const fetch = async ({ commit }, { userlesson, user }) => {
 		window.events.$emit('completedPackage')
 	}
 
+	window.events.$emit('allObjectivesCompleted', response.data.userlesson.completedObjectives)
+
 	await commit('loadingStatus', null, { root: true })
 }
 
