@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'home-redirect' => \TrainingTracker\Http\Middleware\RedirectFromHome::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'can' => \TrainingTracker\Http\Middleware\PermissionMiddleware::class,

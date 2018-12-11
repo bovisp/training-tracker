@@ -1,4 +1,8 @@
 <?php
+Route::get('/', function () {
+	return 'home';
+})->middleware('home-redirect');
+
 /**
  * Download middleware routes for downloading logbook entry files.
  */
