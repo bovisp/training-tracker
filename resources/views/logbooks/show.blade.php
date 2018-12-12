@@ -30,7 +30,7 @@
 			<p>
 				<strong>{{ trans('app.pages.logbooks.show.lesson') }}</strong>
 				{{ 
-					number_format($logbook->objective->lesson->number) . ' - ' . $logbook->objective->lesson->name 
+					number_format($logbook->objective->lesson->number, 2) . ' - ' . $logbook->objective->lesson->name 
 				}}
 			</p>
 
