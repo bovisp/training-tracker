@@ -122,7 +122,7 @@ class UserLessonCompleted implements Rule
                 });
 
                 if ($this->commentsCount === 0) {                    
-                    $this->errors[] = 'There are no comments by any Supervispr or Head of Operations in any of the logbook entries pertaining to the objective ' . $logbook->objective->number . '.';
+                    $this->errors[] = 'There are no comments by any Supervisor or Head of Operations in any of the logbook entries pertaining to the objective ' . $logbook->objective->number . '.';
                 }
 
                 $this->commentsCount = 0;
