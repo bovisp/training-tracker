@@ -50,7 +50,7 @@ class UpdateUserLesson {
 
 			$classErrors = (new $actionClass(request($action), $userlesson))->validate();
 	
-			if (count($classErrors)) {
+			if (!empty($classErrors)) {
 				foreach ($classErrors as $error) {
 					$errors[key($error['errors'])] = current($error['errors']);
 				}

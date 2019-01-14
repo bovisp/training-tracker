@@ -128,7 +128,7 @@ class UserLessonCompleted implements Rule
                 $this->commentsCount = 0;
             });
 
-        if (count($this->errors) > 0) {
+        if (!empty($this->errors)) {
             return false;
         }
 
