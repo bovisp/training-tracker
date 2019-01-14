@@ -80,7 +80,7 @@ class UpdateCompletedRequest implements StoreSpreadsheet
 
 	public function hasErrors($validator)
 	{
-		return count($validator->errors()->toArray());
+		return !empty($validator->errors()->toArray());
 	}
 
 	public function getErrors($validator, $row)

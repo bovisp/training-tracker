@@ -33,7 +33,7 @@ class UpdateObjectivesRequest implements StoreSpreadsheet
 	{
 		$this->validateRow(request()->all());
 
-		if (count($this->errors)) {
+		if (!empty($this->errors)) {
 			$this->errors = [
 				[
 					'errors' => [
@@ -90,7 +90,7 @@ class UpdateObjectivesRequest implements StoreSpreadsheet
 
 	public function hasErrors($validator)
 	{
-		return count($validator->errors()->toArray());
+		return !empty($validator->errors()->toArray());
 	}
 
 	public function getErrors($validator, $row)

@@ -38,11 +38,11 @@ trait HasUserLessonsTrait
 
         $unassignedDepricatedLessonIds = $this->getUnassignedDepricatedLessonIds(); 
 
-        if (count($unassignedNonDepricatedLessonIds)) {
+        if (!empty($unassignedNonDepricatedLessonIds)) {
             $result['non_depricated'] = $this->getUnassignedNonDepricatedLessons($unassignedNonDepricatedLessonIds);
         }
 
-        if (count($unassignedDepricatedLessonIds)) {
+        if (!empty($unassignedDepricatedLessonIds)) {
             $result['depricated'] = $this->getUnassignedDepricatedLessons($unassignedDepricatedLessonIds);
         }
 
@@ -55,7 +55,7 @@ trait HasUserLessonsTrait
             return false;
         }
 
-        return count($this->getUnassignedUserLessons()) > 0;
+        return !empty($this->getUnassignedUserLessons());
     }
 
     protected function getUnassignedNonDepricatedLessonIds()
