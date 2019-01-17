@@ -26,7 +26,6 @@ class CheckMoodleAuthentication
             if ($request->expectsJson()) {
                 throw new \Exception(trans('app.errors.general.denied'));
             }
-
             abort(401, trans('app.errors.general.denied'));
         }
 

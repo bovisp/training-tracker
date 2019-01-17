@@ -18,7 +18,7 @@ class RedirectFromHome
         if (moodleauth()->user()->roles->first()->type === 'administrator') {
             return redirect('/users');
         }
-
+ 
         return redirect('/users/' . moodleauth()->id());
     }
 }

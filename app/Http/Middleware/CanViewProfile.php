@@ -19,9 +19,11 @@ class CanViewProfile
             abort(404);
         }
 
+
         if (moodleauth()->admin()) {
             return $next($request);
         }
+
 
         if (moodleauth()->user()->hasRole('administrator')) {
             return $next($request);
@@ -30,6 +32,7 @@ class CanViewProfile
         if ($this->authenticatedUsersProfile()) {
             return $next($request);
         }
+
 
         foreach(moodleauth()->user()->reportingStructure() as $employee) {
             if ($employee['id'] === $this->userIdFromRequest() && $employee['rank'] > moodleauth()->user()->roles->first()->rank && moodleauth()->user()->active === 1) {
@@ -42,7 +45,9 @@ class CanViewProfile
 
     protected function userIdFromRequest()
     {
-        return (int) explode("/", request()->url())[4];
+	preg_match_all("/\/users\/([\d]+)/",request()->url(),$matches);
+
+	return (int) $matches[1][0];
     }
 
     protected function authenticatedUsersProfile() {
