@@ -42,7 +42,9 @@ class CanDownloadFile
 
     protected function userIdFromRequest()
     {
-        return (int) explode("/", request()->url())[5];
+        preg_match_all("/\/entries\/([\d]+)/",request()->url(),$matches);
+
+        return (int)  $matches[1][0];
     }
 
     protected function authenticatedUsersProfile() {
