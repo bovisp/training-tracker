@@ -20,7 +20,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        $reporting = $user->reportingStructure();
+        $reporting = $user->reportingStructure()->unique();
 
         $roles = Role::where('rank', '!=', $user->roles->first()->rank)->get();
 

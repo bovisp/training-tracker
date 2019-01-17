@@ -45,9 +45,9 @@ class CanViewProfile
 
     protected function userIdFromRequest()
     {
-	preg_match_all("/\/users\/([\d]+)/",request()->url(),$matches);
+    	preg_match_all("/\/users\/([\d]+)/",request()->url(),$matches);
 
-	return (int) $matches[1][0];
+    	return (int) $matches[1][0];
     }
 
     protected function authenticatedUsersProfile() {
