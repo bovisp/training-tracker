@@ -1,6 +1,6 @@
 <template>
 	<a 
-		:href="`/users/${user.id}/notifications`" 
+		:href="`${urlBase}/users/${user.id}/notifications`" 
 		:title="message"
 	>
 		<div class="icon">
