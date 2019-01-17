@@ -30,7 +30,7 @@ class LogbookEntryObserver
 			$files = unserialize($logbookEntry->files);
 
 	        foreach ($files as $file) {
-	            $filePath = '/public/entries/' . $logbookentry->logbook->userlesson->user->id . '/' . $file['codedFilename'];
+	            $filePath = '/public/entries/' . $logbookEntry->logbook->userlesson->user->id . '/' . $file['codedFilename'];
 
 	            Storage::delete($filePath);
 	        }
