@@ -149,13 +149,13 @@
 
 		methods: {
 			update () {
-				let data = {
+				let dateData = {
 					deactivated_at: this.deactivatedDate ? (new Date(this.deactivatedDate)).toMysqlFormat() : null,
 					reactivated_at: this.reactivatedDate ? (new Date(this.reactivatedDate)).toMysqlFormat() : null,
 					deactivation_rationale: this.rationale
 				}
 
-				axios.put(`${urlBase}/users/api/${this.user.id}/deactivation`, data)
+				axios.put(`${urlBase}/users/api/${this.user.id}/deactivation`, dateData)
 					.then(({data}) => {
 						this.$toast.open({
 	                        message: data.flash,
@@ -180,12 +180,18 @@
 	                        this.errors.record(error.data.errors)
 	                    }
 					})
+			},
+
+			formatDate (date) {
+				let dateArray = date.split('/')
+
+				return new Date(`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`)
 			}
 		},
 
 		mounted () {
-			this.deactivatedDate = this.user.deactivated_at ? new Date(this.user.deactivated_at.replace(/-/g, '\/')) : null
-			this.reactivatedDate = this.user.reactivated_at ? new Date(this.user.reactivated_at.replace(/-/g, '\/')) : null
+			this.deactivatedDate = this.user.deactivated_at ? this.formatDate(this.user.deactivated_at) : null
+			this.reactivatedDate = this.user.reactivated_at ? this.formatDate(this.user.reactivated_at) : null
 			this.rationale = this.user.deactivation_rationale
 		}
 	}
