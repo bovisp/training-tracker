@@ -46,7 +46,10 @@
 					(<strong>{{ entry.edited_by.role }}</strong>)
 				</p>
 
-				<article v-html="entry.body"></article>
+				<article 
+					v-html="formatted(entry.body)"
+					class="entry" 
+				></article>
 			</div>
 		</template>
 
@@ -122,6 +125,15 @@
 	            			})
                     	}).catch(error => {})
                 })
+			},
+
+			formatted (text) {
+				return text
+					.replace(/<p\sclass=\"ql-align-justify\"><br><\/p>/gim, "")
+					.replace(/<p\sclass=\"ql-align-center\"><br><\/p>/gim, "")
+					.replace(/<p\sclass=\"ql-align-right\"><br><\/p>/gim, "")
+					.replace(/<p\sclass=\"ql-align-left\"><br><\/p>/gim, "")
+					.replace(/<p><br><\/p>/gim, "")
 			}
 		},
 

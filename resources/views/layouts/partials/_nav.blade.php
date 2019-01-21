@@ -23,9 +23,14 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <unread-notifications 
-            :user="{{ moodleauth()->user() }}"
-          />
+
+          @if (moodleauth()->user()->hasRole(['head_of_operations', 'supervisor']))
+
+            <unread-notifications 
+              :user="{{ moodleauth()->user() }}"
+            />
+
+          @endif
         </div>
 
         <b-dropdown position="is-bottom-left" v-cloak>
