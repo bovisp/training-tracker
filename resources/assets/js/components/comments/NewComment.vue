@@ -2,7 +2,7 @@
 	<div class="mb-6">
 		<button 
 			class="button is-text has-text-info"
-			@click.prevent="active = true"
+			@click.prevent="markAsActive"
 			v-if="!active"
 		>{{ trans('app.components.comments.addcomment') }}</button>
 
@@ -35,7 +35,7 @@
 
 					<button 
 						class="button is-text is-small"
-						@click.prevent="active = false"
+						@click.prevent="markAsInactive"
 					>{{ trans('app.general.buttons.cancel') }}</button>
 				</div>
 			</form>
@@ -74,13 +74,25 @@
 				store: 'comments/store'
 			}),
 
+			markAsActive () {
+				this.active = true
+
+				window.events.$emit('comment:new-active')
+			},
+
+			markAsInactive () {
+				this.active = false
+
+				window.events.$emit('comment:new-inactive')
+			},
+
 			submit () {
 				this.store({
 					endpoint: this.endpoint,
 					data: this.form
 				})
 				.then(response => {
-					this.active = false
+					this.markAsInactive()
 
 					this.form.body = ''
 
@@ -98,7 +110,7 @@
 		                    type: 'is-danger'
 		                })
 
-		                this.active = false
+		                this.markAsInactive()
 					}
 				})
 			}

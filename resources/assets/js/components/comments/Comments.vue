@@ -17,7 +17,7 @@
 			</ul>
 		</template>
 
-		<article class="message is-info" v-else>
+		<article class="message is-info" v-if="comments.length === 0 && newActive === false">
 			<div class="message-body">
 				{{ trans('app.components.comments.nocomments') }}
 			</div>
@@ -54,6 +54,12 @@
 			NewComment
 		},
 
+		data () {
+			return {
+				newActive: false
+			}
+		},
+
 		mixins: [
 			findGetParameter
 		],
@@ -86,6 +92,9 @@
 
 		mounted () {
 			this.init()
+
+			window.events.$on('comment:new-active', () => this.newActive = true)
+			window.events.$on('comment:new-inactive', () => this.newActive = false)
 		}
 	}
 </script>
