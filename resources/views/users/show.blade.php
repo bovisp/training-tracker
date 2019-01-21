@@ -104,9 +104,18 @@
 								@foreach($reporting->where('role', $role->type)->toArray() as $person)
 
 									<li>
-										<a href="{{ env('APP_URL') }}/users/{{ $person['id'] }}">
+
+										@if ((moodleauth()->user()->roles->first()->type === 'administrator') || ((int) moodleauth()->user()->roles->first()->rank <= (int) $role->rank))
+
+											<a href="{{ env('APP_URL') }}/users/{{ $person['id'] }}">
+												{{ $person['firstname'] }} {{ $person['lastname'] }}
+											</a>
+
+										@else
+					
 											{{ $person['firstname'] }} {{ $person['lastname'] }}
-										</a>
+
+										@endif
 									</li>
 
 								@endforeach
