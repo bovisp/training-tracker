@@ -155,9 +155,13 @@
 
 				<div class="divider divider--relaxed"></div>
 
-				@component('users.components.delete', ['user' => $user])
+				@if (moodleauth()->user()->hasRole('administrator'))
 
-				@endcomponent
+					@component('users.components.delete', ['user' => $user])
+
+					@endcomponent
+
+				@endif
 			</div>
 		</div>
 	</div>
