@@ -26,6 +26,7 @@
 								:value="status.type" 
 								:key="status.type" 
 								v-text="status.name"
+								:selected="p9 === status.type"
 							></option>
 						</select>
 					</div>
@@ -59,7 +60,7 @@
 								:value="status.type" 
 								:key="status.type" 
 								v-text="status.name"
-								:selected="status.type == p18"
+								:selected="status.type === p18"
 							></option>
 						</select>
 					</div>
@@ -93,7 +94,7 @@
 								:value="status.type" 
 								:key="status.type" 
 								v-text="status.name"
-								:selected="status.type == p30"
+								:selected="status.type === p30"
 							></option>
 						</select>
 					</div>
@@ -127,7 +128,7 @@
 								:value="status.type" 
 								:key="status.type" 
 								v-text="status.name"
-								:selected="status.type == p42"
+								:selected="status.type === p42"
 							></option>
 						</select>
 					</div>
