@@ -65,9 +65,13 @@ class UpdateObjectivesRequest implements StoreSpreadsheet
 
 	public function persist($row)
 	{
-		$userlesson = Userlesson::find((int) explode('/', request()->path())[3]);
-		
-		$user = User::find((int) explode('/', request()->path())[1]);
+		preg_match_all("/\/userlessons\/([\d]+)/",request()->url(),$userlessonsMatches);
+
+		$userlesson = Userlesson::find((int) $userlessonsMatches[1][0]);
+
+		preg_match_all("/\/users\/([\d]+)/",request()->url(),$userMatches);
+
+		$user = User::find((int) $userMatches[1][0]);
 
 		$objectives = Objective::where('lesson_id', $userlesson->lesson->id)
             ->pluck('id')
