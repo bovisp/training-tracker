@@ -84,18 +84,26 @@
 
 	                    this.errors.clear('appointed_at')
 
-	                    this.appointmentDate = new Date(data.date)
+	                    console.log(data.date.date)
+
+	                    this.appointmentDate = new Date(data.date.date)
 					})
 					.catch(error => {
 						if (error.response.status === 422) {
 	                        this.errors.record(error.data.errors)
 	                    }
 					})
+			},
+
+			formatDate (date) {
+				let dateArray = date.split('/')
+
+				return new Date(`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`)
 			}
 		},
 
 		mounted () {
-			this.appointmentDate = this.user.appointed_at ? new Date(this.user.appointed_at.replace(/-/g, '\/')) : null
+			this.appointmentDate = this.user.appointed_at ? this.formatDate(this.user.appointed_at) : null
 		}
 	}
 </script>

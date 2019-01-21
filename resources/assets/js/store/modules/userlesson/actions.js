@@ -3,8 +3,6 @@ export const fetch = async ({ commit }, { userlesson, user }) => {
 
 	let response = await axios.get(`${urlBase}/users/${user}/userlessons/${userlesson}/api`)
 
-	console.log(response.data)
-
 	await commit('initialize', response.data)
 
 	if (response.data.completedPackage === 1) {
