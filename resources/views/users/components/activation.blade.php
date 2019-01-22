@@ -1,6 +1,6 @@
 {{ $user->active === 1 ? trans('app.general.yes') : trans('app.general.no') }}
 
-@if (moodleauth()->user()->hasRole('administrator'))
+@if (moodleauth()->user()->hasRole(['administrator', 'supervisor', 'head_of_operations', 'manager']) && moodleauth()->id() !== $user->id)
 
 	<form action="{{ env('APP_URL') }}/users/{{ $user->id }}/activation" method="POST">
 		@if ($user->active)

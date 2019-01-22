@@ -131,9 +131,11 @@
 					return this.trans('app.components.deactivation.nodeactivateddate')
 				}
 
-				let date = new Date(this.deactivatedDate)
+				// console.log(this.deactivatedDate + this.deactivatedDate.getTimezoneOffset())
 
-				return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+				// let date = new Date(this.deactivatedDate)
+
+				return `${this.deactivatedDate.getDate()}/${this.deactivatedDate.getMonth() + 1}/${this.deactivatedDate.getFullYear()}`;
 			},
 
 			reactivatedAt () {
@@ -141,9 +143,9 @@
 					return this.trans('app.components.deactivation.noreactivateddate')
 				}
 
-				let date = new Date(this.reactivatedDate)
+				// let date = new Date(this.reactivatedDate)
 
-				return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+				return `${this.reactivatedDate.getDate()}/${this.reactivatedDate.getMonth() + 1}/${this.reactivatedDate.getFullYear()}`;
 			}
 		},
 
@@ -171,8 +173,8 @@
 	                    this.errors.clear('reactivated_at')
 	                    this.errors.clear('deactivation_rationale')
 
-	                    this.deactivatedDate = new Date(data.data.deactivated_at)
-	                    this.reactivatedDate = new Date(data.data.reactivated_at)
+	                    this.deactivatedDate = this.formatDate(data.data.deactivated_at)
+	                    this.reactivatedDate = this.formatDate(data.data.reactivated_at)
 	                    this.rationale = data.data.deactivation_rationale
 					})
 					.catch(error => {
@@ -183,9 +185,13 @@
 			},
 
 			formatDate (date) {
-				let dateArray = date.split('/')
+				let dateArray = date.split(/[- :]/)
 
-				return new Date(`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`)
+				if (dateArray.length === 3) {
+					return new Date(dateArray[0], dateArray[1]-1, dateArray[2])
+				}
+
+				return new Date(dateArray[0], dateArray[1]-1, dateArray[2], dateArray[3], dateArray[4], dateArray[5])
 			}
 		},
 

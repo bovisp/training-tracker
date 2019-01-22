@@ -35,8 +35,18 @@ class UsersActivationController extends Controller
             'active' => 0
         ]);
 
+        if (moodleauth()->user()->hasRole('administrator')) {
+             return redirect()
+                ->route('users.show', ['user' => $user->id])
+                ->with([
+                    'flash' => [
+                        'message' => trans('app.flash.userdeactivated')
+                    ]
+                ]);
+        }
+
         return redirect()
-            ->route('users.show', ['user' => $user->id])
+            ->route('users.show', ['user' => moodleauth()->id()])
             ->with([
                 'flash' => [
                     'message' => trans('app.flash.userdeactivated')

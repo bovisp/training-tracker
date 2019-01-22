@@ -42,17 +42,19 @@
 
 					</dd>
 
-					<dt>
-						<strong>{{ trans('app.pages.users.show.appointdate') }}</strong>
-					</dt>
+					@if ($user->roles->first()->type !== 'apprentice' && $user->appointed_at !== null || ($user->roles->first()->type === 'apprentice'))
+						<dt>
+							<strong>{{ trans('app.pages.users.show.appointdate') }}</strong>
+						</dt>
 
-					<dd class="is-flex items-center">
+						<dd class="is-flex items-center">
 
-						@component('users.components.appointment', ['user' => $user])
+							@component('users.components.appointment', ['user' => $user])
 
-						@endcomponent
-						
-					</dd>
+							@endcomponent
+							
+						</dd>
+					@endif
 					
 					@if (!$user->active || $user->deactivated_at)
 
@@ -86,7 +88,7 @@
 						<div class="is-flex items-center mb-4">
 							<h5 class="title is-5 mb-0">{{ $role->name }}</h5>
 
-							@if (moodleauth()->user()->roles->first()->type === 'administrator')
+							@if (moodleauth()->user()->roles->first()->type === 'administrator' && $user->active)
 
 								<a 
 									class="button is-text is-small ml-4"

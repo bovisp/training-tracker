@@ -23,6 +23,13 @@ Route::middleware(['download'])->group(function () {
 	);
 });
 
+Route::middleware(['role:administrator|supervisor|head_of_operations|manager'])->group(function () {
+
+	Route::prefix('/users')->group(function () {
+		Route::delete('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@destroy');
+	});
+});
+
 /**
  * All routes that can only be viewed by administrators.
  */
@@ -84,8 +91,6 @@ Route::middleware(['role:administrator'])->group(function () {
 			->name('usersreporting.index');
 
 		Route::post('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@store');
-
-		Route::delete('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@destroy');
 
 		Route::get('/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\InactiveUsersController@index')
 			->name('inactiveusers.index');
