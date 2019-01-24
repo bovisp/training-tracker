@@ -102,7 +102,7 @@
 					
 					@if($reporting->where('role', $role->type)->count() > 0)
 
-						<ul class="mt-0">
+						<ul class="mt-0 mb-4">
 
 							@foreach($reporting->where('role', $role->type)->toArray() as $person)
 

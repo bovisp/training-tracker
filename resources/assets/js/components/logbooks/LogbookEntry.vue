@@ -8,7 +8,7 @@
 					<div class="level-item">
 						<button 
 							class="button is-text has-text-info"
-							@click.prevent="editing = true"
+							@click.prevent="isEditing"
 							v-if="!completedPackage"
 						>{{ trans('app.components.logbooks.editentry') }}</button>
 					</div>
@@ -109,6 +109,16 @@
 				hide: 'logbooks/hide',
 				destroy: 'logbooks/destroy'
 			}),
+
+			isEditing () {
+				this.editing = true
+
+				setTimeout(() => {
+                    let tooltips = document.querySelectorAll('.ql-formats')
+
+					console.log(tooltips)
+                }, 200)
+			},
 
 			remove () {
 				this.$dialog.confirm({

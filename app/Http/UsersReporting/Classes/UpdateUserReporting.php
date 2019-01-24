@@ -92,7 +92,7 @@ class UpdateUserReporting
 
     protected function attachSupervisors()
     {
-        $idsToAttach = Supervisor::whereUserId(array_flatten(request()->all()))
+        $idsToAttach = Supervisor::whereIn('user_id', array_flatten(request()->all()))
             ->get()
             ->pluck('id')
             ->toArray();
