@@ -20,9 +20,8 @@
 			<div class="control">
 				<button 
 					class="button is-link is-small" 
-					type="submit"
 					@click.prevent="submit"
-				>{{ trans('app.general.buttons.edit') }}</button>
+				>{{ trans('app.general.buttons.submit') }}</button>
 			</div>
 
 			<div class="control">

@@ -40,7 +40,7 @@
 						<button
 							@click.prevent="submit"
 							class="button is-info"
-						>{{ trans('app.general.buttons.create') }}</button>
+						>{{ trans('app.general.buttons.submit') }}</button>
 					</div>
 
 					<div class="level-item">
