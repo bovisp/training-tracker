@@ -34,13 +34,9 @@
 						<strong>{{ trans('app.pages.users.show.active') }}</strong>
 					</dt>
 
-					<dd class="is-flex items-center">
-						
-						@component('users.components.activation', ['user' => $user])
-
-						@endcomponent
-
-					</dd>
+					<activation 
+						:user="{{ json_encode($user) }}"
+					></activation>
 
 					@if ($user->roles->first()->type !== 'apprentice' && $user->appointed_at !== null || ($user->roles->first()->type === 'apprentice'))
 						<dt>

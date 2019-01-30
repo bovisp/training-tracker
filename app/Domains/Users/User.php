@@ -8,6 +8,7 @@ use TrainingTracker\App\Traits\HasPermissionsTrait;
 use TrainingTracker\App\Traits\HasSupervisorsTrait;
 use TrainingTracker\App\Traits\HasUserLessonsTrait;
 use TrainingTracker\Domains\Comments\Comment;
+use TrainingTracker\Domains\Deactivation\Deactivation;
 use TrainingTracker\Domains\MoodleUsers\MoodleUser;
 use TrainingTracker\Domains\Users\User;
 
@@ -58,6 +59,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(MoodleUser::class, 'id', 'moodle_id')
             ->select('firstname', 'lastname', 'email', 'id');
+    }
+
+    public function deactivations()
+    {
+        return $this->hasMany(Deactivation::class);
     }
 
     public static function notIn()
