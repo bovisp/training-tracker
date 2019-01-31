@@ -104,6 +104,7 @@ Vue.prototype.trans = (key) => {
 Vue.component('data-table', require('./components/datatable/Datatable.vue'));
 Vue.component('appointment-date', require('./components/users/AppointmentDate.vue'));
 Vue.component('deactivation', require('./components/users/Deactivation.vue'));
+Vue.component('deactivations', require('./components/users/deactivations/Deactivations.vue'));
 Vue.component('activation', require('./components/users/Activation.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('unassigned-user-lessons', require('./components/users/UnassignedUserLessons.vue'));

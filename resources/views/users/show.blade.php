@@ -52,19 +52,15 @@
 						</dd>
 					@endif
 					
-					@if (!$user->active || $user->deactivated_at)
+					@if ($user->deactivations->count())
 
 						<dt>
-							<strong>{{ trans('app.pages.users.show.deactivation') }}</strong>
+							<strong>{{ !$user->active ?  'Current deactivation' : 'Deactivations' }}</strong>
 						</dt>
 
-						<dd class="is-flex items-center">
-
-							@component('users.components.deactivation', ['user' => $user])
-
-							@endcomponent
-							
-						</dd>
+						<deactivations 
+							:user="{{ json_encode($user) }}"
+						/>
 
 					@endif
 

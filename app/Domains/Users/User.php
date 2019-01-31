@@ -63,7 +63,8 @@ class User extends Authenticatable
 
     public function deactivations()
     {
-        return $this->hasMany(Deactivation::class);
+        return $this->hasMany(Deactivation::class)
+            ->latest('deactivated_at');
     }
 
     public static function notIn()

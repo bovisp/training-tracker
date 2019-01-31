@@ -20,6 +20,8 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
+        $user->load(['deactivations']);
+        
         $reporting = $user->reportingStructure()->unique();
 
         $roles = Role::where('rank', '!=', $user->roles->first()->rank)->get();

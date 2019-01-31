@@ -199,6 +199,9 @@ Route::middleware(['profile'])->group(function () {
 	Route::prefix('users/{user}')->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')
 			->name('users.show');
+
+		Route::get('/deactivations', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@index');
+		// Route::patch('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\Api\UsersActivationController@update');
 	});
 
 	/**
