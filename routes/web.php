@@ -201,7 +201,7 @@ Route::middleware(['profile'])->group(function () {
 			->name('users.show');
 
 		Route::get('/deactivations', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@index');
-		// Route::patch('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\Api\UsersActivationController@update');
+		Route::put('/deactivations', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@update');
 	});
 
 	/**

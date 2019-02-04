@@ -15,19 +15,21 @@ class UsersDeactivationController extends Controller
             $user->deactivations
         );
     }
-    // public function update(User $user)
-    // {
-    // 	$user->update(request()->only([
-    // 		'deactivated_at', 'reactivated_at', 'deactivation_rationale'
-    // 	]));
 
-    //     return response()->json([
-    //         'flash' => trans('app.flash.deactivationupdated'),
-    //         'data' => [
-    //         	'deactivated_at' => $user->deactivated_at,
-    //         	'reactivated_at' => $user->reactivated_at,
-    //         	'deactivation_rationale' => $user->deactivation_rationale
-    //         ]
-    //     ]);
-    // }
+    public function update(User $user)
+    {
+        request()->validate([
+            'deactivated_at' => 'date',
+            'reactivated_at' => 'date',
+            'deactivation_rationale' => 'min:3'
+        ]);
+
+        $user->deactivations()->update(request()->only([
+    		'deactivated_at', 'reactivated_at', 'deactivation_rationale'
+    	]));
+
+        return response()->json([
+            'flash' => 'edited!'
+        ]);
+    }
 }

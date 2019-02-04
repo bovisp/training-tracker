@@ -28,6 +28,13 @@
 						        </b-datepicker>
 						    </b-field>
 
+						    <p 
+								class="help is-danger"
+								:class="{ 'is-block': errors.has('deactivated_at') }" 
+					            v-text="errors.get('deactivated_at')" 
+					            v-show="errors.has('deactivated_at')"
+							></p>
+
 						    <b-field>
 						        <b-field label="Rationale for deactivation">
 						            <textarea 
@@ -37,6 +44,13 @@
 						            	v-model="rationale"></textarea>
 						        </b-field>
 						    </b-field>
+
+						    <p 
+								class="help is-danger"
+								:class="{ 'is-block': errors.has('deactivation_rationale') }" 
+					            v-text="errors.get('deactivation_rationale')" 
+					            v-show="errors.has('deactivation_rationale')"
+							></p>
 					    </template>
 
 					    <template v-else>
@@ -48,6 +62,13 @@
 						        </b-datepicker>
 						    </b-field>
 
+						    <p 
+								class="help is-danger"
+								:class="{ 'is-block': errors.has('reactivated_at') }" 
+					            v-text="errors.get('reactivated_at')" 
+					            v-show="errors.has('reactivated_at')"
+							></p>r
+
 						    <div style="height: 330px;"></div>
 					    </template>
 					</section>
@@ -57,7 +78,11 @@
                         	{{ activationAction }}
                         </button>
 
-                        <button class="button is-text" type="button" @click.prevent="isActive = false">Close</button>
+                        <button 
+                        	class="button is-text" 
+                        	type="button" 
+                        	@click.prevent="close"
+                        >Close</button>
                     </footer>
 				</div>
 			</b-modal>
@@ -66,6 +91,8 @@
 </template>
 
 <script>
+	import Error from '../../classes/Error'
+
 	export default {
 		props: {
 			user: {
@@ -79,7 +106,8 @@
 				isActive: false,
 				deactivatedDate: null,
 				reactivatedDate: null,
-				rationale: ''
+				rationale: '',
+				errors: new Error()
 			}
 		},
 
@@ -101,7 +129,7 @@
 			requestData () {
 				if (this.user.active === 1) {
 					return {
-						deactivated_at: (new Date(this.deactivatedDate)).toMysqlFormat(),
+						deactivated_at: this.deactivatedDate ? (new Date(this.deactivatedDate)).toMysqlFormat() : null,
 						deactivation_rationale: this.rationale
 					}
 				}
@@ -109,6 +137,14 @@
 				return {
 					reactivated_at: (new Date(this.reactivatedDate)).toMysqlFormat()
 				}
+			},
+
+			close () {
+				this.isActive = false
+
+				this.errors.clear('deactivated_at')
+				this.errors.clear('reactivated_at')
+				this.errors.clear('deactivation_rationale')
 			},
 
 			action () {
@@ -127,11 +163,22 @@
                         type: 'is-success'
                     })
 
+                    this.errors.clear('deactivated_at')
+					this.errors.clear('reactivated_at')
+					this.errors.clear('deactivation_rationale')
+
 					setTimeout(() => {
                         window.location = `${urlBase}/users/${this.user.id}`;
                     }, 3000)
-				}).catch(error => {
-					console.log(error)
+				})
+				.catch(error => {
+					this.errors.clear('deactivated_at')
+					this.errors.clear('reactivated_at')
+					this.errors.clear('deactivation_rationale')
+					
+					if (error.response.status === 422) {
+                        this.errors.record(error.response.data.errors)
+                    }
 				})
 			}
 		}

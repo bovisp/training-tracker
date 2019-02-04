@@ -9,11 +9,80 @@
 
 			<section class="modal-card-body">
 				<div
-					v-for="deactivation in user.deactivations"
+					v-if="isEditing"
 				>
-					<p style="margin-bottom: 0;">Deactivated: {{ formatDate(deactivation.deactivated_at) }}</p>
-					<p style="margin-bottom: 0;">Reactivated: {{ formatDate(deactivation.reactivated_at) }}</p>
-					<p>Rationale: {{ deactivation.deactivation_rationale }}</p>
+					<b-field label="Deactivation date">
+				        <b-datepicker
+				            icon="calendar-today"
+				            v-model="editingDeactivation.deactivated_at"
+				            size="is-small">
+				        </b-datepicker>
+				    </b-field>
+
+				    <p 
+						class="help is-danger"
+						:class="{ 'is-block': errors.has('deactivated_at') }" 
+			            v-text="errors.get('deactivated_at')" 
+			            v-show="errors.has('deactivated_at')"
+					></p>
+
+				    <b-field label="Deactivation date">
+				        <b-datepicker
+				            icon="calendar-today"
+				            v-model="editingDeactivation.reactivated_at"
+				            size="is-small">
+				        </b-datepicker>
+				    </b-field>
+
+				    <p 
+						class="help is-danger"
+						:class="{ 'is-block': errors.has('reactivated_at') }" 
+			            v-text="errors.get('reactivated_at')" 
+			            v-show="errors.has('reactivated_at')"
+					></p>
+
+				    <b-field label="Deactivation rationale">
+						<div class="control">
+							<textarea class="textarea" v-model="editingDeactivation.deactivation_rationale"></textarea>
+
+							<p 
+								class="help is-danger"
+								:class="{ 'is-block': errors.has('deactivation_rationale') }" 
+					            v-text="errors.get('deactivation_rationale')" 
+					            v-show="errors.has('deactivation_rationale')"
+							></p>
+						</div>
+					</b-field>
+
+					<div class="field is-grouped">
+						<div class="control">
+							<button 
+								class="button is-info is-small"
+								@click.prevent="submit"
+							>Submit</button>
+						</div>
+
+						<div class="control">
+							<button 
+								class="button is-text is-small"
+								@click.prevent="cancel"
+							>Cancel</button>
+						</div>
+					</div>
+				</div>
+
+				<div
+					v-for="deactivation in deactivations"
+					v-else
+				>
+					<deactivation 
+						:deactivation="deactivation"
+					/>
+
+					<button 
+						class="button is-text is-small"
+						@click="edit(deactivation)"
+					>Edit deactivation</button>
 
 					<hr>
 				</div>
@@ -31,6 +100,9 @@
 </template>
 
 <script>
+	import Deactivation from './Deactivation'
+	import Error from '../../../classes/Error'
+
 	export default {
 		props: {
 			user: {
@@ -39,32 +111,97 @@
 			}
 		},
 
+		components: {
+			Deactivation
+		},
+
 		data () {
 			return {
-				isActive: false
+				isActive: false,
+				isEditing: false,
+				editingDeactivation: {
+					deactivated_at: '',
+					reactivated_at: '',
+					deactivation_rationale: ''
+				},
+				deactivations: [],
+				errors: new Error()
 			}
 		},
 
 		methods: {
+			edit (deactivation) {
+				this.isEditing = true
+				this.editingDeactivation = deactivation
+
+				this.editingDeactivation.deactivated_at = this.formatDate(this.editingDeactivation.deactivated_at)
+				this.editingDeactivation.reactivated_at = this.formatDate(this.editingDeactivation.reactivated_at)
+			},
+
 			formatDate (date) {
 				if (date === null) {
-					return 'No date entered'
+					return null
 				}
 
 				let dateArray = date.split(/[- :]/)
 
-				if (dateArray.length === 3) {
-					var jsDate = new Date(dateArray[0], dateArray[1]-1, dateArray[2])
-				} else {
-					var jsDate =  new Date(dateArray[0], dateArray[1]-1, dateArray[2], dateArray[3], dateArray[4], dateArray[5])
+				return new Date(dateArray[0], dateArray[1]-1, dateArray[2])
+			},
+
+			submit () {
+				let data = {
+					deactivated_at: this.editingDeactivation.deactivated_at ? (new Date(this.editingDeactivation.deactivated_at)).toMysqlFormat() : null,
+					reactivated_at: this.editingDeactivation.reactivated_at ? (new Date(this.editingDeactivation.reactivated_at)).toMysqlFormat() : null,
+					deactivation_rationale: this.editingDeactivation.deactivation_rationale
 				}
 
-				return `${jsDate.getDate()}/${jsDate.getMonth() + 1}/${jsDate.getFullYear()}`;
+				axios.put(`${urlBase}/users/${this.user.id}/deactivations`, data)
+					.then(({ data }) => {
+						this.editingDeactivation.deactivated_at = ''
+						this.editingDeactivation.deactivation_rationale = ''
+						this.editingDeactivation.reactivated_at = ''
+
+						this.isEditing = false
+
+						this.errors.clear('deactivated_at')
+						this.errors.clear('reactivated_at')
+						this.errors.clear('deactivation_rationale')
+
+						this.fetch()
+					})
+					.catch(error => {
+						this.errors.clear('deactivated_at')
+						this.errors.clear('reactivated_at')
+						this.errors.clear('deactivation_rationale')
+						
+						if (error.response.status === 422) {
+	                        this.errors.record(error.response.data.errors)
+	                    }
+					})
+			},
+
+			cancel () {
+				this.editingDeactivation.deactivated_at = ''
+				this.editingDeactivation.deactivation_rationale = ''
+				this.editingDeactivation.reactivated_at = ''
+
+				this.isEditing = false
+
+				this.fetch()
+			},
+
+			fetch () {
+				axios.get(`${urlBase}/users/${this.user.id}/deactivations`)
+					.then(({ data }) => {
+						this.deactivations = data.data
+					})
 			}
 		},
 
 		mounted () {
 			window.events.$on('deactivation-model:toggle', () => this.isActive = true)
+
+			this.fetch()
 		}
 	}
 </script>
