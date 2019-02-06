@@ -171,6 +171,10 @@ $dragndrop-min-height: 200px;
 }
 
 // Flex helpers
+.flex {
+	display: flex;
+}
+
 .self {
 	&-end {
 		align-self: flex-end;

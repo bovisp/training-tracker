@@ -9,6 +9,10 @@ import map from 'lodash.map'
 import filter from 'lodash.filter'
 import find from 'lodash.find'
 import assign from 'lodash.assign'
+import get from 'lodash.get'
+import concat from 'lodash.concat' 
+
+window._ = require('lodash')
 
 import user from './mixins/user'
 import getUrlBase from './mixins/urlBase'

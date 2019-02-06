@@ -1,5 +1,6 @@
 export default {
 	user: null,
 	unread: [],
-	read: []
+	read: [],
+	apprenticeNames: []
 }

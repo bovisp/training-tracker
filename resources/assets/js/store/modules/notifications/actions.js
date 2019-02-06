@@ -7,12 +7,16 @@ export const fetch = async ({ commit }, userId) => {
 
 	await commit('setReadNotifications', response.data.notifications)
 
+	await commit('setApprenticeNames', response.data.notifications)
+
+	await window.events.$emit('notifications:recalculate-tabs')
+
 	await commit('setUser', response.data.user.id)
 
 	commit('loadingStatus', null, { root: true })
 }
 
-export const deleteNotification = ({ commit, state }, notificationId) => {
+export const deleteNotification = ({ commit, state, dispatch }, notificationId) => {
 	commit('loadingStatus', null, { root: true })
 
 	axios.delete(`${urlBase}/users/${state.user}/notifications/${notificationId}`)
@@ -20,6 +24,8 @@ export const deleteNotification = ({ commit, state }, notificationId) => {
 			commit('deleteNotification', notificationId)
 
 			commit('loadingStatus', null, { root: true })
+
+			dispatch('fetch', state.user)
 
 			return Promise.resolve(response)
 		})

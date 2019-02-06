@@ -19,3 +19,13 @@ export const markAsRead = (state, notificationId) => {
 
 	state.read.push(find(state.unread, { meta: { id: notificationId }}))
 }
+
+export const setApprenticeNames = (state, notifications) => {
+	let apprenticeNames = []
+
+	forEach(notifications, notification => {
+		apprenticeNames.push(`${notification.meta.lessonPackageApprentice.firstname} ${notification.meta.lessonPackageApprentice.lastname}`)
+	})
+
+	state.apprenticeNames = _.uniq(apprenticeNames)
+}

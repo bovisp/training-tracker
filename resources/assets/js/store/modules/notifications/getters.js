@@ -5,3 +5,5 @@ export const read = state => state.read
 export const unread = state => state.unread
 
 export const user = state => state.user
+
+export const apprenticeNames = state => state.apprenticeNames

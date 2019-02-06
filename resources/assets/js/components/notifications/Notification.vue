@@ -110,11 +110,13 @@
 
 			unread () {
 				this.markAsUnread(this.notification.data.id)
-					.then(response => this.$toast.open({
-		                message: this.trans('app.components.notifications.notificationunread'),
-		                position: 'is-top-right',
-		                type: 'is-success'
-            		}))
+					.then(response => {
+						this.$toast.open({
+			                message: this.trans('app.components.notifications.notificationunread'),
+			                position: 'is-top-right',
+			                type: 'is-success'
+	            		})
+					})
 			}
 		}
 	}
