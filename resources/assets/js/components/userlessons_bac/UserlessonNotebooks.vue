@@ -23,7 +23,9 @@
 						{{ trans('app.components.userlessons.updatedentrymessage1') }} {{ editorName(logbook) }} (<strong>{{ editorRole(logbook) }}</strong>) {{ trans('app.components.userlessons.updatedentrymessage2') }} {{ editedAt(logbook) }}
 					</p>
 
-					<div class="level">
+					{{ logbook }}
+
+					<!-- <div class="level">
 						<div class="level-left"></div>
 
 						<div class="level-right">
@@ -42,7 +44,7 @@
 								</a>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 
 				<hr v-if="index !== (logbooks.length - 1)">

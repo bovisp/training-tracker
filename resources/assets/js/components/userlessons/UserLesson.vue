@@ -1,12 +1,13 @@
 <template>
-	<div>
-		<article v-if="errors.denied" class="message is-danger mt-4">
-			<div class="message-body content">
-				<ul class="mt-0">
-					<li v-for="(error, type) in errors" v-text="error" :key="type"></li>
-				</ul>
-			</div>
-		</article>
+	<section class="section">
+		<div class="columns is-desktop">
+			<Status 
+				v-for="status in statusPeriods"
+				:status="status"
+				:key="status"
+				@statuschanged="statusChanged"
+			/>
+		</div>
 
 		<div 
 			style="position: fixed; bottom: 0; left: 0; background: #FFF; display: flex; width: 100%; z-index: 10;"
@@ -15,7 +16,6 @@
 		>
 				<button 
 					class="button is-info ml-auto"
-					:class="{ 'is-loading' : isLoading }"
 					@click="submit"
 				>
 					<i class="mdi mdi-content-save mr-2"></i>
@@ -23,104 +23,109 @@
 					{{ trans('app.components.userlessons.save') }}
 				</button>
 		</div>
-
-		<user-lesson-status />
-
-		<user-lesson-objectives />
-
-		<user-lesson-notebooks></user-lesson-notebooks>
-
-		<h3 class="title is-3 mt-16">
-			{{ trans('app.components.userlessons.finalevaluation') }}
-		</h3>
-
-		<comments 
-			:endpoint="commentsEndpoint"
-			:is-completed="isCompleted"
-			:create-roles="['supervisor', 'head_of_operations']"
-		/>
-
-		<h3 class="title is-3 mt-16">
-			{{ trans('app.components.userlessons.signoff') }}
-		</h3>
-
-		<user-lesson-final></user-lesson-final>
-
-		<b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
-	</div>
+	</section>
 </template>
 
 <script>
-	import UserLessonStatus from './UserLessonStatus'
-	import UserLessonObjectives from './UserLessonObjectives'
-	import UserLessonFinal from './UserLessonFinal'
-	import UserLessonNotebooks from './UserLessonNotebooks'
-	import Comments from '../comments/Comments'
-	import { mapGetters, mapActions } from 'vuex'
+	import { mapActions, mapGetters } from 'vuex'
+	import Status from './statuses/Status'
 
 	export default {
-		props: ['userLesson', 'user'],
-
-		computed: {
-			...mapGetters({
-				isLoading: 'isLoading',
-				errors: 'errors',
-				isCompleted: 'userlessons/isCompleted'
-			}),
-
-			commentsEndpoint () {
-				return `/users/${this.user.id}/userlessons/${this.userLesson.id}/comments`
+		props: {
+			initialUserlesson: {
+				type: Object,
+				required: true
 			}
 		},
 
 		components: {
-			UserLessonStatus,
-			UserLessonObjectives,
-			UserLessonFinal,
-			UserLessonNotebooks,
-			Comments
+			Status
+		},
+
+		data () {
+			return {
+				statusPeriods: [ 'p9', 'p18', 'p30', 'p42' ],
+				statusLabels: { 
+					p9: 'Early EG-03', 
+					p18: 'Late EG-03', 
+					p30: 'Early EG-04',
+					p42: 'Late EG-04'
+				},
+				form: {
+					statuses: {
+						p9: '',
+						p18: '',
+						p30: '',
+						p42: ''
+					}
+				}
+			}
+		},
+
+		computed: {
+			...mapGetters({
+				userlesson: 'userlessons/userlesson'
+			})
+		},
+
+		watch: {
+			form: {
+				handler (data) {
+					this.updateForm(data) 
+				},
+				deep: true
+			}
 		},
 
 		methods: {
 			...mapActions({
-				fetch: 'userlessons/fetch',
-				patch: 'userlessons/patch',
-				updateCompletedPackage: 'userlessons/updateCompletedPackage'
+				initialize: 'userlessons/initialize',
+				updateForm: 'userlessons/updateForm',
+				update: 'userlessons/update'
 			}),
 
-			submit () {
-				this.patch()
-					.then(response => this.$toast.open({
-			                message: response.data.flash,
-			                position: 'is-top-right',
-			                type: 'is-success'
-            		})).catch(error => {
-						if (error.response.status === 403) {
-							this.$dialog.alert({
-			                    title: this.trans('app.general.unauthorized'),
-			                    message: this.errors.denied,
-			                    type: 'is-danger'
-			                })
-						}
+			statusChanged (data) {
+				this.form.statuses[data.status] = data.value
+			},
 
-						if (error.response.status === 422 && this.errors.completed) {
-							this.$dialog.alert({
-			                    title: this.trans('app.components.userlessons.incomplete'),
-			                    message: this.errors.completed[0],
-			                    type: 'is-danger'
-			                })
+			async submit () {
+				let response = await this.update()
 
-			                this.updateCompletedPackage()
-						}
+				if (response.status === 200) {
+					this.$toast.open({
+		                message: response.data.flash,
+		                position: 'is-top-right',
+		                type: 'is-success'
             		})
+				}
+
+				if (response.status === 422) {
+					this.$toast.open({
+		                message: response.data.message,
+		                position: 'is-top-right',
+		                type: 'is-danger'
+	        		})
+				}
+			},
+
+			setStatuses () {
+				setTimeout(() => {
+					forEach(this.statusPeriods, period => {
+						this.form.statuses[period] = this.userlesson[period]
+						window.events.$emit(`status-${period}`, {
+							period: this.userlesson[period],
+							isCovered: this.userlesson.lesson[period],
+							statusLabel: this.statusLabels[period]
+						})
+					})
+				}, 200)
 			}
 		},
 
 		mounted () {
-			this.fetch({
-				userlesson: this.userLesson.id,
-				user: this.user.id
-			})
+			this.initialize(this.initialUserlesson)
+
+			this.setStatuses()
 		}
 	}
 </script>

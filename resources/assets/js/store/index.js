@@ -8,9 +8,9 @@ import * as mutations from './mutations'
 import * as actions from './actions'
 import * as getters from './getters'
 
-import userlessons from './modules/userlesson'
+import userlessons from './modules/userlessons'
 import comments from './modules/comments'
-import logbooks from './modules/logbooks'
+// import logbooks from './modules/logbooks'
 import notifications from './modules/notifications'
 
 export default new Vuex.Store({
@@ -21,7 +21,7 @@ export default new Vuex.Store({
 	modules: {
 		userlessons,
 		comments,
-		logbooks,
+		// logbooks,
 		notifications 
 	} 
 })
