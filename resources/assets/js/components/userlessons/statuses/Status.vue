@@ -23,7 +23,7 @@
 			        	></option>
 
 			            <option
-			                 v-for="statusType in statusTypes"
+			                 v-for="statusType in filteredStatusTypes"
 			                :value="statusType.type"
 			                :key="statusType.type"
 			                :selected="statusType.type === content"
@@ -55,8 +55,19 @@
 					{ type: 'c', name: 'C - Completed' },
 					{ type: 'd', name: 'D - Deferred' },
 					{ type: 'e', name: 'E - Exempt' }
-				]
+				],
+				allObjectivesCompleted: false
 		    }
+		},
+
+		computed: {
+			filteredStatusTypes () {
+				if (this.allObjectivesCompleted) {
+					return this.statusTypes
+				}
+				
+				return filter(this.statusTypes, status => status.type !== 'c')
+			}
 		},
 
 		methods: {
@@ -82,6 +93,8 @@
 					this.disableItem = true
 				}
 			})
+
+			window.events.$on('objectivescompleted', completed => this.allObjectivesCompleted = completed)
 		}
 	}
 </script>

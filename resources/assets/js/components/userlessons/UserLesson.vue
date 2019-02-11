@@ -137,7 +137,10 @@
 			form: {
 				handler (data) {
 					this.updateForm(data)
+
 					window.events.$emit('disable', data.completed)
+
+					window.events.$emit('objectivescompleted', this.userlesson.lesson.objectives.length === this.form.objectives.length)
 				},
 				deep: true
 			}
