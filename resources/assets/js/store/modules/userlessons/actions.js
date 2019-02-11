@@ -12,8 +12,6 @@ export const update = async ({ commit, state, dispatch }) => {
 			`${urlBase}/users/${state.userlesson.user.id}/userlessons/${state.userlesson.id}`, state.form
 		)
 
-		await dispatch('initialize', response.data.userlesson)
-
 		return response
 	} catch (e) {
 		return e.response

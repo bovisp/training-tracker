@@ -16,7 +16,7 @@
 			        	@change="handleInput" 
 			        	:for="status" 
 			        	class="is-full-width"
-			        	:disabled="!hasRoleOf(['supervisor', 'head_of_operations'])"
+			        	:disabled="!hasRoleOf(['supervisor', 'head_of_operations']) || disableItem"
 			        >
 			        	<option 
 			        		:value="null"
@@ -50,6 +50,7 @@
 		    	isCovered: 0,
 		    	label: '',
 		    	content: null,
+		    	disableItem: false,
 		    	statusTypes: [
 					{ type: 'c', name: 'C - Completed' },
 					{ type: 'd', name: 'D - Deferred' },
@@ -72,6 +73,14 @@
 				this.content = period
 				this.isCovered = isCovered
 				this.label = statusLabel
+			})
+
+			window.events.$on('disable', disabled => {
+				if (disabled === 0 || disabled === '0') {
+					this.disableItem = false
+				} else if (disabled === 1 || disabled === '1') {
+					this.disableItem = true
+				}
 			})
 		}
 	}

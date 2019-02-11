@@ -63,6 +63,8 @@
 					{{ trans('app.components.userlessons.save') }}
 				</button>
 		</div>
+
+		<b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
 	</section>
 </template>
 
@@ -104,7 +106,8 @@
 					},
 					objectives: [],
 					completed: 0
-				}
+				},
+				isLoading: false
 			}
 		},
 
@@ -117,7 +120,8 @@
 		watch: {
 			form: {
 				handler (data) {
-					this.updateForm(data) 
+					this.updateForm(data)
+					window.events.$emit('disable', data.completed)
 				},
 				deep: true
 			}
@@ -143,10 +147,18 @@
 			},
 
 			async submit () {
+				this.isLoading = true
+
 				let response = await this.update()
 
 				if (response.status === 200) {
-					this.$toast.open({
+					await this.initialize(response.data.userlesson)
+
+            		await this.setData()
+
+            		this.isLoading = false
+
+            		this.$toast.open({
 		                message: response.data.flash,
 		                position: 'is-top-right',
 		                type: 'is-success'
@@ -154,20 +166,24 @@
 				}
 
 				if (response.status === 422 && this.errors.completed) {
+					this.form.completed = 0
+
+	                window.events.$emit('removecompletion')
+
+	                this.isLoading = false
+
 					this.$dialog.alert({
 	                    title: this.trans('app.components.userlessons.incomplete'),
 	                    message: this.errors.completed[0],
 	                    type: 'is-danger'
 	                })
 
-	                this.form.completed = 0
-
-	                window.events.$emit('removecompletion')
-
 	                return
 				}
 
 				if (response.status === 422) {
+					this.isLoading = false
+
 					this.$toast.open({
 		                message: response.data.message,
 		                position: 'is-top-right',
@@ -176,7 +192,7 @@
 				}
 			},
 
-			setStatuses () {
+			setData () {
 				setTimeout(() => {
 					forEach(this.statusPeriods, period => {
 						this.form.statuses[period] = this.userlesson[period]
@@ -195,14 +211,16 @@
 					window.events.$emit('completed', {
 						completed: this.userlesson.completed
 					})
-				}, 200)
+				}, 100)
+
+				window.events.$emit('disable', this.userlesson.completed)
 			}
 		},
 
 		mounted () {
 			this.initialize(this.initialUserlesson)
 
-			this.setStatuses()
+			this.setData()
 		}
 	}
 </script>

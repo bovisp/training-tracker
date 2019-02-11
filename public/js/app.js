@@ -27037,23 +27037,19 @@ var update = function () {
 
 					case 3:
 						response = _context2.sent;
-						_context2.next = 6;
-						return dispatch('initialize', response.data.userlesson);
-
-					case 6:
 						return _context2.abrupt('return', response);
 
-					case 9:
-						_context2.prev = 9;
+					case 7:
+						_context2.prev = 7;
 						_context2.t0 = _context2['catch'](0);
 						return _context2.abrupt('return', _context2.t0.response);
 
-					case 12:
+					case 10:
 					case 'end':
 						return _context2.stop();
 				}
 			}
-		}, _callee2, _this, [[0, 9]]);
+		}, _callee2, _this, [[0, 7]]);
 	}));
 
 	return function update(_x3) {
@@ -61928,6 +61924,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
 
 
 
@@ -61966,7 +61964,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 				},
 				objectives: [],
 				completed: 0
-			}
+			},
+			isLoading: false
 		};
 	},
 
@@ -61979,6 +61978,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 		form: {
 			handler: function handler(data) {
 				this.updateForm(data);
+				window.events.$emit('disable', data.completed);
 			},
 
 			deep: true
@@ -62006,25 +62006,47 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 					while (1) {
 						switch (_context.prev = _context.next) {
 							case 0:
-								_context.next = 2;
+								this.isLoading = true;
+
+								_context.next = 3;
 								return this.update();
 
-							case 2:
+							case 3:
 								response = _context.sent;
 
-
-								if (response.status === 200) {
-									this.$toast.open({
-										message: response.data.flash,
-										position: 'is-top-right',
-										type: 'is-success'
-									});
-								}
-
-								if (!(response.status === 422 && this.errors.completed)) {
-									_context.next = 9;
+								if (!(response.status === 200)) {
+									_context.next = 11;
 									break;
 								}
+
+								_context.next = 7;
+								return this.initialize(response.data.userlesson);
+
+							case 7:
+								_context.next = 9;
+								return this.setData();
+
+							case 9:
+
+								this.isLoading = false;
+
+								this.$toast.open({
+									message: response.data.flash,
+									position: 'is-top-right',
+									type: 'is-success'
+								});
+
+							case 11:
+								if (!(response.status === 422 && this.errors.completed)) {
+									_context.next = 17;
+									break;
+								}
+
+								this.form.completed = 0;
+
+								window.events.$emit('removecompletion');
+
+								this.isLoading = false;
 
 								this.$dialog.alert({
 									title: this.trans('app.components.userlessons.incomplete'),
@@ -62032,15 +62054,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 									type: 'is-danger'
 								});
 
-								this.form.completed = 0;
-
-								window.events.$emit('removecompletion');
-
 								return _context.abrupt('return');
 
-							case 9:
+							case 17:
 
 								if (response.status === 422) {
+									this.isLoading = false;
+
 									this.$toast.open({
 										message: response.data.message,
 										position: 'is-top-right',
@@ -62048,7 +62068,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 									});
 								}
 
-							case 10:
+							case 18:
 							case 'end':
 								return _context.stop();
 						}
@@ -62062,7 +62082,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 			return submit;
 		}(),
-		setStatuses: function setStatuses() {
+		setData: function setData() {
 			var _this = this;
 
 			setTimeout(function () {
@@ -62083,14 +62103,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 				window.events.$emit('completed', {
 					completed: _this.userlesson.completed
 				});
-			}, 200);
+			}, 100);
+
+			window.events.$emit('disable', this.userlesson.completed);
 		}
 	}),
 
 	mounted: function mounted() {
 		this.initialize(this.initialUserlesson);
 
-		this.setStatuses();
+		this.setData();
 	}
 });
 
@@ -62199,6 +62221,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			isCovered: 0,
 			label: '',
 			content: null,
+			disableItem: false,
 			statusTypes: [{ type: 'c', name: 'C - Completed' }, { type: 'd', name: 'D - Deferred' }, { type: 'e', name: 'E - Exempt' }]
 		};
 	},
@@ -62224,6 +62247,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			_this.content = period;
 			_this.isCovered = isCovered;
 			_this.label = statusLabel;
+		});
+
+		window.events.$on('disable', function (disabled) {
+			if (disabled === 0 || disabled === '0') {
+				_this.disableItem = false;
+			} else if (disabled === 1 || disabled === '1') {
+				_this.disableItem = true;
+			}
 		});
 	}
 });
@@ -62264,10 +62295,9 @@ var render = function() {
                   staticClass: "is-full-width",
                   attrs: {
                     for: _vm.status,
-                    disabled: !_vm.hasRoleOf([
-                      "supervisor",
-                      "head_of_operations"
-                    ])
+                    disabled:
+                      !_vm.hasRoleOf(["supervisor", "head_of_operations"]) ||
+                      _vm.disableItem
                   },
                   on: { change: _vm.handleInput }
                 },
@@ -62406,10 +62436,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			completedObjectives: [],
-			objectives: []
+			objectives: [],
+			disableItem: false
 		};
 	},
 
+
+	computed: {
+		hasLogbooksNotRequired: function hasLogbooksNotRequired() {
+			return _.find(this.objectives, function (objective) {
+				return objective.notebook_required === 0;
+			});
+		}
+	},
 
 	watch: {
 		completedObjectives: function completedObjectives() {
@@ -62428,6 +62467,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return objective.id;
 			});
 			_this.objectives = objectives;
+		});
+
+		window.events.$on('disable', function (disabled) {
+			if (disabled === 0 || disabled === '0') {
+				_this.disableItem = false;
+			} else if (disabled === 1 || disabled === '1') {
+				_this.disableItem = true;
+			}
 		});
 	}
 });
@@ -62454,7 +62501,9 @@ var render = function() {
                 attrs: {
                   "native-value": objective.id,
                   type: "is-success",
-                  disabled: !_vm.hasRoleOf(["supervisor", "head_of_operations"])
+                  disabled:
+                    !_vm.hasRoleOf(["supervisor", "head_of_operations"]) ||
+                    _vm.disableItem
                 },
                 model: {
                   value: _vm.completedObjectives,
@@ -62480,7 +62529,12 @@ var render = function() {
       0
     ),
     _vm._v(" "),
-    _vm._m(0),
+    _vm.hasLogbooksNotRequired
+      ? _c("div", { staticClass: "has-text-grey-light mt-4" }, [
+          _c("i", { staticClass: "mdi mdi-information-variant mr-1" }),
+          _vm._v("\n\t\t= Logbook not required for this objective\n\t")
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _vm.errors.objectives
       ? _c("article", { staticClass: "message is-danger mt-4" }, [
@@ -62491,17 +62545,7 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "has-text-grey-light mt-4" }, [
-      _c("i", { staticClass: "mdi mdi-information-variant mr-1" }),
-      _vm._v("\n\t\t= Logbook not required for this objective\n\t")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -62649,79 +62693,101 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("section", { staticClass: "section" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "columns is-desktop" },
-      _vm._l(_vm.statusPeriods, function(status) {
-        return _c("Status", {
-          key: status,
-          attrs: { status: status },
-          on: { statuschanged: _vm.statusChanged }
-        })
-      }),
-      1
-    ),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _c("div", { staticClass: "columns" }, [
+  return _c(
+    "section",
+    { staticClass: "section" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
       _c(
         "div",
-        { staticClass: "column" },
-        [_c("Objectives", { on: { updateobjectives: _vm.objectivesChanged } })],
+        { staticClass: "columns is-desktop" },
+        _vm._l(_vm.statusPeriods, function(status) {
+          return _c("Status", {
+            key: status,
+            attrs: { status: status },
+            on: { statuschanged: _vm.statusChanged }
+          })
+        }),
         1
-      )
-    ]),
-    _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _c("div", { staticClass: "columns" }, [
-      _c(
-        "div",
-        { staticClass: "column" },
-        [_c("Completed", { on: { updatecompleted: _vm.completedChanged } })],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _vm.hasRoleOf(["supervisor", "head_of_operations", "manager"])
-      ? _c(
+      ),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c("div", { staticClass: "columns" }, [
+        _c(
           "div",
-          {
-            staticClass: "p-4 has-background-white-ter",
-            staticStyle: {
-              position: "fixed",
-              bottom: "0",
-              left: "0",
-              background: "#FFF",
-              display: "flex",
-              width: "100%",
-              "z-index": "10"
-            }
-          },
+          { staticClass: "column" },
           [
-            _c(
-              "button",
-              {
-                staticClass: "button is-info ml-auto",
-                on: { click: _vm.submit }
-              },
-              [
-                _c("i", { staticClass: "mdi mdi-content-save mr-2" }),
-                _vm._v(
-                  "\n\n\t\t\t\t" +
-                    _vm._s(_vm.trans("app.components.userlessons.save")) +
-                    "\n\t\t\t"
-                )
-              ]
-            )
-          ]
+            _c("Objectives", {
+              on: { updateobjectives: _vm.objectivesChanged }
+            })
+          ],
+          1
         )
-      : _vm._e()
-  ])
+      ]),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _c("div", { staticClass: "columns" }, [
+        _c(
+          "div",
+          { staticClass: "column" },
+          [_c("Completed", { on: { updatecompleted: _vm.completedChanged } })],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _vm.hasRoleOf(["supervisor", "head_of_operations", "manager"])
+        ? _c(
+            "div",
+            {
+              staticClass: "p-4 has-background-white-ter",
+              staticStyle: {
+                position: "fixed",
+                bottom: "0",
+                left: "0",
+                background: "#FFF",
+                display: "flex",
+                width: "100%",
+                "z-index": "10"
+              }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "button is-info ml-auto",
+                  on: { click: _vm.submit }
+                },
+                [
+                  _c("i", { staticClass: "mdi mdi-content-save mr-2" }),
+                  _vm._v(
+                    "\n\n\t\t\t\t" +
+                      _vm._s(_vm.trans("app.components.userlessons.save")) +
+                      "\n\t\t\t"
+                  )
+                ]
+              )
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("b-loading", {
+        attrs: {
+          "is-full-page": true,
+          active: _vm.isLoading,
+          "can-cancel": false
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {

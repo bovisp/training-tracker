@@ -9,6 +9,7 @@ use TrainingTracker\App\Rules\UserLessonCompleted;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\UserLessons\Classes\UpdateUserLesson;
+use TrainingTracker\Http\UserLessons\Requests\UserlessonRequest;
 
 class UserLessonsController extends Controller
 {
@@ -28,31 +29,14 @@ class UserLessonsController extends Controller
         return view('userlessons.show', compact('userlesson', 'user'));
     }
 
-    public function update(User $user, UserLesson $userlesson)
+    public function update(UserlessonRequest $request, User $user, UserLesson $userlesson)
     {
-        request()->validate([
-            'statuses.*' => [
-                'nullable',
-                Rule::in(['c', 'd', 'e']),
-            ],
-            'objectives' => 'exists:objectives,id',
-        ]);
+        if (moodleauth()->user()->hasRole(['administrator', 'supervisor', 'head_of_operations'])) {
+            $this->updateObjectivesandStatus($user, $userlesson);
+        }        
 
-        $userlesson->update([
-            'p9' => request('statuses')['p9'],
-            'p18' => request('statuses')['p18'],
-            'p30' => request('statuses')['p30'],
-            'p42' => request('statuses')['p42']
-        ]);
-
-        $user->updateObjectives($userlesson);
-
-        if ((int) request('completed') === 1) {
-            $this->validateCompletedStatus($userlesson);
-
-            $userlesson->update([
-                'completed' => (int) request('completed')
-            ]);
+        if (moodleauth()->user()->hasRole(['administrator', 'manager', 'head_of_operations'])) {
+            $this->updateCompleted($userlesson);
         }
 
         $userlesson->load(['user', 'lesson.objectives', 'user.objectives']);
@@ -87,5 +71,28 @@ class UserLessonsController extends Controller
         ])->validate();
 
         return true;
+    }
+
+    protected function updateCompleted(UserLesson $userlesson)
+    {
+        if ((int) request('completed') === 1) {
+            $this->validateCompletedStatus($userlesson);
+        }
+
+        $userlesson->update([
+            'completed' => (int) request('completed')
+        ]);
+    }
+
+    protected function updateObjectivesandStatus(User $user, UserLesson $userlesson)
+    {
+        $userlesson->update([
+            'p9' => request('statuses')['p9'],
+            'p18' => request('statuses')['p18'],
+            'p30' => request('statuses')['p30'],
+            'p42' => request('statuses')['p42']
+        ]);
+
+        $user->updateObjectives($userlesson);
     }
 }
