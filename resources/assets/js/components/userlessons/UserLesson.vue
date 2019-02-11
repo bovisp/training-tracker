@@ -33,6 +33,22 @@
 			</div>
 		</div>
 
+		<div class="columns mt-8">
+			<div class="column">
+				<h2 class="title is-2 has-text-weight-light">
+					Sign off by Manager or Head of Operations
+				</h2>
+			</div>
+		</div>
+
+		<div class="columns">
+			<div class="column">
+				<Completed 
+					@updatecompleted="completedChanged"
+				/>
+			</div>
+		</div>
+
 		<div 
 			style="position: fixed; bottom: 0; left: 0; background: #FFF; display: flex; width: 100%; z-index: 10;"
 			class="p-4 has-background-white-ter" 
@@ -54,6 +70,7 @@
 	import { mapActions, mapGetters } from 'vuex'
 	import Status from './statuses/Status'
 	import Objectives from './objectives/Objectives'
+	import Completed from './completed/Completed'
 
 	export default {
 		props: {
@@ -65,7 +82,8 @@
 
 		components: {
 			Status,
-			Objectives
+			Objectives,
+			Completed
 		},
 
 		data () {
@@ -84,7 +102,8 @@
 						p30: '',
 						p42: ''
 					},
-					objectives: []
+					objectives: [],
+					completed: 0
 				}
 			}
 		},
@@ -119,6 +138,10 @@
 				this.form.objectives = data
 			},
 
+			completedChanged (data) {
+				this.form.completed = data
+			},
+
 			async submit () {
 				let response = await this.update()
 
@@ -128,6 +151,20 @@
 		                position: 'is-top-right',
 		                type: 'is-success'
             		})
+				}
+
+				if (response.status === 422 && this.errors.completed) {
+					this.$dialog.alert({
+	                    title: this.trans('app.components.userlessons.incomplete'),
+	                    message: this.errors.completed[0],
+	                    type: 'is-danger'
+	                })
+
+	                this.form.completed = 0
+
+	                window.events.$emit('removecompletion')
+
+	                return
 				}
 
 				if (response.status === 422) {
@@ -153,6 +190,10 @@
 					window.events.$emit('objectives', {
 						objectives: this.userlesson.lesson.objectives,
 						completed: this.userlesson.user.objectives
+					})
+
+					window.events.$emit('completed', {
+						completed: this.userlesson.completed
 					})
 				}, 200)
 			}

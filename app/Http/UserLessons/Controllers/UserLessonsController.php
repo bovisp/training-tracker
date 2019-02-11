@@ -2,8 +2,10 @@
 
 namespace TrainingTracker\Http\UserLessons\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use TrainingTracker\App\Controllers\Controller;
+use TrainingTracker\App\Rules\UserLessonCompleted;
 use TrainingTracker\Domains\UserLessons\UserLesson;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\UserLessons\Classes\UpdateUserLesson;
@@ -33,7 +35,7 @@ class UserLessonsController extends Controller
                 'nullable',
                 Rule::in(['c', 'd', 'e']),
             ],
-            'objectives' => 'exists:objectives,id'
+            'objectives' => 'exists:objectives,id',
         ]);
 
         $userlesson->update([
@@ -45,6 +47,14 @@ class UserLessonsController extends Controller
 
         $user->updateObjectives($userlesson);
 
+        if ((int) request('completed') === 1) {
+            $this->validateCompletedStatus($userlesson);
+
+            $userlesson->update([
+                'completed' => (int) request('completed')
+            ]);
+        }
+
         $userlesson->load(['user', 'lesson.objectives', 'user.objectives']);
 
         return response()->json([
@@ -53,12 +63,6 @@ class UserLessonsController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \TrainingTracker\UserLesson  $userLesson
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(User $user, UserLesson $userlesson)
     {
         $userlesson->delete();
@@ -70,5 +74,18 @@ class UserLessonsController extends Controller
                     'message' => trans('app.flash.lessonpackagedeleted')
                 ]
             ]);
+    }
+
+    protected function validateCompletedStatus(UserLesson $userlesson)
+    {
+        Validator::make(request()->all(), [
+            'completed' => [
+                new UserLessonCompleted($userlesson->load([
+                    'lesson.objectives', 'lesson', 'user', 'user.objectives'
+                ]))
+            ]
+        ])->validate();
+
+        return true;
     }
 }

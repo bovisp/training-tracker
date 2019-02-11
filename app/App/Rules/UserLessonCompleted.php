@@ -11,7 +11,7 @@ class UserLessonCompleted implements Rule
 
     protected $errors = [];
 
-    protected $commentsCount = 0;
+    // protected $commentsCount = 0;
 
     protected $statusPeriods = ['p9', 'p18', 'p30', 'p42'];
 
@@ -29,12 +29,13 @@ class UserLessonCompleted implements Rule
      */
     public function passes($attribute, $value)
     {
-        if ($value === 1 ) {
+        if ((int) $value === 1 ) {
             return $this->completedStatus() && 
-                   $this->completedObjectives() && 
-                   $this->completedNotebooks() &&
-                   $this->completedEvaluation() &&
-                   $this->completedComments();
+                    $this->completedObjectives();
+                   // $this->completedObjectives() && 
+                   // $this->completedNotebooks() &&
+                   // $this->completedEvaluation() &&
+                   // $this->completedComments();
         }
         
         return true;
@@ -66,15 +67,11 @@ class UserLessonCompleted implements Rule
         $completedObjectives = $this->userlesson->user->objectives->pluck('id')->toArray();
         $totalObjectives = $this->userlesson->lesson->objectives->pluck('id')->toArray();
 
-        usort($completedObjectives, function ($a, $b) {
-            return $this->arrSort($a, $b);
+        $objectivesDifference = array_filter($totalObjectives, function ($objective) use ($completedObjectives) {
+            return !in_array($objective, $completedObjectives);
         });
 
-        usort($totalObjectives, function ($a, $b) {
-            return $this->arrSort($a, $b);
-        });
-
-        if ($totalObjectives === $completedObjectives) {
+        if (count($objectivesDifference) === 0) {
             return true;
         }
 
@@ -133,13 +130,5 @@ class UserLessonCompleted implements Rule
         }
 
         return true;
-    }
-
-    protected function arrSort($a, $b) {
-        if ($a == $b) {
-            return 0;
-        }
-        
-        return ($a < $b) ? -1 : 1;
     }
 }

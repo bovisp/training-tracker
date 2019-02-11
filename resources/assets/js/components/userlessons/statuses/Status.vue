@@ -16,11 +16,10 @@
 			        	@change="handleInput" 
 			        	:for="status" 
 			        	class="is-full-width"
+			        	:disabled="!hasRoleOf(['supervisor', 'head_of_operations'])"
 			        >
 			        	<option 
-			        		value="" 
-			        		v-if="content === null" 
-			        		:selected="content === null"
+			        		:value="null"
 			        	></option>
 
 			            <option
