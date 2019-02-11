@@ -18,15 +18,10 @@ class UserLessonsController extends Controller
             ['only' => ['update']]
         );
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \TrainingTracker\UserLesson  $userLesson
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(User $user, UserLesson $userlesson)
     {
-        $userlesson->load('user');
+        $userlesson->load(['user', 'lesson.objectives', 'user.objectives']);
         
         return view('userlessons.show', compact('userlesson', 'user'));
     }
@@ -37,7 +32,8 @@ class UserLessonsController extends Controller
             'statuses.*' => [
                 'nullable',
                 Rule::in(['c', 'd', 'e']),
-            ]
+            ],
+            'objectives' => 'exists:objectives,id'
         ]);
 
         $userlesson->update([
@@ -47,7 +43,9 @@ class UserLessonsController extends Controller
             'p42' => request('statuses')['p42']
         ]);
 
-        $userlesson->load('user');
+        $user->updateObjectives($userlesson);
+
+        $userlesson->load(['user', 'lesson.objectives', 'user.objectives']);
 
         return response()->json([
             'flash' => trans('app.flash.lessonpackageupdated'),

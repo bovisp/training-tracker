@@ -1,5 +1,13 @@
 <template>
 	<section class="section">
+		<div class="columns">
+			<div class="column">
+				<h2 class="title is-2 has-text-weight-light">
+					Status
+				</h2>
+			</div>
+		</div>
+
 		<div class="columns is-desktop">
 			<Status 
 				v-for="status in statusPeriods"
@@ -7,6 +15,22 @@
 				:key="status"
 				@statuschanged="statusChanged"
 			/>
+		</div>
+
+		<div class="columns mt-8">
+			<div class="column">
+				<h2 class="title is-2 has-text-weight-light">
+					Objectives
+				</h2>
+			</div>
+		</div>
+
+		<div class="columns">
+			<div class="column">
+				<Objectives	
+					@updateobjectives="objectivesChanged"
+				/>
+			</div>
 		</div>
 
 		<div 
@@ -29,6 +53,7 @@
 <script>
 	import { mapActions, mapGetters } from 'vuex'
 	import Status from './statuses/Status'
+	import Objectives from './objectives/Objectives'
 
 	export default {
 		props: {
@@ -39,7 +64,8 @@
 		},
 
 		components: {
-			Status
+			Status,
+			Objectives
 		},
 
 		data () {
@@ -57,7 +83,8 @@
 						p18: '',
 						p30: '',
 						p42: ''
-					}
+					},
+					objectives: []
 				}
 			}
 		},
@@ -86,6 +113,10 @@
 
 			statusChanged (data) {
 				this.form.statuses[data.status] = data.value
+			},
+
+			objectivesChanged (data) {
+				this.form.objectives = data
 			},
 
 			async submit () {
@@ -117,6 +148,11 @@
 							isCovered: this.userlesson.lesson[period],
 							statusLabel: this.statusLabels[period]
 						})
+					})
+
+					window.events.$emit('objectives', {
+						objectives: this.userlesson.lesson.objectives,
+						completed: this.userlesson.user.objectives
 					})
 				}, 200)
 			}
