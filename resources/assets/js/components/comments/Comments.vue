@@ -38,11 +38,6 @@
 				required: true,
 				type: String
 			},
-			isCompleted: {
-				required: false,
-				type: Boolean,
-				default: false
-			},
 			createRoles: {
 				required: false,
 				type: Array
@@ -56,7 +51,8 @@
 
 		data () {
 			return {
-				newActive: false
+				newActive: false,
+				isCompleted: false
 			}
 		},
 
@@ -91,10 +87,21 @@
 		},
 
 		mounted () {
-			this.init()
+			setTimeout(() => {
+				this.init()
+			}, 200)
 
 			window.events.$on('comment:new-active', () => this.newActive = true)
+
 			window.events.$on('comment:new-inactive', () => this.newActive = false)
+
+			window.events.$on('disable', disabled => {
+				if (disabled === 0 || disabled === '0') {
+					this.isCompleted = false
+				} else if (disabled === 1 || disabled === '1') {
+					this.isCompleted = true
+				}
+			})
 		}
 	}
 </script>

@@ -31,7 +31,8 @@ class UserLessonCompleted implements Rule
     {
         if ((int) $value === 1 ) {
             return $this->completedStatus() && 
-                    $this->completedObjectives();
+                    $this->completedObjectives() &&
+                    $this->completedEvaluation();
                    // $this->completedObjectives() && 
                    // $this->completedNotebooks() &&
                    // $this->completedEvaluation() &&

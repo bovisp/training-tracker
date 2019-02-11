@@ -36,6 +36,19 @@
 		<div class="columns mt-8">
 			<div class="column">
 				<h2 class="title is-2 has-text-weight-light">
+					Statement of Competency
+				</h2>
+			</div>
+		</div>
+
+		<comments 
+			:endpoint="commentsEndpoint"
+			:create-roles="['supervisor', 'head_of_operations']"
+		/>
+
+		<div class="columns mt-8">
+			<div class="column">
+				<h2 class="title is-2 has-text-weight-light">
 					Sign off by Manager or Head of Operations
 				</h2>
 			</div>
@@ -73,6 +86,7 @@
 	import Status from './statuses/Status'
 	import Objectives from './objectives/Objectives'
 	import Completed from './completed/Completed'
+	import Comments from '../comments/Comments'
 
 	export default {
 		props: {
@@ -85,7 +99,8 @@
 		components: {
 			Status,
 			Objectives,
-			Completed
+			Completed,
+			Comments
 		},
 
 		data () {
@@ -107,7 +122,8 @@
 					objectives: [],
 					completed: 0
 				},
-				isLoading: false
+				isLoading: false,
+				commentsEndpoint: ''
 			}
 		},
 
@@ -214,6 +230,8 @@
 				}, 100)
 
 				window.events.$emit('disable', this.userlesson.completed)
+
+				this.commentsEndpoint = `/users/${this.userlesson.user.id}/userlessons/${this.userlesson.id}/comments`
 			}
 		},
 
