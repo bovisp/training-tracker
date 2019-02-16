@@ -223,7 +223,11 @@ $dragndrop-min-height: 200px;
 		margin-bottom: 0 !important;
 	}
 
-	&-0 {
+	&-1 {
+		margin-bottom: .25rem;
+	}
+
+	&-2 {
 		margin-bottom: .5rem !important;
 	}
 
@@ -255,6 +259,10 @@ $dragndrop-min-height: 200px;
 }
 
 .mr {
+	&-1 {
+		margin-right: .25rem;
+	}
+
 	&-2 {
 		margin-right: .5rem;
 	}

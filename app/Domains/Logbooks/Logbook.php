@@ -33,6 +33,7 @@ class Logbook extends Model
     public function entries()
     {
     	return $this->hasMany(LogbookEntry::class)
+            ->select('id', 'logbook_id', 'updated_at', 'user_id', 'created_at')
     		->orderBy('created_at', 'asc');
     }
 

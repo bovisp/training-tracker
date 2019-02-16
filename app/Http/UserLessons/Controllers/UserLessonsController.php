@@ -24,7 +24,7 @@ class UserLessonsController extends Controller
     
     public function show(User $user, UserLesson $userlesson)
     {
-        $userlesson->load(['user', 'lesson.objectives', 'user.objectives']);
+        $userlesson->load(['user', 'lesson.objectives', 'user.objectives', 'logbooks']);
         
         return view('userlessons.show', compact('userlesson', 'user'));
     }

@@ -1,4 +1,6 @@
 export default {
 	userlesson: {},
-	form: {}
+	form: {},
+	logbooks: [],
+	entry: {}
 }

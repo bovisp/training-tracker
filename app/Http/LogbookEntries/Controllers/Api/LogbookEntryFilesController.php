@@ -43,6 +43,10 @@ class LogbookEntryFilesController extends Controller
     {
         $filesArr = unserialize($logbookEntry->files);
 
+        if ($filesArr === false) {
+            $filesArr = [];
+        }
+
         foreach (request('files') as $file) {
             array_push($filesArr, $file);
         }

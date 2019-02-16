@@ -1,5 +1,5 @@
 <template>
-	<section class="section">
+	<section class="section" style="position: relative;">
 		<div class="columns">
 			<div class="column">
 				<h2 class="title is-2 has-text-weight-light">
@@ -29,6 +29,22 @@
 			<div class="column">
 				<Objectives	
 					@updateobjectives="objectivesChanged"
+				/>
+			</div>
+		</div>
+
+		<div class="columns mt-8">
+			<div class="column">
+				<h2 class="title is-2 has-text-weight-light">
+					Logbooks
+				</h2>
+			</div>
+		</div>
+
+		<div class="columns">
+			<div class="column">
+				<Logbooks 
+					:userlesson="initialUserlesson"
 				/>
 			</div>
 		</div>
@@ -87,6 +103,7 @@
 	import Objectives from './objectives/Objectives'
 	import Completed from './completed/Completed'
 	import Comments from '../comments/Comments'
+	import Logbooks from './logbooks/Logbooks'
 
 	export default {
 		props: {
@@ -100,7 +117,8 @@
 			Status,
 			Objectives,
 			Completed,
-			Comments
+			Comments,
+			Logbooks
 		},
 
 		data () {

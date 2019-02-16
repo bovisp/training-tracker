@@ -193,6 +193,10 @@ Route::middleware(['role:administrator'])->group(function () {
  */
 Route::middleware(['profile'])->group(function () {
 
+	Route::get('userlessons/{userlesson}/logbooks', '\TrainingTracker\Http\Logbooks\Controllers\Api\LogbooksController@index');
+	Route::get('entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@show');
+	Route::patch('entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update');
+
 	/**
 	 * Various HTTP "user" routes.
 	 */

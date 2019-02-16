@@ -10,7 +10,6 @@ import * as getters from './getters'
 
 import userlessons from './modules/userlessons'
 import comments from './modules/comments'
-// import logbooks from './modules/logbooks'
 import notifications from './modules/notifications'
 
 export default new Vuex.Store({
@@ -21,7 +20,6 @@ export default new Vuex.Store({
 	modules: {
 		userlessons,
 		comments,
-		// logbooks,
 		notifications 
 	} 
 })

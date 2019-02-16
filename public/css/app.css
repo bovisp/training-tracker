@@ -17871,7 +17871,11 @@ a.has-text-danger:focus {
   margin-bottom: 0 !important;
 }
 
-.mb-0 {
+.mb-1 {
+  margin-bottom: .25rem;
+}
+
+.mb-2 {
   margin-bottom: .5rem !important;
 }
 
@@ -17897,6 +17901,10 @@ a.has-text-danger:focus {
 
 .ml-4 {
   margin-left: 1rem;
+}
+
+.mr-1 {
+  margin-right: .25rem;
 }
 
 .mr-2 {

@@ -22,6 +22,7 @@ trait HasObjectivesTrait
     public function updateObjectives(UserLesson $userlesson)
     {
         $allObjectivesForUserlesson = $userlesson->lesson->objectives->pluck('id');
+        
         $this->objectives()->detach($allObjectivesForUserlesson);
 
         $this->objectives()->attach(request('objectives'));

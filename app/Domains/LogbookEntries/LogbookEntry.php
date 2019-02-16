@@ -58,12 +58,6 @@ class LogbookEntry extends Model
 
     public function add(User $user, Logbook $logbook)
     {
-        // $body = request('body');
-
-        // $pattern = "/<p\sclass=\"ql-align-justify\"><br><\/p>/";
-
-        // $newBody = preg_replace($pattern, '', $body); 
-
         $logbookEntry = self::create([
             'body' => request('body'),
             'logbook_id' => $logbook->id,
@@ -83,12 +77,6 @@ class LogbookEntry extends Model
 
     public function edit(User $user)
     {
-        // $body = request('body');
-
-        # $pattern = "/<p\sclass=\"ql-align-justify\"><br><\/p>/";
-
-        // $newBody = preg_replace($pattern, '', $body); 
-
         $this->update([
             'body' => request('body')
         ]);
