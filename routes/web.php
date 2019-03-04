@@ -193,9 +193,12 @@ Route::middleware(['role:administrator'])->group(function () {
  */
 Route::middleware(['profile'])->group(function () {
 
+	Route::get('api/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonsController@show');
 	Route::get('userlessons/{userlesson}/logbooks', '\TrainingTracker\Http\Logbooks\Controllers\Api\LogbooksController@index');
 	Route::get('entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@show');
 	Route::patch('entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update');
+	Route::delete('entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@destroy');
+	Route::post('logbooks/{logbook}/entries', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store');
 
 	/**
 	 * Various HTTP "user" routes.
@@ -249,7 +252,7 @@ Route::middleware(['profile'])->group(function () {
 
 		Route::get('/', '\TrainingTracker\Http\Logbooks\Controllers\LogbookController@show');
 
-		Route::post('/', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store');
+		// Route::post('/', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store');
 
 		Route::post('/files/meta', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@meta');
 

@@ -15,7 +15,6 @@
 				<button 
 					class="button has-text-danger is-text is-small"
 					@click.prevent="remove(file.codedFilename)"
-					v-if="!isCompleted"
 				>{{ trans('app.general.buttons.delete') }}</button>
 			</li>
 		</ul>

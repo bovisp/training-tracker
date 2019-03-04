@@ -17839,6 +17839,12 @@ a.has-text-danger:focus {
           align-items: center;
 }
 
+.items-end {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
 .mt-0 {
   margin-top: 0 !important;
 }

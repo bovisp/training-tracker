@@ -31,7 +31,8 @@ class LogbookEntry extends Model
 
     protected $with = [
         'editor',
-        'creator'
+        'creator',
+        'comments'
     ];
 
     public function logbook()
@@ -73,6 +74,8 @@ class LogbookEntry extends Model
                 $logbookEntry, $user->id, 'logbook_entry_added'
             )
         );
+
+        return $logbookEntry;
     }
 
     public function edit(User $user)

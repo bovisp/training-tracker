@@ -41,6 +41,11 @@
 			createRoles: {
 				required: false,
 				type: Array
+			},
+			isCompleted: {
+				required: false,
+				type: Boolean,
+				default: false
 			} 
 		},
 
@@ -52,7 +57,7 @@
 		data () {
 			return {
 				newActive: false,
-				isCompleted: false
+				// completed: false
 			}
 		},
 
@@ -62,9 +67,7 @@
 
 		computed: {
 			...mapGetters({
-				comments: 'comments/comments',
-				userId: 'logbooks/userId',
-				logbookId: 'logbooks/logbookId'
+				comments: 'comments/comments'
 			})
 		},
 
@@ -80,8 +83,6 @@
 
 				if (commentId) {
 					VueScrollTo.scrollTo(`#comment-${commentId}`, 500)
-
-					window.history.replaceState({}, document.title, `/users/${parseInt(this.userId)}/logbooks/${parseInt(this.logbookId)}`);
 				}
 			}
 		},
@@ -89,19 +90,23 @@
 		mounted () {
 			setTimeout(() => {
 				this.init()
+
+				// this.completed = this.isCompleted
 			}, 200)
 
 			window.events.$on('comment:new-active', () => this.newActive = true)
 
 			window.events.$on('comment:new-inactive', () => this.newActive = false)
 
-			window.events.$on('disable', disabled => {
-				if (disabled === 0 || disabled === '0') {
-					this.isCompleted = false
-				} else if (disabled === 1 || disabled === '1') {
-					this.isCompleted = true
-				}
-			})
+			// window.events.$on('disable-objectives', () => {
+			// 	console.log("false")
+			// 	this.completed = false
+			// })
+			
+			// window.events.$on('enable-objectives', () => {
+			// 	console.log("true")
+			// 	this.completed = true
+			// })
 		}
 	}
 </script>

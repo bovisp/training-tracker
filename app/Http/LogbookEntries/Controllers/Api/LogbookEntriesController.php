@@ -4,6 +4,8 @@ namespace TrainingTracker\Http\LogbookEntries\Controllers\Api;
 
 use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\LogbookEntries\LogbookEntry;
+use TrainingTracker\Domains\Logbooks\Logbook;
+use TrainingTracker\Http\LogbookEntries\Requests\LogbookEntriesStoreRequest;
 use TrainingTracker\Http\LogbookEntries\Resources\LogbookEntryResource;
 
 class LogbookEntriesController extends Controller
@@ -16,24 +18,25 @@ class LogbookEntriesController extends Controller
     //         ]);
     // }
 
-    // public function store(LogbookEntriesStoreRequest $request, User $user, Logbook $logbook)
-    // {
-    //     if ($logbook->userlesson->completed === 1) {
-    //         return response()->json([
-    //             'errors' => [
-    //                 'errors' => 'You cannot do this as the lesson package has been marked as complete.'
-    //             ]
-    //         ], 403);
-    //     }
+    public function store(LogbookEntriesStoreRequest $request, Logbook $logbook)
+    {
+        // if ($logbook->userlesson->completed === 1) {
+        //     return response()->json([
+        //         'errors' => [
+        //             'errors' => 'You cannot do this as the lesson package has been marked as complete.'
+        //         ]
+        //     ], 403);
+        // }
         
-    //     $logbookEntry = new LogbookEntry;
+        $logbookEntry = new LogbookEntry;
 
-    //     $logbookEntry->add($user, $logbook);
+        $entry = $logbookEntry->add($logbook->userlesson->user, $logbook);
 
-    //     return response()->json([
-    //         'flash' => trans('app.flash.logbookentryadded')
-    //     ]);
-    // }
+        return response()->json([
+            'flash' => trans('app.flash.logbookentryadded'),
+            'entry' => $entry->id
+        ]);
+    }
 
     public function show(LogbookEntry $entry)
     {
@@ -53,12 +56,12 @@ class LogbookEntriesController extends Controller
         ]);
     }
 
-    // public function destroy(User $user, Logbook $logbook, LogbookEntry $logbookEntry)
-    // {
-    //     $logbookEntry->delete();
+    public function destroy(LogbookEntry $entry)
+    {
+        $entry->delete();
 
-    //     return response()->json([
-    //         'flash' => trans('app.flash.logbookentrydeleted')
-    //     ]);
-    // }
+        return response()->json([
+            'flash' => trans('app.flash.logbookentrydeleted')
+        ]);
+    }
 }

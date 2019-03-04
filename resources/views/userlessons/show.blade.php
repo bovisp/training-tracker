@@ -22,8 +22,8 @@
 				</a>
 			</p>
 
-			<userlesson 
-				:initial-userlesson="{{ json_encode($userlesson) }}"
+			<userlesson
+				:userlesson-id="{{ $userlesson->id }}"
 			></userlesson>
 
 			<div class="divider divider--relaxed"></div>

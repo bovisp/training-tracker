@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<ul>
+		<ul v-if="logbooks.length">
 			<li
 				v-for="(logbook, index) in sortedLogbooks"
 				:key="logbook.id"
@@ -12,14 +12,27 @@
 				/>
 			</li>
 		</ul>
+
+		<article class="message is-info" v-else>
+			<div class="message-body">
+				No logbooks required
+			</div>
+		</article>
 	</div>
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+	import { mapActions, mapGetters } from 'vuex'
 	import Entries from './Entries'
 
 	export default {
+		props: {
+			userlesson: {
+				type: Object,
+				required: true
+			}
+		},
+
 		components: {
 			Entries
 		},
@@ -32,6 +45,16 @@
 			sortedLogbooks () {
 				return orderBy(this.logbooks, ['objective.number'], ['asc'])
 			}
+		},
+
+		methods: {
+			...mapActions({
+				fetch: 'userlessons/fetchLogbooks'
+			})
+		},
+
+		mounted () {
+			this.fetch(this.userlesson.id)
 		}
 	}
 </script>

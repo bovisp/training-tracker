@@ -22,3 +22,7 @@
 	    </b-dropdown>
 	</div>
 </template>
+
+<script>
+	export default {}
+</script>

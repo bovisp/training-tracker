@@ -185,6 +185,10 @@ $dragndrop-min-height: 200px;
 	&-center {
 		align-items: center;
 	}
+
+	&-end {
+		align-items: flex-end;
+	}
 }
 
 // Spacing utilities

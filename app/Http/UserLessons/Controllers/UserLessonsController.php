@@ -24,7 +24,7 @@ class UserLessonsController extends Controller
     
     public function show(User $user, UserLesson $userlesson)
     {
-        $userlesson->load(['user', 'lesson.objectives', 'user.objectives', 'logbooks']);
+        $userlesson->load(['user', 'lesson.objectives', 'user.objectives', 'logbooks', 'logbooks.objective']);
         
         return view('userlessons.show', compact('userlesson', 'user'));
     }
@@ -33,10 +33,6 @@ class UserLessonsController extends Controller
     {
         if (moodleauth()->user()->hasRole(['administrator', 'supervisor', 'head_of_operations'])) {
             $this->updateObjectivesandStatus($user, $userlesson);
-        }        
-
-        if (moodleauth()->user()->hasRole(['administrator', 'manager', 'head_of_operations'])) {
-            $this->updateCompleted($userlesson);
         }
 
         $userlesson->load(['user', 'lesson.objectives', 'user.objectives']);

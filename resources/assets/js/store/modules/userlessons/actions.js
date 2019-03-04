@@ -1,16 +1,12 @@
-export const initialize = async ({ commit }, userlesson) => {
-	await commit('SET_USERLESSON', userlesson)
-}
-
-export const updateForm = ({ commit }, data) => {
-	commit('UPDATE_FORM', data)
-}
-
-export const update = async ({ state }) => {
+export const fetch = async ({ commit }, userlessonId) => {
 	try {
-		let response = await axios.put(
-			`${urlBase}/users/${state.userlesson.user.id}/userlessons/${state.userlesson.id}`, state.form
-		)
+		let response = await axios.get(`/api/userlessons/${userlessonId}`)
+
+		await commit('SET_USERLESSON', response.data)
+		await commit('SET_OBJECTIVES', response.data.lesson.objectives)
+		await commit('SET_COMPLETED_OBJECTIVES', response.data.user.objectives)
+		await commit('SET_LOGBOOKS', response.data.logbooks)
+		await commit('SET_LESSON', response.data.lesson)
 
 		return response
 	} catch (e) {
@@ -18,9 +14,39 @@ export const update = async ({ state }) => {
 	}
 }
 
-export const updateEntry = async ({ state }, { data, entryId}) => {
+export const open = async ({ commit }, { entryId, logbookId }) => {
+	if (logbookId !== null) {
+		await commit('TOGGLE_ENTRY_MODAL')
+		await commit('SET_LOGBOOK_ID', logbookId)
+
+		return
+	}
+
 	try {
-		let response = axios.patch(`${urlBase}/entries/${entryId}`, data)
+		let response = await axios.get(`${urlBase}/entries/${entryId}`)
+
+		await commit('TOGGLE_ENTRY_MODAL')
+		await commit('SET_ENTRY', response.data.data)
+
+		return response
+	} catch (e) {
+		return e.response
+	}
+}
+
+export const close = async ({ commit, state }) => {
+	await commit('TOGGLE_ENTRY_MODAL')
+	await commit('SET_ENTRY', {})
+	await commit('SET_LOGBOOK_ID', null)
+}
+
+export const storeEntry = async ({ state, commit, dispatch }, { data, logbookId }) => {
+	try {
+		let response = await axios.post(`${urlBase}/logbooks/${logbookId}/entries`, data)
+
+		await dispatch('fetchLogbooks', state.userlesson.id)
+		await dispatch('fetchEntry', response.data.entry)
+		await commit('SET_LOGBOOK_ID', null)
 
 		return response
 	} catch (e) {

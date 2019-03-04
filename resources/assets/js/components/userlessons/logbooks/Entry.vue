@@ -1,44 +1,103 @@
 <template>
-	<div>
-		<b-modal 
-			:active.sync="isActive" 
-			:width="960" 
-			scroll="keep" 
-			:can-cancel="['escape', 'x']"
-		>
-			<div class="card">
-				<div class="card-content">
-					<EntryModal 
-						:entry-id="entry.id"
-					/>
-				</div>
-			</div>
-		</b-modal>
+	<section>
+		<NewEntry v-if="logbookId"/>
 
-		<a @click.prevent="isActive = true">
-			Entry created at {{ entry.created_at }}
-		</a>
-	</div>
+		<template v-else>
+			{{ objectiveCompleted }}
+
+			<EntrySettings 
+				@entryedit="editing = true"
+				@entrydelete="destroy"
+				v-if="!objectiveCompleted"
+			/>
+
+			<article 
+				class="content" 
+				v-if="!editing"
+				v-html="entry.body"
+			></article>
+
+			<EditEntry 
+				@entrycancel="editing = false"
+				@entryupdate="update"
+				:data="entry.body"
+				v-else
+			/>
+
+			<h3 class="is-3 has-text-weight-light title">
+				Files
+			</h3>
+
+			<EntryFiles 
+				:is-completed="objectiveCompleted"
+			/>
+
+			<h3 class="title is-3 has-text-weight-light mt-8">
+				{{ trans('app.components.logbooks.comments') }}
+			</h3>
+
+			<Comments 
+				:endpoint="commentsEndpoint"
+				:create-roles="['supervisor', 'head_of_operations', 'apprentice']"
+				:is-completed="objectiveCompleted"
+			/>
+		</template>
+	</section>
 </template>
 
 <script>
-	import EntryModal from './EntryModal'
+	import { mapGetters } from 'vuex'
+	import NewEntry from './NewEntry'
+	import EntrySettings from './EntrySettings'
+	import EditEntry from './EditEntry'
+	import EntryFiles from './EntryFiles'
+	import Comments from '../../comments/Comments'
 
 	export default {
-		props: {
-			entry: {
-				type: Object,
-				required: true
+		data () {
+			return {
+				editing: false
 			}
 		},
 
 		components: {
-			EntryModal
+			NewEntry,
+			EntrySettings,
+			EditEntry,
+			EntryFiles,
+			Comments
 		},
 
-		data () {
-			return {
-				isActive: false
+		computed: {
+			...mapGetters({
+				entry: 'userlessons/entry',
+				logbookId: 'userlessons/logbookId',
+				logbooks: 'userlessons/logbooks',
+				userlesson: 'userlessons/userlesson',
+				form: 'userlessons/form'
+			}),
+
+			commentsEndpoint () {
+				return `/users/${this.userlesson.user.id}/entries/${this.entry.id}/comments`
+			},
+
+			objectiveCompleted () {
+				console.log(this.form.completedObjectives, this.entry.objective_id)
+				if (_.indexOf(this.form.completedObjectives, this.entry.objective_id) >= 0) {
+					return true
+				}
+
+				return false
+			}
+		},
+
+		methods: {
+			destroy () {
+				console.log("destroyed")
+			},
+
+			update () {
+				console.log("updating")
 			}
 		}
 	}

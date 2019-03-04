@@ -37,6 +37,14 @@
     import Uploads from './Uploads'
 
     export default {
+        props: {
+            logbookId: {
+                type: Number,
+                required: false,
+                default: null
+            }
+        },
+
         data() {
             return {
                 files: [],
@@ -95,9 +103,7 @@
             storeMeta (file) {
                 let fileObject = this.generateFileObject(file)
 
-                console.log(this.userlesson.user.id)
-
-                return axios.post(`${urlBase}/users/${this.userlesson.user.id}/logbooks/${this.entry.logbook}/files/meta`, {
+                return axios.post(`${urlBase}/users/${this.userlesson.user.id}/logbooks/${this.logbookId ? this.logbookId : this.entry.logbook}/files/meta`, {
                     name: file.name
                 })
                 .then(
@@ -139,7 +145,7 @@
 
                 window.events.$emit('upload:initialized')
 
-                axios.post(`${urlBase}/users/${this.userlesson.user.id}/logbooks/${this.entry.logbook}/files/upload`, form, {
+                axios.post(`${urlBase}/users/${this.userlesson.user.id}/logbooks/${this.logbookId ? this.logbookId : this.entry.logbook}/files/upload`, form, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },

@@ -8,12 +8,16 @@
 			<span class="has-text-weight-light">{{ logbook.objective.name }}</span>
 		</h3>
 
-		<ul class="ml-4">
+		<ul 
+			class="ml-4" 
+		>
 			<template v-if="logbook.entries.length">
-				<li v-for="entry in logbook.entries">
-					<a @click.prevent="open({entryId: entry.id, logbookId: null})">
-						Entry created at {{ entry.created_at }}
-					</a>
+				<li
+					v-for="entry in logbook.entries"
+				>
+					<Entry 
+						:entry="entry"
+					/>
 				</li>
 			</template>
 
@@ -27,7 +31,7 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
+	import Entry from './Entry'
 
 	export default {
 		props: {
@@ -41,10 +45,8 @@
 			}
 		},
 
-		methods: {
-			...mapActions({
-				open: 'userlessons/open'
-			})
+		components: {
+			Entry
 		}
 	}
 </script>

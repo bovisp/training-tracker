@@ -9,7 +9,7 @@
 				<b-checkbox v-model="completedObjectives"
 	                :native-value="objective.id"
 	                type="is-success"
-	                :disabled="!hasRoleOf(['supervisor', 'head_of_operations']) || disableItem"
+	                :disabled="isDisabled"
 	            >
 	            	<i class="mdi mdi-information-variant mr-1" v-if="!objective.notebook_required"></i>
 	        		{{ objective.name }}
@@ -21,50 +21,35 @@
 			<i class="mdi mdi-information-variant mr-1"></i>
 			= Logbook not required for this objective
 		</div>
-
-		<article class="message is-danger mt-4" v-if="errors.objectives">
-			<div class="message-body">
-				{{ errors.objectives[0] }}
-			</div>
-		</article>
 	</div>
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
+
 	export default {
-		data() {
-            return {
-                completedObjectives: [],
-                objectives: [],
-                disableItem: false
-            }
-        },
+		computed: {
+			...mapGetters({
+				objectives: 'userlessons/objectives'
+			}),
 
-        computed: {
-        	hasLogbooksNotRequired () {
-        		return _.find(this.objectives, objective => objective.notebook_required === 0)
-        	}
-        },
+			completedObjectives: {
+				get () {
+					return this.$store.state.userlessons.form.completedObjectives
+				},
 
-		watch: {
-			completedObjectives () {
-				this.$emit('updateobjectives',this.completedObjectives)
-			}
-		},
-
-		mounted () {
-			window.events.$on('objectives', ({ objectives, completed }) => {
-				this.completedObjectives = _.map(completed, objective => objective.id)
-				this.objectives = objectives
-			})
-
-			window.events.$on('disable', disabled => {
-				if (disabled === 0 || disabled === '0') {
-					this.disableItem = false
-				} else if (disabled === 1 || disabled === '1') {
-					this.disableItem = true
+				set (value) {
+					this.$store.commit('userlessons/UPDATE_COMPLETED_OBJECTIVES', value)
 				}
-			})
+			},
+
+			isDisabled () {
+				return false
+			},
+
+			hasLogbooksNotRequired () {
+        		return _.find(this.objectives, objective => objective.notebook_required === 0)
+        	},
 		}
 	}
 </script>

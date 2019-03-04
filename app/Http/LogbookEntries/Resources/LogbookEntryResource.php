@@ -24,7 +24,8 @@ class LogbookEntryResource extends Resource
             'edited_by' => new UserResource(User::find($this->edited_by)),
             'created_by' => new UserResource(User::find($this->user_id)),
             'files' => unserialize($this->files),
-            'logbook' => $this->logbook->id
+            'logbook' => $this->logbook->id,
+            'objective_id' => $this->logbook->objective->id
         ];
     }
 }
