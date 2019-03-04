@@ -3,8 +3,6 @@
 		<NewEntry v-if="logbookId"/>
 
 		<template v-else>
-			{{ objectiveCompleted }}
-
 			<EntrySettings 
 				@entryedit="editing = true"
 				@entrydelete="destroy"
@@ -37,6 +35,7 @@
 			</h3>
 
 			<Comments 
+				v-if="Object.keys(entry).length > 0"
 				:endpoint="commentsEndpoint"
 				:create-roles="['supervisor', 'head_of_operations', 'apprentice']"
 				:is-completed="objectiveCompleted"

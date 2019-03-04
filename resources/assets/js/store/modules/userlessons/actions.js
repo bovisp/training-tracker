@@ -34,9 +34,11 @@ export const open = async ({ commit }, { entryId, logbookId }) => {
 	}
 }
 
-export const close = async ({ commit, state }) => {
+export const close = async ({ commit, state, dispatch }) => {
 	await commit('TOGGLE_ENTRY_MODAL')
 	await commit('SET_ENTRY', {})
+	await commit('comments/setComments', {}, { root: true })
+	await dispatch('comments/fetch', `/users/${state.userlesson.user.id}/userlessons/${state.userlesson.id}/comments`, { root: true })
 	await commit('SET_LOGBOOK_ID', null)
 }
 

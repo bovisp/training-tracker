@@ -56,8 +56,7 @@
 
 		data () {
 			return {
-				newActive: false,
-				// completed: false
+				newActive: false
 			}
 		},
 
@@ -90,23 +89,11 @@
 		mounted () {
 			setTimeout(() => {
 				this.init()
-
-				// this.completed = this.isCompleted
 			}, 200)
 
 			window.events.$on('comment:new-active', () => this.newActive = true)
 
 			window.events.$on('comment:new-inactive', () => this.newActive = false)
-
-			// window.events.$on('disable-objectives', () => {
-			// 	console.log("false")
-			// 	this.completed = false
-			// })
-			
-			// window.events.$on('enable-objectives', () => {
-			// 	console.log("true")
-			// 	this.completed = true
-			// })
 		}
 	}
 </script>

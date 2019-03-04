@@ -10,6 +10,7 @@
 							<option 
 								:value="logbook.id"
 								v-for="logbook in filteredLogbooks"
+								:key="logbook.id"
 							>{{ logbook.objective.name }}</option>
 						</template>
 					</select>
@@ -18,7 +19,7 @@
 
 			<button 
 				class="button is-link ml-4"
-				@click.prevent="open({entryId: null, logbookId})"
+				@click.prevent="open({entryId: null, logbookId}); logbookId = '';"
 			>Create</button>
 		</div>
 	</div>

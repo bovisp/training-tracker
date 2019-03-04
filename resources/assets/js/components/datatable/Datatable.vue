@@ -1,9 +1,9 @@
 <template>
 	<section>
-		<div v-if="errors.length" class="message is-danger mb-8">
+		<div v-if="errors_data.length" class="message is-danger mb-8">
             <div class="message-body content">
                 <ul class="mt-0">
-                    <li v-for="error in errors">{{ error }}</li>
+                    <li v-for="error in errors_data" :key="error">{{ error }}</li>
                 </ul>
             </div>
         </div>
@@ -147,7 +147,7 @@
 	    		checkedRows: [],
 	    		roles: [],
 	    		rolesModel: [],
-	    		errors: [],
+	    		errors_data: [],
 	    		search: ''
 			}
 		},
@@ -206,7 +206,7 @@
 	        },
 
 	        validate () {
-	        	this.errors = []
+	        	this.errors_data = []
 
 	        	let postArray = []
 
@@ -220,7 +220,7 @@
 	        		})
 	        	}
 
-	        	if (this.errors.length === 0) {
+	        	if (this.errors_data.length === 0) {
 	        		this.post(postArray)
 	        	}
 	        },
@@ -249,7 +249,7 @@
         			})
 
         			if (hasRole === false) {
-        				this.errors.push(
+        				this.errors_data.push(
         					`${this.trans('app.components.datatable.roleerrormessage1')} ${user.firstname} ${user.lastname}. ${this.trans('app.components.datatable.roleerrormessage2')}`
         				)
         			}
@@ -265,7 +265,7 @@
 	        		if (find(this.checkedRows, ['id', parseInt(valueArray[0])]) === undefined) {
 	        			const user = this.findUserId(parseInt(valueArray[0]))
 
-	                    this.errors.push(
+	                    this.errors_data.push(
 	                        `${this.trans('app.components.datatable.roleerrormessage3')} ${user.firstname} ${user.lastname} ${this.trans('app.components.datatable.roleerrormessage4')}`
 	                    )
 	        		}
