@@ -25,7 +25,7 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             'type' => 'required|min:3',
-            'rank' => 'integer',
+            'rank' => 'sometimes|integer',
             'name_en' => 'required|min:3',
             'name_fr' => 'required|min:3'
         ];

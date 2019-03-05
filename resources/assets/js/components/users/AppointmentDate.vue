@@ -34,9 +34,9 @@
 		<div v-if="editing">
 			<p 
 				class="help is-danger"
-				:class="{ 'is-block': errors.has('appointed_at') }" 
-	            v-text="errors.get('appointed_at')" 
-	            v-show="errors.has('appointed_at')"
+				:class="{ 'is-block': errors_data.has('appointed_at') }" 
+	            v-text="errors_data.get('appointed_at')" 
+	            v-show="errors_data.has('appointed_at')"
 			></p>
 		</div>
 	</div>
@@ -52,7 +52,7 @@
 			return {
 				appointmentDate: '',
 				editing: false,
-				errors: new Error()
+				errors_data: new Error()
 			}
 		},
 
@@ -82,7 +82,7 @@
 
 	                    this.editing = false
 
-	                    this.errors.clear('appointed_at')
+	                    this.errors_data.clear('appointed_at')
 
 	                    console.log(data.date.date)
 
@@ -90,7 +90,7 @@
 					})
 					.catch(error => {
 						if (error.response.status === 422) {
-	                        this.errors.record(error.data.errors)
+	                        this.errors_data.record(error.data.errors)
 	                    }
 					})
 			},

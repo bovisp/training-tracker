@@ -38,14 +38,14 @@
 				required: true,
 				type: String
 			},
+			createRoles: {
+				required: false,
+				type: Array
+			},
 			isCompleted: {
 				required: false,
 				type: Boolean,
 				default: false
-			},
-			createRoles: {
-				required: false,
-				type: Array
 			} 
 		},
 
@@ -66,9 +66,7 @@
 
 		computed: {
 			...mapGetters({
-				comments: 'comments/comments',
-				userId: 'logbooks/userId',
-				logbookId: 'logbooks/logbookId'
+				comments: 'comments/comments'
 			})
 		},
 
@@ -84,16 +82,17 @@
 
 				if (commentId) {
 					VueScrollTo.scrollTo(`#comment-${commentId}`, 500)
-
-					window.history.replaceState({}, document.title, `/users/${parseInt(this.userId)}/logbooks/${parseInt(this.logbookId)}`);
 				}
 			}
 		},
 
 		mounted () {
-			this.init()
+			setTimeout(() => {
+				this.init()
+			}, 200)
 
 			window.events.$on('comment:new-active', () => this.newActive = true)
+
 			window.events.$on('comment:new-inactive', () => this.newActive = false)
 		}
 	}

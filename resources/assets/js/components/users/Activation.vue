@@ -30,9 +30,9 @@
 
 						    <p 
 								class="help is-danger"
-								:class="{ 'is-block': errors.has('deactivated_at') }" 
-					            v-text="errors.get('deactivated_at')" 
-					            v-show="errors.has('deactivated_at')"
+								:class="{ 'is-block': errors_data.has('deactivated_at') }" 
+					            v-text="errors_data.get('deactivated_at')" 
+					            v-show="errors_data.has('deactivated_at')"
 							></p>
 
 						    <b-field>
@@ -47,9 +47,9 @@
 
 						    <p 
 								class="help is-danger"
-								:class="{ 'is-block': errors.has('deactivation_rationale') }" 
-					            v-text="errors.get('deactivation_rationale')" 
-					            v-show="errors.has('deactivation_rationale')"
+								:class="{ 'is-block': errors_data.has('deactivation_rationale') }" 
+					            v-text="errors_data.get('deactivation_rationale')" 
+					            v-show="errors_data.has('deactivation_rationale')"
 							></p>
 					    </template>
 
@@ -64,9 +64,9 @@
 
 						    <p 
 								class="help is-danger"
-								:class="{ 'is-block': errors.has('reactivated_at') }" 
-					            v-text="errors.get('reactivated_at')" 
-					            v-show="errors.has('reactivated_at')"
+								:class="{ 'is-block': errors_data.has('reactivated_at') }" 
+					            v-text="errors_data.get('reactivated_at')" 
+					            v-show="errors_data.has('reactivated_at')"
 							></p>r
 
 						    <div style="height: 330px;"></div>
@@ -107,7 +107,7 @@
 				deactivatedDate: null,
 				reactivatedDate: null,
 				rationale: '',
-				errors: new Error()
+				errors_data: new Error()
 			}
 		},
 
@@ -142,9 +142,9 @@
 			close () {
 				this.isActive = false
 
-				this.errors.clear('deactivated_at')
-				this.errors.clear('reactivated_at')
-				this.errors.clear('deactivation_rationale')
+				this.errors_data.clear('deactivated_at')
+				this.errors_data.clear('reactivated_at')
+				this.errors_data.clear('deactivation_rationale')
 			},
 
 			action () {
@@ -163,24 +163,28 @@
                         type: 'is-success'
                     })
 
-                    this.errors.clear('deactivated_at')
-					this.errors.clear('reactivated_at')
-					this.errors.clear('deactivation_rationale')
+                    this.errors_data.clear('deactivated_at')
+					this.errors_data.clear('reactivated_at')
+					this.errors_data.clear('deactivation_rationale')
 
 					setTimeout(() => {
                         window.location = `${urlBase}/users/${this.user.id}`;
                     }, 3000)
 				})
 				.catch(error => {
-					this.errors.clear('deactivated_at')
-					this.errors.clear('reactivated_at')
-					this.errors.clear('deactivation_rationale')
+					this.errors_data.clear('deactivated_at')
+					this.errors_data.clear('reactivated_at')
+					this.errors_data.clear('deactivation_rationale')
 					
 					if (error.response.status === 422) {
-                        this.errors.record(error.response.data.errors)
+                        this.errors_data.record(error.response.data.errors)
                     }
 				})
 			}
 		}
 	}
 </script>
+
+<style>
+
+</style>

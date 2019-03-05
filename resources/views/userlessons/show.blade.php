@@ -22,10 +22,9 @@
 				</a>
 			</p>
 
-			<user-lesson 
-				:user-lesson="{{ $userlesson }}"
-				:user="{{ $user }}"
-			></user-lesson>
+			<userlesson
+				:userlesson-id="{{ $userlesson->id }}"
+			></userlesson>
 
 			<div class="divider divider--relaxed"></div>
 

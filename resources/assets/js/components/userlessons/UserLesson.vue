@@ -1,12 +1,68 @@
 <template>
-	<div>
-		<article v-if="errors.denied" class="message is-danger mt-4">
-			<div class="message-body content">
-				<ul class="mt-0">
-					<li v-for="(error, type) in errors" v-text="error" :key="type"></li>
-				</ul>
+	<section class="section" style="position: relative;">
+		<div class="columns">
+			<div class="column">
+				<h2 class="title is-2 has-text-weight-light">
+					Status
+				</h2>
 			</div>
-		</article>
+		</div>
+
+		<div class="columns is-desktop">
+			<Status 
+				v-for="status in statuses"
+				:key="status.period"
+				:status="status"
+			/>
+		</div>
+
+		<div class="columns mt-8">
+			<div class="column">
+				<h2 class="title is-2 has-text-weight-light">
+					Objectives
+				</h2>
+			</div>
+		</div>
+
+		<div class="columns">
+			<div class="column">
+				<Objectives />
+			</div>
+		</div>
+		
+		<template v-if="logbooks.length > 0">
+			<div class="columns mt-8">
+				<div class="column">
+					<h2 class="title is-2 has-text-weight-light">
+						Logbooks
+					</h2>
+				</div>
+			</div>
+
+			<div class="columns">
+				<div class="column">
+					<NewEntryDropdown 
+						v-if="!allObjectivesComplete"
+					/>
+
+					<Logbooks />
+				</div>
+			</div>
+
+			<div class="columns mt-8">
+				<div class="column">
+					<h2 class="title is-2 has-text-weight-light">
+						Statement of Competency
+					</h2>
+				</div>
+			</div>
+
+			<comments 
+				:endpoint="commentsEndpoint"
+				:create-roles="['supervisor', 'head_of_operations']"
+				:is-completed="allObjectivesComplete"
+			/>
+		</template>
 
 		<div 
 			style="position: fixed; bottom: 0; left: 0; background: #FFF; display: flex; width: 100%; z-index: 10;"
@@ -15,7 +71,6 @@
 		>
 				<button 
 					class="button is-info ml-auto"
-					:class="{ 'is-loading' : isLoading }"
 					@click="submit"
 				>
 					<i class="mdi mdi-content-save mr-2"></i>
@@ -24,103 +79,61 @@
 				</button>
 		</div>
 
-		<user-lesson-status />
-
-		<user-lesson-objectives />
-
-		<user-lesson-notebooks></user-lesson-notebooks>
-
-		<h3 class="title is-3 mt-16">
-			{{ trans('app.components.userlessons.finalevaluation') }}
-		</h3>
-
-		<comments 
-			:endpoint="commentsEndpoint"
-			:is-completed="isCompleted"
-			:create-roles="['supervisor', 'head_of_operations']"
-		/>
-
-		<h3 class="title is-3 mt-16">
-			{{ trans('app.components.userlessons.signoff') }}
-		</h3>
-
-		<user-lesson-final></user-lesson-final>
-
-		<b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
-	</div>
+		<EntryModal />
+	</section>
 </template>
 
 <script>
-	import UserLessonStatus from './UserLessonStatus'
-	import UserLessonObjectives from './UserLessonObjectives'
-	import UserLessonFinal from './UserLessonFinal'
-	import UserLessonNotebooks from './UserLessonNotebooks'
+	import { mapActions, mapGetters } from 'vuex'
+	import Objectives from './objectives/Objectives'
+	import NewEntryDropdown from './logbooks/NewEntryDropdown'
+	import Logbooks from './logbooks/Logbooks'
+	import EntryModal from './logbooks/EntryModal'
+	import Status from './statuses/Status'
 	import Comments from '../comments/Comments'
-	import { mapGetters, mapActions } from 'vuex'
 
 	export default {
-		props: ['userLesson', 'user'],
-
-		computed: {
-			...mapGetters({
-				isLoading: 'isLoading',
-				errors: 'errors',
-				isCompleted: 'userlessons/isCompleted'
-			}),
-
-			commentsEndpoint () {
-				return `/users/${this.user.id}/userlessons/${this.userLesson.id}/comments`
+		props: {
+			userlessonId: {
+				type: Number,
+				required: true
 			}
 		},
 
 		components: {
-			UserLessonStatus,
-			UserLessonObjectives,
-			UserLessonFinal,
-			UserLessonNotebooks,
+			Objectives,
+			NewEntryDropdown,
+			Logbooks,
+			EntryModal,
+			Status,
 			Comments
+		},
+
+		computed: {
+			...mapGetters({
+				userlesson: 'userlessons/userlesson',
+				logbooks: 'userlessons/logbooks',
+				allObjectivesComplete: 'userlessons/allObjectivesComplete',
+				statuses: 'userlessons/statuses'
+			}),
+
+			commentsEndpoint () {
+				return `/users/${this.userlesson.user.id}/userlessons/${this.userlesson.id}/comments`
+			}
 		},
 
 		methods: {
 			...mapActions({
-				fetch: 'userlessons/fetch',
-				patch: 'userlessons/patch',
-				updateCompletedPackage: 'userlessons/updateCompletedPackage'
+				fetch: 'userlessons/fetch'
 			}),
 
 			submit () {
-				this.patch()
-					.then(response => this.$toast.open({
-			                message: response.data.flash,
-			                position: 'is-top-right',
-			                type: 'is-success'
-            		})).catch(error => {
-						if (error.response.status === 403) {
-							this.$dialog.alert({
-			                    title: this.trans('app.general.unauthorized'),
-			                    message: this.errors.denied,
-			                    type: 'is-danger'
-			                })
-						}
-
-						if (error.response.status === 422 && this.errors.completed) {
-							this.$dialog.alert({
-			                    title: this.trans('app.components.userlessons.incomplete'),
-			                    message: this.errors.completed[0],
-			                    type: 'is-danger'
-			                })
-
-			                this.updateCompletedPackage()
-						}
-            		})
+				console.log('submitting')
 			}
 		},
 
 		mounted () {
-			this.fetch({
-				userlesson: this.userLesson.id,
-				user: this.user.id
-			})
+			this.fetch(this.userlessonId)
 		}
 	}
 </script>

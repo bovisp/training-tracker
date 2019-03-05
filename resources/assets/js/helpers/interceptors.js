@@ -7,7 +7,9 @@ axios.interceptors.response.use(
 		if (error.response.status === 422) {
 			store.dispatch('setErrors', error.response.data.errors)
 
-			store.dispatch('cancelLoadingStatus')
+			// console.log(error.response.data.errors)
+
+			// store.dispatch('cancelLoadingStatus')
 		}
 
 		if (error.response.status === 403) {
@@ -30,3 +32,15 @@ axios.interceptors.response.use(
 		return Promise.reject(error)
 	}
 )
+
+axios.interceptors.request.use(
+	config =>  {
+		store.dispatch('clearErrors')
+
+		return config
+	}, 
+
+	error =>  {
+		return Promise.reject(error)
+	}
+);

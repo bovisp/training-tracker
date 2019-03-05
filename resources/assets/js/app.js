@@ -16,6 +16,7 @@ window._ = require('lodash')
 
 import user from './mixins/user'
 import getUrlBase from './mixins/urlBase'
+import error from './mixins/errors'
 
 import './helpers/interceptors'
 
@@ -112,13 +113,13 @@ Vue.component('deactivations', require('./components/users/deactivations/Deactiv
 Vue.component('activation', require('./components/users/Activation.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('unassigned-user-lessons', require('./components/users/UnassignedUserLessons.vue'));
-Vue.component('user-lesson', require('./components/userlessons/UserLesson.vue'));
-Vue.component('logbook', require('./components/logbooks/Logbook.vue')); 
+Vue.component('userlesson', require('./components/userlessons/Userlesson.vue'));
 Vue.component('user-errors', require('./components/UserErrors.vue')); 
 Vue.component('notifications', require('./components/notifications/Notifications.vue')); 
 Vue.component('unread-notifications', require('./components/notifications/UnreadNotifications.vue')); 
 
 Vue.mixin(user)
+Vue.mixin(error)
 Vue.mixin(getUrlBase)
 
 /**

@@ -25,7 +25,7 @@ class StoreRoleRequest extends FormRequest
     {
         return [
             'type' => 'required|min:3|unique:roles,type',
-            'rank' => 'integer|unique:roles,rank',
+            'rank' => 'sometimes|integer|unique:roles,rank',
             'name_en' => 'required|min:3',
             'name_fr' => 'required|min:3'
         ];

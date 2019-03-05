@@ -1,10 +1,10 @@
 <template>
-	<div class="message is-danger" v-if="Object.keys(errors).length">
+	<div class="message is-danger" v-if="Object.keys(errors_data).length">
 		<div class="message-body">
 			<div class="content">
 				<ul class="mt-0">
-					<template v-for="error in Object.keys(errors)">
-						<li v-text="errors[error][0]"></li>
+					<template v-for="error in Object.keys(errors_data)">
+						<li v-text="errors_data[error][0]"></li>
 					</template>
 				</ul>
 			</div>
@@ -17,13 +17,13 @@
 	export default {
 		data () {
 			return  {
-				errors: {}
+				errors_data: {}
 			}
 		},
 
 		mounted () {
 			window.events.$on('users-create-error', (errors) => {
-				this.errors = errors;
+				this.errors_data = errors;
 			})
 		}
 	}

@@ -37,6 +37,14 @@
     import Uploads from './Uploads'
 
     export default {
+        props: {
+            logbookId: {
+                type: Number,
+                required: false,
+                default: null
+            }
+        },
+
         data() {
             return {
                 files: [],
@@ -50,8 +58,8 @@
 
         computed: {
             ...mapGetters({
-                'logbookId': 'logbooks/logbookId',
-                'userId': 'logbooks/userId'
+                'userlesson': 'userlessons/userlesson',
+                'entry': 'userlessons/entry'
             })
         },
 
@@ -95,7 +103,7 @@
             storeMeta (file) {
                 let fileObject = this.generateFileObject(file)
 
-                return axios.post(`${urlBase}/users/${this.userId}/logbooks/${this.logbookId}/files/meta`, {
+                return axios.post(`${urlBase}/users/${this.userlesson.user.id}/logbooks/${this.logbookId ? this.logbookId : this.entry.logbook}/files/meta`, {
                     name: file.name
                 })
                 .then(
@@ -137,7 +145,7 @@
 
                 window.events.$emit('upload:initialized')
 
-                axios.post(`${urlBase}/users/${this.userId}/logbooks/${this.logbookId}/files/upload`, form, {
+                axios.post(`${urlBase}/users/${this.userlesson.user.id}/logbooks/${this.logbookId ? this.logbookId : this.entry.logbook}/files/upload`, form, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },

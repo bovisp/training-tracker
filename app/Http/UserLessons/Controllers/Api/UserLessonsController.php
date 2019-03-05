@@ -35,36 +35,12 @@ class UserLessonsController extends Controller
         ];
     }
 
-    public function show(User $user, UserLesson $userlesson)
+    public function show(UserLesson $userlesson)
     {
-        $userlesson->load(['lesson.level']);
+        $userlesson->load([
+            'user', 'lesson.objectives', 'user.objectives', 'logbooks', 'logbooks.objective'
+        ]);
 
-        $user->load(['moodleuser']);
-
-        return [
-            'userlesson' => [
-                'id' => $userlesson->id,
-                'lesson' => $userlesson->lesson,
-                'level' => $userlesson->lesson->level,
-                'status' => [
-                    'p9' => $userlesson->p9,
-                    'p18' => $userlesson->p18,
-                    'p30' => $userlesson->p30,
-                    'p42' => $userlesson->p42
-                ],
-                'objectives' => $userlesson->lesson->objectives,
-                'logbooks' => $user->logbooks->whereIn('userlesson_id', [$userlesson->id]),
-                'completedObjectives' => $user->completedObjectives(),
-            ],
-            'user' => [
-                'id' => $user->id,
-                'firstname' => $user->firstname,
-                'lastname' => $user->lastname,
-            ],
-            'auth' => [
-                'role' => moodleauth()->user()->roles->first()->type
-            ],
-            'completedPackage' => $userlesson->completed
-        ];
+        return $userlesson;
     }
 }

@@ -3,6 +3,7 @@
 namespace TrainingTracker\App\Traits;
 
 use TrainingTracker\Domains\Objectives\Objective;
+use TrainingTracker\Domains\UserLessons\UserLesson;
 
 trait HasObjectivesTrait
 {
@@ -18,10 +19,12 @@ trait HasObjectivesTrait
             ->toArray();
     }
 
-    public function updateObjectives($allObjectives, $newobjectives)
+    public function updateObjectives(UserLesson $userlesson)
     {
-        $this->objectives()->detach($allObjectives);
+        $allObjectivesForUserlesson = $userlesson->lesson->objectives->pluck('id');
+        
+        $this->objectives()->detach($allObjectivesForUserlesson);
 
-        $this->objectives()->attach($newobjectives);
+        $this->objectives()->attach(request('objectives'));
     }
 }
