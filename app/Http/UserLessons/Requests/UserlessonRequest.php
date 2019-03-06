@@ -36,7 +36,7 @@ class UserlessonRequest extends FormRequest
                     }
                 },
             ],
-            'objectives.*' => [
+            'completedObjectives.*' => [
                 'exists:objectives,id',
                 function ($attribute, $value, $fail) {
                     $logbook = $this->userlesson->logbooks->where('objective_id', $value)->first();

@@ -10,24 +10,8 @@ use TrainingTracker\Http\LogbookEntries\Resources\LogbookEntryResource;
 
 class LogbookEntriesController extends Controller
 {
-    // public function index(User $user, Logbook $logbook)
-    // {
-    //     return LogbookEntriesResource::collection($logbook->entries)
-    //         ->additional([
-    //             'completedPackage' => $logbook->userlesson->completed
-    //         ]);
-    // }
-
     public function store(LogbookEntriesStoreRequest $request, Logbook $logbook)
     {
-        // if ($logbook->userlesson->completed === 1) {
-        //     return response()->json([
-        //         'errors' => [
-        //             'errors' => 'You cannot do this as the lesson package has been marked as complete.'
-        //         ]
-        //     ], 403);
-        // }
-        
         $logbookEntry = new LogbookEntry;
 
         $entry = $logbookEntry->add($logbook->userlesson->user, $logbook);

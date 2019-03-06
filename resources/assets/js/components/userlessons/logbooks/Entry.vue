@@ -45,7 +45,7 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
 	import NewEntry from './NewEntry'
 	import EntrySettings from './EntrySettings'
 	import EditEntry from './EditEntry'
@@ -81,7 +81,6 @@
 			},
 
 			objectiveCompleted () {
-				console.log(this.form.completedObjectives, this.entry.objective_id)
 				if (_.indexOf(this.form.completedObjectives, this.entry.objective_id) >= 0) {
 					return true
 				}
@@ -91,12 +90,41 @@
 		},
 
 		methods: {
-			destroy () {
-				console.log("destroyed")
+			...mapActions({
+				updateEntry: 'userlessons/updateEntry',
+				destroyEntry: 'userlessons/destroyEntry'
+			}),
+
+			async destroy () {
+				let response = await this.destroyEntry(this.entry.id)
+
+				this.$toast.open({
+	                message: response.data.flash,
+	                position: 'is-top-right',
+	                type: 'is-success'
+        		})
 			},
 
-			update () {
-				console.log("updating")
+			async update (data) {
+				let response = await this.updateEntry(data)
+
+				if (response.status === 200) {
+            		this.editing = false
+
+            		this.$toast.open({
+		                message: response.data.flash,
+		                position: 'is-top-right',
+		                type: 'is-success'
+            		})
+				}
+
+				if (response.status === 422) {
+					this.$toast.open({
+		                message: response.data.message,
+		                position: 'is-top-right',
+		                type: 'is-danger'
+	        		})
+				}
 			}
 		}
 	}

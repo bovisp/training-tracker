@@ -14,6 +14,8 @@ export const statuses = state => state.statuses
 
 export const statusTypes = state => state.statusTypes
 
+export const statusComplete = state => state.statusComplete
+
 export const lesson = state => state.lesson
 
 export const allObjectivesComplete = state => state.allObjectivesComplete

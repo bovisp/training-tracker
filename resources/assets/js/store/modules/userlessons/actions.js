@@ -7,6 +7,35 @@ export const fetch = async ({ commit }, userlessonId) => {
 		await commit('SET_COMPLETED_OBJECTIVES', response.data.user.objectives)
 		await commit('SET_LOGBOOKS', response.data.logbooks)
 		await commit('SET_LESSON', response.data.lesson)
+		await commit('SET_STATUSES', {
+			p9: response.data.p9,
+			p18: response.data.p18,
+			p30: response.data.p30,
+			p42: response.data.p42
+		})
+
+		return response
+	} catch (e) {
+		return e.response
+	}
+}
+
+export const reset = async ({ commit, state }) => {
+	await commit('SET_COMPLETED_OBJECTIVES', state.userlesson.user.objectives)
+	await commit('RESET_STATUSES')
+}
+
+export const update = async ({ state }) => {
+	let statuses = []
+
+	_.forEach(state.form.statuses, status => statuses.push(status))
+
+	try {
+		let response = await axios.put(
+			`${urlBase}/users/${state.userlesson.user.id}/userlessons/${state.userlesson.id}`, {
+				statuses, completedObjectives: state.form.completedObjectives
+			}
+		)
 
 		return response
 	} catch (e) {
@@ -40,6 +69,7 @@ export const close = async ({ commit, state, dispatch }) => {
 	await commit('comments/setComments', {}, { root: true })
 	await dispatch('comments/fetch', `/users/${state.userlesson.user.id}/userlessons/${state.userlesson.id}/comments`, { root: true })
 	await commit('SET_LOGBOOK_ID', null)
+
 }
 
 export const storeEntry = async ({ state, commit, dispatch }, { data, logbookId }) => {
@@ -49,6 +79,32 @@ export const storeEntry = async ({ state, commit, dispatch }, { data, logbookId 
 		await dispatch('fetchLogbooks', state.userlesson.id)
 		await dispatch('fetchEntry', response.data.entry)
 		await commit('SET_LOGBOOK_ID', null)
+
+		return response
+	} catch (e) {
+		return e.response
+	}
+}
+
+export const destroyEntry = async ({ state, dispatch }, entryId) => {
+	try {
+		let response = axios.delete(`${urlBase}/entries/${entryId}`)
+
+		await dispatch('close')
+		await dispatch('fetchLogbooks', state.userlesson.id)
+
+		return response
+	} catch (e) {
+		return e.response
+	}
+}
+
+export const updateEntry = async ({ state, dispatch }, data) => {
+	try {
+		let response = axios.patch(`${urlBase}/entries/${state.entry.id}`, data)
+
+		await dispatch('fetchLogbooks', state.userlesson.id)
+		await dispatch('fetchEntry', state.entry.id)
 
 		return response
 	} catch (e) {
@@ -90,4 +146,8 @@ export const patchFiles = async ({ commit, state }, payload) => {
 	} catch (e) {
 		return e.response
 	}
+}
+
+export const updateStatus = async ({ commit }, {period, value}) => {
+	await commit('UPDATE_STATUS', {period, value})
 }

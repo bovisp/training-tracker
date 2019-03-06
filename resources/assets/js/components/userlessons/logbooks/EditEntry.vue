@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="mb-4">
 		<vue-editor 
 			v-model="form.body"
 			:editorOptions="editorSettings"

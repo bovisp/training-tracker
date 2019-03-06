@@ -14,6 +14,37 @@ export const SET_COMPLETED_OBJECTIVES = (state, completedObjectives) => {
 	state.allObjectivesComplete = state.form.completedObjectives.length === state.objectives.length
 }
 
+export const SET_STATUSES = (state, statuses) => {
+	state.form.statuses.p9 = statuses.p9
+	state.form.statuses.p18 = statuses.p18
+	state.form.statuses.p30 = statuses.p30
+	state.form.statuses.p42 = statuses.p42
+
+	_.forEach(statuses, status => {
+		if (status === 'c') {
+			state.statusComplete = true
+		}
+	})
+}
+
+export const UPDATE_STATUS = (state, {period, value}) => {
+	state.form.statuses[period] = value
+
+	if (value === 'c') {
+		state.statusComplete = true
+	} else {
+		state.statusComplete = false
+	}
+}
+
+export const RESET_STATUSES = (state) => {
+	for (let i = 0; i < state.form.statuses.length; i++) {
+		if (state.form.statuses[i] === 'c') {
+			state.form.statuses[i] = null
+		}
+	}
+}
+
 export const UPDATE_COMPLETED_OBJECTIVES = (state, completedObjectives) => {
 	state.form.completedObjectives = completedObjectives
 

@@ -24,7 +24,9 @@ class UserLessonsController extends Controller
     
     public function show(User $user, UserLesson $userlesson)
     {
-        $userlesson->load(['user', 'lesson.objectives', 'user.objectives', 'logbooks', 'logbooks.objective']);
+        $userlesson->load([
+            'user', 'lesson.objectives', 'user.objectives', 'logbooks', 'logbooks.objective'
+        ]);
         
         return view('userlessons.show', compact('userlesson', 'user'));
     }
@@ -83,10 +85,10 @@ class UserLessonsController extends Controller
     protected function updateObjectivesandStatus(User $user, UserLesson $userlesson)
     {
         $userlesson->update([
-            'p9' => request('statuses')['p9'],
-            'p18' => request('statuses')['p18'],
-            'p30' => request('statuses')['p30'],
-            'p42' => request('statuses')['p42']
+            'p9' => request('statuses')[0],
+            'p18' => request('statuses')[1],
+            'p30' => request('statuses')[2],
+            'p42' => request('statuses')[3]
         ]);
 
         $user->updateObjectives($userlesson);

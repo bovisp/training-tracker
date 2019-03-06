@@ -7,6 +7,7 @@ export default {
 	logbookId: null,
 	allObjectivesComplete: false,
 	entryModalActive: false,
+	statusComplete: false,
 	form: {
 		completedObjectives: [],
 		statuses: {

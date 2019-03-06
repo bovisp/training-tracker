@@ -17,6 +17,10 @@ class Comment extends Model
         'edited_at'
     ];
 
+    protected $with = [
+        'user'
+    ];
+
     public static function boot()
     {
         parent::boot();

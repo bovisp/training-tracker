@@ -25,6 +25,6 @@ trait HasObjectivesTrait
         
         $this->objectives()->detach($allObjectivesForUserlesson);
 
-        $this->objectives()->attach(request('objectives'));
+        $this->objectives()->attach(request('completedObjectives'));
     }
 }

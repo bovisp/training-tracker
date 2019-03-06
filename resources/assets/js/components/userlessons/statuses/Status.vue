@@ -9,11 +9,12 @@
 
 			<div class="control">
 				<div 
-					class="select is-full-width" 
-					:class="{ 'is-danger': errors[`statuses.${status.period}`] }"
+					class="select is-full-width"
 				>
 			        <select 
 			        	:id="status.period" 
+			        	:value="periodValue"
+			        	@input="update"
 			        	class="is-full-width"
 			        	:disabled="!hasRoleOf(['supervisor', 'head_of_operations'])"
 			        >
@@ -25,22 +26,17 @@
 			                 v-for="statusType in filteredStatusTypes"
 			                :value="statusType.type"
 			                :key="statusType.type"
+			                :selected="statusType.type === periodValue"
 			            >{{ statusType.name }}</option>
 			        </select>
 		        </div>
 	        </div>
-
-	        <p 
-				v-if="errors[`statuses.${status.period}`]" 
-				v-text="errors[`statuses.${status.period}`][0]"
-				class="help is-danger"
-			></p>
 	    </div>
     </div>
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
 
 	export default {
 		props: {
@@ -60,8 +56,14 @@
 			...mapGetters({
 				lesson: 'userlessons/lesson',
 				statusTypes: 'userlessons/statusTypes',
-				allObjectivesComplete: 'userlessons/allObjectivesComplete'
+				allObjectivesComplete: 'userlessons/allObjectivesComplete',
+				form: 'userlessons/form'
 			}),
+
+			periodValue () {
+				console.log(this.form.statuses[this.status.period])
+				return this.form.statuses[this.status.period]
+			},
 
 			isCovered () {
 				return this.lesson[this.status.period]
@@ -78,19 +80,17 @@
 
 					let statusIndex = _.indexOf(this.periods, this.status.period)
 
-					console.log(statusIndex)
-
 					if (statusIndex === 0 && _.indexOf(statusArr, 1, statusIndex + 1) >= 0) {
 						return filter(this.statusTypes, status => status.type !== 'c')
 					}
 
 					if (statusIndex === 0 && _.indexOf(statusArr, 1, statusIndex + 1) === -1) {
 						return this.statusTypes
-					}
+					}	
 
-					if (this.status === 'p42') {
+					if (this.status.period === 'p42') {
 						return this.statusTypes
-					}
+					}				
 
 					if (statusArr[statusIndex] === 1 && _.indexOf(statusArr, 1, statusIndex + 1) >= 0) {
 						return filter(this.statusTypes, status => status.type !== 'c')
@@ -114,6 +114,19 @@
 				}
 				
 				return filter(this.statusTypes, status => status.type !== 'c')
+			}
+		},
+
+		methods: {
+			...mapActions({
+				updateStatus: 'userlessons/updateStatus'
+			}),
+
+			update (e) {
+				this.updateStatus({
+					period: this.status.period,
+					value: e.target.value
+				})
 			}
 		}
 	}

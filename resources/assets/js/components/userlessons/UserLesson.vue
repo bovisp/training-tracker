@@ -16,6 +16,18 @@
 			/>
 		</div>
 
+		<article class="message is-danger mt-4" v-if="filteredKeys(errors, /statuses/).length">
+			<div class="message-body">
+				<div class="content">
+					<ul class="mt-0">
+						<li v-for="error in filteredKeys(errors, /statuses/)">
+							{{ errors[error][0] }}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</article>
+
 		<div class="columns mt-8">
 			<div class="column">
 				<h2 class="title is-2 has-text-weight-light">
@@ -60,7 +72,7 @@
 			<comments 
 				:endpoint="commentsEndpoint"
 				:create-roles="['supervisor', 'head_of_operations']"
-				:is-completed="allObjectivesComplete"
+				:is-completed="allObjectivesComplete && statusComplete"
 			/>
 		</template>
 
@@ -114,7 +126,8 @@
 				userlesson: 'userlessons/userlesson',
 				logbooks: 'userlessons/logbooks',
 				allObjectivesComplete: 'userlessons/allObjectivesComplete',
-				statuses: 'userlessons/statuses'
+				statuses: 'userlessons/statuses',
+				statusComplete: 'userlessons/statusComplete'
 			}),
 
 			commentsEndpoint () {
@@ -124,11 +137,45 @@
 
 		methods: {
 			...mapActions({
-				fetch: 'userlessons/fetch'
+				fetch: 'userlessons/fetch',
+				update: 'userlessons/update',
+				reset: 'userlessons/reset'
 			}),
 
-			submit () {
-				console.log('submitting')
+			async submit () {
+				let response = await this.update()
+
+				if (response.status === 200) {
+					await this.fetch(this.userlessonId)
+
+            		this.$toast.open({
+		                message: response.data.flash,
+		                position: 'is-top-right',
+		                type: 'is-success'
+            		})
+				}
+
+				if (response.status === 422) {
+					await this.reset()
+
+					this.$toast.open({
+		                message: response.data.message,
+		                position: 'is-top-right',
+		                type: 'is-danger'
+	        		})
+				}
+			},
+
+			filteredKeys (obj, filter) {
+				let key, keys = []
+
+				for (key in obj) {
+					if (obj.hasOwnProperty(key) && filter.test(key)) {
+						keys.push(key)
+					}
+				}
+
+	  			return keys
 			}
 		},
 

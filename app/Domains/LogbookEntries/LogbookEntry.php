@@ -42,12 +42,12 @@ class LogbookEntry extends Model
 
     public function editor()
     {
-        return $this->belongsTo(User::class, 'edited_by');
+        return $this->belongsTo(User::class, 'edited_by', 'id');
     }
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function comments()
@@ -81,7 +81,8 @@ class LogbookEntry extends Model
     public function edit(User $user)
     {
         $this->update([
-            'body' => request('body')
+            'body' => request('body'),
+            'edited_by' => moodleauth()->id()
         ]);
 
         $users = $user->supervisorsAndHeadOfOperationsRoles($user);
