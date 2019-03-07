@@ -24,6 +24,7 @@
 
 			<userlesson
 				:userlesson-id="{{ $userlesson->id }}"
+				:user="{{ $user }}"
 			></userlesson>
 
 			<div class="divider divider--relaxed"></div>

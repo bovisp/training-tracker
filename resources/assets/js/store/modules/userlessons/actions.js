@@ -1,6 +1,6 @@
-export const fetch = async ({ commit }, userlessonId) => {
+export const fetch = async ({ commit, state }, { userlesson, user }) => {
 	try {
-		let response = await axios.get(`/api/userlessons/${userlessonId}`)
+		let response = await axios.get(`/api/users/${user}/userlessons/${userlesson}`)
 
 		await commit('SET_USERLESSON', response.data)
 		await commit('SET_OBJECTIVES', response.data.lesson.objectives)
@@ -43,9 +43,7 @@ export const update = async ({ state }) => {
 	}
 }
 
-export const open = async ({ commit }, { entryId, logbookId }) => {
-	commit('UPDATE_LOADING')
-
+export const open = async ({ commit, state }, { entryId, logbookId }) => {
 	if (logbookId !== null) {
 		await commit('TOGGLE_ENTRY_MODAL')
 		await commit('SET_LOGBOOK_ID', logbookId)
@@ -54,12 +52,11 @@ export const open = async ({ commit }, { entryId, logbookId }) => {
 	}
 
 	try {
-		let response = await axios.get(`${urlBase}/entries/${entryId}`)
+		console.log(state.userlesson.user.id)
+		let response = await axios.get(`${urlBase}/users/${state.userlesson.user.id}/entries/${entryId}`)
 
 		await commit('TOGGLE_ENTRY_MODAL')
 		await commit('SET_ENTRY', response.data.data)
-
-		commit('UPDATE_LOADING')
 
 		return response
 	} catch (e) {
@@ -78,7 +75,7 @@ export const close = async ({ commit, state, dispatch }) => {
 
 export const storeEntry = async ({ state, commit, dispatch }, { data, logbookId }) => {
 	try {
-		let response = await axios.post(`${urlBase}/logbooks/${logbookId}/entries`, data)
+		let response = await axios.post(`${urlBase}/users/${state.userlesson.user.id}/logbooks/${logbookId}/entries`, data)
 
 		await dispatch('fetchLogbooks', state.userlesson.id)
 		await dispatch('fetchEntry', response.data.entry)
@@ -92,7 +89,7 @@ export const storeEntry = async ({ state, commit, dispatch }, { data, logbookId 
 
 export const destroyEntry = async ({ state, dispatch }, entryId) => {
 	try {
-		let response = axios.delete(`${urlBase}/entries/${entryId}`)
+		let response = axios.delete(`${urlBase}/users/${state.userlesson.user.id}/entries/${entryId}`)
 
 		await dispatch('close')
 		await dispatch('fetchLogbooks', state.userlesson.id)
@@ -105,7 +102,7 @@ export const destroyEntry = async ({ state, dispatch }, entryId) => {
 
 export const updateEntry = async ({ state, dispatch }, data) => {
 	try {
-		let response = axios.patch(`${urlBase}/entries/${state.entry.id}`, data)
+		let response = axios.patch(`${urlBase}/users/${state.userlesson.user.id}/entries/${state.entry.id}`, data)
 
 		await dispatch('fetchLogbooks', state.userlesson.id)
 		await dispatch('fetchEntry', state.entry.id)
@@ -116,14 +113,14 @@ export const updateEntry = async ({ state, dispatch }, data) => {
 	}
 }
 
-export const fetchLogbooks = async ({ commit }, userlessonId) => {
-	let response = await axios.get(`${urlBase}/userlessons/${userlessonId}/logbooks`)
+export const fetchLogbooks = async ({ commit, state }, userlessonId) => {
+	let response = await axios.get(`${urlBase}/users/${state.userlesson.user.id}/userlessons/${userlessonId}/logbooks`)
 
 	await commit('SET_LOGBOOKS', response.data.logbooks)
 }
 
-export const fetchEntry = async ({ commit }, entryId) => {
-	let response = await axios.get(`${urlBase}/entries/${entryId}`)
+export const fetchEntry = async ({ commit, state }, entryId) => {
+	let response = await axios.get(`${urlBase}/users/${state.userlesson.user.id}/entries/${entryId}`)
 
 	await commit('SET_ENTRY', response.data.data)
 }

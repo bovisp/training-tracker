@@ -22,7 +22,7 @@
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
+        {{-- <div class="navbar-item">
 
           @if (moodleauth()->user()->hasRole(['head_of_operations', 'supervisor']))
 
@@ -31,7 +31,7 @@
             />
 
           @endif
-        </div>
+        </div> --}}
 
         <b-dropdown position="is-bottom-left" v-cloak>
           <button class="navbar-item button is-text has-underline-none" slot="trigger">

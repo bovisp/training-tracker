@@ -9,7 +9,7 @@
 				<b-checkbox v-model="completedObjectives"
 	                :native-value="objective.id"
 	                type="is-success"
-	                :disabled="statusComplete"
+	                :disabled="statusComplete || !hasRoleOf(['supervisor', 'head_of_operations'])"
 	            >
 	            	<i class="mdi mdi-information-variant mr-1" v-if="!objective.notebook_required"></i>
 	        		{{ objective.name }}

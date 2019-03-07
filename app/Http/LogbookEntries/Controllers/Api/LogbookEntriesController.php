@@ -5,12 +5,13 @@ namespace TrainingTracker\Http\LogbookEntries\Controllers\Api;
 use TrainingTracker\App\Controllers\Controller;
 use TrainingTracker\Domains\LogbookEntries\LogbookEntry;
 use TrainingTracker\Domains\Logbooks\Logbook;
+use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\LogbookEntries\Requests\LogbookEntriesStoreRequest;
 use TrainingTracker\Http\LogbookEntries\Resources\LogbookEntryResource;
 
 class LogbookEntriesController extends Controller
 {
-    public function store(LogbookEntriesStoreRequest $request, Logbook $logbook)
+    public function store(LogbookEntriesStoreRequest $request, User $user, Logbook $logbook)
     {
         $logbookEntry = new LogbookEntry;
 
@@ -22,12 +23,12 @@ class LogbookEntriesController extends Controller
         ]);
     }
 
-    public function show(LogbookEntry $entry)
+    public function show(User $user, LogbookEntry $entry)
     {
         return new LogbookEntryResource($entry);
     }
 
-    public function update(LogbookEntry $entry)
+    public function update(User $user, LogbookEntry $entry)
     {
         request()->validate([
             'body' => 'required'
@@ -40,7 +41,7 @@ class LogbookEntriesController extends Controller
         ]);
     }
 
-    public function destroy(LogbookEntry $entry)
+    public function destroy(User $user, LogbookEntry $entry)
     {
         $entry->delete();
 

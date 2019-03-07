@@ -9,7 +9,6 @@ class NotificationsController extends Controller
 {
     public function index(User $user)
     {    	
-    	return $user->notifications;
-        // return view('notifications.index', compact('user'));
+        return view('notifications.index', compact('user'));
     }
 }

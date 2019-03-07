@@ -111,6 +111,10 @@
 			userlessonId: {
 				type: Number,
 				required: true
+			},
+			user: {
+				type: Object,
+				required: true
 			}
 		},
 
@@ -157,7 +161,7 @@
 				this.updateLoading()
 
 				if (response.status === 200) {
-					await this.fetch(this.userlessonId)
+					await this.fetch({userlesson: this.userlessonId, user: this.user.id})
 
             		this.$toast.open({
 		                message: response.data.flash,
@@ -191,7 +195,7 @@
 		},
 
 		mounted () {
-			this.fetch(this.userlessonId)
+			this.fetch({userlesson: this.userlessonId, user: this.user.id})
 		}
 	}
 </script>

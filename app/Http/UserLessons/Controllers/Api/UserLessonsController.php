@@ -35,7 +35,7 @@ class UserLessonsController extends Controller
         ];
     }
 
-    public function show(UserLesson $userlesson)
+    public function show(User $user, UserLesson $userlesson)
     {
         $userlesson->load([
             'user', 'lesson.objectives', 'user.objectives', 'logbooks', 'logbooks.objective'

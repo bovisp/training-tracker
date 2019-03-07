@@ -193,12 +193,12 @@ Route::middleware(['role:administrator'])->group(function () {
  */
 Route::middleware(['profile'])->group(function () {
 
-	Route::get('api/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonsController@show');
-	Route::get('userlessons/{userlesson}/logbooks', '\TrainingTracker\Http\Logbooks\Controllers\Api\LogbooksController@index');
-	Route::get('entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@show');
-	Route::patch('entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update');
-	Route::delete('entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@destroy');
-	Route::post('logbooks/{logbook}/entries', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store');
+	Route::get('api/users/{user}/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonsController@show');
+	Route::get('users/{user}/userlessons/{userlesson}/logbooks', '\TrainingTracker\Http\Logbooks\Controllers\Api\LogbooksController@index');
+	Route::get('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@show');
+	Route::patch('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update');
+	Route::delete('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@destroy');
+	Route::post('users/{user}/logbooks/{logbook}/entries', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store');
 
 	/**
 	 * Various HTTP "user" routes.
