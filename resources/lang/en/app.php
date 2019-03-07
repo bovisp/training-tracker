@@ -54,6 +54,7 @@ return [
             'tenperpage' => '10 per page',
             'twentyfiveperpage' => '25 per page',
             'fiftyperpage' => '50 per page',
+            'hundredperpage' => '100 per page',
             'search' => 'Search...',
             'selectrole' => 'Select a role...',
             'roleerrormessage1' => 'You have not yet assigned a role to',

@@ -44,7 +44,6 @@
 
 		mounted () {
 			window.events.$on('user:activation', status => {
-				console.log(status)
 				this.user.active = status
 			})
 		}

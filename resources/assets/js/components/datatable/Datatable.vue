@@ -29,7 +29,7 @@
 		                <option value="10">{{ trans('app.components.datatable.tenperpage') }}</option>
 		                <option value="25">{{ trans('app.components.datatable.twentyfiveperpage') }}</option>
 		                <option value="50">{{ trans('app.components.datatable.fiftyperpage') }}</option>
-		                <option value="100">{{ trans('app.components.datatable.fiftyperpage') }}</option>
+		                <option value="100">{{ trans('app.components.datatable.hundredperpage') }}</option>
 		            </b-select>
 		        </b-field>
 			</div>

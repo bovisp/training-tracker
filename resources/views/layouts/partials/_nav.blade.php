@@ -97,10 +97,24 @@
           <hr class="dropdown-divider">
 
           <b-dropdown-item has-link>
-            <a href="http://msc-educ-smc.cmc.ec.gc.ca/moodle">
+            <a href="http://msc-educ-smc.cmc.ec.gc.ca/moodle-dev">
               <b-icon icon="exit-to-app"></b-icon>
 
               {{ trans('app.pages.layouts.nav.returntomoodle') }}
+            </a>
+          </b-dropdown-item> 
+
+          <hr class="dropdown-divider">
+
+          <b-dropdown-item has-link>
+            <a href="http://msc-educ-smc.cmc.ec.gc.ca/moodle-dev/enrol/index.php?id=27">
+              Back to HT – APTP EG03 – EG04 Moodle course
+            </a>
+          </b-dropdown-item> 
+
+          <b-dropdown-item has-link>
+            <a href="http://msc-educ-smc.cmc.ec.gc.ca/moodle-dev/enrol/index.php?id=28">
+              Back to HT – APTP EG04 – EG05 Moodle course
             </a>
           </b-dropdown-item> 
         </b-dropdown>
