@@ -21,3 +21,5 @@ export const lesson = state => state.lesson
 export const allObjectivesComplete = state => state.allObjectivesComplete
 
 export const entryModalActive = state => state.entryModalActive
+
+export const isLoading = state => state.isLoading

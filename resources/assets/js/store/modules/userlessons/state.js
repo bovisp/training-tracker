@@ -8,6 +8,7 @@ export default {
 	allObjectivesComplete: false,
 	entryModalActive: false,
 	statusComplete: false,
+	isLoading: false,
 	form: {
 		completedObjectives: [],
 		statuses: {

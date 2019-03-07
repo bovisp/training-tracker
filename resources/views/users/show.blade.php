@@ -35,7 +35,7 @@
 					</dt>
 
 					<activation 
-						:user="{{ json_encode($user) }}"
+						:user-init="{{ json_encode($user) }}"
 					></activation>
 
 					@if ($user->roles->first()->type !== 'apprentice' && $user->appointed_at !== null || ($user->roles->first()->type === 'apprentice'))
@@ -54,12 +54,8 @@
 					
 					@if ($user->deactivations->count())
 
-						<dt>
-							<strong>{{ !$user->active ?  'Current deactivation' : 'Deactivations' }}</strong>
-						</dt>
-
 						<deactivations 
-							:user="{{ json_encode($user) }}"
+							:user-init="{{ json_encode($user) }}"
 						/>
 
 					@endif

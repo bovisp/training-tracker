@@ -21,12 +21,12 @@
 
 				    <p 
 						class="help is-danger"
-						:class="{ 'is-block': errors.has('deactivated_at') }" 
-			            v-text="errors.get('deactivated_at')" 
-			            v-show="errors.has('deactivated_at')"
+						:class="{ 'is-block': errors_data.has('deactivated_at') }" 
+			            v-text="errors_data.get('deactivated_at')" 
+			            v-show="errors_data.has('deactivated_at')"
 					></p>
 
-				    <b-field label="Deactivation date">
+				    <b-field label="Reactivation date">
 				        <b-datepicker
 				            icon="calendar-today"
 				            v-model="editingDeactivation.reactivated_at"
@@ -36,9 +36,9 @@
 
 				    <p 
 						class="help is-danger"
-						:class="{ 'is-block': errors.has('reactivated_at') }" 
-			            v-text="errors.get('reactivated_at')" 
-			            v-show="errors.has('reactivated_at')"
+						:class="{ 'is-block': errors_data.has('reactivated_at') }" 
+			            v-text="errors_data.get('reactivated_at')" 
+			            v-show="errors_data.has('reactivated_at')"
 					></p>
 
 				    <b-field label="Deactivation rationale">
@@ -47,9 +47,9 @@
 
 							<p 
 								class="help is-danger"
-								:class="{ 'is-block': errors.has('deactivation_rationale') }" 
-					            v-text="errors.get('deactivation_rationale')" 
-					            v-show="errors.has('deactivation_rationale')"
+								:class="{ 'is-block': errors_data.has('deactivation_rationale') }" 
+					            v-text="errors_data.get('deactivation_rationale')" 
+					            v-show="errors_data.has('deactivation_rationale')"
 							></p>
 						</div>
 					</b-field>
@@ -125,7 +125,7 @@
 					deactivation_rationale: ''
 				},
 				deactivations: [],
-				errors: new Error()
+				errors_data: new Error()
 			}
 		},
 
@@ -155,7 +155,7 @@
 					deactivation_rationale: this.editingDeactivation.deactivation_rationale
 				}
 
-				axios.put(`${urlBase}/users/${this.user.id}/deactivations`, data)
+				axios.put(`${urlBase}/users/${this.user.id}/deactivations/${this.editingDeactivation.id}`, data)
 					.then(({ data }) => {
 						this.editingDeactivation.deactivated_at = ''
 						this.editingDeactivation.deactivation_rationale = ''
@@ -163,19 +163,27 @@
 
 						this.isEditing = false
 
-						this.errors.clear('deactivated_at')
-						this.errors.clear('reactivated_at')
-						this.errors.clear('deactivation_rationale')
+						this.errors_data.clear('deactivated_at')
+						this.errors_data.clear('reactivated_at')
+						this.errors_data.clear('deactivation_rationale')
+
+						window.events.$emit('user:activation', data.active)
+
+						this.$toast.open({
+	                        message: data.flash,
+	                        position: 'is-top-right',
+	                        type: 'is-success'
+	                    })
 
 						this.fetch()
 					})
 					.catch(error => {
-						this.errors.clear('deactivated_at')
-						this.errors.clear('reactivated_at')
-						this.errors.clear('deactivation_rationale')
+						this.errors_data.clear('deactivated_at')
+						this.errors_data.clear('reactivated_at')
+						this.errors_data.clear('deactivation_rationale')
 						
 						if (error.response.status === 422) {
-	                        this.errors.record(error.response.data.errors)
+	                        this.errors_data.record(error.response.data.errors)
 	                    }
 					})
 			},

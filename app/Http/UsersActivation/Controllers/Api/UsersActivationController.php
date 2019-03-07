@@ -33,7 +33,7 @@ class UsersActivationController extends Controller
     public function update(User $user)
     {
         request()->validate([
-            'reactivated_at' => 'required|min:3'
+            'reactivated_at' => 'required|date'
         ]);
 
         $user->update([

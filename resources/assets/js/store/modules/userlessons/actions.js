@@ -44,6 +44,8 @@ export const update = async ({ state }) => {
 }
 
 export const open = async ({ commit }, { entryId, logbookId }) => {
+	commit('UPDATE_LOADING')
+
 	if (logbookId !== null) {
 		await commit('TOGGLE_ENTRY_MODAL')
 		await commit('SET_LOGBOOK_ID', logbookId)
@@ -56,6 +58,8 @@ export const open = async ({ commit }, { entryId, logbookId }) => {
 
 		await commit('TOGGLE_ENTRY_MODAL')
 		await commit('SET_ENTRY', response.data.data)
+
+		commit('UPDATE_LOADING')
 
 		return response
 	} catch (e) {

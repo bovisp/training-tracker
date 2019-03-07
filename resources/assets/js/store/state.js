@@ -1,4 +1,3 @@
 export default {
-	errors: {},
-	isLoading: false
+	errors: {}
 }

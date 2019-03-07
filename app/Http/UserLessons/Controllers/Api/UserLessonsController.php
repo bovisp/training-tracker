@@ -19,7 +19,7 @@ class UserLessonsController extends Controller
                 'displayable' => [
                     ['field' => 'level', 'label' => trans('app.datatable.label.level'), 'sortable' => 'sortable'],
                     ['field' => 'package', 'label' => trans('app.datatable.label.lessonpackage'), 'sortable' => 'sortable'],
-                    ['field' => 'completed', 'label' => trans('app.datatable.label.completed'), 'sortable' => 'sortable'],
+                    ['field' => 'status', 'label' => 'Status', 'sortable' => 'sortable'],
                 ],
                 'orderby' => [
                     ['key' => 'level', 'dir' => 'asc'],

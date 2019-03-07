@@ -14,7 +14,7 @@
 				<div class="modal-card">
 					<header class="modal-card-head">
                         <p class="modal-card-title">
-                        	Deactivate {{ user.firstname }} {{ user.lastname }}
+                        	{{ user.active ? 'Deactivate' : 'Activate'}} {{ user.firstname }} {{ user.lastname }}
                         </p>
                     </header>
 
@@ -67,7 +67,7 @@
 								:class="{ 'is-block': errors_data.has('reactivated_at') }" 
 					            v-text="errors_data.get('reactivated_at')" 
 					            v-show="errors_data.has('reactivated_at')"
-							></p>r
+							></p>
 
 						    <div style="height: 330px;"></div>
 					    </template>
@@ -95,7 +95,7 @@
 
 	export default {
 		props: {
-			user: {
+			userInit: {
 				type: Object,
 				required: true
 			}
@@ -107,7 +107,8 @@
 				deactivatedDate: null,
 				reactivatedDate: null,
 				rationale: '',
-				errors_data: new Error()
+				errors_data: new Error(),
+				user: this.userInit
 			}
 		},
 
@@ -135,7 +136,7 @@
 				}
 
 				return {
-					reactivated_at: (new Date(this.reactivatedDate)).toMysqlFormat()
+					reactivated_at: this.reactivatedDate ? (new Date(this.reactivatedDate)).toMysqlFormat() : null
 				}
 			},
 
@@ -181,10 +182,12 @@
                     }
 				})
 			}
+		},
+
+		mounted () {
+			window.events.$on('user:activation', status => {
+				this.user.active = status
+			})
 		}
 	}
 </script>
-
-<style>
-
-</style>

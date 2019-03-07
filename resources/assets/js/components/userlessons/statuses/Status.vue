@@ -61,7 +61,6 @@
 			}),
 
 			periodValue () {
-				console.log(this.form.statuses[this.status.period])
 				return this.form.statuses[this.status.period]
 			},
 

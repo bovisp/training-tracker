@@ -38,11 +38,12 @@ export const UPDATE_STATUS = (state, {period, value}) => {
 }
 
 export const RESET_STATUSES = (state) => {
-	for (let i = 0; i < state.form.statuses.length; i++) {
-		if (state.form.statuses[i] === 'c') {
-			state.form.statuses[i] = null
-		}
+  for (const status in state.form.statuses) {
+    if (state.form.statuses[status] === 'c') {
+		state.form.statuses[status] = null
+		state.statusComplete = false
 	}
+  }
 }
 
 export const UPDATE_COMPLETED_OBJECTIVES = (state, completedObjectives) => {
@@ -62,3 +63,5 @@ export const DELETE_FILE = (state, payload) => {
 export const UPDATE_FILES = (state, payload) => {
 	forEach(payload.files, file => state.entry.files.push(file))
 }
+
+export const UPDATE_LOADING = state => state.isLoading = !state.isLoading

@@ -41,11 +41,13 @@
 				:is-completed="objectiveCompleted"
 			/>
 		</template>
+
+		<b-loading :active.sync="isLoading"></b-loading>
 	</section>
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
+	import { mapGetters, mapActions, mapMutations } from 'vuex'
 	import NewEntry from './NewEntry'
 	import EntrySettings from './EntrySettings'
 	import EditEntry from './EditEntry'
@@ -73,7 +75,8 @@
 				logbookId: 'userlessons/logbookId',
 				logbooks: 'userlessons/logbooks',
 				userlesson: 'userlessons/userlesson',
-				form: 'userlessons/form'
+				form: 'userlessons/form',
+				isLoading: 'userlessons/isLoading'
 			}),
 
 			commentsEndpoint () {
@@ -95,8 +98,16 @@
 				destroyEntry: 'userlessons/destroyEntry'
 			}),
 
+			...mapMutations({
+				updateLoading: 'userlessons/UPDATE_LOADING'
+			}),
+
 			async destroy () {
+				this.updateLoading()
+
 				let response = await this.destroyEntry(this.entry.id)
+
+				this.updateLoading()
 
 				this.$toast.open({
 	                message: response.data.flash,

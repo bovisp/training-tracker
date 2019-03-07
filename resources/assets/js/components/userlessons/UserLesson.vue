@@ -92,11 +92,13 @@
 		</div>
 
 		<EntryModal />
+
+		<b-loading :active.sync="isLoading"></b-loading>
 	</section>
 </template>
 
 <script>
-	import { mapActions, mapGetters } from 'vuex'
+	import { mapActions, mapGetters, mapMutations } from 'vuex'
 	import Objectives from './objectives/Objectives'
 	import NewEntryDropdown from './logbooks/NewEntryDropdown'
 	import Logbooks from './logbooks/Logbooks'
@@ -127,7 +129,8 @@
 				logbooks: 'userlessons/logbooks',
 				allObjectivesComplete: 'userlessons/allObjectivesComplete',
 				statuses: 'userlessons/statuses',
-				statusComplete: 'userlessons/statusComplete'
+				statusComplete: 'userlessons/statusComplete',
+				isLoading: 'userlessons/isLoading'
 			}),
 
 			commentsEndpoint () {
@@ -142,8 +145,16 @@
 				reset: 'userlessons/reset'
 			}),
 
+			...mapMutations({
+				updateLoading: 'userlessons/UPDATE_LOADING'
+			}),
+
 			async submit () {
+				this.updateLoading()
+
 				let response = await this.update()
+
+				this.updateLoading()
 
 				if (response.status === 200) {
 					await this.fetch(this.userlessonId)
