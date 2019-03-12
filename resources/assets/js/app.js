@@ -116,7 +116,7 @@ Vue.component('unassigned-user-lessons', require('./components/users/UnassignedU
 Vue.component('userlesson', require('./components/userlessons/Userlesson.vue'));
 Vue.component('user-errors', require('./components/UserErrors.vue')); 
 Vue.component('notifications', require('./components/notifications/Notifications.vue')); 
-// Vue.component('unread-notifications', require('./components/notifications/UnreadNotifications.vue')); 
+Vue.component('unread-notifications', require('./components/notifications/UnreadNotifications.vue')); 
 
 Vue.mixin(user)
 Vue.mixin(error)

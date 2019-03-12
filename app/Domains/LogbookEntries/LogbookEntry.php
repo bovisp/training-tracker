@@ -6,8 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
-use TrainingTracker\App\Notifications\LogbookCommentEntryNotification;
-use TrainingTracker\App\Notifications\LogbookEntryNotification;
+use TrainingTracker\App\Notifications\LogbookEntryCommentNotification;
+use TrainingTracker\App\Notifications\LogbookEntryCreatedNotification;
+use TrainingTracker\App\Notifications\LogbookEntryEditedNotification;
 use TrainingTracker\Domains\Comments\Comment;
 use TrainingTracker\Domains\Logbooks\Logbook;
 use TrainingTracker\Domains\Users\User;
@@ -70,8 +71,8 @@ class LogbookEntry extends Model
 
         Notification::send(
             $users, 
-            new LogbookEntryNotification(
-                $logbookEntry, $user->id, 'logbook_entry_added'
+            new LogbookEntryCreatedNotification(
+                $logbookEntry, 'logbook_entry_added'
             )
         );
 
@@ -89,8 +90,8 @@ class LogbookEntry extends Model
 
         Notification::send(
             $users, 
-            new LogbookEntryNotification(
-                $this, $user->id, 'logbook_entry_updated'
+            new LogbookEntryEditedNotification(
+                $this, 'logbook_entry_updated'
             )
         );
     }
@@ -105,10 +106,14 @@ class LogbookEntry extends Model
 
         $users = $user->supervisorsAndHeadOfOperationsRoles($user);
 
+        if (moodleauth()->user()->hasRole(['supervisor', 'head_of_operations', 'administrator'])) {
+            $users->prepend($user);
+        }
+
         Notification::send(
             $users, 
-            new LogbookCommentEntryNotification(
-                $comment, $user->id, 'logbook_entry_comment_added', moodleauth()->user()
+            new LogbookEntryCommentNotification(
+                $comment, 'logbook_entry_comment_added'
             )
         );
 
@@ -125,8 +130,8 @@ class LogbookEntry extends Model
 
         Notification::send(
             $users, 
-            new LogbookCommentEntryNotification(
-                $comment, $user->id, 'logbook_entry_comment_updated', moodleauth()->user()
+            new LogbookEntryCommentNotification(
+                $comment, 'logbook_entry_comment_updated'
             )
         );
 

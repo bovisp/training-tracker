@@ -10,7 +10,7 @@ import * as getters from './getters'
 
 import userlessons from './modules/userlessons'
 import comments from './modules/comments'
-// import notifications from './modules/notifications'
+import notifications from './modules/notifications'
 
 export default new Vuex.Store({
 	state, 
@@ -20,6 +20,6 @@ export default new Vuex.Store({
 	modules: {
 		userlessons,
 		comments,
-		// notifications 
+		notifications 
 	} 
 })

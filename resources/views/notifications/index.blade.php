@@ -9,7 +9,7 @@
 			</h2>
 
 			<notifications 
-				:user="{{ $user }}"
+				:user-init="{{ $user }}"
 			></notifications>
 		</div>
 	</div>

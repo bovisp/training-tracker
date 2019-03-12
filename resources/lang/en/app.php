@@ -135,7 +135,7 @@ return [
             'notificationunread' => 'Notification marked as unread.',
             'nonotifications' => 'You have no notifications.',
             'markallread' => 'Mark all as read',
-            'deleteallread' => 'Delete all unread',
+            'deleteallunread' => 'Delete all unread',
             'markallunread' => 'Mark all as unread',
             'deleteallread' => 'Delete all read',
             'notificationsmarkedread' => 'Notifications marked as read.',
