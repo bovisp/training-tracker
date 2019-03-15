@@ -8,7 +8,7 @@ use TrainingTracker\App\Traits\HasPermissionsTrait;
 use TrainingTracker\App\Traits\HasSupervisorsTrait;
 use TrainingTracker\App\Traits\HasUserLessonsTrait;
 use TrainingTracker\Domains\Comments\Comment;
-use TrainingTracker\Domains\Deactivation\Deactivation;
+use TrainingTracker\Domains\Deactivations\Deactivation;
 use TrainingTracker\Domains\MoodleUsers\MoodleUser;
 use TrainingTracker\Domains\Users\User;
 
