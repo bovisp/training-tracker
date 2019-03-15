@@ -54,7 +54,7 @@
 			<div class="columns">
 				<div class="column">
 					<NewEntryDropdown 
-						v-if="!allObjectivesComplete"
+						v-if="allObjectivesRequiringLogbooks === false"
 					/>
 
 					<Logbooks />
@@ -131,14 +131,31 @@
 			...mapGetters({
 				userlesson: 'userlessons/userlesson',
 				logbooks: 'userlessons/logbooks',
-				allObjectivesComplete: 'userlessons/allObjectivesComplete',
 				statuses: 'userlessons/statuses',
 				statusComplete: 'userlessons/statusComplete',
-				isLoading: 'userlessons/isLoading'
+				isLoading: 'userlessons/isLoading',
+				form: 'userlessons/form',
+				allObjectivesComplete: 'userlessons/allObjectivesComplete' 
 			}),
 
 			commentsEndpoint () {
 				return `/users/${this.userlesson.user.id}/userlessons/${this.userlesson.id}/comments`
+			},
+
+			allObjectivesRequiringLogbooks () {
+				let objectivesRequiringLogbooks = _.map(this.logbooks, logbook => {
+					if (logbook.objective.notebook_required == 1) {
+						return logbook.objective.id
+					}
+				})
+
+				let intersection = _.intersection(objectivesRequiringLogbooks, this.form.completedObjectives)
+
+				if (intersection.length === objectivesRequiringLogbooks.length) {
+					return true
+				}
+
+				return false
 			}
 		},
 

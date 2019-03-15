@@ -35,6 +35,8 @@ Route::middleware(['role:administrator|supervisor|head_of_operations|manager'])-
  */
 Route::middleware(['role:administrator'])->group(function () {
 
+	Route::get('/users/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\InactiveUsersController@index')->name('inactiveusers.index');
+
 	/**
 	 * Various API "role" routes.
 	 */
@@ -69,9 +71,6 @@ Route::middleware(['role:administrator'])->group(function () {
 
 		Route::put('/{user}/appointment', '\TrainingTracker\Http\UsersAppointment\Controllers\Api\UsersAppointmentController@update');
 
-		Route::post('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\Api\UsersActivationController@store');
-		Route::patch('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\Api\UsersActivationController@update');
-
 		Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\Api\UsersReportingController@index')
 			->name('usersreporting.index.api');
 
@@ -90,11 +89,6 @@ Route::middleware(['role:administrator'])->group(function () {
 
 		Route::get('/{user}/reporting/{role}/edit', '\TrainingTracker\Http\UsersReporting\Controllers\UsersReportingController@index')
 			->name('usersreporting.index');
-
-		Route::post('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@store');
-
-		Route::get('/inactive', '\TrainingTracker\Http\InactiveUsers\Controllers\InactiveUsersController@index')
-			->name('inactiveusers.index');
 
 		Route::get('/userlessons/unassigned', '\TrainingTracker\Http\UnassignedUserLessons\Controllers\Api\UnassignedUserLessonsController@index');
 	});
@@ -193,6 +187,14 @@ Route::middleware(['role:administrator'])->group(function () {
  */
 Route::middleware(['profile'])->group(function () {
 
+	Route::middleware(['role:administrator|supervisor|head_of_operations'])->group(function () {
+		Route::post('users/{user}/activation/api', '\TrainingTracker\Http\UsersActivation\Controllers\Api\UsersActivationController@store');
+		Route::patch('users/{user}/activation/api', '\TrainingTracker\Http\UsersActivation\Controllers\Api\UsersActivationController@update');
+		Route::post('/{user}/activation', '\TrainingTracker\Http\UsersActivation\Controllers\UsersActivationController@store');
+		Route::get('users/{user}/deactivations', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@index');
+		Route::put('users/{user}/deactivations/{deactivation}', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@update');
+	});
+
 	Route::get('api/users/{user}/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonsController@show');
 	Route::get('users/{user}/userlessons/{userlesson}/logbooks', '\TrainingTracker\Http\Logbooks\Controllers\Api\LogbooksController@index');
 	Route::get('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@show');
@@ -206,9 +208,6 @@ Route::middleware(['profile'])->group(function () {
 	Route::prefix('users/{user}')->group(function () {
 		Route::get('/', '\TrainingTracker\Http\Users\Controllers\UsersController@show')
 			->name('users.show');
-
-		Route::get('/deactivations', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@index');
-		Route::put('/deactivations/{deactivation}', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@update');
 	});
 
 	/**
@@ -251,8 +250,6 @@ Route::middleware(['profile'])->group(function () {
 		Route::get('/entries', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@index');
 
 		Route::get('/', '\TrainingTracker\Http\Logbooks\Controllers\LogbookController@show');
-
-		// Route::post('/', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store');
 
 		Route::post('/files/meta', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@meta');
 

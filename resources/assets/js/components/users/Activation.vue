@@ -2,7 +2,7 @@
 	<dd class="is-flex items-center">
 		{{ userActiveStatus }}
 
-		<div v-if="hasRoleOf(['supervisor', 'head_of_operations', 'manager']) && authUser !== user.id">
+		<div v-if="hasRoleOf(['supervisor', 'head_of_operations', 'manager']) && authUser.id != user.id">
 			<button 
 				class="button is-text is-small"
 				@click.prevent="isActive = !isActive"
@@ -153,7 +153,7 @@
 				
 				axios({
 					method: this.requestAction,
-					url: `${urlBase}/users/api/${this.user.id}/activation`,
+					url: `${urlBase}/users/${this.user.id}/activation/api`,
 					data
 				}).then(({ data }) => {
 					this.isActive = false

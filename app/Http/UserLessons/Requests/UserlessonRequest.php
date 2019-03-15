@@ -3,6 +3,7 @@
 namespace TrainingTracker\Http\UserLessons\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use TrainingTracker\Domains\Objectives\Objective;
 use Illuminate\Validation\Rule;
 
 class UserlessonRequest extends FormRequest
@@ -40,26 +41,30 @@ class UserlessonRequest extends FormRequest
                 'exists:objectives,id',
                 function ($attribute, $value, $fail) {
                     $logbook = $this->userlesson->logbooks->where('objective_id', $value)->first();
-                    $entries = $logbook->entries;
+                    $requiresEntry = (Objective::find($value))->notebook_required;
+                    $entries = optional($logbook)->entries;
 
-                    if ($entries->count() === 0) {
+                    if ($entries !== null && $entries->count() === 0 && $requiresEntry) {
                         $fail("The objective {$logbook->objective->name} does not yet have a logbook entry");
                     }
                 },
                 function ($attribute, $value, $fail) {
-                   $logbook = $this->userlesson->logbooks->where('objective_id', $value)->first();
-                   $entries = $logbook->entries;
+                    $logbook = $this->userlesson->logbooks->where('objective_id', $value)->first();
+                    $requiresEntry = (Objective::find($value))->notebook_required;
+                    $entries = optional($logbook)->entries;
 
-                    $entriesWithComments = $entries->filter(function ($entry) {
-                        return $entry->comments
-                            ->filter(function ($comment) {
-                                return $comment->user->hasRole(['supervisor', 'head_of_operations', 'administrator']);
-                            })
-                            ->count() > 0;
-                    });
+                    if ($entries !== null && $entries->count() === 0 && $requiresEntry) {
+                        $entriesWithComments = $entries->filter(function ($entry) {
+                            return $entry->comments
+                                ->filter(function ($comment) {
+                                    return $comment->user->hasRole(['supervisor', 'head_of_operations', 'administrator']);
+                                })
+                                ->count() > 0;
+                        });
 
-                    if (count($entriesWithComments) === 0) {
-                        $fail("No logbook associated with the objective '{$logbook->objective->name}' has a comment by a Supervisor or Head of Operations.");
+                        if (count($entriesWithComments) === 0) {
+                            $fail("No logbook associated with the objective '{$logbook->objective->name}' has a comment by a Supervisor or Head of Operations.");
+                        }
                     }
                 }
             ]

@@ -110,6 +110,10 @@
 				this.form.body = ''
 				this.form.files = []
 			}
+		},
+
+		mounted () {
+			window.events.$on('upload:finished', fileObject => this.form.files.push(fileObject))
 		}
 	}
 </script>

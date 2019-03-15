@@ -22,6 +22,11 @@
 // Import buefy styling
 @import "~buefy/dist/buefy.css";
 
+// Override beufy modal background
+.modal-background {
+	background-color: rgba(10, 10, 10, 1);
+}
+
 // Any component wrapped in v-cloak before the component has loaded
 [v-cloak] {
 	display: none;

@@ -8,8 +8,13 @@ export const SET_ENTRY = (state, entry) => state.entry = entry
 
 export const SET_LESSON = (state, lesson) => state.lesson = lesson
 
-export const SET_COMPLETED_OBJECTIVES = (state, completedObjectives) => {
-	state.form.completedObjectives = _.map(completedObjectives, objective => objective.id)
+export const SET_COMPLETED_OBJECTIVES = async (state, {userObjectives, lessonObjectives}) => {
+	userObjectives = await _.map(userObjectives, objective => objective.id)
+	lessonObjectives = await _.map(lessonObjectives, objective => objective.id)
+
+	let completedObjectivesForUserlesson = await _.intersection(userObjectives, lessonObjectives)
+
+	state.form.completedObjectives = completedObjectivesForUserlesson
 
 	state.allObjectivesComplete = state.form.completedObjectives.length === state.objectives.length
 }
