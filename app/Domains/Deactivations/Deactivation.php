@@ -1,6 +1,6 @@
 <?php
 
-namespace TrainingTracker\Domains\Deactivation;
+namespace TrainingTracker\Domains\Deactivations;
 
 use Illuminate\Database\Eloquent\Model;
 use TrainingTracker\Domains\Users\User;
