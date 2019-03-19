@@ -195,7 +195,7 @@ Route::middleware(['profile'])->group(function () {
 		Route::put('users/{user}/deactivations/{deactivation}', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@update');
 	});
 
-	Route::get('api/users/{user}/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserlessonsController@show');
+	Route::get('api/users/{user}/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@show');
 	Route::get('users/{user}/userlessons/{userlesson}/logbooks', '\TrainingTracker\Http\Logbooks\Controllers\Api\LogbooksController@index');
 	Route::get('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@show');
 	Route::patch('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update');
