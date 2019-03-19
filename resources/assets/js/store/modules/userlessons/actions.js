@@ -1,6 +1,6 @@
 export const fetch = async ({ commit, state }, { userlesson, user }) => {
 	try {
-		let response = await axios.get(`/api/users/${user}/userlessons/${userlesson}`)
+		let response = await axios.get(`${urlBase}/api/users/${user}/userlessons/${userlesson}`)
 
 		await commit('SET_COMPLETED_OBJECTIVES', {
 			userObjectives: response.data.user.objectives,
