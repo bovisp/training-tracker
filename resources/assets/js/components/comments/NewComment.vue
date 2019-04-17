@@ -84,6 +84,7 @@
 				this.active = false
 
 				window.events.$emit('comment:new-inactive')
+				window.events.$emit('comment:saved')
 			},
 
 			submit () {

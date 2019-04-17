@@ -53,7 +53,7 @@ class UserlessonRequest extends FormRequest
                     $requiresEntry = (Objective::find($value))->notebook_required;
                     $entries = optional($logbook)->entries;
 
-                    if ($entries !== null && $entries->count() === 0 && $requiresEntry) {
+                    if ($entries !== null && $entries->count() !== 0 && $requiresEntry) {
                         $entriesWithComments = $entries->filter(function ($entry) {
                             return $entry->comments
                                 ->filter(function ($comment) {

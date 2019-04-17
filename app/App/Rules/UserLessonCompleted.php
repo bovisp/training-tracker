@@ -32,7 +32,8 @@ class UserLessonCompleted implements Rule
         if ((int) $value === 1 ) {
             return $this->completedStatus() && 
                     $this->completedObjectives() &&
-                    $this->completedEvaluation();
+                    $this->completedEvaluation() &&
+                    $this->completedComments();
                    // $this->completedObjectives() && 
                    // $this->completedNotebooks() &&
                    // $this->completedEvaluation() &&
@@ -112,6 +113,7 @@ class UserLessonCompleted implements Rule
             ->logbooks
             ->each(function ($logbook) {
                 $logbook->entries->each(function ($entry) {
+                    dd("entry");
                     $entry->comments->each(function ($comment) use ($entry) {
                         if ($comment->user->hasRole(['supervisor', 'head_of_operations', 'administrator'])) {
                             $this->commentsCount += 1;

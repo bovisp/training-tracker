@@ -180,11 +180,11 @@
 				if (response.status === 200) {
 					await this.fetch({userlesson: this.userlessonId, user: this.user.id})
 
-            		this.$toast.open({
-		                message: response.data.flash,
-		                position: 'is-top-right',
-		                type: 'is-success'
-            		})
+      		this.$toast.open({
+            message: response.data.flash,
+            position: 'is-top-right',
+            type: 'is-success'
+      		})
 				}
 
 				if (response.status === 422) {
@@ -213,6 +213,11 @@
 
 		mounted () {
 			this.fetch({userlesson: this.userlessonId, user: this.user.id})
+
+			window.events.$on('comment:saved', () => {
+				console.log("here")
+				this.fetch({userlesson: this.userlessonId, user: this.user.id})
+			})
 		}
 	}
 </script>

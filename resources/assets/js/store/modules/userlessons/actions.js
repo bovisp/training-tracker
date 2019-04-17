@@ -24,7 +24,10 @@ export const fetch = async ({ commit, state }, { userlesson, user }) => {
 }
 
 export const reset = async ({ commit, state }) => {
-	await commit('SET_COMPLETED_OBJECTIVES', state.userlesson.user.objectives)
+	await commit('SET_COMPLETED_OBJECTIVES', {
+		userObjectives: state.userlesson.user.objectives,
+		lessonObjectives: state.objectives
+	})
 	await commit('RESET_STATUSES')
 }
 
