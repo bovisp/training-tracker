@@ -4,7 +4,7 @@ namespace TrainingTracker\Http\UsersDeactivation\Controllers\Api;
 
 use Illuminate\Http\Request;
 use TrainingTracker\App\Controllers\Controller;
-use TrainingTracker\Domains\Deactivation\Deactivation;
+use TrainingTracker\Domains\Deactivations\Deactivation;
 use TrainingTracker\Domains\Users\User;
 use TrainingTracker\Http\UsersDeactivation\Resources\DeactivationResource;
 

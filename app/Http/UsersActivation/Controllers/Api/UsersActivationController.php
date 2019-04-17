@@ -3,7 +3,7 @@
 namespace TrainingTracker\Http\UsersActivation\Controllers\Api;
 
 use TrainingTracker\App\Controllers\Controller;
-use TrainingTracker\Domains\Deactivation\Deactivation;
+use TrainingTracker\Domains\Deactivations\Deactivation;
 use TrainingTracker\Domains\Users\User;
 
 class UsersActivationController extends Controller
