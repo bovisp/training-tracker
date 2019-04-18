@@ -34,8 +34,6 @@ export const reset = async ({ commit, state }) => {
 export const update = async ({ state }) => {
 	let statuses = []
 
-	console.log(state.form.statuses)
-
 	_.forEach(state.form.statuses, status => statuses.push(status))
 
 	try {
