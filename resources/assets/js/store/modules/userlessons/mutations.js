@@ -35,8 +35,6 @@ export const SET_STATUSES = (state, statuses) => {
 export const UPDATE_STATUS = (state, {period, value}) => {
 	state.form.statuses[period] = value
 
-	console.log(period, value, state.form.statuses)
-
 	if (value === 'c') {
 		state.statusComplete = true
 	} else {

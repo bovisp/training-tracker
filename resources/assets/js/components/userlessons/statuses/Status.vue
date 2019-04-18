@@ -14,7 +14,7 @@
 			        <select 
 			        	:id="status.period" 
 			        	:value="periodValue"
-			        	@input="update"
+			        	@change="update"
 			        	class="is-full-width"
 			        	:disabled="!hasRoleOf(['supervisor', 'head_of_operations'])"
 			        >
@@ -122,7 +122,6 @@
 			}),
 
 			update (e) {
-				console.log("update", this.status.period, e.target.value)
 				this.updateStatus({
 					period: this.status.period,
 					value: e.target.value
