@@ -28,7 +28,7 @@
 
             <unread-notifications 
               :user="{{ moodleauth()->user() }}"
-            />
+            ></unread-notifications>
 
           @endif
         </div>
