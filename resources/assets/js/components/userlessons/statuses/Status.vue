@@ -122,6 +122,7 @@
 			}),
 
 			update (e) {
+				console.log("update", this.status.period, e.target.value)
 				this.updateStatus({
 					period: this.status.period,
 					value: e.target.value
