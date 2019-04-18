@@ -34,10 +34,11 @@ export const reset = async ({ commit, state }) => {
 export const update = async ({ state }) => {
 	let statuses = []
 
-	await _.forEach(state.form.statuses, status => statuses.push(status))
+	console.log(state.form.statuses)
+
+	_.forEach(state.form.statuses, status => statuses.push(status))
 
 	try {
-		console.log(statuses)
 		let response = await axios.put(
 			`${urlBase}/users/${state.userlesson.user.id}/userlessons/${state.userlesson.id}`, {
 				statuses, completedObjectives: state.form.completedObjectives
