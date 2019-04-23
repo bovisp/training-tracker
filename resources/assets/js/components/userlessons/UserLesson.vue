@@ -60,21 +60,21 @@
 					<Logbooks />
 				</div>
 			</div>
-
-			<div class="columns mt-8">
-				<div class="column">
-					<h2 class="title is-2 has-text-weight-light">
-						Statement of Competency
-					</h2>
-				</div>
-			</div>
-
-			<comments 
-				:endpoint="commentsEndpoint"
-				:create-roles="['supervisor', 'head_of_operations']"
-				:is-completed="allObjectivesComplete && statusComplete"
-			/>
 		</template>
+
+		<div class="columns mt-8">
+			<div class="column">
+				<h2 class="title is-2 has-text-weight-light">
+					Statement of Competency
+				</h2>
+			</div>
+		</div>
+
+		<comments 
+			:endpoint="commentsEndpoint"
+			:create-roles="['supervisor', 'head_of_operations']"
+			:is-completed="allObjectivesComplete && statusComplete"
+		/>
 
 		<div 
 			style="position: fixed; bottom: 0; left: 0; background: #FFF; display: flex; width: 100%; z-index: 10;"
