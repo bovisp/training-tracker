@@ -17,6 +17,7 @@ window._ = require('lodash')
 import user from './mixins/user'
 import getUrlBase from './mixins/urlBase'
 import error from './mixins/errors'
+import helpers from './mixins/helpers'
 
 import './helpers/interceptors'
 
@@ -121,6 +122,7 @@ Vue.component('unread-notifications', require('./components/notifications/Unread
 Vue.mixin(user)
 Vue.mixin(error)
 Vue.mixin(getUrlBase)
+Vue.mixin(helpers)
 
 /**
  * Instantiates the application Vue instance that can be utilized on any view

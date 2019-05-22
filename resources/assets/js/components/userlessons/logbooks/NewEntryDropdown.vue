@@ -11,7 +11,7 @@
 								:value="logbook.id"
 								v-for="logbook in filteredLogbooks"
 								:key="logbook.id"
-							>{{ logbook.objective.name }}</option>
+							>{{ textTruncate(logbook.objective.name, 50) }}</option>
 						</template>
 					</select>
 				</div>
