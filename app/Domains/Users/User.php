@@ -1,4 +1,5 @@
 <?php
+
 namespace TrainingTracker\Domains\Users;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;

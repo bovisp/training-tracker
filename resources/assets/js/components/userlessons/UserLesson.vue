@@ -139,7 +139,7 @@
 			}),
 
 			commentsEndpoint () {
-				return `/users/${this.userlesson.user.id}/userlessons/${this.userlesson.id}/comments`
+				return `/users/${this.user.id}/userlessons/${this.userlessonId}/comments`
 			},
 
 			allObjectivesRequiringLogbooks () {
@@ -212,6 +212,7 @@
 		},
 
 		mounted () {
+			console.log(this.userlessonId, this.user.id)
 			this.fetch({userlesson: this.userlessonId, user: this.user.id})
 
 			window.events.$on('comment:saved', () => {
