@@ -43,7 +43,7 @@ class Auth
 	{
 		$session = new Session;
 
-        $this->browserCookie = $_COOKIE['MoodleSessionDev'] ?? '';
+        $this->browserCookie = $_COOKIE['MoodleSession'] ?? '';
 		$this->cookie = optional($session->cookie($this->browserCookie))->sid;
 		$this->moodleId = optional($session->cookie($this->browserCookie))->userid;
 	}
