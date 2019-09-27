@@ -62,7 +62,7 @@
 					return this.trans('app.components.appointmentdate.noappointmentset')
 				}
 
-				let date = new Date(this.appointmentDate)
+        let date = new Date(this.appointmentDate)
 
 				return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 			}
@@ -96,9 +96,10 @@
 			},
 
 			formatDate (date) {
-				let dateArray = date.split('/')
+        let dateArray = date.split('/')
+        console.log(dateArray)
 
-				return new Date(`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`)
+				return new Date(`${dateArray[1]}-${dateArray[0]}-${dateArray[2]}`)
 			}
 		},
 
