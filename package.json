@@ -9,20 +9,12 @@
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
-    "devDependencies": {
-        "@fortawesome/fontawesome-free": "^5.11.2",
-        "axios": "^0.19.0",
-        "cross-env": "^5.2.1",
-        "laravel-mix": "^2.1.14",
-        "vue": "^2.6.10",
-        "vuex": "^3.1.1"
-    },
     "dependencies": {
-        "buefy": "^0.7.10",
-        "bulma": "^0.7.5",
-        "dayjs": "^1.8.16",
+        "buefy": "^0.8.13",
+        "bulma": "^0.8.1",
+        "dayjs": "^1.8.23",
         "es6-promise": "^4.2.8",
-        "fast-sort": "^1.5.3",
+        "fast-sort": "^2.1.1",
         "lodash.assign": "^4.2.0",
         "lodash.concat": "^4.5.0",
         "lodash.filter": "^4.6.0",
@@ -32,10 +24,21 @@
         "lodash.map": "^4.6.0",
         "lodash.orderby": "^4.6.0",
         "lodash.sortby": "^4.7.0",
-        "pluralize": "^7.0.0",
+        "pluralize": "^8.0.0",
         "quill-image-drop-module": "^1.0.3",
         "vue-scrollto": "^2.17.1",
-        "vue-template-compiler": "^2.6.10",
+        "vue-template-compiler": "^2.6.11",
         "vue2-editor": "^2.10.2"
+    },
+    "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.13.0",
+        "axios": "^0.19.2",
+        "cross-env": "^7.0.2",
+        "laravel-mix": "^5.0.4",
+        "resolve-url-loader": "^3.1.0",
+        "sass": "^1.26.3",
+        "sass-loader": "^8.0.2",
+        "vue": "^2.6.11",
+        "vuex": "^3.1.3"
     }
 }

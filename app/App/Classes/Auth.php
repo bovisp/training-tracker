@@ -2,10 +2,10 @@
 
 namespace TrainingTracker\App\Classes;
 
-use TrainingTracker\Domains\Config\Config;
-use TrainingTracker\Domains\MoodleUsers\MoodleUser;
-use TrainingTracker\Domains\Sessions\Session;
 use TrainingTracker\Domains\Users\User;
+use TrainingTracker\Domains\Config\Config;
+use TrainingTracker\Domains\Sessions\Session;
+use TrainingTracker\Domains\MoodleUsers\MoodleUser;
 
 /**
  * Provides a set of helper methods to extract information about an
