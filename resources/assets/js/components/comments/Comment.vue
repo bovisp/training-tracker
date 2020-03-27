@@ -121,7 +121,7 @@
 					})
 					.catch(error => {
 						if (error.response.status === 403) {
-							this.$dialog.alert({
+							this.$buefy.dialog.alert({
 			                    title: this.trans('app.general.unauthorized'),
 			                    message: this.errors.denied,
 			                    type: 'is-danger'

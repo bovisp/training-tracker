@@ -47,9 +47,9 @@
 
 								<div class="level-right">
 									<form action="{{ env('APP_URL') }}/users/{{ $user->id }}/userlessons/{{ $userlesson->id }}" method="POST">
-										{{ csrf_field() }}
+										@csrf
 
-										{{ method_field('delete') }}
+										@method('DELETE')
 
 										<div class="field">
 											<div class="control">
