@@ -12,6 +12,7 @@
     "dependencies": {
         "buefy": "^0.8.13",
         "bulma": "^0.8.1",
+        "core-js": "^3.6.4",
         "dayjs": "^1.8.23",
         "es6-promise": "^4.2.8",
         "fast-sort": "^2.1.1",

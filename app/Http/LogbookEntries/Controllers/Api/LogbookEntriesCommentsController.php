@@ -34,6 +34,19 @@ class LogbookEntriesCommentsController extends Controller
             ], 403);
         }
 
+        if (
+            moodleauth()->user()->roles->first()->type === 'head_of_operations' || 
+            moodleauth()->user()->roles->first()->type === 'manager'
+        ) {
+            return response()->json([
+                'errors' => [
+                    'errors' => [
+                        'denied' => trans('app.errors.general.denied')
+                    ]
+                ]
+            ], 403);
+        }
+
         request()->validate([
             'body' => 'required|max:5000'
         ]);
@@ -109,6 +122,13 @@ class LogbookEntriesCommentsController extends Controller
 
         if (moodleauth()->id() == $comment->user->id) {
             return true;
+        }
+
+        if (
+            moodleauth()->user()->roles->first()->type === 'head_of_operations' || 
+            moodleauth()->user()->roles->first()->type === 'manager'
+        ) {
+            return false;
         }
 
         if (moodleauth()->user()->roles->first()->rank > $comment->user->roles->first()->rank) {

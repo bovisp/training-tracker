@@ -195,12 +195,20 @@ Route::middleware(['profile'])->group(function () {
 		Route::put('users/{user}/deactivations/{deactivation}', '\TrainingTracker\Http\UsersDeactivation\Controllers\Api\UsersDeactivationController@update');
 	});
 
+	Route::middleware(['role:administrator|apprentice|supervisor'])->group(function () {
+		Route::patch('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update');
+		Route::delete('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@destroy');
+		Route::post('users/{user}/logbooks/{logbook}/entries', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store');
+		
+		Route::prefix('users/{user}/logbooks/{logbook}')->group(function () {
+			Route::post('/files/meta', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@meta');
+			Route::post('/files/upload', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@upload');
+		});
+	});
+
 	Route::get('api/users/{user}/userlessons/{userlesson}', '\TrainingTracker\Http\UserLessons\Controllers\Api\UserLessonsController@show');
 	Route::get('users/{user}/userlessons/{userlesson}/logbooks', '\TrainingTracker\Http\Logbooks\Controllers\Api\LogbooksController@index');
 	Route::get('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@show');
-	Route::patch('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update');
-	Route::delete('users/{user}/entries/{entry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@destroy');
-	Route::post('users/{user}/logbooks/{logbook}/entries', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@store');
 
 	/**
 	 * Various HTTP "user" routes.
@@ -250,14 +258,6 @@ Route::middleware(['profile'])->group(function () {
 		Route::get('/entries', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@index');
 
 		Route::get('/', '\TrainingTracker\Http\Logbooks\Controllers\LogbookController@show');
-
-		Route::post('/files/meta', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@meta');
-
-		Route::post('/files/upload', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntryFilesController@upload');
-
-		Route::put('/entries/{logbookEntry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@update');
-
-		Route::delete('/entries/{logbookEntry}', '\TrainingTracker\Http\LogbookEntries\Controllers\Api\LogbookEntriesController@destroy');
 	});
 
 	/**

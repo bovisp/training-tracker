@@ -54,7 +54,7 @@
 			<div class="columns">
 				<div class="column">
 					<NewEntryDropdown 
-						v-if="allObjectivesRequiringLogbooks === false"
+						v-if="allObjectivesRequiringLogbooks === false && hasRoleOf(['apprentice', 'supervisor'])"
 					/>
 
 					<Logbooks />

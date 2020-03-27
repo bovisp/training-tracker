@@ -89,7 +89,12 @@
 			},
 
 			canEdit () {
-				return (this.authUser.id == this.comment.user.id) || (this.authUser.rank < this.comment.user.roleRank)
+				return (this.authUser.id == this.comment.user.id) || 
+					(
+						this.authUser.rank < this.comment.user.roleRank && 
+						this.authUser.role !== 'manager' &&
+						this.authUser.role !== 'head_of_operations'
+					)
 			}
 		},
 
@@ -99,7 +104,7 @@
 			}),
 
 			confirm () {
-                this.$dialog.confirm({
+                this.$buefy.dialog.confirm({
                     message: this.trans('app.components.comments.deletecomment'),
                     onConfirm: () => this.remove()
                 })
@@ -108,7 +113,7 @@
 			remove () {
 				this.destroy(`${this.endpoint}/${this.comment.id}`)
 					.then(response => {
-						this.$toast.open({
+						this.$buefy.toast.open({
 			                message: this.trans('app.components.comments.commentdeleted'),
 			                position: 'is-top-right',
 			                type: 'is-success'

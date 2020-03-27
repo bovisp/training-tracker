@@ -131,7 +131,7 @@
 			async removeFile (file) {
 				let response = await this.deleteFile(file)
 
-				this.$toast.open({
+				this.$buefy.toast.open({
 	                message: this.trans('app.components.logbooks.filedeleted'),
 	                position: 'is-top-right',
 	                type: 'is-success'
@@ -141,7 +141,7 @@
 			},
 
 			remove (file) {
-				this.$dialog.confirm({
+				this.$buefy.dialog.confirm({
                     title: this.trans('app.components.logbooks.deletefile'),
                     message: this.trans('app.components.logbooks.deletefileconfirm'),
                     confirmText: this.trans('app.components.logbooks.deletefile'),
@@ -154,7 +154,7 @@
 				let response = await this.patchFiles(this.form)
 
 				if (response.status === 200) {
-					this.$toast.open({
+					this.$buefy.toast.open({
 		                message: response.data.flash,
 		                position: 'is-top-right',
 		                type: 'is-success'
@@ -162,7 +162,7 @@
 
             		this.cancel()
 				} else {
-					this.$toast.open({
+					this.$buefy.toast.open({
 		                message: this.trans('app.components.logbooks.cantupdatefiles'),
 		                position: 'is-top-right',
 		                type: 'is-danger'

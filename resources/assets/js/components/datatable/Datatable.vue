@@ -102,219 +102,210 @@
 </template>
 
 <script>
-	import sort from 'fast-sort'
+import sort from 'fast-sort'
 
-	export default {
-		props: {
-			endpoint: {
-				required: true,
-				type: String
-			},
-			hasCheckbox: {
-				required: false,
-				type: Boolean
-			},
-			withRoles: {
-	            type: Boolean,
-	            required: false
-	        },
-	        postEndpoint: {
-	            type: String,
-	            required: false
-	        },
-		    successMessage: {
-	            type: String,
-	            required: false
-	        },
-	        redirectEndpoint: {
-	            type: String,
-	            required: false
-	        }
+export default {
+	props: {
+		endpoint: {
+			required: true,
+			type: String
 		},
-
-		data () {
-			return {
-				records: [],
-
-	    		meta: {
-	    			actionButton: {},
-	    			displayable: [],
-	    			orderby: [],
-	    		},
-	    		isLoading: false,
-	    		perPage: 10,
-	    		sortOrder: [],
-	    		checkedRows: [],
-	    		roles: [],
-	    		rolesModel: [],
-	    		errors_data: [],
-	    		search: ''
-			}
+		hasCheckbox: {
+			required: false,
+			type: Boolean
 		},
-
-		computed: {
-			filteredRecords () {
-				let data = this.records
-
-				data = filter(data, row => {
-					return Object.keys(row).some(key => {
-						return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1
-					})
-				})
-
-				return data
-			}
+		withRoles: {
+			type: Boolean,
+			required: false
 		},
-
-		methods: {
-			async fetch () {
-				this.isLoading = !this.isLoading
-
-				await axios.get(this.endpoint)
-	    			.then(({data}) => {
-	    				this.records = data.records
-	    				this.meta = data.meta
-
-	    				if (data.roles) {
-	    					this.roles = data.roles
-	    				}
-
-	    				if (data.linkUsers) {
-	    					this.populateCheckedUsers()
-	    				}
-	    			})
-
-	    		await this.makeSortArray()
-
-	    		await sort(this.records).by(this.sortOrder)
-
-	    		this.isLoading = !this.isLoading
-			},
-
-			makeSortArray () {
-				forEach(this.meta.orderby, item => {
-					this.sortOrder.push({
-						[item.dir]: item.key
-					})
-				})
-			},
-
-			actionButtonLink (id) {
-	            return `
-	                ${this.meta.actionButton.endpoint}${id}${this.meta.actionButton.endpointSuffix || ''}
-	            `
-	        },
-
-	        validate () {
-	        	this.errors_data = []
-
-	        	let postArray = []
-
-	        	if (this.withRoles) {
-	        		postArray = this.prepareNewUsers()
-	        	} else {
-	        		postArray = map(this.checkedRows, user => {
-	        			return {
-	        				id: user.id
-	        			}
-	        		})
-	        	}
-
-	        	if (this.errors_data.length === 0) {
-	        		this.post(postArray)
-	        	}
-	        },
-
-	        prepareNewUsers () {
-	        	this.validateRolesModel()
-
-	        	let postArray = []
-
-        		forEach(this.checkedRows, user => {
-        			let hasRole = false
-
-        			forEach(filter(this.rolesModel), value => {
-        				let tempArray = value.split(':')
-
-        				let valueArray = {
-        					id: tempArray[0],
-        					role: tempArray[1]
-        				}
-
-	        			if (parseInt(tempArray[0]) == user.id) {
-	        				postArray.push(valueArray)
-
-	        				hasRole = true
-	        			}
-        			})
-
-        			if (hasRole === false) {
-        				this.errors_data.push(
-        					`${this.trans('app.components.datatable.roleerrormessage1')} ${user.firstname} ${user.lastname}. ${this.trans('app.components.datatable.roleerrormessage2')}`
-        				)
-        			}
-        		})
-
-        		return postArray
-	        },
-
-	        validateRolesModel () {
-	        	forEach(filter(this.rolesModel), value => {
-	        		let valueArray = value.split(':')
-
-	        		if (find(this.checkedRows, ['id', parseInt(valueArray[0])]) === undefined) {
-	        			const user = this.findUserId(parseInt(valueArray[0]))
-
-	                    this.errors_data.push(
-	                        `${this.trans('app.components.datatable.roleerrormessage3')} ${user.firstname} ${user.lastname} ${this.trans('app.components.datatable.roleerrormessage4')}`
-	                    )
-	        		}
-	        	})
-	        },
-
-	        post (postArray) {
-	        	if (postArray.length === 0) {
-	                this.$toast.open({
-	                    message: `${this.trans('app.components.datatable.usererror')}`,
-	                    position: 'is-top-right',
-	                    type: 'is-danger'
-	                })
-	            } else {
-	            	axios.post(this.postEndpoint, postArray)
-		                .then(response => {
-		                    this.$toast.open({
-		                        message: this.successMessage,
-		                        position: 'is-top-right',
-		                        type: 'is-success'
-		                    })
-
-		                    setTimeout(() => {
-		                        window.location = this.redirectEndpoint;
-		                    }, 3000)
-		                })
-		                .catch(error => {
-		                    if (error.response.status === 422) {
-		                        window.events.$emit('users-create-error', error.response.data.errors)
-		                    }
-		                })
-	            }
-	        },
-
-	        findUserId (key) {
-	        	return find(this.records, ['id', key])
-	        },
-
-	        populateCheckedUsers () {
-	        	forEach(this.records, user => {
-	        		if (user.checked) {
-	        			this.checkedRows.push(user)
-	        		}
-	        	})
-	        }
+		postEndpoint: {
+			type: String,
+			required: false
 		},
-
-		mounted () {
-			this.fetch()
+		successMessage: {
+			type: String,
+			required: false
+		},
+		redirectEndpoint: {
+			type: String,
+			required: false
 		}
+	},
+
+	data () {
+		return {
+			records: [],
+
+			meta: {
+				actionButton: {},
+				displayable: [],
+				orderby: [],
+			},
+			isLoading: false,
+			perPage: 10,
+			sortOrder: [],
+			checkedRows: [],
+			roles: [],
+			rolesModel: [],
+			errors_data: [],
+			search: ''
+		}
+	},
+
+	computed: {
+		filteredRecords () {
+			let data = this.records
+
+			data = filter(data, row => {
+				return Object.keys(row).some(key => {
+					return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1
+				})
+			})
+
+			return data
+		}
+	},
+
+	methods: {
+		async fetch () {
+			this.isLoading = !this.isLoading
+
+			let {data} = await axios.get(this.endpoint)
+				
+			this.records = data.records
+			this.meta = data.meta
+
+			if (data.roles) {
+				this.roles = data.roles
+			}
+
+			if (data.linkUsers) {
+				this.populateCheckedUsers()
+			}
+
+			await this.makeSortArray()
+
+			await sort(this.records).by(this.sortOrder)
+
+			this.isLoading = !this.isLoading
+		},
+
+		makeSortArray () {
+			forEach(this.meta.orderby, item => {
+				this.sortOrder.push({
+					[item.dir]: item.key
+				})
+			})
+		},
+
+		actionButtonLink (id) {
+			return `
+				${this.meta.actionButton.endpoint}${id}${this.meta.actionButton.endpointSuffix || ''}
+			`
+		},
+
+		validate () {
+			this.errors_data = []
+
+			let postArray = []
+
+			if (this.withRoles) {
+				postArray = this.prepareNewUsers()
+			} else {
+				postArray = map(this.checkedRows, user => {
+					return {
+						id: user.id
+					}
+				})
+			}
+
+			if (this.errors_data.length === 0) {
+				this.post(postArray)
+			}
+		},
+
+		prepareNewUsers () {
+			this.validateRolesModel()
+
+			let postArray = []
+
+			forEach(this.checkedRows, user => {
+				let hasRole = false
+
+				forEach(filter(this.rolesModel), value => {
+					let tempArray = value.split(':')
+
+					let valueArray = {
+						id: tempArray[0],
+						role: tempArray[1]
+					}
+
+					if (parseInt(tempArray[0]) == user.id) {
+						postArray.push(valueArray)
+
+						hasRole = true
+					}
+				})
+
+				if (hasRole === false) {
+					this.errors_data.push(
+						`${this.trans('app.components.datatable.roleerrormessage1')} ${user.firstname} ${user.lastname}. ${this.trans('app.components.datatable.roleerrormessage2')}`
+					)
+				}
+			})
+
+			return postArray
+		},
+
+		validateRolesModel () {
+			forEach(filter(this.rolesModel), value => {
+				let valueArray = value.split(':')
+
+				if (find(this.checkedRows, ['id', parseInt(valueArray[0])]) === undefined) {
+					const user = this.findUserId(parseInt(valueArray[0]))
+
+					this.errors_data.push(
+						`${this.trans('app.components.datatable.roleerrormessage3')} ${user.firstname} ${user.lastname} ${this.trans('app.components.datatable.roleerrormessage4')}`
+					)
+				}
+			})
+		},
+
+		async post (postArray) {
+			if (postArray.length === 0) {
+				this.$buefy.toast.open({
+					message: `${this.trans('app.components.datatable.usererror')}`,
+					position: 'is-top-right',
+					type: 'is-danger'
+				})
+			} else {
+				try {
+					let response = await axios.post(this.postEndpoint, postArray)
+
+					window.location = this.redirectEndpoint
+				} catch (error) {
+					if (typeof error.response !== 'undefined' && error.response.status === 422) {
+						window.events.$emit('users-create-error', error.response.data.errors)
+					}
+				}
+			}
+		},
+
+		findUserId (key) {
+			return find(this.records, ['id', key])
+		},
+
+		populateCheckedUsers () {
+			forEach(this.records, user => {
+				if (user.checked) {
+					this.checkedRows.push(user)
+				}
+			})
+		}
+	},
+
+	mounted () {
+		this.fetch()
 	}
+}
 </script>

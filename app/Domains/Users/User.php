@@ -75,6 +75,7 @@ class User extends Authenticatable
         return MoodleUser::select('id', 'firstname', 'lastname', 'email')
             ->where('id', '>', 1)
             ->whereNotIn('id', $employees)
+            ->where('email', 'LIKE', '%@%.%')
             ->get();
     }    
 

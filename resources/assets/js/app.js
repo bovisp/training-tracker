@@ -1,6 +1,9 @@
 require('./bootstrap');
 
-import Vue from 'vue';
+import 'core-js/es/object/assign'
+import 'core-js/es/symbol/iterator'
+
+import Vue from 'vue'
 import Buefy from 'buefy'
 import store from './store'
 import orderBy from 'lodash.orderby'
@@ -20,6 +23,18 @@ import error from './mixins/errors'
 import helpers from './mixins/helpers'
 
 import './helpers/interceptors'
+
+import DataTable from './components/datatable/Datatable.vue';
+import AppointmentDate from './components/users/AppointmentDate.vue';
+import Deactivation from './components/users/Deactivation.vue';
+import Deactivations from './components/users/deactivations/Deactivations.vue';
+import Activation from './components/users/Activation.vue';
+import Flash from './components/Flash.vue';
+import UnassignedUserLessons from './components/users/UnassignedUserLessons.vue';
+import Userlesson from './components/userlessons/Userlesson.vue';
+import UserErrors from './components/UserErrors.vue';
+import Notifications from './components/notifications/Notifications.vue';
+import UnreadNotifications from './components/notifications/UnreadNotifications.vue';
 
 Vue.use(Buefy, {
 	defaultToastDuration: 5000
@@ -107,17 +122,17 @@ Vue.prototype.trans = (key) => {
 	return current;
 }
 
-Vue.component('data-table', require('./components/datatable/Datatable.vue'));
-Vue.component('appointment-date', require('./components/users/AppointmentDate.vue'));
-Vue.component('deactivation', require('./components/users/Deactivation.vue'));
-Vue.component('deactivations', require('./components/users/deactivations/Deactivations.vue'));
-Vue.component('activation', require('./components/users/Activation.vue'));
-Vue.component('flash', require('./components/Flash.vue'));
-Vue.component('unassigned-user-lessons', require('./components/users/UnassignedUserLessons.vue'));
-Vue.component('userlesson', require('./components/userlessons/Userlesson.vue'));
-Vue.component('user-errors', require('./components/UserErrors.vue')); 
-Vue.component('notifications', require('./components/notifications/Notifications.vue')); 
-Vue.component('unread-notifications', require('./components/notifications/UnreadNotifications.vue')); 
+Vue.component('data-table', DataTable);
+Vue.component('appointment-date', AppointmentDate);
+Vue.component('deactivation', Deactivation);
+Vue.component('deactivations', Deactivations);
+Vue.component('activation', Activation);
+Vue.component('flash', Flash);
+Vue.component('unassigned-user-lessons', UnassignedUserLessons);
+Vue.component('userlesson', Userlesson);
+Vue.component('user-errors', UserErrors); 
+Vue.component('notifications', Notifications); 
+Vue.component('unread-notifications', UnreadNotifications); 
 
 Vue.mixin(user)
 Vue.mixin(error)

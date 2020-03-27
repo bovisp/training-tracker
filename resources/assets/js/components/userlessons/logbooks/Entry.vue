@@ -37,7 +37,7 @@
 			<Comments 
 				v-if="Object.keys(entry).length > 0"
 				:endpoint="commentsEndpoint"
-				:create-roles="['supervisor', 'head_of_operations', 'apprentice']"
+				:create-roles="['supervisor', 'apprentice']"
 				:is-completed="objectiveCompleted"
 			/>
 		</template>
@@ -110,31 +110,31 @@
 				this.updateLoading()
 
 				this.$toast.open({
-          message: response.data.flash,
-          position: 'is-top-right',
-          type: 'is-success'
-    		})
+					message: response.data.flash,
+					position: 'is-top-right',
+					type: 'is-success'
+				})
 			},
 
 			async update (data) {
 				let response = await this.updateEntry(data)
 
 				if (response.status === 200) {
-      		this.editing = false
+					this.editing = false
 
-      		this.$toast.open({
-            message: response.data.flash,
-            position: 'is-top-right',
-            type: 'is-success'
-      		})
+					this.$toast.open({
+						message: response.data.flash,
+						position: 'is-top-right',
+						type: 'is-success'
+					})
 				}
 
 				if (response.status === 422) {
 					this.$toast.open({
-            message: response.data.message,
-            position: 'is-top-right',
-            type: 'is-danger'
-      		})
+						message: response.data.message,
+						position: 'is-top-right',
+						type: 'is-danger'
+					})
 				}
 			}
 		}
