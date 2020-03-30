@@ -74,7 +74,7 @@
 					appointed_at: (new Date(this.appointmentDate)).toMysqlFormat()
 				})
 					.then(({data}) => {
-						this.$toast.open({
+						this.$buefy.toast.open({
 	                        message: data.flash,
 	                        position: 'is-top-right',
 	                        type: 'is-success'

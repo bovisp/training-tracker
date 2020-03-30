@@ -158,7 +158,7 @@
 				}).then(({ data }) => {
 					this.isActive = false
 
-					this.$toast.open({
+					this.$buefy.toast.open({
                         message: data.flash,
                         position: 'is-top-right',
                         type: 'is-success'

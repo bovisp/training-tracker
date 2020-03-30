@@ -131,10 +131,6 @@
 					return this.trans('app.components.deactivation.nodeactivateddate')
 				}
 
-				// console.log(this.deactivatedDate + this.deactivatedDate.getTimezoneOffset())
-
-				// let date = new Date(this.deactivatedDate)
-
 				return `${this.deactivatedDate.getDate()}/${this.deactivatedDate.getMonth() + 1}/${this.deactivatedDate.getFullYear()}`;
 			},
 
@@ -142,8 +138,6 @@
 				if (this.reactivatedDate === null) {
 					return this.trans('app.components.deactivation.noreactivateddate')
 				}
-
-				// let date = new Date(this.reactivatedDate)
 
 				return `${this.reactivatedDate.getDate()}/${this.reactivatedDate.getMonth() + 1}/${this.reactivatedDate.getFullYear()}`;
 			}
@@ -159,7 +153,7 @@
 
 				axios.put(`${urlBase}/users/api/${this.user.id}/deactivation`, dateData)
 					.then(({data}) => {
-						this.$toast.open({
+						this.$buefy.toast.open({
 	                        message: data.flash,
 	                        position: 'is-top-right',
 	                        type: 'is-success'

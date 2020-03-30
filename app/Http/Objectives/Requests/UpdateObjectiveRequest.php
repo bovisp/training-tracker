@@ -3,7 +3,6 @@
 namespace TrainingTracker\Http\Objectives\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateObjectiveRequest extends FormRequest
 {

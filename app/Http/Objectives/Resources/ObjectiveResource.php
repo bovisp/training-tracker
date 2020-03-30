@@ -2,9 +2,9 @@
 
 namespace TrainingTracker\Http\Objectives\Resources;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ObjectiveResource extends Resource
+class ObjectiveResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

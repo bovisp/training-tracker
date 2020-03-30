@@ -2,11 +2,11 @@
 
 namespace TrainingTracker\Http\LogbookEntries\Resources;
 
-use Illuminate\Http\Resources\Json\Resource;
 use TrainingTracker\Domains\Users\User;
+use Illuminate\Http\Resources\Json\JsonResource;
 use TrainingTracker\Http\Users\Resources\UserResource;
 
-class LogbookEntryResource extends Resource
+class LogbookEntryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

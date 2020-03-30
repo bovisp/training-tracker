@@ -14,6 +14,7 @@
         type: Object
       }
     },
+    
     computed: {
       userlessonOwner () {
         return this.notification.data.editorId === this.notification.data.userlessonUserId ? 'their' : `${this.notification.data.userlessonUserName}'s`

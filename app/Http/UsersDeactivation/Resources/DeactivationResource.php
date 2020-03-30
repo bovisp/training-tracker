@@ -2,9 +2,9 @@
 
 namespace TrainingTracker\Http\UsersDeactivation\Resources;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class DeactivationResource extends Resource
+class DeactivationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -12,6 +12,7 @@
         type: Object
       }
     },
+    
     computed: {
       isOwner () {
         return this.notification.data.creatorId === this.notification.data.userlessonUserId ? 'their' : `${this.notification.data.creatorName}'s`

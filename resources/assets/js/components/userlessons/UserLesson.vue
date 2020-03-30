@@ -180,11 +180,11 @@
 				if (response.status === 200) {
 					await this.fetch({userlesson: this.userlessonId, user: this.user.id})
 
-      		this.$toast.open({
-            message: response.data.flash,
-            position: 'is-top-right',
-            type: 'is-success'
-      		})
+      		this.$buefy.toast.open({
+				message: response.data.flash,
+				position: 'is-top-right',
+				type: 'is-success'
+			})
 				}
 
 				if (response.status === 422) {

@@ -90,7 +90,7 @@
 				if (response.status === 200) {
             		this.reset()
 
-            		this.$toast.open({
+            		this.$buefy.toast.open({
 		                message: response.data.flash,
 		                position: 'is-top-right',
 		                type: 'is-success'
@@ -98,7 +98,7 @@
 				}
 
 				if (response.status === 422) {
-					this.$toast.open({
+					this.$buefy.toast.open({
 		                message: response.data.message,
 		                position: 'is-top-right',
 		                type: 'is-danger'

@@ -11,8 +11,6 @@ class UserLessonCompleted implements Rule
 
     protected $errors = [];
 
-    // protected $commentsCount = 0;
-
     protected $statusPeriods = ['p9', 'p18', 'p30', 'p42'];
 
     public function __construct(UserLesson $userlesson)
@@ -34,10 +32,6 @@ class UserLessonCompleted implements Rule
                     $this->completedObjectives() &&
                     $this->completedEvaluation() &&
                     $this->completedComments();
-                   // $this->completedObjectives() && 
-                   // $this->completedNotebooks() &&
-                   // $this->completedEvaluation() &&
-                   // $this->completedComments();
         }
         
         return true;
@@ -113,7 +107,6 @@ class UserLessonCompleted implements Rule
             ->logbooks
             ->each(function ($logbook) {
                 $logbook->entries->each(function ($entry) {
-                    dd("entry");
                     $entry->comments->each(function ($comment) use ($entry) {
                         if ($comment->user->hasRole(['supervisor', 'head_of_operations', 'administrator'])) {
                             $this->commentsCount += 1;

@@ -126,9 +126,7 @@ class Auth
             return '';
         }
 
-        $user = new MoodleUser;
-
-        return $user->profile($this->moodleId);
+        return (new MoodleUser)->profile($this->moodleId);
     }
 
     public function user()
@@ -164,8 +162,6 @@ class Auth
             return '';
         }
 
-        $user = new MoodleUser;
-
-        return $user->profile($this->moodleId)->id;
+        return (new MoodleUser)->profile($this->moodleId)->id;
     }
 }

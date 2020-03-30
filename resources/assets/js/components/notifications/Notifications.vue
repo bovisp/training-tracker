@@ -165,41 +165,41 @@
 			async allRead () {
 				let response = await this.markAllAsRead()
 
-				this.$toast.open({
-          message: this.trans('app.components.notifications.notificationsmarkedread'),
-          position: 'is-top-right',
-          type: 'is-success'
-    		})
+				this.$buefy.toast.open({
+					message: this.trans('app.components.notifications.notificationsmarkedread'),
+					position: 'is-top-right',
+					type: 'is-success'
+				})
 			},
 
 			async allUnread () {
 				let response = await this.markAllAsUnread()
 
-				this.$toast.open({
-          message: this.trans('app.components.notifications.notificationsmarkedunread'),
-          position: 'is-top-right',
-          type: 'is-success'
-    		})
+				this.$buefy.toast.open({
+					message: this.trans('app.components.notifications.notificationsmarkedunread'),
+					position: 'is-top-right',
+					type: 'is-success'
+				})
 			},
 
 			async deleteRead () {
 				let response = await this.deleteAllRead()
 
-				this.$toast.open({
-          message: this.trans('app.components.notifications.notificationsdeleted'),
-          position: 'is-top-right',
-          type: 'is-success'
-    		})
+				this.$buefy.toast.open({
+					message: this.trans('app.components.notifications.notificationsdeleted'),
+					position: 'is-top-right',
+					type: 'is-success'
+				})
 			},
 
 			async deleteUnread () {
 				let response = await this.deleteAllUnread()
 
-				this.$toast.open({
-          message: this.trans('app.components.notifications.unreadnotificationsdeleted'),
-          position: 'is-top-right',
-          type: 'is-success'
-    		})
+				this.$buefy.toast.open({
+					message: this.trans('app.components.notifications.unreadnotificationsdeleted'),
+					position: 'is-top-right',
+					type: 'is-success'
+				})
 			}
 		},
 

@@ -73,6 +73,7 @@
 
 				<div
 					v-for="deactivation in deactivations"
+					:key="deactivation.id"
 					v-else
 				>
 					<deactivation 
@@ -169,7 +170,7 @@
 
 						window.events.$emit('user:activation', data.active)
 
-						this.$toast.open({
+						this.$buefy.toast.open({
 	                        message: data.flash,
 	                        position: 'is-top-right',
 	                        type: 'is-success'

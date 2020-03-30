@@ -146,7 +146,7 @@
 						.then(response => {
 							this.nonDepricated = ''
 
-							this.$toast.open({
+							this.$buefy.toast.open({
 		                        message: response.data.flash,
 		                        position: 'is-top-right',
 		                        type: 'is-success'

@@ -97,7 +97,7 @@
 
 					this.form.body = ''
 
-					this.$toast.open({
+					this.$buefy.toast.open({
 		                message: this.trans('app.components.comments.commentadded'),
 		                position: 'is-top-right',
 		                type: 'is-success'
@@ -105,7 +105,7 @@
 				})
 				.catch(error => {
 					if (error.response.status === 403) {
-						this.$dialog.alert({
+						this.$buefy.dialog.alert({
 		                    title: this.trans('app.general.unauthorized'),
 		                    message: this.errors.denied,
 		                    type: 'is-danger'

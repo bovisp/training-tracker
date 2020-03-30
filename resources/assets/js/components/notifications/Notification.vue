@@ -127,7 +127,7 @@
       async destroy () {
         let response = await this.deleteNotification(this.notification.id)
 
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: this.trans('app.components.notifications.notificationdeleted'),
           position: 'is-top-right',
           type: 'is-success'
@@ -137,7 +137,7 @@
       async read () {
         let response = await this.markAsRead(this.notification.id)
 
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: this.trans('app.components.notifications.notificationread'),
           position: 'is-top-right',
           type: 'is-success'
@@ -147,7 +147,7 @@
       async unread () {
         let response = await this.markAsUnread(this.notification.id)
 
-        this.$toast.open({
+        this.$buefy.toast.open({
           message: this.trans('app.components.notifications.notificationunread'),
           position: 'is-top-right',
           type: 'is-success'

@@ -12,6 +12,7 @@
         type: Object
       }
     },
+    
     computed: {
       owner () {
         if (this.authUser.role === 'apprentice') {
